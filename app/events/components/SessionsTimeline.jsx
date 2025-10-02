@@ -12,27 +12,31 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-// Safe date formatting
+/* 🔹 Safe date formatting */
 function safeFormat(dateString) {
   if (!dateString) return null;
   const d = typeof dateString === "string" ? parseISO(dateString) : dateString;
   if (!isValid(d)) return null;
-  return format(d, "MMM d yyyy hh:mmaaa").toLowerCase();
+  return format(d, "MMM d yyyy • hh:mmaaa");
 }
 
-// Format session range
+/* 🔹 Format session range elegantly */
 function formatSessionRange(startString, endString) {
   const start = parseISO(startString);
   const end = parseISO(endString);
   if (!isValid(start) || !isValid(end)) return "";
 
-  if (format(start, "yyyyMMdd") === format(end, "yyyyMMdd")) {
-    return `${format(start, "MMM d yyyy")} ${format(start, "hh:mmaaa").toLowerCase()} - ${format(
-      end,
-      "hh:mmaaa"
-    ).toLowerCase()} (${format(start, "EEE")})`;
-  }
-  return `${safeFormat(startString)} - ${safeFormat(endString)} (${format(end, "EEE")})`;
+  const sameDay = format(start, "yyyyMMdd") === format(end, "yyyyMMdd");
+
+  return sameDay
+    ? `${format(start, "MMM d yyyy")} • ${format(start, "hh:mmaaa")} – ${format(
+        end,
+        "hh:mmaaa"
+      )} (${format(start, "EEE")})`
+    : `${safeFormat(startString)} → ${safeFormat(endString)} (${format(
+        end,
+        "EEE"
+      )})`;
 }
 
 export default function SessionsTimeline({ event }) {
@@ -44,76 +48,86 @@ export default function SessionsTimeline({ event }) {
 
   return (
     <motion.section
-      className="w-full"
+      className="w-full mt-14"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      {/* Section Header */}
-      <Card className="border-0 shadow-none mb-12 text-center">
+      {/* 🔹 Section Header */}
+      <Card className="shadow-none border-none bg-transparent  text-center mb-1">
         <CardHeader>
-          <CardTitle className="text-4xl sm:text-5xl font-bold text-primary tracking-tight">
+          <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">
             Sessions Timeline
           </CardTitle>
-          <CardDescription className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Detailed schedule of all sessions and activities planned for this event
+          <CardDescription className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto text-muted-foreground mt-2">
+            Step-by-step schedule for each session of the event.
           </CardDescription>
         </CardHeader>
       </Card>
 
-      {/* Timeline */}
-      <CardContent className="relative pl-8 space-y-8 border-l-2 border-primary/30">
-        {sortedSessions.map((session, index) => (
-          <motion.div
-            key={session._id || index}
-            className="relative"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-          >
-            {/* Timeline Dot */}
-            <Card className="absolute -left-11 top-6 w-5 h-5 rounded-full bg-primary border-1.5 border-background shadow-md p-0" />
+      {/* 🔹 Timeline Container */}
+      <div className="relative">
+        {/* Vertical line for timeline */}
+        <div className="absolute left-4 sm:left-6 top-0 bottom-0 w-px bg-primary/30" />
 
-            {/* Session Card */}
-            <Card className="hover:shadow-lg transition-shadow duration-300 rounded-xl">
-              <CardContent className="p-6 sm:p-8">
-                <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 p-0">
-                  <CardTitle className="text-xl sm:text-2xl font-bold text-primary truncate">
-                    {session.title || "Untitled Session"}
-                  </CardTitle>
-                  <Badge variant="outline" className="w-fit text-sm sm:text-base">
-                    Session {index + 1}
-                  </Badge>
-                </CardHeader>
+        <div className="space-y-10">
+          {sortedSessions.map((session, index) => (
+            <motion.div
+              key={session._id || index}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative pl-12 sm:pl-16"
+            >
+              {/* 🔹 Timeline Dot */}
+              <div className="absolute left-2 sm:left-4 top-6 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-primary border-2 border-background shadow-md" />
 
-                {session.description && (
-                  <CardDescription className="text-muted-foreground mb-4 leading-relaxed text-sm sm:text-base">
-                    {session.description}
-                  </CardDescription>
-                )}
+              {/* 🔹 Session Card */}
+              <Card className="rounded-xl hover:shadow-lg transition-shadow duration-300">
+                <CardContent className="p-5 sm:p-7">
+                  {/* Title + Badge */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <CardTitle className="text-lg sm:text-xl md:text-2xl font-semibold text-primary">
+                      {session.title || "Untitled Session"}
+                    </CardTitle>
+                    <Badge
+                      variant="outline"
+                      className="text-xs sm:text-sm md:text-base whitespace-nowrap"
+                    >
+                      Session {index + 1}
+                    </Badge>
+                  </div>
 
-                {/* Time & Venue */}
-                <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-0">
-                  <CardContent className="flex items-center gap-2 text-primary/90 p-0">
-                    <IconClock className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span>{formatSessionRange(session.startTime, session.endTime)}</span>
-                  </CardContent>
-
-                  {session.venue && session.venue.name && (
-                    <CardContent className="flex items-center gap-2 text-primary/90 p-0">
-                      <IconMapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span>
-                        {session.venue.name}
-                        {session.venue.city ? `, ${session.venue.city}` : ""}
-                      </span>
-                    </CardContent>
+                  {/* Description */}
+                  {session.description && (
+                    <CardDescription className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
+                      {session.description}
+                    </CardDescription>
                   )}
+
+                  {/* Time & Venue */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                    <div className="flex items-center gap-2 text-primary/90 text-sm sm:text-base">
+                      <IconClock className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                      <span>{formatSessionRange(session.startTime, session.endTime)}</span>
+                    </div>
+
+                    {session.venue?.name && (
+                      <div className="flex items-center gap-2 text-primary/90 text-sm sm:text-base">
+                        <IconMapPin className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                        <span>
+                          {session.venue.name}
+                          {session.venue.city ? `, ${session.venue.city}` : ""}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </CardContent>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </motion.section>
   );
 }

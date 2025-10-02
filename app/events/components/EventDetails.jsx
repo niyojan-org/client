@@ -16,7 +16,7 @@ import OrganizationCard from "./OrganizationCard";
 import EventDescription from "./EventDescription";
 import EventBenefits from "./EventBenefits";
 import SessionsTimeline from "./SessionsTimeline";
-import TicketCards from "./TicketCards";
+// import TicketCards from "./TicketCards";
 import SpeakersSection from "./SpeakersSection";
 import SimilarEvents from "./SimilarEvents";
 import CallToAction from "./CallToAction";

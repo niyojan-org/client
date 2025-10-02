@@ -16,6 +16,8 @@ import {
   IconLayoutDashboard,
   IconPhoneCall,
   IconSettings,
+  IconCalendarEvent,
+  IconInfoCircle
 } from '@tabler/icons-react';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState, useRef } from 'react';
@@ -32,28 +34,24 @@ export default function Navbar() {
     setVisible(latest > 80);
   });
 
-  // 🔹 Dynamic nav items
-  const navItems = [
-    ...(isAuthenticated
-      ? []
-      : [{ id: 'profile', label: 'Profile', icon: <IconUser size={18} />, href: '/profile' }]
-    ),
-    organization
-      ? {
-        id: 'manage-org',
-        label: 'My Organization',
-        icon: <IconLayoutDashboard size={18} />,
-        href: '/org',
-      }
-      : {
-        id: 'switch-org',
-        label: 'Organizer Mode',
-        icon: <IconLayoutDashboard size={18} />,
-        href: '/org/create',
-      },
-    { id: 'contact', label: 'Contact', icon: <IconPhoneCall size={18} />, href: '/contact' },
-    { id: 'features', label: 'Features', icon: <IconSettings size={18} />, href: '/features' },
-  ];
+
+// 🔹 Dynamic nav items in the desired order
+const navItems = [
+  { id: 'explore', label: 'Explore', icon: <IconCalendarEvent size={18} />, href: '/' },
+  { id: 'about', label: 'About', icon: <IconInfoCircle size={18} />, href: '/about' },
+  { id: 'features', label: 'Features', icon: <IconSettings size={18} />, href: '/features' },
+  { id: 'contact', label: 'Contact', icon: <IconPhoneCall size={18} />, href: '/contact' },
+  // Profile link only if authenticated
+  // ...(!isAuthenticated
+  //   ? [{ id: 'profile', label: 'Profile', icon: <IconUser size={18} />, href: '/profile' }]
+  //   : []
+  // ),
+  // Organization / Organizer Mode always shows
+  organization
+    ? { id: 'manage-org', label: 'My Organization', icon: <IconLayoutDashboard size={18} />, href: '/org' }
+    : { id: 'switch-org', label: 'Organizer Mode', icon: <IconLayoutDashboard size={18} />, href: '/org/create' },
+];
+
 
   return (
     <motion.header
@@ -148,7 +146,9 @@ export default function Navbar() {
                 <IconMenu2 size={22} />
               </Button>
             </SheetTrigger>
+
             <SheetContent
+              aria-describedby="Mobile Navigation"
               side="left"
               className="w-[260px] bg-card/90 backdrop-blur-md shadow-xl"
             >

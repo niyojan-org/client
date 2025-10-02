@@ -14,6 +14,9 @@ import { Textarea } from "@/components/ui/textarea";
 export default function DynamicField({ field, value, onChange }) {
   const { name, label, type, required, placeholder, options = [] } = field;
 
+  const renderRequired = () =>
+    required ? <span className="text-destructive-foreground">*</span> : null;
+
   switch (type) {
     case "text":
     case "email":
@@ -24,7 +27,7 @@ export default function DynamicField({ field, value, onChange }) {
       return (
         <div className="space-y-1">
           <Label htmlFor={name}>
-            {label} {required && <span className="text-red-500">*</span>}
+            {label} {renderRequired()}
           </Label>
           <Input
             id={name}
@@ -42,7 +45,7 @@ export default function DynamicField({ field, value, onChange }) {
       return (
         <div className="space-y-1">
           <Label htmlFor={name}>
-            {label} {required && <span className="text-red-500">*</span>}
+            {label} {renderRequired()}
           </Label>
           <Textarea
             id={name}
@@ -59,11 +62,12 @@ export default function DynamicField({ field, value, onChange }) {
       return (
         <div className="space-y-1">
           <Label>
-            {label} {required && <span className="text-red-500">*</span>}
+            {label} {renderRequired()}
           </Label>
           <Select
             value={value || ""}
             onValueChange={(val) => onChange(name, val)}
+            className="grid grid-cols-1 w-full"
           >
             <SelectTrigger>
               <SelectValue placeholder={placeholder || `Select ${label}`} />
@@ -79,70 +83,70 @@ export default function DynamicField({ field, value, onChange }) {
         </div>
       );
 
-    case "radio":
-      return (
-        <div className="space-y-1">
-          <Label>
-            {label} {required && <span className="text-red-500">*</span>}
-          </Label>
-          <RadioGroup
-            value={value || ""}
-            onValueChange={(val) => onChange(name, val)}
-            className={"grid-cols-5"}
-          >
-            {options.map((opt) => (
-              <div key={opt.value} className="flex items-center space-x-2">
-                <RadioGroupItem value={opt.value} id={`${name}-${opt.value}`} />
-                <Label htmlFor={`${name}-${opt.value}`}>{opt.label}</Label>
-              </div>
-            ))}
-          </RadioGroup>
-        </div>
-      );
-
-    case "checkbox":
-      return (
-        <div className="space-y-1">
-          <Label>
-            {label} {required && <span className="text-red-500">*</span>}
-          </Label>
-          <div className="grid grid-cols-5">
-            {options.map((opt) => (
-              <div key={opt.value} className="flex items-center space-x-2">
-                <Checkbox
-                  id={`${name}-${opt.value}`}
-                  checked={
-                    Array.isArray(value) ? value.includes(opt.value) : false
-                  }
-                  onCheckedChange={(checked) => {
-                    let newValue = Array.isArray(value) ? [...value] : [];
-                    if (checked) newValue.push(opt.value);
-                    else newValue = newValue.filter((v) => v !== opt.value);
-                    onChange(name, newValue);
-                  }}
-                />
-                <Label htmlFor={`${name}-${opt.value}`}>{opt.label}</Label>
-              </div>
-            ))}
+    // RadioGroup and Checkbox grids updated for responsiveness
+case "radio":
+  return (
+    <div className="space-y-1">
+      <Label>
+        {label} {renderRequired()}
+      </Label>
+      <RadioGroup
+        value={value || ""}
+        onValueChange={(val) => onChange(name, val)}
+        className="flex flex-wrap gap-2"
+      >
+        {options.map((opt) => (
+          <div key={opt.value} className="flex items-center space-x-2 w-[48%] sm:w-auto">
+            <RadioGroupItem value={opt.value} id={`${name}-${opt.value}`} />
+            <Label htmlFor={`${name}-${opt.value}`}>{opt.label}</Label>
           </div>
-        </div>
-      );
+        ))}
+      </RadioGroup>
+    </div>
+  );
 
-    case "file":
-      return (
-        <div className="space-y-1">
-          <Label htmlFor={name}>
-            {label} {required && <span className="text-red-500">*</span>}
-          </Label>
-          <Input
-            id={name}
-            name={name}
-            type="file"
-            required={required}
-            onChange={(e) => onChange(name, e.target.files?.[0] || null)}
-          />
-        </div>
-      );
+case "checkbox":
+  return (
+    <div className="space-y-1">
+      <Label>
+        {label} {renderRequired()}
+      </Label>
+      <div className="flex flex-wrap gap-2">
+        {options.map((opt) => (
+          <div key={opt.value} className="flex items-center space-x-2 w-[48%] sm:w-auto">
+            <Checkbox
+              id={`${name}-${opt.value}`}
+              checked={Array.isArray(value) ? value.includes(opt.value) : false}
+              onCheckedChange={(checked) => {
+                const newValue = Array.isArray(value) ? [...value] : [];
+                if (checked) newValue.push(opt.value);
+                else newValue.splice(newValue.indexOf(opt.value), 1);
+                onChange(name, newValue);
+              }}
+            />
+            <Label htmlFor={`${name}-${opt.value}`}>{opt.label}</Label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+
+    // case "file":
+    //   return (
+    //     <div className="space-y-1">
+    //       <Label htmlFor={name}>
+    //         {label} {renderRequired()}
+    //       </Label>
+    //       <Input
+    //         id={name}
+    //         name={name}
+    //         type="file"
+    //         required={required}
+    //         onChange={(e) => onChange(name, e.target.files?.[0] || null)}
+    //       />
+    //     </div>
+    //   );
 
     default:
       return null;
