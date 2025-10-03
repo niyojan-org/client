@@ -59,6 +59,8 @@ export default function PaymentPage() {
         },
       };
 
+      console.log(options)
+
       const rzp = new window.Razorpay(options);
       rzp.open();
     };

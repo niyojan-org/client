@@ -17,17 +17,32 @@ export default function ClientLayout({ children }) {
   const { fetchUser, isAuthenticated, user, logout } = useUserStore();
 
   const ref = useRef(null);
-  const { scrollY } = useScroll({ target: ref });
+  const [isMounted, setIsMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setVisible(latest > 80);
-  });
+  // Handle client-side mounting
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Only initialize scroll after mounting
+  const scrollConfig = isMounted && ref.current ? { target: ref } : {};
+  const { scrollY } = useScroll(scrollConfig);
+
+  useEffect(() => {
+    if (!isMounted || !scrollY) return;
+
+    const unsubscribe = scrollY.on("change", (latest) => {
+      setVisible(latest > 80);
+    });
+
+    return () => unsubscribe?.();
+  }, [scrollY, isMounted]);
 
   // fetch user once (backend stays intact)
   useEffect(() => {
     if (typeof fetchUser === "function") {
-      fetchUser().catch(() => {});
+      fetchUser().catch(() => { });
     }
   }, []);
 
@@ -65,7 +80,7 @@ export default function ClientLayout({ children }) {
     try {
       if (logout) await logout();
       router.push("/");
-    } catch {}
+    } catch { }
   }, [logout, router]);
 
   if (hideNavbar) {

@@ -86,8 +86,8 @@ export default function RegistrationPage() {
         headers: { "Content-Type": "application/json" },
       });
 
-      const { code} = res.data;
-      const {participant, payment} = res.data.data;
+      const { code } = res.data;
+      const { participant, payment } = res.data.data;
       console.log(code);
       console.log(payment);
 
@@ -97,13 +97,9 @@ export default function RegistrationPage() {
           participant.name,
           participant.email
         );
+        console.log(paymentRes)
 
-        await api.post(`/payment/status`, {
-          orderId: payment.razorpayOrderId,
-          paymentId: paymentRes.razorpay_payment_id,
-          signature: paymentRes.razorpay_signature,
-          participantId: participant._id,
-        });
+        await api.post(`/payment/status`, paymentRes);
 
         router.push(
           `/events/${slug}/success?paymentId=${paymentRes.razorpay_payment_id}&name=${participant.name}&email=${participant.email}&slug=${slug}`
@@ -173,11 +169,10 @@ export default function RegistrationPage() {
                   <div
                     key={ticket._id}
                     onClick={() => !ticket.soldOut && setSelectedTicket(ticket)}
-                    className={`flex items-center justify-between p-4 border rounded cursor-pointer transition-all hover:shadow-md w-[90%] sm:w-[48%] md:w-[48%] lg:w-auto ${
-                      selectedTicket?._id === ticket._id
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-300"
-                    }`}
+                    className={`flex items-center justify-between p-4 border rounded cursor-pointer transition-all hover:shadow-md w-[90%] sm:w-[48%] md:w-[48%] lg:w-auto ${selectedTicket?._id === ticket._id
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-gray-300"
+                      }`}
                   >
                     {/* Placeholder for future SVG */}
                     <div className="flex items-center gap-2">
