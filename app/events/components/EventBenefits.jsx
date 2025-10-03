@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   IconTrophy,
   IconUsers,
@@ -17,18 +18,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
 
-/* 🔹 Hover animation for cards */
+/* ---------- animations ---------- */
 const cardHoverVariants = {
-  hover: {
-    scale: 1.02,
-    y: -3,
-    transition: { duration: 0.25, ease: "easeOut" },
-  },
+  hover: { scale: 1.02, y: -3, transition: { duration: 0.25, ease: "easeOut" } },
 };
 
-/* 🔹 Icon mapping */
+/* ---------- icon mapping ---------- */
+/** @type {Record<string, any>} */
 const benefitIcons = {
   "Real Tournament Experience": IconTrophy,
   Network: IconUsers,
@@ -42,24 +39,32 @@ function getBenefitIcon(title) {
   return benefitIcons[title] || benefitIcons.default;
 }
 
-/* 🔹 Text truncation helper */
-function truncateText(text, maxLength) {
-  if (!text) return "";
-  return text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
+function truncate(text = "", max = 80) {
+  return text.length > max ? text.slice(0, max) + "…" : text;
 }
 
+/* ---------- component ---------- */
 export default function EventBenefits({ event }) {
-  if (!event?.benefits?.length) return null;
+  const prefersReducedMotion = useReducedMotion();
+
+  if (!event?.benefits || event.benefits.length === 0) return null;
+
+  /* track expanded state per card */
+  const [expandedCards, setExpandedCards] = useState({});
+
+  const toggleExpand = (idx) =>
+    setExpandedCards((prev) => ({ ...prev, [idx]: !prev[idx] }));
 
   return (
     <motion.section
       className="w-full mt-12"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.2 }}
+      initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
+      animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      aria-label="Event benefits"
     >
-      <Card className="shadow-xl rounded-2xl border-none bg-transparent overflow-hidden">
-        {/* 🔹 Section Header */}
+      <Card className="border-t-4 border-t-primary rounded-2xl overflow-hidden backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300">
+        {/* ---- Header ---- */}
         <CardHeader className="text-center pb-8 px-4 sm:px-8">
           <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">
             Event Benefits
@@ -69,57 +74,64 @@ export default function EventBenefits({ event }) {
           </CardDescription>
         </CardHeader>
 
-        {/* 🔹 Benefits Grid */}
+        {/* ---- Benefits grid ---- */}
         <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 px-4 sm:px-6 md:px-10 pb-10">
-          {event.benefits.map((benefit, index) => {
-            const IconComponent = getBenefitIcon(benefit.title);
-            const [expanded, setExpanded] = useState(false);
-            const longDesc = benefit.description?.length > 150;
+          {event.benefits.map((benefit, idx) => {
+            const IconComp = getBenefitIcon(benefit.title);
+            const isExpanded = expandedCards[idx] || false;
+            const longDesc = (benefit.description?.length ?? 0) > 80;
 
             return (
-              <motion.div
-                key={benefit._id || index}
+              <motion.article
+                key={benefit._id || idx}
                 variants={cardHoverVariants}
-                whileHover="hover"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={prefersReducedMotion ? undefined : "hover"}
+                initial={prefersReducedMotion ? {} : { opacity: 0, y: 15 }}
+                animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: idx * 0.08 }}
+                className="focus-within:ring-2 focus-within:ring-primary/40 rounded-xl"
               >
-                <Card className="h-full border-l-4 border-primary shadow-sm hover:shadow-md rounded-xl bg-card transition-all duration-300 flex flex-col">
-                  {/* 🔹 Icon + Title */}
+                <Card className="h-full border-l-4 border-primary shadow-sm hover:shadow-md bg-card rounded-xl flex flex-col">
+                  {/* icon + title */}
                   <CardHeader className="flex items-center gap-3">
-                    <span className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10">
-                      <IconComponent className="w-5 h-5 text-primary" />
+                    <span
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10"
+                      aria-hidden
+                    >
+                      <IconComp className="w-5 h-5 text-primary" />
                     </span>
                     <CardTitle className="text-base sm:text-lg md:text-xl font-semibold leading-snug break-words">
-                      {benefit.title}
+                      {benefit.title || "Untitled Benefit"}
                     </CardTitle>
                   </CardHeader>
 
-                  {/* 🔹 Description with “Show more” */}
+                  {/* description */}
                   <CardContent className="px-5 pb-6 pt-0 flex flex-col flex-grow">
                     <CardDescription className="text-sm sm:text-base text-muted-foreground leading-relaxed text-justify">
-                      {expanded
-                        ? benefit.description
-                        : truncateText(benefit.description, 80)}
+                      {isExpanded
+                        ? benefit.description || "No description provided."
+                        : truncate(benefit.description || "No description provided.", 80)}
                     </CardDescription>
 
+                    {/* show more/less */}
                     {longDesc && (
                       <button
-                        onClick={() => setExpanded(!expanded)}
-                        className="mt-3 text-primary text-xs sm:text-sm font-medium flex items-center gap-1 hover:underline self-start"
+                        type="button"
+                        onClick={() => toggleExpand(idx)}
+                        className="mt-3 text-primary text-xs sm:text-sm font-medium flex items-center gap-1 hover:underline focus:outline-none focus:ring-1 focus:ring-primary/40 rounded"
+                        aria-expanded={isExpanded}
                       >
-                        {expanded ? "Show less" : "Show more"}
+                        {isExpanded ? "Show less" : "Show more"}
                         <IconChevronDown
                           className={`w-4 h-4 transition-transform ${
-                            expanded ? "rotate-180" : ""
+                            isExpanded ? "rotate-180" : ""
                           }`}
                         />
                       </button>
                     )}
                   </CardContent>
                 </Card>
-              </motion.div>
+              </motion.article>
             );
           })}
         </CardContent>

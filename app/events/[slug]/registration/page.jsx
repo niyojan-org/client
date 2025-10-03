@@ -82,21 +82,24 @@ export default function RegistrationPage() {
         referralCode: referralCode || null,
       };
 
-      const res = await api.post(`/event/register/${slug}`, payload, {
+      const res = await api.post(`/event/${slug}/register`, payload, {
         headers: { "Content-Type": "application/json" },
       });
 
-      const { order, participant } = res.data;
+      const { code} = res.data;
+      const {participant, payment} = res.data.data;
+      console.log(code);
+      console.log(payment);
 
-      if (selectedTicket.price > 0 && order) {
+      if (code === "PAYMENT_REQUIRED" && payment) {
         const paymentRes = await openRazorpay(
-          order,
+          payment,
           participant.name,
           participant.email
         );
 
-        await api.post(`/event/payment/verify`, {
-          orderId: order.razorpayOrderId,
+        await api.post(`/payment/status`, {
+          orderId: payment.razorpayOrderId,
           paymentId: paymentRes.razorpay_payment_id,
           signature: paymentRes.razorpay_signature,
           participantId: participant._id,

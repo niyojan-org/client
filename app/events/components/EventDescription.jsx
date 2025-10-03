@@ -61,7 +61,7 @@ export default function EventDescription({ event }) {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full"
     >
-      <Card className="border-t-4 border-t-primary shadow-lg rounded-xl overflow-hidden bg-card mt-10">
+      <Card className="border-t-4 border-t-primary backdrop-blur-md mb-1 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-card mt-10">
         {/* 🔹 Header */}
         <CardHeader className="text-center py-6 px-4 sm:px-8">
           <CardTitle className="text-2xl sm:text-3xl font-bold text-primary">
@@ -71,8 +71,8 @@ export default function EventDescription({ event }) {
 
         <CardContent className="px-4 sm:px-8 md:px-12 lg:px-16 pb-10">
           {/* 🔹 Quick Overview (KEEP COMMENTED) */}
-          {/*
-          {aiSummary && (
+          
+          {/* {aiSummary && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -91,8 +91,8 @@ export default function EventDescription({ event }) {
                 </p>
               </div>
             </motion.div>
-          )}
-          */}
+          )} */}
+         
 
           {/* 🔹 Full Description */}
           {event.description?.trim() && (

@@ -60,9 +60,9 @@ export default function HeroSection({ event }) {
       <div
         className="
           relative z-10 w-full max-w-7xl
-          px-4 sm:px-6 md:px-10 lg:px-14
-          pb-6 sm:pb-8 md:pb-12
-          flex flex-col gap-3 sm:gap-4
+          px-4 sm:px-6 md:px-10 lg:px-20
+          pb-6 sm:pb-8 md:pb-10
+          flex flex-col gap-3 sm:gap-4 space-y-0
         "
       >
         {/* Badges */}
@@ -129,7 +129,7 @@ export default function HeroSection({ event }) {
         >
           {event.organization && (
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
               <span className="font-medium">
                 {event.organization.name}
               </span>
