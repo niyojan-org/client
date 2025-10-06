@@ -1,11 +1,11 @@
 // app/(auth)/layout.js
 'use client'
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/store/userStore';
 
-export default function AuthLayout({ children }) {
+function AuthLayoutContent({ children }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { token: storeToken } = useUserStore();
@@ -21,4 +21,12 @@ export default function AuthLayout({ children }) {
   }, [searchParams, router]);
 
   return <div>{children}</div>;
+}
+
+export default function AuthLayout({ children }) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AuthLayoutContent>{children}</AuthLayoutContent>
+    </Suspense>
+  );
 }
