@@ -1,6 +1,6 @@
 'use client'; // MUST be first line
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Auth from '../../components/Auth';
 
 // Simple CSS loader while the page initializes
@@ -18,5 +18,9 @@ export default function AuthPage() {
 
   if (loading) return <Loader />;
 
-  return <Auth />;
+  return (
+    <Suspense fallback={<Loader />}>
+      <Auth />
+    </Suspense>
+  );
 }
