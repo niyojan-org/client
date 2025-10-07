@@ -51,6 +51,7 @@ export default function HeroSection({ event }) {
           quality={85}
           className="object-cover object-center"
         />
+        
         {/* Gradient overlays for text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />

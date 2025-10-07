@@ -1,5 +1,6 @@
+
 import "./globals.css";
-import ClientLayout from "@/app/ClientLayout";
+import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
 import { LoaderProvider } from "@/components/LoaderContext";
 import {

@@ -5,113 +5,166 @@ import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import useEventStore from "@/store/eventStore";
 import { toast } from "sonner";
-import DynamicField from "../../components/DynamicField";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
+import { IconArrowLeft } from "@tabler/icons-react";
 import api from "@/lib/api";
 import openRazorpay from "@/lib/openRazorpay";
-import { IconArrowLeft } from "@tabler/icons-react";
+import DynamicField from "../../components/DynamicField";
+import GroupMultiStepForm from "../../components/GroupMultiStepForm";
+import CouponInput from "../../components/couponInput";
+import { SpinnerCustom } from "@/components/ui/spinner";
 
+
+
+// Registration Page Component
 export default function RegistrationPage() {
   const { slug } = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
   const referralCode = searchParams.get("ref") || null;
-
   const { fetchRegistrationForm, registrationForm } = useEventStore();
-  const [formData, setFormData] = useState({});
   const [selectedTicket, setSelectedTicket] = useState(null);
+  const [formData, setFormData] = useState({});
   const [couponCode, setCouponCode] = useState("");
-  const [discount, setDiscount] = useState(0);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (slug) fetchRegistrationForm(slug);
   }, [slug]);
 
-  const handleChange = (name, value) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  //loader while fetching form using spinner from shadcn
+  const isLoading = !registrationForm; // shows spinner until form is loaded
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <SpinnerCustom className=" text-primary" />
+      </div>
+    );
+  }
 
   const allFields = [
     ...(registrationForm?.defaultFields || []),
     ...(registrationForm?.customFields || []),
   ];
 
-  const applyCoupon = () => {
-    if (couponCode === "WELCOME20") {
-      setDiscount(20);
-      toast.success("Coupon applied! 20% discount");
-    } else {
-      setDiscount(0);
-      toast.error("Invalid coupon code");
+  const normalizeDynamicFields = (fields) => {
+    const out = {};
+    for (const [key, val] of Object.entries(fields || {})) {
+      out[key] = Array.isArray(val) ? val.join(", ") : val ?? "";
     }
+    return out;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedTicket) return toast.error("Please select a ticket");
-
-    for (const field of allFields) {
-      if (field.required && !formData[field.name]) {
-        return toast.error(`${field.label} is required`);
+  // ----------- Validation ----------
+  const validateLeader = () => {
+    for (const f of allFields) {
+      if (f.required && !formData[f.name]) {
+        toast.error(`${f.label} is required`);
+        return false;
       }
     }
+    return true;
+  };
 
+  // ----------- Individual Submit ----------
+  const handleSubmitSingle = async () => {
+    if (!validateLeader()) return;
     try {
       setSubmitting(true);
-
-      const dynamicFields = {};
-      allFields.forEach((field) => {
-        let value = formData[field.name] || "";
-        if (Array.isArray(value)) value = value.join(", ");
-        dynamicFields[field.name] = value;
-      });
-
       const payload = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        ticketId: selectedTicket._id,
-        dynamicFields,
-        coupon: couponCode || null,
+        ticketId: selectedTicket?._id,
+        couponCode: couponCode || null,
         referralCode: referralCode || null,
+        name: formData.name || "",
+        email: formData.email || "",
+        phone: formData.phone || "",
+        dynamicFields: normalizeDynamicFields(formData),
       };
 
-      const res = await api.post(`/event/${slug}/register`, payload, {
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const { code } = res.data;
-      const { participant, payment } = res.data.data;
-      console.log(code);
-      console.log(payment);
+      const res = await api.post(`/event/${slug}/register`, payload);
+      const { code, data } = res.data;
+      const { participant, payment } = data || {};
 
       if (code === "PAYMENT_REQUIRED" && payment) {
-        const paymentRes = await openRazorpay(
+        const payRes = await openRazorpay(
           payment,
-          participant.name,
-          participant.email
+          participant?.name || formData.name,
+          participant?.email || formData.email
         );
-        console.log(paymentRes)
-
-        await api.post(`/payment/status`, paymentRes);
-
+        await api.post(`/payment/status`, payRes);
         router.push(
-          `/events/${slug}/success?paymentId=${paymentRes.razorpay_payment_id}&name=${participant.name}&email=${participant.email}&slug=${slug}`
+          `/events/${slug}/success?paymentId=${
+            payRes.razorpay_payment_id
+          }&name=${encodeURIComponent(
+            participant?.name || formData.name
+          )}&email=${encodeURIComponent(
+            participant?.email || formData.email
+          )}&slug=${slug}`
         );
       } else {
         toast.success("Registration successful!");
         router.push(
-          `/events/${slug}/success?name=${participant.name}&email=${participant.email}&slug=${slug}`
+          `/events/${slug}/success?name=${encodeURIComponent(
+            formData.name
+          )}&email=${encodeURIComponent(formData.email)}&slug=${slug}`
         );
       }
     } catch (err) {
-      console.error(err.response?.data || err);
+      toast.error(err.response?.data?.message || "Registration failed!");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  // ----------- Group Submit ----------
+  const handleSubmitGroup = async ({ leader, groupName, groupMembers }) => {
+    try {
+      setSubmitting(true);
+      const payload = {
+        ticketId: selectedTicket._id,
+        couponCode: couponCode || null,
+        referralCode: referralCode || null,
+        groupName: groupName.trim(),
+        groupLeader: {
+          ...leader,
+          dynamicFields: normalizeDynamicFields(leader),
+        },
+        groupMembers: groupMembers.map((m) => ({
+          ...m,
+          dynamicFields: normalizeDynamicFields(m),
+        })),
+      };
+
+      const res = await api.post(`/event/${slug}/register`, payload);
+      const { code, data } = res.data;
+      const { participant, payment } = data || {};
+
+      if (code === "PAYMENT_REQUIRED" && payment) {
+        const payRes = await openRazorpay(
+          payment,
+          participant?.name || leader.name,
+          participant?.email || leader.email
+        );
+        await api.post(`/payment/status`, payRes);
+        router.push(
+          `/events/${slug}/success?paymentId=${
+            payRes.razorpay_payment_id
+          }&name=${encodeURIComponent(
+            participant?.name || leader.name
+          )}&email=${encodeURIComponent(leader.email)}&slug=${slug}`
+        );
+      } else {
+        toast.success("Registration successful!");
+        router.push(
+          `/events/${slug}/success?name=${encodeURIComponent(
+            leader.name
+          )}&email=${encodeURIComponent(leader.email)}&slug=${slug}`
+        );
+      }
+    } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
@@ -119,114 +172,115 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6">
-      {/* Event Banner */}
+    <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-8">
+      {/* ---------- Banner ---------- */}
       {registrationForm?.eventDetails?.bannerImage && (
-        <div className="relative w-full h-80 rounded-2xl shadow-md overflow-hidden">
+        <div className="relative w-full h-72 rounded-2xl overflow-hidden shadow-md">
           <Image
             src={registrationForm.eventDetails.bannerImage}
             alt={registrationForm.eventDetails.title}
             fill
             className="object-cover"
           />
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => router.back()}
+            className="absolute top-4 left-4 flex items-center gap-2 rounded-full bg-white/80 hover:bg-white backdrop-blur cursor-pointer"
+          >
+            <IconArrowLeft size={16} /> Back
+          </Button>
         </div>
       )}
 
-      {/* back button  */}
-      <Button
-        variant="outline"
-        onClick={() => router.back()}
-        className="mb-4 cursor-pointer flex items-center gap-2"
-      >
-        <IconArrowLeft size={16} /> Back
-      </Button>
-
-      <Card className="py-6 space-y-6">
+      {/* ---------- Registration Card ---------- */}
+      <Card className="shadow-md border rounded-xl">
         <CardHeader>
-          <CardTitle className="font-bold text-center text-xl">
-            {registrationForm?.eventDetails?.title}
+          <CardTitle className="text-center text-2xl font-semibold">
+            {registrationForm?.eventDetails?.title || "Register"}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* All fields in two-column grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {allFields.map((field) => (
-                <DynamicField
-                  key={field.name}
-                  field={field}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                />
+
+        <CardContent className="space-y-8">
+          {/* ---------- Ticket Selector ---------- */}
+          <div>
+            <Label className="block mb-3 font-semibold text-lg">
+              Choose Your Ticket
+            </Label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {registrationForm?.tickets?.map((t) => (
+                <div
+                  key={t._id}
+                  onClick={() => setSelectedTicket(t)}
+                  className={`cursor-pointer rounded-xl border p-4 shadow-sm transition-all hover:shadow-md ${
+                    selectedTicket?._id === t._id
+                      ? "border-primary bg-primary/5"
+                      : "border-gray-200"
+                  }`}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">{t.type}</span>
+                    <span className="font-semibold text-primary">
+                      ₹{t.price}
+                    </span>
+                  </div>
+                  {t.soldOut && (
+                    <p className="text-red-500 text-sm mt-1">Sold Out</p>
+                  )}
+                </div>
               ))}
             </div>
+          </div>
 
-            {/* Ticket Selection: two per row on desktop, full width on mobile */}
-            <div>
-              <Label className="mb-2 block font-semibold">Choose Ticket</Label>
-              <div className="flex flex-wrap gap-4 justify-center">
-                {registrationForm?.tickets?.map((ticket) => (
-                  <div
-                    key={ticket._id}
-                    onClick={() => !ticket.soldOut && setSelectedTicket(ticket)}
-                    className={`flex items-center justify-between p-4 border rounded cursor-pointer transition-all hover:shadow-md w-[90%] sm:w-[48%] md:w-[48%] lg:w-auto ${selectedTicket?._id === ticket._id
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-300"
-                      }`}
-                  >
-                    {/* Placeholder for future SVG */}
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                        🎫
-                      </div>
-                      <span>{ticket.type}</span>
-                    </div>
-                    <span className="font-medium">₹{ticket.price}</span>
-                    {ticket.soldOut && (
-                      <span className="ml-2 text-red-500">Sold Out</span>
-                    )}
-                  </div>
+          {/* ---------- INDIVIDUAL FLOW ---------- */}
+          {(!selectedTicket || !selectedTicket.isGroupTicket) && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmitSingle();
+              }}
+              className="space-y-6"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {allFields.map((f) => (
+                  <DynamicField
+                    key={f.name}
+                    field={f}
+                    value={formData[f.name] || ""}
+                    onChange={(name, val) =>
+                      setFormData((prev) => ({ ...prev, [name]: val }))
+                    }
+                  />
                 ))}
               </div>
-            </div>
 
-            {/* Coupon */}
-            <div className="space-y-2">
-              <Label className="font-semibold">Coupon Code</Label>
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Enter coupon code"
-                  value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value)}
+              {/* couupon code  */}
+              {registrationForm?.allowCoupons && (
+                <CouponInput
+                  onApply={(code) => setCouponCode(code)}
+                  className="max-w-sm"
                 />
-                <Button
-                  type="button"
-                  onClick={applyCoupon}
-                  className="cursor-pointer"
-                >
-                  Apply
-                </Button>
-              </div>
-              {discount > 0 && (
-                <p className="text-green-600">Applied: {discount}% discount</p>
               )}
-            </div>
+              
+              <Button
+                type="submit"
+                disabled={submitting}
+                className="w-full rounded-full"
+              >
+                {submitting ? "Submitting..." : "Submit & Pay"}
+              </Button>
+            </form>
+          )}
 
-            {referralCode && (
-              <p className="text-sm text-gray-600">
-                Referral Code Applied:{" "}
-                <span className="font-medium">{referralCode}</span>
-              </p>
-            )}
-
-            <Button
-              type="submit"
-              disabled={submitting}
-              className="w-full cursor-pointer"
-            >
-              {submitting ? "Submitting..." : "Submit & Pay"}
-            </Button>
-          </form>
+          {/* ---------- GROUP FLOW ---------- */}
+          {selectedTicket?.isGroupTicket && (
+            <GroupMultiStepForm
+              allFields={allFields}
+              groupSettings={selectedTicket.groupSettings}
+              leaderData={formData}
+              onSubmit={handleSubmitGroup}
+            />
+          )}
         </CardContent>
       </Card>
     </div>

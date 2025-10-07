@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import api from "@/lib/api";
-// import useLoader from "@/components/LoaderContext";
 import { useLoaderStore } from "./loaderStore";
 
 const useEventStore = create((set) => ({
