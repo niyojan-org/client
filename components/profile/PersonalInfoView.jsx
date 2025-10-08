@@ -41,7 +41,7 @@ export function PersonalInfoView({ user, onEdit, className }) {
     ];
 
     return (
-        <Card className={cn("", className)}>
+        <Card className={cn("h-full", className)}>
             <CardHeader className="border-b pb-2 flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 p-0">
                     <User className="h-5 w-5" />

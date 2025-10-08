@@ -96,8 +96,7 @@ export default function RegistrationPage() {
         );
         await api.post(`/payment/status`, payRes);
         router.push(
-          `/events/${slug}/success?paymentId=${
-            payRes.razorpay_payment_id
+          `/events/${slug}/success?paymentId=${payRes.razorpay_payment_id
           }&name=${encodeURIComponent(
             participant?.name || formData.name
           )}&email=${encodeURIComponent(
@@ -113,6 +112,7 @@ export default function RegistrationPage() {
         );
       }
     } catch (err) {
+      console.log(err)
       toast.error(err.response?.data?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
@@ -127,7 +127,7 @@ export default function RegistrationPage() {
         ticketId: selectedTicket._id,
         couponCode: couponCode || null,
         referralCode: referralCode || null,
-        groupName: groupName.trim(),
+        groupName: groupName?.trim(),
         groupLeader: {
           ...leader,
           dynamicFields: normalizeDynamicFields(leader),
@@ -150,8 +150,7 @@ export default function RegistrationPage() {
         );
         await api.post(`/payment/status`, payRes);
         router.push(
-          `/events/${slug}/success?paymentId=${
-            payRes.razorpay_payment_id
+          `/events/${slug}/success?paymentId=${payRes.razorpay_payment_id
           }&name=${encodeURIComponent(
             participant?.name || leader.name
           )}&email=${encodeURIComponent(leader.email)}&slug=${slug}`
@@ -165,6 +164,7 @@ export default function RegistrationPage() {
         );
       }
     } catch (err) {
+      console.log(err)
       toast.error(err.response?.data?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
@@ -212,11 +212,10 @@ export default function RegistrationPage() {
                 <div
                   key={t._id}
                   onClick={() => setSelectedTicket(t)}
-                  className={`cursor-pointer rounded-xl border p-4 shadow-sm transition-all hover:shadow-md ${
-                    selectedTicket?._id === t._id
-                      ? "border-primary bg-primary/5"
-                      : "border-gray-200"
-                  }`}
+                  className={`cursor-pointer rounded-xl border p-4 shadow-sm transition-all hover:shadow-md ${selectedTicket?._id === t._id
+                    ? "border-primary bg-primary/5"
+                    : "border-gray-200"
+                    }`}
                 >
                   <div className="flex justify-between items-center">
                     <span className="font-medium">{t.type}</span>
@@ -261,7 +260,7 @@ export default function RegistrationPage() {
                   className="max-w-sm"
                 />
               )}
-              
+
               <Button
                 type="submit"
                 disabled={submitting}
@@ -279,6 +278,10 @@ export default function RegistrationPage() {
               groupSettings={selectedTicket.groupSettings}
               leaderData={formData}
               onSubmit={handleSubmitGroup}
+              groupName={formData.groupName || ""}
+              setGroupName={(name) =>
+                setFormData((prev) => ({ ...prev, groupName: name }))
+              }
             />
           )}
         </CardContent>
