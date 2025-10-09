@@ -161,6 +161,7 @@ export default function RegistrationPage() {
         setParticipant(part);
       }
     } catch (err) {
+      console.log(err)
       toast.error(err.response?.data?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
@@ -175,7 +176,7 @@ export default function RegistrationPage() {
         ticketId: selectedTicket._id,
         couponCode: couponCode || null,
         referralCode: referralCode || null,
-        groupName: groupName.trim(),
+        groupName: groupName?.trim(),
         groupLeader: {
           ...leader,
           dynamicFields: normalizeDynamicFields(leader),
@@ -220,6 +221,7 @@ export default function RegistrationPage() {
         setParticipant(part);
       }
     } catch (err) {
+      console.log(err)
       toast.error(err.response?.data?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
