@@ -17,8 +17,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 export default function DynamicField({ field, value, onChange }) {
   const { name, label, type, required, placeholder, options = [] } = field
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return null;
+  // useEffect(() => setMounted(true), [])
+  // if (!mounted) return null;
 
   const Req = required ? <span className="text-red-500">*</span> : null
 

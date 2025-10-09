@@ -124,73 +124,73 @@ const Ticket = ({ ticketName, price }) => {
           }
         }
 
-        /* Punch edges */
-        [class*="ticket-edge"] {
-          background: var(--color-background);
-          border: 0.2rem solid var(--border);
-          border-radius: 50%;
-          height: 2.5rem;
-          width: 2.5rem;
-          position: absolute;
-        }
-        [class*="top"] {
-          top: -1rem;
-        }
-        [class*="bottom"] {
-          top: calc(100% - 1.5rem);
-        }
-        [class*="left"] {
-          left: -1rem;
-        }
-        [class*="right"] {
-          right: -1rem;
-        }
+        // /* Punch edges */
+        // [class*="ticket-edge"] {
+        //   background: var(--color-background);
+        //   border: 0.2rem solid var(--border);
+        //   border-radius: 50%;
+        //   height: 2.5rem;
+        //   width: 2.5rem;
+        //   position: absolute;
+        // }
+        // [class*="top"] {
+        //   top: -1rem;
+        // }
+        // [class*="bottom"] {
+        //   top: calc(100% - 1.5rem);
+        // }
+        // [class*="left"] {
+        //   left: -1rem;
+        // }
+        // [class*="right"] {
+        //   right: -1rem;
+        // }
 
-        .ticket-punches,
-        .ticket-punches::before,
-        .ticket-punches-right,
-        .ticket-punches-right::before {
-          background: var(--muted);
-          border: 0.2rem solid var(--border);
-          border-radius: 50%;
-          height: 1.8rem;
-          width: 1.8rem;
-          position: absolute;
-        }
+        // .ticket-punches,
+        // .ticket-punches::before,
+        // .ticket-punches-right,
+        // .ticket-punches-right::before {
+        //   background: var(--muted);
+        //   border: 0.2rem solid var(--border);
+        //   border-radius: 50%;
+        //   height: 1.8rem;
+        //   width: 1.8rem;
+        //   position: absolute;
+        // }
 
-        .ticket-punches {
-          top: 50%;
-          left: -1rem;
-          transform: translateY(-50%);
-        }
-        .ticket-punches::before {
-          content: "";
-          position: absolute;
-          top: -2.1rem;
-          left: -0.25rem;
-          height: 1.8rem;
-          width: 1.8rem;
-          border: inherit;
-          border-radius: inherit;
-          background: inherit;
-        }
+        // .ticket-punches {
+        //   top: 50%;
+        //   left: -1rem;
+        //   transform: translateY(-50%);
+        // }
+        // .ticket-punches::before {
+        //   content: "";
+        //   position: absolute;
+        //   top: -2.1rem;
+        //   left: -0.25rem;
+        //   height: 1.8rem;
+        //   width: 1.8rem;
+        //   border: inherit;
+        //   border-radius: inherit;
+        //   background: inherit;
+        // }
 
-        .ticket-punches-right {
-          top: 50%;
-          left: calc(100% - 1rem);
-          transform: translateY(-50%);
-        }
-        .ticket-punches-right::before {
-          content: "";
-          position: absolute;
-          top: -2.1rem;
-          left: -0.25rem;
-          height: 1.8rem;
-          width: 1.8rem;
-          border: inherit;
-          border-radius: inherit;
-          background: inherit;
-        }
+        // .ticket-punches-right {
+        //   top: 50%;
+        //   left: calc(100% - 1rem);
+        //   transform: translateY(-50%);
+        // }
+        // .ticket-punches-right::before {
+        //   content: "";
+        //   position: absolute;
+        //   top: -2.1rem;
+        //   left: -0.25rem;
+        //   height: 1.8rem;
+        //   width: 1.8rem;
+        //   border: inherit;
+        //   border-radius: inherit;
+        //   background: inherit;
+        // }
       `}</style>
     </div>
   );
