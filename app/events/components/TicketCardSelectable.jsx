@@ -13,7 +13,7 @@ export default function TicketCardSelectable({
       onClick={!soldOut ? onClick : undefined}
       className={`
         ticket
-        ${selected ? "border-2 border-primary ring-2 ring-primary/20" : "border border-gray-300"}
+        ${selected ? "border-1 border-primary ring-2 ring-primary/20" : "border border-gray-300"}
         ${soldOut ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:scale-[1.01] hover:shadow-sm"}
       `}
     >
@@ -26,7 +26,7 @@ export default function TicketCardSelectable({
         <p className="ticket-price">₹{price}</p>
 
         {/* Side text */}
-        <div className="ticket-side-text">ORGATIC</div>
+        <div className={`ticket-side-text ${selected ? "bg-primary text-muted" : "text-muted-foreground"}`}>ORGATIC</div>
       </div>
 
       {soldOut && (
@@ -109,7 +109,6 @@ export default function TicketCardSelectable({
           height: 2rem;
           text-align: center;
           border-top: 0.1rem solid var(--border);
-          color: var(--muted-foreground);
           transform: rotate(90deg) translate(-0.6rem, 2.5rem);
           font-size: 0.6rem;
           font-weight: 600;

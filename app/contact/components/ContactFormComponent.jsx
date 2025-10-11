@@ -154,7 +154,15 @@ export const ContactFormComponent = ({
 
                     {/* Subject Field */}
                     <div className="space-y-2">
-                        <Label htmlFor="subject">Subject (Optional)</Label>
+                        <div className="flex items-center justify-between">
+                            <Label htmlFor="subject">Subject (Optional)</Label>
+                            {formData.subject && (
+                                <p className="text-xs text-muted-foreground text-right">
+                                    {formData.subject.length}/200
+                                </p>
+                            )}
+                        </div>
+
                         <Input
                             id="subject"
                             name="subject"
@@ -170,11 +178,6 @@ export const ContactFormComponent = ({
                         />
                         {errors.subject && (
                             <p className="text-xs text-destructive">{errors.subject}</p>
-                        )}
-                        {formData.subject && (
-                            <p className="text-xs text-muted-foreground text-right">
-                                {formData.subject.length}/200
-                            </p>
                         )}
                     </div>
 

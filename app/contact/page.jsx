@@ -21,13 +21,13 @@ const Contact02Page = () => {
     } = useContactForm();
 
     return (
-        <div className="h-full">
+        <div className="">
             <div className="w-full mx-auto space-y-1">
                 <p className="text-base sm:text-lg text-muted-foreground">
                     We&apos;d love to hear from you. Please fill out this form or shoot us
                     an email.
                 </p>
-                <div className="mt-2 sm:mt-10 grid lg:grid-cols-2 gap-8 md:gap-10">
+                <div className="grid lg:grid-cols-2 gap-8 md:gap-10">
                     <ContactMethods />
 
                     {/* Form */}

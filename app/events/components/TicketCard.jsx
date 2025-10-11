@@ -36,7 +36,7 @@ const Ticket = ({ ticketName, price }) => {
         .ticket {
           background: var(--card);
           border-radius: var(--radius);
-          height: 11rem;
+          height: 9.8rem;
           max-width: 100%;
           margin: 0 auto;
           position: relative;

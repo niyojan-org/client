@@ -12,11 +12,12 @@ import api from "@/lib/api";
 import openRazorpay from "@/lib/openRazorpay";
 import DynamicField from "../../components/DynamicField";
 import GroupMultiStepForm from "../../components/GroupMultiStepForm";
-import CouponInput from "../../components/CouponInput";
 import { SpinnerCustom } from "@/components/ui/spinner";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import TicketCardSelectable from "../../components/TicketCardSelectable";
 import confetti from "canvas-confetti";
+import CouponInput from "../../components/couponInput";
+import Error404 from "@/app/not-found";
 
 export default function RegistrationPage() {
   const { slug } = useParams();
@@ -24,7 +25,7 @@ export default function RegistrationPage() {
   const searchParams = useSearchParams();
   const referralCode = searchParams.get("ref") || null;
   // include coupon-related store values
-  const { fetchRegistrationForm, registrationForm, verifyCouponCode, couponData, verifyingCoupon, couponFinalPrice, couponDiscount, clearCoupon} = useEventStore();
+  const { fetchRegistrationForm, registrationForm, verifyCouponCode, couponData, verifyingCoupon, couponFinalPrice, couponDiscount, clearCoupon, error, loadingRegistrationForm } = useEventStore();
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [formData, setFormData] = useState({});
   const [groupName, setGroupName] = useState("");
@@ -66,8 +67,7 @@ export default function RegistrationPage() {
     }
   }, [paymentStatus]);
 
-  const isLoading = !registrationForm;
-  if (isLoading) {
+  if (loadingRegistrationForm) {
     return (
       <div className="flex items-center justify-center h-screen bg-background">
         <SpinnerCustom className="text-primary" />
@@ -258,6 +258,11 @@ export default function RegistrationPage() {
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
 
+  if (error) {
+    return <Error404 />;
+  }
+
+
   // ---------- RENDER ----------
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-8">
@@ -346,7 +351,7 @@ export default function RegistrationPage() {
       )}
 
       {/* ✅ SUCCESS */}
-      {paymentStatus === "success" && ( participant || pendingPayment ) && (
+      {paymentStatus === "success" && (participant || pendingPayment) && (
         <div className="flex items-center justify-center bg-card rounded-2xl p-8 border border-border shadow-md text-center">
           <div className="flex flex-col items-center space-y-4">
             <div className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center shadow-md border border-success/20">
@@ -494,8 +499,8 @@ export default function RegistrationPage() {
                   {submitting
                     ? "Submitting..."
                     : couponDiscount > 0
-                    ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
-                    : `Submit & Pay ₹${originalPrice}`}
+                      ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
+                      : `Submit & Pay ₹${originalPrice}`}
                 </Button>
               </form>
             ) : (

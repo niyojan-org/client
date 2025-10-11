@@ -17,6 +17,7 @@ export const SuccessModal = ({ open, onClose, data, onSendAnother }) => {
     const [copied, setCopied] = useState(false);
 
     if (!data) return null;
+    console.log(data)
 
     const handleCopy = () => {
         navigator.clipboard.writeText(data.id);
@@ -69,7 +70,7 @@ export const SuccessModal = ({ open, onClose, data, onSendAnother }) => {
                             </div>
                             <div className="flex items-center gap-2">
                                 <code className="flex-1 text-sm font-mono bg-background px-3 py-2 rounded border break-all">
-                                    {data._id}
+                                    {data.id}
                                 </code>
                                 <Button
                                     variant="outline"

@@ -40,10 +40,10 @@ const contactMethods = [
 
 export const ContactMethods = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-12">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8 h-fit ">
       {contactMethods.map((method, index) => {
         const Icon = method.icon;
-        
+
         return (
           <div key={index} className="sm:space-y-1">
             <div className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
@@ -51,7 +51,7 @@ export const ContactMethods = () => {
             </div>
             <h3 className="font-semibold text-xl mt-3">{method.title}</h3>
             <p className="text-muted-foreground">{method.description}</p>
-            
+
             {method.type === "link" && (
               <Link
                 className="font-medium text-primary hover:underline inline-block"
@@ -67,7 +67,7 @@ export const ContactMethods = () => {
                 ))}
               </Link>
             )}
-            
+
             {method.type === "dialog" && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>

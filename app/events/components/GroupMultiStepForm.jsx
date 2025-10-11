@@ -16,8 +16,8 @@ import {
   StepperTitle,
   StepperTrigger,
 } from "@/components/ui/stepper";
-import CouponInput from "./CouponInput";
 import useEventStore from "@/store/eventStore";
+import CouponInput from "./couponInput";
 
 // ── Multi-Step Form for Group Registration ──
 export default function GroupMultiStepForm({
@@ -360,8 +360,8 @@ export default function GroupMultiStepForm({
                 {loading
                   ? "Submitting..."
                   : couponDiscount > 0
-                  ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
-                  : ` Submit & Pay ₹${originalPrice}`}
+                    ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
+                    : ` Submit & Pay ₹${originalPrice}`}
               </Button>
             </div>
           </>
