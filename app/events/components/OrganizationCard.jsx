@@ -49,16 +49,18 @@ export default function OrganizationCard({ event }) {
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="w-full"
+      className="w-full mt-10"
     >
       <Card className="border-t-4 border-t-primary backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300">
         
         {/* -------- Mobile / Tablet Layout -------- */}
         <div className="lg:hidden">
           <CardHeader>
+            <h1></h1>
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
                 <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2 break-words">
+                  
                   <motion.div whileHover={{ scale: 1.05 }} className="text-primary">
                     <IconBuildingBank className="h-5 w-5" />
                   </motion.div>
@@ -129,7 +131,7 @@ export default function OrganizationCard({ event }) {
             {socialLinks.length > 0 && (
               <div className="space-y-2">
                 <h4 className="text-sm font-medium text-muted-foreground">Social Media</h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 ">
                   {socialLinks.map(([platform, url]) => {
                     const Icon = socialIcons[platform] || IconWorld;
                     return (
@@ -143,9 +145,9 @@ export default function OrganizationCard({ event }) {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="h-8 w-8 p-0 hover:scale-110 transition-transform"
+                          className="h-8 w-8 p-0 hover:scale-110 transition-transform "
                         >
-                          <Icon className="h-4 w-4" />
+                          <Icon className="h-4 w-4 "  />
                         </Button>
                       </Link>
                     );

@@ -8,6 +8,7 @@ import useEventStore from "@/store/eventStore";
 import EventDetails from "../components/EventDetails";
 import { useLoaderStore } from "@/store/loaderStore";
 import { CallToAction, EventBenefits, EventDescription, HeroSection, OrganizationCard, RegistrationWidget, SessionsTimeline, SimilarEvents, SpeakersSection, TicketCards } from "../components";
+import Footer from "@/components/pages/Footer";
 
 export default function EventSlugPage(props) {
   const { showLoader, hideLoader } = useLoaderStore();
@@ -153,15 +154,19 @@ export default function EventSlugPage(props) {
         </motion.div> */}
 
         {/* Call to Action */}
-        {/* <motion.div
+        <motion.div
           className="w-full"
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.9 }}
         >
           <CallToAction event={singleEvent} registrationActive={true} />
-        </motion.div> */}
+        </motion.div>
+        
+        {/* footer */}
+
       </motion.div>
+        <Footer />
     </div>
   );
 }

@@ -23,13 +23,13 @@ export default function TicketCards({ event }) {
 
   return (
     <motion.section
-      className="w-full py-10 sm:py-14"
+      className="w-full py-10 "
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       {/* Header */}
-      <div className="border-t-4 border-t-primary py-5 text-center max-w-6xl mx-auto space-y-5 px-4 bg-card w-full rounded-2xl">
+      <div className="border-t-4 border-t-primary py-3 text-center max-w-6xl mx-auto space-y-5 px-4 bg-card w-full rounded-2xl">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary tracking-tight">
           Ticket Options
         </h2>
@@ -52,7 +52,7 @@ export default function TicketCards({ event }) {
             className="w-full flex justify-center"
           >
             <Link
-              href={`/register/${ticket._id}`}
+              href={`/events/${event.slug}/registration?ticketId=${ticket._id}`}
               className="block w-full max-w-sm sm:max-w-md md:max-w-[22rem]"
             >
               <Ticket

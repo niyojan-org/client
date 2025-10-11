@@ -66,7 +66,7 @@ export default function SessionsTimeline({ event }) {
       aria-label="Sessions timeline"
     >
       {/* ---- Header ---- */}
-      <Card className="border-t-4 border-t-primary text-center backdrop-blur-md mb-6 shadow-xl hover:shadow-2xl transition-all duration-300 ">
+      <Card className="border-t-4 border-t-primary text-center backdrop-blur-md  shadow-xl hover:shadow-2xl transition-all duration-300  mb-0 ">
         <CardHeader>
           <CardTitle className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary">
             Sessions Timeline
@@ -81,7 +81,7 @@ export default function SessionsTimeline({ event }) {
           {/* Vertical line visible only on sm+ */}
           <div className="hidden sm:block absolute left-8 top-6 bottom-6 w-px bg-primary/50" aria-hidden />
 
-          <div className="space-y-8 sm:space-y-10">
+          <div className="space-y-8 sm:space-y-5">
             {sessions.map((session, idx) => (
               <motion.article
                 key={session.id}
@@ -100,9 +100,9 @@ export default function SessionsTimeline({ event }) {
 
                 {/* card */}
                 <Card className="rounded-xl hover:shadow-lg transition-shadow duration-300 focus-within:ring-2 focus-within:ring-primary/40">
-                  <CardContent className="p-5 sm:p-6">
+                  <CardContent className="p-5 sm:px-4 py-0">
                     {/* header row */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
                       <CardTitle
                         id={`session-title-${session.id}`}
                         className="text-lg sm:text-xl md:text-2xl font-semibold text-primary"

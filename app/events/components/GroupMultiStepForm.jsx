@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Loader2, XCircle } from "lucide-react";
+import { XCircle } from "lucide-react";
 import DynamicField from "./DynamicField";
 import {
   Stepper,
@@ -16,7 +16,8 @@ import {
   StepperTitle,
   StepperTrigger,
 } from "@/components/ui/stepper";
-import CouponInput from "./couponInput";
+import CouponInput from "./CouponInput";
+import useEventStore from "@/store/eventStore";
 
 // ── Multi-Step Form for Group Registration ──
 export default function GroupMultiStepForm({
@@ -26,13 +27,26 @@ export default function GroupMultiStepForm({
   setGroupName,
   leaderData = {},
   onSubmit,
+  slug,
+  selectedTicket,
+  couponCode,
+  setCouponCode,
 }) {
   const { minParticipants = 2, maxParticipants = 5 } = groupSettings;
-
   const [currentStep, setCurrentStep] = useState(1);
   const [groupMembers, setGroupMembers] = useState([]);
   const [leaderForm, setLeaderForm] = useState(leaderData);
   const [loading, setLoading] = useState(false);
+  const {
+    fetchRegistrationForm,
+    registrationForm,
+    verifyCouponCode,
+    couponData,
+    verifyingCoupon,
+    couponFinalPrice,
+    couponDiscount,
+    clearCoupon,
+  } = useEventStore();
 
   /** ── ensure at least 1 member exists (Leader + Member2) ── */
   useEffect(() => {
@@ -118,9 +132,13 @@ export default function GroupMultiStepForm({
 
   const isReviewStep = currentStep === steps.length;
   const isLastMemberStep = currentStep === groupMembers.length + 1;
+  // 🔢 Final ticket price after coupon
+  const originalPrice = selectedTicket?.price || 0;
+  const finalPrice = couponFinalPrice || originalPrice;
 
+  ///// ── Render ── ////
   return (
-    <Card className="shadow-md border rounded-xl">
+    <Card className="shadow-md border rounded-xl ">
       <CardHeader>
         <CardTitle className="text-center text-xl font-semibold">
           Group Registration
@@ -146,7 +164,7 @@ export default function GroupMultiStepForm({
             <React.Fragment key={i}>
               <StepperItem step={i + 1}>
                 <StepperTrigger className="flex flex-col items-center gap-2">
-                  <StepperIndicator className="size-8 text-sm font-semibold" />
+                  <StepperIndicator className="size-6 text-sm font-semibold" />
                   <StepperTitle className="text-xs sm:text-sm">
                     {label}
                   </StepperTitle>
@@ -169,7 +187,7 @@ export default function GroupMultiStepForm({
                   placeholder="Enter group name"
                   value={groupName}
                   onChange={(e) => setGroupName(e.target.value)}
-                  className="rounded-full"
+                  className="rounded-xl focus-visible:ring-2 focus-visible:ring-primary"
                 />
               </div>
             )}
@@ -297,22 +315,53 @@ export default function GroupMultiStepForm({
           )}
         </div>
 
-        {isReviewStep && (
+        {/* coupon input filed based on backend data  */}
+
+        {registrationForm?.allowCoupons && isReviewStep && (
           <>
             <CouponInput
-              onApply={(code) => {
-                console.log("Group coupon applied:", code);
+              verifying={verifyingCoupon}
+              couponData={couponData}
+              appliedCode={couponData?.code}
+              discountAmount={couponDiscount}
+              finalPrice={finalPrice}
+              ticketPrice={originalPrice}
+              onApply={async (code) => {
+                try {
+                  const { discountAmount } = await verifyCouponCode(
+                    slug,
+                    code,
+                    selectedTicket?.price
+                  );
+                  setCouponCode(code);
+                  toast.success(
+                    `Coupon applied! You saved ₹${discountAmount} off your ticket`
+                  );
+                } catch (err) {
+                  toast.error(
+                    err.response?.data?.message || "Invalid coupon code"
+                  );
+                }
               }}
+              onClear={() => {
+                clearCoupon();
+                setCouponCode("");
+              }}
+              className="max-w-sm"
             />
 
             <div className="pt-6 flex justify-center">
               <Button
                 size="lg"
-                className="w-full sm:w-1/2 bg-success text-white rounded-full"
+                className="w-full sm:w-1/2 bg-primary text-card rounded-full"
                 onClick={handleSubmit}
                 disabled={loading}
               >
-                {loading ? "Processing..." : "Submit & Pay"}
+                {loading
+                  ? "Submitting..."
+                  : couponDiscount > 0
+                  ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
+                  : ` Submit & Pay ₹${originalPrice}`}
               </Button>
             </div>
           </>

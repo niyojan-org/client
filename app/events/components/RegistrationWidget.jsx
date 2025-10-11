@@ -9,7 +9,6 @@ import {
   isAfter,
   isBefore,
 } from "date-fns";
-
 import {
   IconCalendar,
   IconUsers,
@@ -30,19 +29,17 @@ import { formatFullTimeline } from "@/lib/timelineFormate";
 export default function RegistrationWidget({ event }) {
   const [timeLeft, setTimeLeft] = useState(null);
 
-  // Registration Logic
   const regStart = event.registrationStart ? parseISO(event.registrationStart) : null;
-  const regEnd   = event.registrationEnd   ? parseISO(event.registrationEnd)   : null;
+  const regEnd = event.registrationEnd ? parseISO(event.registrationEnd) : null;
   const regIsOpen = Boolean(event.isRegistrationOpen);
 
   const now = new Date();
   const registrationActive =
     regIsOpen && regStart && regEnd && isAfter(now, regStart) && isBefore(now, regEnd);
 
-  // Capacity & Sold Tickets
   const { totalCapacity, totalSold, spotsRemaining } = useMemo(() => {
     const capacity = event.tickets?.reduce((sum, t) => sum + (t.capacity || 0), 0) || 0;
-    const sold     = event.tickets?.reduce((sum, t) => sum + (t.sold || 0), 0) || 0;
+    const sold = event.tickets?.reduce((sum, t) => sum + (t.sold || 0), 0) || 0;
     return {
       totalCapacity: capacity,
       totalSold: sold,
@@ -50,22 +47,17 @@ export default function RegistrationWidget({ event }) {
     };
   }, [event.tickets]);
 
-  // Availability Message
   const availability = useMemo(() => {
     if (spotsRemaining <= 0) return { text: "Sold Out", variant: "destructive", urgent: true };
     const pct = (spotsRemaining / totalCapacity) * 100;
-    if (pct <= 10)  return { text: `Only ${spotsRemaining} left!`, variant: "destructive", urgent: true };
-    if (pct <= 25)  return { text: "Almost sold out", variant: "destructive", urgent: true };
-    if (pct <= 50)  return { text: "Filling fast", variant: "default", urgent: true };
-    if (pct <= 75)  return { text: "Good availability", variant: "secondary", urgent: false };
+    if (pct <= 10) return { text: `Only ${spotsRemaining} left!`, variant: "destructive", urgent: true };
+    if (pct <= 25) return { text: "Almost sold out", variant: "destructive", urgent: true };
+    if (pct <= 50) return { text: "Filling fast", variant: "default", urgent: true };
+    if (pct <= 75) return { text: "Good availability", variant: "secondary", urgent: false };
     return { text: "Available", variant: "secondary", urgent: false };
   }, [spotsRemaining, totalCapacity]);
 
-  // Countdown Timer
-  const regEndDate = useMemo(
-    () => (event.registrationEnd ? parseISO(event.registrationEnd) : null),
-    [event.registrationEnd]
-  );
+  const regEndDate = useMemo(() => (event.registrationEnd ? parseISO(event.registrationEnd) : null), [event.registrationEnd]);
 
   useEffect(() => {
     if (!regEndDate) return;
@@ -87,27 +79,27 @@ export default function RegistrationWidget({ event }) {
     return () => clearInterval(timer);
   }, [regEndDate]);
 
-  /* -----------------------------  Render  ------------------------------ */
+  /* ------------------------------------------------------------------ */
+  /*                               Render                               */
+  /* ------------------------------------------------------------------ */
   return (
     <Card
       role="complementary"
       aria-label="Event registration section"
       className="
-        rounded-2xl
-        bg-white/60 dark:bg-slate-800/40
-        backdrop-blur-md
-        border border-white/20 dark:border-white/10
-        shadow-xl hover:shadow-2xl
-        transition-all duration-300 py-0
+        rounded-xl sm:rounded-2xl
+        bg-gradient-to-br from-background/80 to-card/80
+        backdrop-blur-md border border-border/40
+        shadow-lg hover:shadow-xl
+        transition-all duration-300
       "
     >
-      <CardContent className="p-5 sm:p-6 space-y-5">
+      <CardContent className="sm:p-4 space-y-6 sm:space-y-3 ">
         {/* Event Info */}
         <motion.div
-          className="grid grid-cols-1  md:grid-cols-2 gap-10"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 "
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          // transition={{ duration: 0.4 }}
         >
           <InfoCard
             icon={<IconCalendar className="w-5 h-5 text-primary" />}
@@ -117,20 +109,12 @@ export default function RegistrationWidget({ event }) {
                 ? formatFullTimeline(event.sessions)
                 : "Date TBD"
             }
-            gradient="from-background to-primary/5"
           />
           <InfoCard
             icon={<IconMapPin className="w-5 h-5 text-primary" />}
             title="Location"
             value={event.sessions?.[0]?.venue?.name || "Venue TBD"}
-            gradient="from-background to-secondary/5"
           />
-          {/* <InfoCard
-            icon={<IconUsers className="w-5 h-5 text-primary" />}
-            title="Capacity"
-            value={`${totalSold}/${totalCapacity} seats filled`}
-            gradient="from-background to-accent/5"
-          /> */}
         </motion.div>
 
         {/* Countdown */}
@@ -144,47 +128,56 @@ export default function RegistrationWidget({ event }) {
           />
         )}
 
-        {/* Registration Button / Alert */}
+        {/* Button / Alert */}
         <motion.div
-          className="pt-2"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
           {registrationActive ? (
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 size="lg"
                 className="
                   w-full rounded-full px-6 py-4
                   bg-primary hover:bg-primary/90
-                  text-white font-semibold text-base
-                  shadow-lg hover:shadow-xl transition-all
+                  text-primary-foreground font-semibold text-base
+                  shadow-md hover:shadow-lg transition-all
                 "
                 asChild
               >
                 <Link href={`/events/${event.slug}/registration`} aria-label="Register now">
-                  <motion.div className="flex items-center justify-center gap-2" whileHover={{ x: 2 }}>
+                  <div className="flex items-center justify-center gap-2">
                     <IconTicket className="w-5 h-5" />
-                    Grab Your Spot
-                  </motion.div>
+                    <span>Grab Your Spot</span>
+                  </div>
                 </Link>
               </Button>
             </motion.div>
           ) : (
             <Alert
               variant="destructive"
-              className="rounded-xl border-destructive/30 bg-gradient-to-r from-destructive/10 to-destructive/5"
+              className="
+                rounded-xl border-destructive/40
+                bg-gradient-to-r from-destructive/10 to-destructive/5
+                flex items-start gap-3
+              "
             >
-              <IconTicket className="h-4 w-4 shrink-0" aria-hidden />
-              <AlertTitle className="font-semibold ml-2">Registration Unavailable</AlertTitle>
-              <AlertDescription className="mt-1 text-sm">
-                {!regIsOpen
-                  ? "Registration is closed for this event."
-                  : spotsRemaining <= 0
-                  ? "Event is fully booked."
-                  : "Registration period has ended."}
-              </AlertDescription>
+              <IconTicket className="h-5 w-5 shrink-0 mt-0.5" aria-hidden />
+              <div>
+                <AlertTitle className="font-semibold">Registration Unavailable</AlertTitle>
+                <AlertDescription className="text-sm">
+                  {!regIsOpen
+                    ? "Registration is closed for this event."
+                    : spotsRemaining <= 0
+                    ? "Event is fully booked."
+                    : "Registration period has ended."
+                    ? "Registration period has not started yet."
+                    : null
+                    }
+
+                </AlertDescription>
+              </div>
             </Alert>
           )}
         </motion.div>
@@ -197,24 +190,15 @@ export default function RegistrationWidget({ event }) {
 /*                       Reusable Sub-components                      */
 /* ------------------------------------------------------------------ */
 
-function InfoCard({ icon, title, value, gradient }) {
+function InfoCard({ icon, title, value }) {
   return (
-    <motion.div whileHover={{ scale: 1.04 }} transition={{ type: "spring", stiffness: 280 }}>
-      <Card
-        className={`rounded-xl border-border/40 bg-gradient-to-br ${gradient} hover:shadow-md transition-all duration-300`}
-      >
-        <CardContent className="flex items-center gap-3 p-4">
-          <div
-            className="
-              p-2 rounded-lg border
-              border-primary/20 bg-primary/10
-            "
-          >
-            {icon}
-          </div>
+    <motion.div whileHover={{ scale: 1.03 }} transition={{ type: "spring", stiffness: 300 }}>
+      <Card className="rounded-xl border border-border/40 bg-card hover:bg-accent/5 transition-all py-0">
+        <CardContent className="flex items-center gap-3 p-4 sm:p-3">
+          <div className="p-2 rounded-lg bg-primary/10 border border-primary/20">{icon}</div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-muted-foreground font-medium tracking-wide">{title}</p>
-            <p className="font-semibold text-sm sm:text-base text-foreground truncate">{value}</p>
+            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">{title}</p>
+            <p className="font-semibold text-sm sm:text-base truncate">{value}</p>
           </div>
         </CardContent>
       </Card>
@@ -223,99 +207,72 @@ function InfoCard({ icon, title, value, gradient }) {
 }
 
 function CountdownCard({ timeLeft, availability, spotsRemaining, totalCapacity, totalSold }) {
+  const formatTime = (value) => String(value).padStart(2, "0");
+
   return (
-    <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      <Card className="rounded-xl bg-gradient-to-br from-card via-card to-muted/20 border-border/60 shadow-lg">
-        <CardContent className="p-4 space-y-4">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      // transition={{ duration: 0.5 }}
+    >
+      <Card className="rounded-xl bg-gradient-to-br from-card to-muted/10 border border-border/50 shadow-md">
+        <CardContent className="p-4 sm:p-5 space-y-4">
           {/* Header */}
-          <div className="flex items-center gap-3 justify-between">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <motion.div
-                className="w-3 h-3 bg-destructive rounded-full shadow-lg"
+                className="w-2.5 h-2.5 bg-destructive rounded-full"
                 animate={{ scale: [1, 1.3, 1], opacity: [1, 0.6, 1] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               />
               <IconClock className="w-4 h-4 text-destructive" aria-hidden />
-              <span className="text-sm font-semibold text-foreground tracking-wide">
+              <span className="text-sm font-semibold text-foreground">
                 Registration closes in
               </span>
             </div>
 
-            <Card
-              className={`rounded-lg ${
-                availability.variant === "destructive"
-                  ? "border-destructive/30 bg-gradient-to-r from-destructive/5 to-destructive/10"
-                  : "border-success/30 bg-gradient-to-r from-success/5 to-success/10"
-              } shadow-sm`}
+            <div
+              className={`
+                flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold shadow-sm
+                ${availability.variant === "destructive"
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-success/10 text-success"}
+              `}
             >
-              <CardContent className="flex items-center gap-3 py-1 px-3">
-                <motion.div
-                  className={`w-3 h-3 rounded-full ${
-                    availability.urgent ? "bg-destructive" : "bg-success"
-                  }`}
-                  animate={
-                    availability.urgent
-                      ? { scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }
-                      : {}
-                  }
-                  transition={{ duration: 1.8, repeat: availability.urgent ? Infinity : 0 }}
-                />
-                <span className="text-sm font-semibold">{availability.text}</span>
-                {(spotsRemaining <= 0 || (spotsRemaining / totalCapacity) * 100 <= 25) && (
-                  <div className="flex items-center gap-1 text-muted-foreground text-xs">
-                    <IconUsers className="w-4 h-4" />
-                    {totalSold}/{totalCapacity}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+              {availability.text}
+              {(spotsRemaining <= 0 || (spotsRemaining / totalCapacity) * 100 <= 25) && (
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <IconUsers className="w-4 h-4" />
+                  {totalSold}/{totalCapacity}
+                </span>
+              )}
+            </div>
           </div>
 
-          <Separator className="bg-gradient-to-r from-transparent via-border to-transparent" />
+          <Separator className="bg-border/40" />
 
-          {/* Timer */}
-          <div className="flex items-center justify-center gap-2 font-mono">
-            {[
-              { value: timeLeft.days, label: "DAYS" },
-              { value: timeLeft.hours, label: "HRS" },
-              { value: timeLeft.minutes, label: "MIN" },
-              { value: timeLeft.seconds, label: "SEC" },
-            ].map((item, i) => (
-              <div key={item.label} className="flex items-center">
-                <motion.div className="flex flex-col items-center" whileHover={{ scale: 1.05 }}>
-                  <Card className="rounded-full bg-white/20 dark:bg-slate-900/30 backdrop-blur border border-white/10 shadow-sm">
-                    <CardContent className="px-3 py-2 min-w-[3rem] text-center">
-                      <motion.span
-                        className={`text-xl font-bold ${
-                          item.label === "SEC" ? "text-primary" : "text-foreground"
-                        }`}
-                        key={item.value}
-                        initial={{ scale: 0.8 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 280 }}
-                      >
-                        {String(item.value).padStart(2, "0")}
-                      </motion.span>
-                    </CardContent>
-                  </Card>
-                  <span className="text-xs text-muted-foreground mt-1 font-medium tracking-wider">
-                    {item.label}
-                  </span>
-                </motion.div>
-                {i < 3 && (
-                  <motion.span
-                    className="text-muted-foreground text-xl mx-1"
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  >
-                    :
-                  </motion.span>
-                )}
-              </div>
-            ))}
+          {/* Compact Digital Timer */}
+          <div className="flex justify-center">
+            <motion.div
+              key={`${timeLeft.days}-${timeLeft.hours}-${timeLeft.minutes}-${timeLeft.seconds}`}
+              // initial={{ opacity: 0, y: 5 }}
+              // animate={{ opacity: 1, y: 0 }}
+              // transition={{ duration: 0.3 }}
+              className="
+                font-source-sans-3 text-lg sm:text-2xl font-bold 
+                text-center tracking-widest
+                bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent
+              "
+            >
+              {timeLeft.days}d{" : "}
+              {formatTime(timeLeft.hours)}h{" : "}
+              {formatTime(timeLeft.minutes)}m{" : "}
+              {formatTime(timeLeft.seconds)}s
+            </motion.div>
           </div>
         </CardContent>
       </Card>
     </motion.div>
   );
 }
+

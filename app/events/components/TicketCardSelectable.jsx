@@ -38,7 +38,7 @@ export default function TicketCardSelectable({
         .ticket {
           background: transparent;
           border-radius: 0.5rem;
-          height: 8rem;
+          height: 5rem;
           min-width: 10rem;
           max-width: 100%;
           position: relative;

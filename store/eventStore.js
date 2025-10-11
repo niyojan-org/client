@@ -1,8 +1,11 @@
+// stores/eventStore.js
 import { create } from "zustand";
 import api from "@/lib/api";
-import { useLoaderStore } from "./loaderStore";
 
-const useEventStore = create((set) => ({
+const useEventStore = create((set, get) => ({
+  // ---------------------------
+  // State
+  // ---------------------------
   featuredEvents: [],
   allEvents: [],
   eventCategories: [],
@@ -12,13 +15,23 @@ const useEventStore = create((set) => ({
   loadingSingleEvent: false,
   registrationForm: null,
   loadingRegistrationForm: false,
+  loading: false,
+
   filters: {
     categories: [],
     modes: [],
     type: "",
   },
-  loading: false,
 
+  //  Coupon-relateds state
+  couponCode: null,          
+  couponData: null,          
+  couponDiscount: 0,         
+  couponFinalPrice: null,   
+  verifyingCoupon: false,
+
+
+  // Filters
   setFilters: (newPartialFilters) =>
     set((state) => ({
       filters: {
@@ -27,6 +40,8 @@ const useEventStore = create((set) => ({
       },
     })),
 
+
+  // Fetch Events
   fetchFeaturedEvents: async () => {
     try {
       const res = await api.get("/event/featured");
@@ -37,19 +52,10 @@ const useEventStore = create((set) => ({
   },
 
   fetchAllEvents: async ({ params } = {}) => {
-    // const { showLoader, hideLoader } = useLoaderStore.getState();
-    console.log(params);
     try {
       set({ loading: true });
-      const res = await api.get("/event", {
-        params,
-      });
-      const events = res.data.data.events;
-      console.log(events);
-      // const modes = Array.from(
-      //   new Set(events.map((e) => e.mode).filter(Boolean))
-      // );
-      set({ allEvents: events });
+      const res = await api.get("/event", { params });
+      set({ allEvents: res.data.data.events });
     } catch (err) {
       set({ error: err.message || "Failed to fetch all events" });
     } finally {
@@ -70,7 +76,6 @@ const useEventStore = create((set) => ({
     set({ loadingSingleEvent: true, error: null });
     try {
       const res = await api.get(`/event/${slug}`);
-      // console.log(res.data.event)
       set({ singleEvent: res.data.event });
     } catch (err) {
       set({ error: err.message || "Failed to fetch event by slug" });
@@ -109,6 +114,121 @@ const useEventStore = create((set) => ({
     }
   },
 
+
+  //  Coupon helpers
+  //  Locally calculate discount (mirrors backend exact data)
+   
+  calculateDiscountedPrice: (originalPrice, coupon) => {
+    if (!coupon || typeof originalPrice !== "number" || originalPrice <= 0) {
+      return { finalPrice: originalPrice, discount: 0 };
+    }
+
+    // Minimum order value
+    if (coupon.minOrderValue && originalPrice < coupon.minOrderValue) {
+      return {
+        finalPrice: originalPrice,
+        discount: 0,
+        reason: `Minimum order value ₹${coupon.minOrderValue} not met`,
+      };
+    }
+
+    let discount = 0;
+
+    if (coupon.discountType === "flat") {
+      discount = coupon.discountValue;
+    } else if (coupon.discountType === "percent") {
+      discount = Math.round((originalPrice * coupon.discountValue) / 100);
+    }
+
+    // Apply maxDiscount if present
+    if (coupon.maxDiscount && discount > coupon.maxDiscount) {
+      discount = coupon.maxDiscount;
+    }
+
+    // Never exceed the price
+    discount = Math.min(discount, originalPrice);
+    const finalPrice = Math.max(0, originalPrice - discount);
+
+    return { finalPrice, discount };
+  },
+
+  
+  //   Verify coupon from backend + compute frontend discount preview
+   
+  verifyCouponCode: async (eventSlug, code, ticketPrice = null) => {
+    set({
+      verifyingCoupon: true,
+      error: null,
+      couponData: null,
+      couponCode: null,
+      couponDiscount: 0,
+      couponFinalPrice: null,
+    });
+
+    try {
+      if (!code || !code.trim()) {
+        throw new Error("Please enter a valid coupon code");
+      }
+
+      const res = await api.get(`/event/coupon/${eventSlug}/${code.trim()}`);
+      const coupon = res.data?.data;
+
+      if (!coupon) {
+        throw new Error("Invalid coupon response from server");
+      }
+
+      // Compute preview
+      let discountAmount = 0;
+      let finalPrice = ticketPrice;
+      if (typeof ticketPrice === "number") {
+        const { discount, finalPrice: fPrice } = get().calculateDiscountedPrice(
+          ticketPrice,
+          coupon
+        );
+        discountAmount = discount;
+        finalPrice = fPrice;
+      }
+
+      set({
+        couponCode: coupon.code,
+        couponData: coupon,
+        couponDiscount: discountAmount,
+        couponFinalPrice: finalPrice,
+        verifyingCoupon: false,
+        error: null,
+      });
+
+      return { coupon, discountAmount, finalPrice };
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Coupon verification failed";
+
+      set({
+        error: message,
+        couponData: null,
+        couponCode: null,
+        couponDiscount: 0,
+        couponFinalPrice: null,
+        verifyingCoupon: false,
+      });
+
+      throw err;
+    }
+  },
+
+  //  * Clear coupon
+  clearCoupon: () =>
+    set({
+      couponCode: null,
+      couponData: null,
+      couponDiscount: 0,
+      couponFinalPrice: null,
+      error: null,
+    }),
+
+  // Cleanup helpers
   clearSingleEvent: () => set({ singleEvent: null, error: null }),
   clearRegistrationForm: () => set({ registrationForm: null, error: null }),
 }));

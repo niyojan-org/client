@@ -36,7 +36,7 @@ const Ticket = ({ ticketName, price }) => {
         .ticket {
           background: var(--card);
           border-radius: var(--radius);
-          height: 11.5rem;
+          height: 11rem;
           max-width: 100%;
           margin: 0 auto;
           position: relative;
@@ -83,6 +83,7 @@ const Ticket = ({ ticketName, price }) => {
         .ticket-headline {
           color: var(--foreground);
           line-height: 1.2;
+          font-size: 1.4rem;
         }
 
         .ticket-star {
