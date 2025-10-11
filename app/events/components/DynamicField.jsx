@@ -13,17 +13,17 @@ import {
 } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Checkbox } from "@/components/ui/checkbox"
+import { PhoneInput } from "@/components/ui/phone-number-input"
 
 export default function DynamicField({ field, value, onChange }) {
   const { name, label, type, required, placeholder, options = [] } = field
-  const [mounted, setMounted] = useState(false)
   // useEffect(() => setMounted(true), [])
   // if (!mounted) return null;
 
   const Req = required ? <span className="text-red-500">*</span> : null
 
   // -------- Inputs --------
-  if (["text", "email", "tel", "number", "url", "date"].includes(type)) {
+  if (["text", "email", "number", "url", "date"].includes(type)) {
     return (
       <div className="space-y-2">
         <Label htmlFor={name} className="font-medium">
@@ -38,6 +38,27 @@ export default function DynamicField({ field, value, onChange }) {
           value={value || ""}
           onChange={(e) => onChange(name, e.target.value)}
           className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
+        />
+      </div>
+    )
+  }
+
+
+  if (type === 'tel') {
+    return (
+      <div className="space-y-2">
+        <Label htmlFor={name} className="font-medium">
+          {label} {Req}
+        </Label>
+        <PhoneInput
+          id={name}
+          name={name}
+          placeholder={placeholder || "123-456-7890"}
+          required={required}
+          value={value || ""}
+          onChange={(val) => onChange(name, val)}
+          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
+          defaultCountry="IN"
         />
       </div>
     )

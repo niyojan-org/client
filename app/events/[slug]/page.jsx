@@ -9,6 +9,7 @@ import EventDetails from "../components/EventDetails";
 import { useLoaderStore } from "@/store/loaderStore";
 import { CallToAction, EventBenefits, EventDescription, HeroSection, OrganizationCard, RegistrationWidget, SessionsTimeline, SimilarEvents, SpeakersSection, TicketCards } from "../components";
 import Footer from "@/components/pages/Footer";
+import Error404 from "@/app/not-found";
 
 export default function EventSlugPage(props) {
   const { showLoader, hideLoader } = useLoaderStore();
@@ -56,18 +57,14 @@ export default function EventSlugPage(props) {
   }
 
   if (!singleEvent) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500">No event found.</p>
-      </div>
-    );
+    return <Error404 />;
   }
 
   return (
     <div className="min-h-screen w-full">
       <HeroSection event={singleEvent} />
 
-      <motion.div 
+      <motion.div
         className="px-2 sm:px-10 lg:px-20 pt-5 space-y-4 pb-8 w-full max-w-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -162,11 +159,11 @@ export default function EventSlugPage(props) {
         >
           <CallToAction event={singleEvent} registrationActive={true} />
         </motion.div>
-        
+
         {/* footer */}
 
       </motion.div>
-        <Footer />
+      <Footer />
     </div>
   );
 }
