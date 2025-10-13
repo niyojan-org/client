@@ -185,8 +185,8 @@ export const platformFeatures = [
 export const team = [
   {
     name: 'Abhishek Kumar',
-    role: 'Core Founder & Full Stack Developer',
-    bio: 'The visionary behind Orgatic. Single-handedly architected and developed the entire platform from frontend to backend, payment integration, and system design.',
+    role: 'CEO & Full Stack Developer',
+    bio: 'The visionary behind Orgatic. Architected and developed the entire platform from frontend to backend, payment integration, and system design.',
     linkedin: 'https://linkedin.com/in/iamabhi0619',
     github: 'https://github.com/iamabhi0619',
     portfolio: 'https://iamabhi.tech',
@@ -194,14 +194,24 @@ export const team = [
   },
   {
     name: 'Alok Kumar',
-    role: 'Frontend & UI/UX Lead',
-    bio: 'Frontend & UI/UX lead crafting polished interfaces and seamless user experiences.',
+    role: 'Full Stack Developer & Frontend Lead',
+    bio: 'Handles major frontend development, API integration, and UI/UX design, ensuring smooth and responsive user experiences.',
     linkedin: 'https://linkedin.com/in/alokumar01',
     github: 'https://github.com/alokumar01',
     portfolio: 'https://whoisalok.tech',
     avatar: '/images/alok.webp',
   },
+  {
+    name: 'Pradum Kumar',
+    role: 'Frontend Developer',
+    bio: 'Handles the frontend development, UI components, and design enhancements.',
+    linkedin: 'https://www.linkedin.com/in/pradum-kumar',
+    github: 'https://github.com/Pradum-codes',
+    portfolio: 'https://pradum-codes.vercel.app/',
+    avatar: '/images/manish.jpg',
+  },
 ];
+
 
 // Tech stack data
 export const techStack = [

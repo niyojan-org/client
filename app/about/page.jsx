@@ -254,7 +254,7 @@ const About = () => {
           </motion.div>
 
           <motion.div
-            className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto"
+            className="grid md:grid-cols-3 gap-12 max-w-7xl mx-auto"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"

@@ -17,7 +17,7 @@ import {
   StepperTrigger,
 } from "@/components/ui/stepper";
 import useEventStore from "@/store/eventStore";
-import CouponInput from "./couponInput";
+import CouponInput from "./CouponInput";
 
 // ── Multi-Step Form for Group Registration ──
 export default function GroupMultiStepForm({

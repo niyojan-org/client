@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -11,12 +12,12 @@ const FinalCTA = () => {
 
   return (
     <section
-      className="relative bg-[#1E3A8A] py-12 sm:py-16 text-white overflow-hidden"
+      className="relative bg-gradient-to-r from-indigo-800 via-indigo-900 to-blue-900 py-16 text-white overflow-hidden"
       aria-label="Final Call to Action"
     >
-      {/* Mandala Border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-[#F97316] opacity-20" />
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-[#F97316] opacity-20" />
+      {/* Decorative lines */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-orange-500 opacity-20" />
+      <div className="absolute bottom-0 left-0 w-full h-1 bg-orange-500 opacity-20" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -28,12 +29,12 @@ const FinalCTA = () => {
         >
           {/* Title */}
           <h2 className="text-3xl sm:text-4xl font-extrabold font-poppins tracking-tight">
-            Ready for the Orgatic Experience?
+            Ready to Host or Join Amazing Events?
           </h2>
 
           {/* Subtext */}
           <p className="text-lg sm:text-xl text-gray-200 font-poppins max-w-2xl mx-auto leading-relaxed">
-            Join 1,000+ LPU students hosting and attending events with Orgatic’s seamless platform.
+            Thousands of students are already creating unforgettable experiences. Jump in and be part of it!
           </p>
 
           {/* CTA Buttons */}
@@ -41,7 +42,7 @@ const FinalCTA = () => {
             <Button
               asChild
               size="lg"
-              className="bg-[#F97316] hover:bg-[#e86a15] text-white px-8 py-3 rounded-full font-semibold font-poppins"
+              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-full font-semibold font-poppins"
             >
               <Link href="/auth">Start Hosting</Link>
             </Button>
@@ -49,7 +50,7 @@ const FinalCTA = () => {
               asChild
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-[#1E3A8A] px-8 py-3 rounded-full font-semibold font-poppins"
+              className="border-white text-white hover:bg-white hover:text-indigo-900 px-8 py-3 rounded-full font-semibold font-poppins"
             >
               <Link href="/explore">Discover Events</Link>
             </Button>

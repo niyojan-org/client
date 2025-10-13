@@ -16,7 +16,7 @@ import { SpinnerCustom } from "@/components/ui/spinner";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import TicketCardSelectable from "../../components/TicketCardSelectable";
 import confetti from "canvas-confetti";
-import CouponInput from "../../components/couponInput";
+import CouponInput from "../../components/CouponInput";
 import Error404 from "@/app/not-found";
 
 export default function RegistrationPage() {

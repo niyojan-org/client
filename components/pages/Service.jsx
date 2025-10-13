@@ -1,90 +1,85 @@
-"use client";
+'use client';
+
 import React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import landingPageContent from "@/constants/LandingPageContent";
+import {
+  IconCalendarCancel,
+  IconUserExclamation,
+  IconCurrencyDollarOff,
+} from "@tabler/icons-react";
 
-export default function WhoIsItFor() {
-  const { title, images } = landingPageContent.imageCarousel;
-
-  const containerVariants = {
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-      },
+export default function WhyWeExist() {
+  const problems = [
+    {
+      icon: <IconCalendarCancel size={42} className="text-indigo-600" />,
+      title: "Event Chaos Everywhere",
+      desc: "Spreadsheets, forms, and endless WhatsApp messages — managing even one event feels like a full-time job.",
     },
-  };
+    {
+      icon: <IconUserExclamation size={42} className="text-indigo-600" />,
+      title: "Zero Collaboration",
+      desc: "Clubs, volunteers, and faculty all use different tools. Miscommunication kills excitement and productivity.",
+    },
+    {
+      icon: <IconCurrencyDollarOff size={42} className="text-indigo-600" />,
+      title: "Unclear Payments & Tracking",
+      desc: "From ticket sales to approvals, handling payments and updates securely shouldn't be this hard.",
+    },
+  ];
 
-  const cardVariants = {
+  const fadeUp = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-    hover: {
-      scale: 1.05,
-      y: -6,
-      boxShadow: "0 20px 30px rgba(0,0,0,0.15)",
-      transition: { duration: 0.3, ease: "easeOut" },
-    },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   return (
     <section
-      className="bg-[#F9FAFB] py-16 sm:py-20"
-      aria-label="Who It's For"
+      className="bg-white py-20 sm:py-24"
+      aria-labelledby="why-we-exist"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Title */}
+      <div className="max-w-6xl mx-auto px-6 text-center">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-3xl sm:text-4xl font-extrabold text-[#1E3A8A] text-center mb-12 font-poppins"
-        >
-          {title}
-        </motion.h2>
-
-        {/* Card Grid */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={containerVariants}
+          variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true }}
+          className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-10"
         >
-          {images.map((item, index) => (
+          Why We Exist
+        </motion.h2>
+
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-lg text-gray-600 mb-16"
+        >
+          Because hosting college events should be exciting — not exhausting.
+          We built a platform that replaces chaos with clarity, helping students
+          and organizations bring their ideas to life.
+        </motion.p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {problems.map((item, index) => (
             <motion.div
               key={index}
-              variants={cardVariants}
-              whileHover="hover"
-              tabIndex={0}
-              role="button"
-              aria-label={item.text}
-              className="relative rounded-xl cursor-pointer outline-none focus:ring-4 focus:ring-indigo-400"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="bg-gray-50 hover:bg-gray-100 transition-all duration-300 rounded-2xl p-8 shadow-sm hover:shadow-md"
             >
-              <Card className="overflow-hidden rounded-xl border-none bg-white transition-shadow duration-300">
-                <CardContent className="p-0">
-                  <div className="relative h-[280px] w-full group">
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      fill
-                      className="object-cover rounded-xl"
-                      loading="lazy"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors duration-300 rounded-xl flex items-center justify-center px-6">
-                      <p className="text-white text-xl sm:text-2xl font-semibold text-center leading-snug">
-                        {item.text}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="p-3 rounded-full bg-indigo-100">{item.icon}</div>
+                <h3 className="text-xl font-semibold text-gray-900">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+              </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import api from "@/lib/api";
 
+
 const useEventStore = create((set, get) => ({
   // ---------------------------
   // State
@@ -16,6 +17,7 @@ const useEventStore = create((set, get) => ({
   registrationForm: null,
   loadingRegistrationForm: false,
   loading: false,
+  organization: null,
 
   filters: {
     categories: [],
@@ -114,10 +116,7 @@ const useEventStore = create((set, get) => ({
     }
   },
 
-
-  //  Coupon helpers
   //  Locally calculate discount (mirrors backend exact data)
-   
   calculateDiscountedPrice: (originalPrice, coupon) => {
     if (!coupon || typeof originalPrice !== "number" || originalPrice <= 0) {
       return { finalPrice: originalPrice, discount: 0 };
@@ -154,7 +153,6 @@ const useEventStore = create((set, get) => ({
 
   
   //   Verify coupon from backend + compute frontend discount preview
-   
   verifyCouponCode: async (eventSlug, code, ticketPrice = null) => {
     set({
       verifyingCoupon: true,
@@ -226,11 +224,29 @@ const useEventStore = create((set, get) => ({
       couponDiscount: 0,
       couponFinalPrice: null,
       error: null,
-    }),
+  }),
 
+  //fetch organization by sluggg
+  fetchOrganizationBySlug: async (slug) => {
+    set({loading: true, error: null, organization: null});
+    try {
+      const res = await api.get(`/org/public/${slug}`);
+      set({organization: res.data.organization, loading: false});
+    } catch (err) {
+      console.log(err);
+      set({
+        error:err.response?.data?.message || err.message || "Failed to fetch organization",
+        loading: false,
+      });
+    }
+  },
+  
+
+  
   // Cleanup helpers
   clearSingleEvent: () => set({ singleEvent: null, error: null }),
   clearRegistrationForm: () => set({ registrationForm: null, error: null }),
+  clearOrganization: () => set({organization: null, loading: false, error: null}),
 }));
 
 export default useEventStore;
