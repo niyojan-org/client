@@ -258,8 +258,11 @@ export default function RegistrationPage() {
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
 
-  if (error) {
+  if (error && !loadingRegistrationForm) {
     return <Error404 />;
+  }
+  if (!registrationForm && !loadingRegistrationForm) {
+    return null;
   }
 
 
@@ -417,8 +420,8 @@ export default function RegistrationPage() {
             </CardTitle>
           </CardHeader>
 
-          <CardContent className="space-y-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <CardContent className="space-y-8 w-full">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full">
               {registrationForm?.tickets?.map((t) => (
                 <TicketCardSelectable
                   key={t._id}
@@ -493,14 +496,14 @@ export default function RegistrationPage() {
                 {/* Dynamic Button Label */}
                 <Button
                   type="submit"
-                  disabled={submitting}
-                  className="w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+                  disabled={submitting || !selectedTicket}
+                  className="w-full rounded-full"
                 >
                   {submitting
                     ? "Submitting..."
                     : couponDiscount > 0
                       ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
-                      : `Submit & Pay ₹${originalPrice}`}
+                      : selectedTicket ? `Submit & Pay ₹${originalPrice}` : "Please select a ticket"}
                 </Button>
               </form>
             ) : (

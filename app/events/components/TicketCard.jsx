@@ -4,17 +4,17 @@ import React from "react";
 
 const Ticket = ({ ticketName, price }) => {
   return (
-    <div className="ticket">
+    <div className="ticket h-fit">
       {/* Punch edges */}
-      <div className="ticket-edge-top-left" />
-      <div className="ticket-edge-top-right" />
-      <div className="ticket-edge-bottom-left" />
-      <div className="ticket-edge-bottom-right" />
-      <div className="ticket-punches" />
-      <div className="ticket-punches-right" />
+      {/* <div className="ticket-edge-top-left" /> */}
+      {/* <div className="ticket-edge-top-right" /> */}
+      {/* <div className="ticket-edge-bottom-left" /> */}
+      {/* <div className="ticket-edge-bottom-right" /> */}
+      {/* <div className="ticket-punches" /> */}
+      {/* <div className="ticket-punches-right" /> */}
 
       {/* Inner content */}
-      <div className="ticket-inner">
+      <div className="ticket-inner relative">
         <div className="ticket-headline-container">
           <h3 className="ticket-headline text-xl sm:text-2xl md:text-3xl font-bold tracking-wide font-mono">
             {ticketName}
@@ -27,7 +27,7 @@ const Ticket = ({ ticketName, price }) => {
           </p>
         </div>
 
-        <div className="ticket-side-text font-semibold tracking-widest">
+        <div className="font-semibold tracking-widest absolute rotate-90 text-sm top-1/2 -left-18 translate-y-[-50%] translate-x-[50%] px-3 py-1  border-t-2">
           ORGATIC
         </div>
       </div>
@@ -36,7 +36,6 @@ const Ticket = ({ ticketName, price }) => {
         .ticket {
           background: var(--card);
           border-radius: var(--radius);
-          height: 9.8rem;
           max-width: 100%;
           margin: 0 auto;
           position: relative;
@@ -58,14 +57,13 @@ const Ticket = ({ ticketName, price }) => {
           background: var(--ticket-inner-bg, #fff);
           box-shadow: 0 0 0 0.3rem var(--border);
           border-radius: var(--radius);
-          height: 70%;
           margin: 1.5rem 2rem;
           display: flex;
           justify-content: center;
           align-items: center;
           text-align: center;
           position: relative;
-          padding: 0 1rem;
+          // padding: 0 1rem;
         }
         @media (max-width: 640px) {
           .ticket-inner {
@@ -100,29 +98,6 @@ const Ticket = ({ ticketName, price }) => {
 
         .ticket-admit {
           margin-top: 0.2rem;
-        }
-
-        .ticket-side-text {
-          position: absolute;
-          top: 2.2rem;
-          left: 0;
-          width: 7rem;
-          height: 4rem;
-          padding: 1rem 0;
-          text-align: center;
-          border-top: 0.2rem solid var(--border);
-          color: var(--muted-foreground);
-          transform: rotate(90deg) translate(-0.8rem, 3rem);
-          font-size: 0.75rem;
-          letter-spacing: 0.2rem;
-        }
-        @media (max-width: 640px) {
-          .ticket-side-text {
-            width: 6rem;
-            height: 3rem;
-            font-size: 0.7rem;
-            left: 1rem
-          }
         }
 
         // /* Punch edges */

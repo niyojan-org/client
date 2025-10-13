@@ -12,21 +12,21 @@ export default function TicketCardSelectable({
     <div
       onClick={!soldOut ? onClick : undefined}
       className={`
-        ticket
+        ticket h-16 w-full
         ${selected ? "border-1 border-primary ring-2 ring-primary/20" : "border border-gray-300"}
         ${soldOut ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:scale-[1.01] hover:shadow-sm"}
       `}
     >
       {/* Main Content */}
-      <div className="ticket-content">
+      <div className="ticket-content relative w-full flex flex-col items-center">
         <h3 className="ticket-name">{ticketName}</h3>
 
-        <div className="ticket-star" />
+        <div className="ticket-star bg-linear-to-r from-transparent via-border to-transparent h-[0.05rem] w-full" />
 
         <p className="ticket-price">₹{price}</p>
 
         {/* Side text */}
-        <div className={`ticket-side-text ${selected ? "bg-primary text-muted" : "text-muted-foreground"}`}>ORGATIC</div>
+        <div className={`absolute rotate-90 text-sm top-1/2 -left-9 h-full px-2 translate-y-[-50%]  border-t ${selected ? "bg-primary text-muted" : "text-muted-foreground"}`}>ORGATIC</div>
       </div>
 
       {soldOut && (
@@ -38,7 +38,6 @@ export default function TicketCardSelectable({
         .ticket {
           background: transparent;
           border-radius: 0.5rem;
-          height: 5rem;
           min-width: 10rem;
           max-width: 100%;
           position: relative;
@@ -47,51 +46,6 @@ export default function TicketCardSelectable({
           align-items: center;
           justify-content: center;
           transition: all 0.2s ease;
-        }
-
-        @media (max-width: 640px) {
-          .ticket {
-            height: 7rem;
-            min-width: 8rem;
-          }
-        }
-
-        /* Inner Content */
-        .ticket-content {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 0.25rem;
-          padding: 0.6rem 0.8rem;
-          width: 100%;
-          height: 100%;
-          position: relative;
-        }
-
-        .ticket-name {
-          font-size: 0.85rem;
-          font-weight: 600;
-          line-height: 1.2;
-          color: var(--foreground);
-          word-break: break-word;
-        }
-
-        @media (min-width: 640px) {
-          .ticket-name {
-            font-size: 1rem;
-          }
-        }
-
-        .ticket-star {
-          width: 100%;
-          height: 1px;
-          background: linear-gradient(
-            to right,
-            transparent,
-            var(--border),
-            transparent
-          );
         }
 
         .ticket-price {
