@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { IconMoodEmpty, IconAlertTriangle, IconSparkles } from "@tabler/icons-react";
+import { IconSparkles } from "@tabler/icons-react";
 
 import EventsList from "./components/EventList";
-import { useLoader } from "@/components/LoaderContext";
 import useEventStore from "@/store/eventStore";
-import Navbar from "./components/Navbar";
 import SearchBar from "./components/SearchBar";
 import { EventCardSkeleton } from "./components/EventCardSkeleton";
 
@@ -42,7 +40,6 @@ export default function EventsPage() {
 
   return (
     <div className="flex min-h-screentransition-colors duration-300">
-      <Navbar />
 
       <main className="flex-1 overflow-auto pt-[72px] px-4 sm:px-6 lg:px-8">
         {/* Compact Header */}
