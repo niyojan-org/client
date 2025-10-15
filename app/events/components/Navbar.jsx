@@ -40,7 +40,7 @@ export default function Navbar() {
     { id: 'contact', label: 'Contact', icon: <IconPhoneCall size={18} />, href: '/contact' },
     organization
       ? { id: 'manage-org', label: 'My Organization', icon: <IconLayoutDashboard size={18} />, href: '/org' }
-      : { id: 'switch-org', label: 'Organizer Mode', icon: <IconLayoutDashboard size={18} />, href: '/org/create' },
+      : { id: 'switch-org', label: 'Organizer', icon: <IconLayoutDashboard size={18} />, href: '/org/create' },
   ], [organization]);
 
   return (
@@ -48,10 +48,10 @@ export default function Navbar() {
       ref={ref}
       animate={{ y: visible ? 8 : 0 }}
       transition={{ type: 'spring', stiffness: 200, damping: 40 }}
-      className="fixed inset-x-[2%] top-3 z-50 w-full rounded-full backdrop-blur-lg"
+      className="fixed inset-x-[2%] top-3 z-50 w-[96%] rounded-full backdrop-blur-lg"
     >
       <motion.div
-        className="mx-auto flex max-w-[95%] items-center justify-between rounded-full px-6 py-2 transition-all duration-300"
+        className="mx-auto flex max-w-[95%] items-center justify-between rounded-full px-1 py-2 transition-all duration-300"
         animate={{
           backgroundColor: visible ? 'rgba(244,247,255,0.9)' : 'rgba(255,255,255,0)',
           backdropFilter: visible ? 'blur(10px)' : 'blur(0px)',

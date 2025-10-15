@@ -20,8 +20,7 @@ import React, { useRef, useState } from "react";
 // ──────────────────────────────
 //
 export const Navbar = ({ children, className }) => {
-  const ref = useRef(null);
-  const { scrollY } = useScroll({ target: ref });
+  const { scrollY } = useScroll(); // <-- track window scroll
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -30,20 +29,16 @@ export const Navbar = ({ children, className }) => {
 
   return (
     <motion.div
-      ref={ref}
       className={cn(
         "fixed inset-x-0 top-0 z-50 w-full transition-all duration-300 ease-in-out",
         className
       )}
     >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(child, { visible })
-          : child
-      )}
+      {typeof children === "function" ? children(visible) : children}
     </motion.div>
   );
 };
+
 
 //
 // ──────────────────────────────
@@ -56,7 +51,7 @@ export const NavBody = ({ children, className, visible }) => {
       animate={{
         backgroundColor: visible
           ? "rgba(255,255,255,0.95)"
-          : "rgba(255,255,255,0)",
+          : "rgba(255,255,255,0.85)", 
         boxShadow: visible
           ? "0 4px 12px rgba(0,0,0,0.08)"
           : "0 0 0 rgba(0,0,0,0)",
@@ -65,7 +60,7 @@ export const NavBody = ({ children, className, visible }) => {
       }}
       transition={{ type: "spring", stiffness: 180, damping: 30 }}
       className={cn(
-        "mx-auto hidden w-full max-w-7xl items-center justify-between rounded-full px-8 py-3 lg:flex transition-all duration-300",
+        "mx-auto flex w-full max-w-7xl items-center justify-between rounded-full px-8 py-3 transition-all duration-300",
         className
       )}
     >
@@ -73,6 +68,7 @@ export const NavBody = ({ children, className, visible }) => {
     </motion.div>
   );
 };
+
 
 //
 // ──────────────────────────────
@@ -122,11 +118,7 @@ export const MobileNav = ({ children, className, visible }) => {
         backdropFilter: visible ? "blur(10px)" : "blur(0px)",
         y: visible ? 4 : 0,
       }}
-      transition={{
-        type: "spring",
-        stiffness: 200,
-        damping: 40,
-      }}
+      transition={{ type: "spring", stiffness: 200, damping: 40 }}
       className={cn(
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between px-4 py-3 lg:hidden rounded-2xl transition-all duration-300",
         className
