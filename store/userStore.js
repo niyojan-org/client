@@ -93,12 +93,14 @@ export const useUserStore = create((set, get) => ({
       message: null,
     });
     toast.success("Logout successful!");
+    return true;
   },
 
   // --- FETCH USER ---
   fetchUser: async () => {
     try {
       set({ loading: true, error: null });
+      console.log("API CALL");
 
       const token = localStorage.getItem("token");
       if (!token) {
