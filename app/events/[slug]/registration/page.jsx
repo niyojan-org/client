@@ -103,15 +103,15 @@ export default function RegistrationPage() {
   };
 
   // 🧩 handle pending states
-  const handlePendingPaymentResponse = (participantData) => {
-    if (!participantData) {
+  const handlePendingPaymentResponse = (details) => {
+    if (!details?.payment) {
       toast.error("Unable to load your pending registration. Please try again.");
       return false;
     }
-    const payment = participantData.payment;
-    if (payment && (payment.status === "pending" || payment.status === "failed")) {
-      setParticipant(participantData);
-      setPendingPayment(payment);
+    console.log(details.payment)
+    if (details.payment && (details.payment.status === "pending" || details.payment.status === "failed")) {
+      setParticipant(details.participant);
+      setPendingPayment(details.payment);
       setShowPendingDialog(true);
       return true;
     }
@@ -239,9 +239,9 @@ export default function RegistrationPage() {
         setShowPendingDialog(false);
       }
     } catch (err) {
-      const res = err.response?.data;
-      if (res?.code === "PARTICIPANT_PENDING_PAYMENT" && res?.error) {
-        handlePendingPaymentResponse(res.error);
+      const res = err.response?.data.error;
+      if (res?.code === "PARTICIPANT_PENDING_PAYMENT" && res?.details?.payment) {
+        handlePendingPaymentResponse(res.details);
         return;
       }
       if (res?.code === "PARTICIPANT_CONFIRMED" || res?.code === "ALREADY_REGISTERED") {
@@ -258,7 +258,7 @@ export default function RegistrationPage() {
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
 
- 
+
   // if (error && !loadingRegistrationForm) {
   //   return <Error404 />;
   // }
@@ -460,41 +460,41 @@ export default function RegistrationPage() {
                     />
                   ))}
                   {/* Coupon Input */}
-                {registrationForm?.allowCoupons && (
-                  <CouponInput
-                    verifying={verifyingCoupon}
-                    couponData={couponData}
-                    appliedCode={couponData?.code}
-                    discountAmount={couponDiscount}
-                    finalPrice={finalPrice}
-                    ticketPrice={originalPrice}
-                    onApply={async (code) => {
-                      try {
-                        const { discountAmount } = await verifyCouponCode(
-                          slug,
-                          code,
-                          selectedTicket?.price
-                        );
-                        setCouponCode(code);
-                        toast.success(
-                          `Coupon applied! ₹${discountAmount} off your ticket`
-                        );
-                      } catch (err) {
-                        toast.error(
-                          err.response?.data?.message || "Invalid coupon code"
-                        );
-                      }
-                    }}
-                    onClear={() => {
-                      clearCoupon();
-                      setCouponCode("");
-                    }}
-                    className="max-w-sm"
-                  />
-                )}
+                  {registrationForm?.allowCoupons && (
+                    <CouponInput
+                      verifying={verifyingCoupon}
+                      couponData={couponData}
+                      appliedCode={couponData?.code}
+                      discountAmount={couponDiscount}
+                      finalPrice={finalPrice}
+                      ticketPrice={originalPrice}
+                      onApply={async (code) => {
+                        try {
+                          const { discountAmount } = await verifyCouponCode(
+                            slug,
+                            code,
+                            selectedTicket?.price
+                          );
+                          setCouponCode(code);
+                          toast.success(
+                            `Coupon applied! ₹${discountAmount} off your ticket`
+                          );
+                        } catch (err) {
+                          toast.error(
+                            err.response?.data?.message || "Invalid coupon code"
+                          );
+                        }
+                      }}
+                      onClear={() => {
+                        clearCoupon();
+                        setCouponCode("");
+                      }}
+                      className="max-w-sm"
+                    />
+                  )}
                 </div>
 
-                
+
 
                 {/* Dynamic Button Label */}
                 <Button
