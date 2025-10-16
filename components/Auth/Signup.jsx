@@ -91,7 +91,7 @@ export default function Signup({ onViewChange }) {
         value={formData.name}
         onChange={handleInputChange}
         autoComplete="name"
-        className="border-border w-full p-2 rounded-full border pl-4 focus:border-ring focus:ring-1 focus:ring-ring"
+        className="border-border w-full p-0 rounded-full border pl-4 focus:border-primary"
       />
       {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
 
@@ -102,7 +102,7 @@ export default function Signup({ onViewChange }) {
         value={formData.email}
         onChange={handleInputChange}
         autoComplete="email"
-        className="border-border w-full p-2 rounded-full border pl-4 focus:border-ring focus:ring-1 focus:ring-ring"
+        className="border-border w-full p-2 rounded-full border pl-4 focus-visible:ring-2 focus-visible:ring-primary"
       />
       {errors.email && <p className="text-destructive text-sm">{errors.email}</p>}
 
@@ -114,16 +114,16 @@ export default function Signup({ onViewChange }) {
           value={formData.password}
           onChange={handleInputChange}
           autoComplete="new-password"
-          className="border-border w-full p-2 rounded-full border pl-4 focus:border-ring focus:ring-1 focus:ring-ring"
+          className="border-border w-full p-2 rounded-full border pl-4 focus-visible:ring-2 focus-visible:ring-primary"
         />
-        <button
+        <Button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           aria-label={showPassword ? 'Hide password' : 'Show password'}
-          className="absolute right-3 top-3/5 -translate-y-1/6 text-muted-foreground hover:text-foreground transition-colors"
+          className="absolute right-2 top-3/6 -translate-y-1/6 bg-transparent hover:bg-transparent "
         >
           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-        </button>
+        </Button>
       </div>
       {errors.password && <p className="text-destructive text-sm">{errors.password}</p>}
 
@@ -168,13 +168,13 @@ export default function Signup({ onViewChange }) {
         </Link>
         <p className="whitespace-nowrap">
           Already have an account?{' '}
-          <button
+          <Button
             type="button"
             onClick={() => onViewChange('login')}
-            className="text-primary hover:underline hover:cursor-pointer transition-colors"
+            className=" bg-transparent hover:bg-transparent"
           >
             Log In
-          </button>
+          </Button>
         </p>
       </div>
     </form>

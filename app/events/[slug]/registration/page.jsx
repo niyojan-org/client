@@ -258,9 +258,11 @@ export default function RegistrationPage() {
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
 
-  if (error && !loadingRegistrationForm) {
-    return <Error404 />;
-  }
+ 
+  // if (error && !loadingRegistrationForm) {
+  //   return <Error404 />;
+  // }
+
   if (!registrationForm && !loadingRegistrationForm) {
     return null;
   }
@@ -353,7 +355,7 @@ export default function RegistrationPage() {
         </div>
       )}
 
-      {/* ✅ SUCCESS */}
+      {/*  SUCCESS */}
       {paymentStatus === "success" && (participant || pendingPayment) && (
         <div className="flex items-center justify-center bg-card rounded-2xl p-8 border border-border shadow-md text-center">
           <div className="flex flex-col items-center space-y-4">
@@ -364,7 +366,7 @@ export default function RegistrationPage() {
               Registration Successful!
             </h2>
             <p className="text-foreground">
-              🎉 Thank you <strong>{participant.name}</strong> for registering.
+              Thank you <strong>{participant.name}</strong> for registering.
             </p>
             <p className="text-muted-foreground">
               A confirmation email has been sent to <strong>{participant.email}</strong>.
@@ -444,7 +446,7 @@ export default function RegistrationPage() {
                   e.preventDefault();
                   handleSubmitSingle();
                 }}
-                className="space-y-6"
+                className="space-y-5"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {allFields.map((f) => (
@@ -457,9 +459,7 @@ export default function RegistrationPage() {
                       }
                     />
                   ))}
-                </div>
-
-                {/* Coupon Input */}
+                  {/* Coupon Input */}
                 {registrationForm?.allowCoupons && (
                   <CouponInput
                     verifying={verifyingCoupon}
@@ -492,6 +492,9 @@ export default function RegistrationPage() {
                     className="max-w-sm"
                   />
                 )}
+                </div>
+
+                
 
                 {/* Dynamic Button Label */}
                 <Button

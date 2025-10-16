@@ -85,19 +85,19 @@ export default function ForgotPassword({ onViewChange, userEmail, setUserEmail }
         Submit
       </Button>
 
-      <div className="mt-auto pt-8 flex flex-col sm:flex-row sm:justify-between items-center text-xs text-muted-foreground gap-y-4">
+      <div className="mt-auto  flex flex-col sm:flex-row sm:justify-between items-center text-xs text-muted-foreground gap-y-4">
         <Link href="/terms-and-conditions" className="hover:underline whitespace-nowrap font-medium hover:text-foreground transition-colors">
           Terms & Conditions
         </Link>
         <p className="whitespace-nowrap font-medium">
           Back to{" "}
-          <button
+          <Button
             type="button"
             onClick={() => onViewChange("login")}
-            className="text-primary hover:underline hover:cursor-pointer transition-colors"
+            className="text-primary hover:underline bg-transparent hover:bg-transparent transition-colors"
           >
             Login
-          </button>
+          </Button>
         </p>
       </div>
     </form>

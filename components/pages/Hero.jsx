@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
 import React, { useMemo } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Button } from "@/components/ui/button"; // shadcn/ui button
+import { Button } from "@/components/ui/button";
+import { IconBrandEvernote, IconTimelineEventExclamation, IconTimelineEventFilled } from "@tabler/icons-react";
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
@@ -19,7 +20,7 @@ export default function Hero() {
     }
     return {
       fadeUp: {
-        initial: { opacity: 0, y: 18 },
+        initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 },
       },
     };
@@ -28,22 +29,21 @@ export default function Hero() {
   return (
     <section
       aria-label="Hero"
-      className="relative overflow-hidden bg-[color:var(--background)] text-[color:var(--foreground)]"
-      style={{ WebkitFontSmoothing: "antialiased" }}
+      className="relative overflow-hidden bg-[color:var(--background)] text-[color:var(--foreground)] transition-colors duration-300"
     >
       {/* Background blobs */}
       <svg
         aria-hidden="true"
-        className="pointer-events-none absolute -top-8 left-[10%] w-[360px] h-[360px] md:w-[520px] md:h-[520px] opacity-20"
+        className="absolute -top-16 left-[10%] w-[360px] h-[360px] md:w-[520px] md:h-[520px] opacity-20 pointer-events-none"
         viewBox="0 0 600 600"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
       >
         <defs>
           <linearGradient id="g1" x1="0" x2="1">
-            <stop offset="0%" stopColor="#7c3aed" />
-            <stop offset="50%" stopColor="#ec4899" />
-            <stop offset="100%" stopColor="#6366f1" />
+            <stop offset="0%" stopColor="var(--primary)" />
+            <stop offset="50%" stopColor="var(--accent)" />
+            <stop offset="100%" stopColor="var(--secondary)" />
           </linearGradient>
           <filter id="blur1" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="40" />
@@ -57,32 +57,8 @@ export default function Hero() {
         </g>
       </svg>
 
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-6%] right-[8%] w-[220px] h-[220px] md:w-[360px] md:h-[360px] opacity-18"
-        viewBox="0 0 600 600"
-        fill="none"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <linearGradient id="g2" x1="0" x2="1">
-            <stop offset="0%" stopColor="#06b6d4" />
-            <stop offset="100%" stopColor="#60a5fa" />
-          </linearGradient>
-          <filter id="blur2" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="28" />
-          </filter>
-        </defs>
-        <g filter="url(#blur2)">
-          <circle cx="300" cy="300" r="180" fill="url(#g2)">
-            <animate attributeName="cx" dur="14s" repeatCount="indefinite" values="300;285;310;300" />
-            <animate attributeName="cy" dur="11s" repeatCount="indefinite" values="300;315;285;300" />
-          </circle>
-        </g>
-      </svg>
-
       {/* Main content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32 lg:py-36 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-28 md:py-32 lg:py-36 text-center">
         <motion.h1
           {...v.fadeUp}
           initial="initial"
@@ -92,9 +68,7 @@ export default function Hero() {
           style={{ lineHeight: 1.06, letterSpacing: "0.02em", fontFamily: "var(--font-source-sans-3)" }}
         >
           Build Events.{" "}
-          <span
-            className="shape-moments bg-clip-text text-transparent bg-gradient-to-r from-[#7c3aed] via-[#ec4899] to-[#6366f1]"
-          >
+          <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent shape-moments">
             Shape Moments.
           </span>{" "}
           Inspire Audiences.
@@ -119,28 +93,16 @@ export default function Hero() {
           transition={{ delay: 0.36, duration: 0.6 }}
           className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center"
         >
-          <Button asChild className="px-7 py-3 rounded-xl shadow-lg font-semibold">
-            <motion.span
-              whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}}
-              whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
+          <Button asChild className="px-7 py-3 rounded-xl shadow-lg font-semibold bg-gradient-to-r from-primary via-accent to-secondary text-card hover:scale-105 transition-transform duration-300">
+            <motion.span whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}} whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}} transition={{ type: "spring", stiffness: 300 }}>
               <Link href="/auth" aria-label="Host Events">
                 Host Events
               </Link>
             </motion.span>
           </Button>
 
-          <Button
-            asChild
-            variant="outline"
-            className="px-7 py-3 rounded-xl font-semibold text-[color:var(--primary)]"
-          >
-            <motion.span
-              whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}}
-              whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
+          <Button asChild variant="outline" className="px-7 py-3 rounded-xl font-semibold border-primary text-primary hover:bg-primary/10 hover:border-primary transition-all duration-300">
+            <motion.span whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}} whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}} transition={{ type: "spring", stiffness: 300 }}>
               <Link href="/events" aria-label="Explore Events">
                 Explore Events
               </Link>
@@ -153,13 +115,13 @@ export default function Hero() {
           initial="initial"
           animate="animate"
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-8 text-sm text-[color:var(--muted-foreground)]"
+          className="mt-45 text-sm text-[color:var(--muted-foreground)]"
         >
-          Trusted by <strong>10,000+</strong> event pros worldwide 🎉
+          Trusted by <strong>1000+</strong> of Organizer & Participants
         </motion.div>
       </div>
 
-      {/* ✨ Local styles with hover shine effect */}
+      {/* ✨ Local Styles */}
       <style jsx>{`
         .shape-moments {
           position: relative;
@@ -178,11 +140,7 @@ export default function Hero() {
         a:focus,
         button:focus {
           outline: none;
-          box-shadow: none; /* 🔥 removed the default ring */
-        }
-
-        @media (max-width: 420px) {
-          .max-w-6xl { padding-left: 18px; padding-right: 18px; }
+          box-shadow: none;
         }
       `}</style>
     </section>

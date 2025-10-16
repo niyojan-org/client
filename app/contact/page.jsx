@@ -6,53 +6,55 @@ import { SuccessModal } from "./components/SuccessModal";
 import { ContactMethods } from "./components/ContactMethods";
 
 const Contact02Page = () => {
-    const {
-        formData,
-        files,
-        loading,
-        success,
-        errors,
-        submittedData,
-        handleChange,
-        handleFileChange,
-        removeFile,
-        handleSubmit,
-        resetForm,
-    } = useContactForm();
+  const {
+    formData,
+    files,
+    loading,
+    success,
+    errors,
+    submittedData,
+    handleChange,
+    handleFileChange,
+    removeFile,
+    handleSubmit,
+    resetForm,
+  } = useContactForm();
 
-    return (
-        <div className="">
-            <div className="w-full mx-auto space-y-1">
-                <p className="text-base sm:text-lg text-muted-foreground">
-                    We&apos;d love to hear from you. Please fill out this form or shoot us
-                    an email.
-                </p>
-                <div className="grid lg:grid-cols-2 gap-8 md:gap-10">
-                    <ContactMethods />
+  return (
+    <div className="w-full max-w-7xl mx-auto flex flex-col gap-8 items-center  my-auto h-full">
+      {/* Intro text */}
+      {/* <p className="text-base sm:text-lg text-muted-foreground text-center lg:text-left">
+        We&apos;d love to hear from you. Please fill out this form or shoot us
+        an email.
+      </p> */}
 
-                    {/* Form */}
-                    <ContactFormComponent
-                        formData={formData}
-                        files={files}
-                        loading={loading}
-                        errors={errors}
-                        onSubmit={handleSubmit}
-                        onChange={handleChange}
-                        onFileChange={handleFileChange}
-                        onRemoveFile={removeFile}
-                    />
-                </div>
+      {/* Grid with methods & form */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-center">
+        {/* Contact Methods */}
+        <ContactMethods />
 
-                {/* Success Modal */}
-                <SuccessModal
-                    open={success}
-                    onClose={() => resetForm()}
-                    data={submittedData}
-                    onSendAnother={resetForm}
-                />
-            </div>
-        </div>
-    );
+        {/* Contact Form */}
+        <ContactFormComponent
+          formData={formData}
+          files={files}
+          loading={loading}
+          errors={errors}
+          onSubmit={handleSubmit}
+          onChange={handleChange}
+          onFileChange={handleFileChange}
+          onRemoveFile={removeFile}
+        />
+      </div>
+
+      {/* Success Modal */}
+      <SuccessModal
+        open={success}
+        onClose={resetForm}
+        data={submittedData}
+        onSendAnother={resetForm}
+      />
+    </div>
+  );
 };
 
 export default Contact02Page;

@@ -40,7 +40,7 @@ const contactMethods = [
 
 export const ContactMethods = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8 h-fit ">
+    <div className="grid grid-cols-2 sm:grid-cols-2 gap-x-8 gap-y-7  ">
       {contactMethods.map((method, index) => {
         const Icon = method.icon;
 

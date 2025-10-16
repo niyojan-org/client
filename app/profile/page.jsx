@@ -10,6 +10,7 @@ import { PersonalInformation } from "@/components/profile/PersonalInformation";
 import { ChangePassword } from "@/components/profile/ChangePassword";
 import { AccountSettings } from "@/components/profile/AccountSettings";
 import { TicketHistory } from "@/components/profile/TicketHistory";
+import { DropdownMenuItem, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 
 export default function Profile() {
   const { user, logout, updateUser } = useUserStore();
@@ -48,6 +49,7 @@ export default function Profile() {
         <div className="lg:col-span-1 flex flex-col overflow-hidden min-h-0">
           <TicketHistory className="flex-1 min-h-0" />
         </div>
+
       </div>
     </div>
   );

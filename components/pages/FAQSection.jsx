@@ -1,8 +1,10 @@
 "use client";
+
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import OrganizerFAQ from "../OrganizerFAQ";
 import { AttendesFAQ } from "../AttendesFAQ";
+import { Button } from "../ui/button";
 
 const FAQSection = () => {
   const [activeTab, setActiveTab] = useState("organizer");
@@ -14,33 +16,36 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-8 bg-gradient-to-b from-white via-indigo-50/20 to-white">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-20 px-4 sm:px-8 bg-gradient-to-b from-background via-primary/5 to-card transition-colors duration-700">
+      <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-indigo-900 mb-10 font-sans">
+        <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 font-sans text-primary dark:text-primary-foreground">
           FAQs for Hosts & Attendees
         </h2>
 
         {/* Tabs */}
-        <div className="flex justify-center gap-4 flex-wrap mb-10">
-          {["organizer", "attendee"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-200 shadow-sm border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 ${
-                activeTab === tab
-                  ? "bg-indigo-600 text-white border-indigo-600"
-                  : "bg-white text-indigo-800 border-indigo-200 hover:bg-indigo-50"
-              }`}
-              aria-pressed={activeTab === tab}
-              aria-label={`View ${tab} FAQs`}
-            >
-              {tab === "organizer" ? "Organizers" : "Attendees"}
-            </button>
-          ))}
+        <div className="flex justify-center gap-3 flex-wrap mb-10">
+          {["organizer", "attendee"].map((tab) => {
+            const isActive = activeTab === tab;
+            return (
+              <Button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`px-6 py-2 rounded-full text-sm font-semibold shadow-sm border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                  isActive
+                    ? "bg-primary text-primary-foreground border-primary/20 hover:bg-primary/90"
+                    : "bg-card text-foreground border border-border hover:bg-muted hover:text-primary"
+                }`}
+                aria-pressed={isActive}
+                aria-label={`View ${tab} FAQs`}
+              >
+                {tab === "organizer" ? "Organizers" : "Attendees"}
+              </Button>
+            );
+          })}
         </div>
 
-        {/* FAQ Panels with Animation */}
+        {/* FAQ Panels */}
         <div className="mt-6 relative min-h-[300px]">
           <AnimatePresence mode="wait">
             {activeTab === "organizer" ? (
@@ -50,6 +55,7 @@ const FAQSection = () => {
                 animate="visible"
                 exit="exit"
                 variants={fadeVariants}
+                className="rounded-xl p-6 bg-card/80 backdrop-blur-sm shadow-lg border border-border/50 transition-colors duration-500"
               >
                 <OrganizerFAQ />
               </motion.div>
@@ -60,6 +66,7 @@ const FAQSection = () => {
                 animate="visible"
                 exit="exit"
                 variants={fadeVariants}
+                className="rounded-xl p-6 bg-card/80 backdrop-blur-sm shadow-lg border border-border/50 transition-colors duration-500"
               >
                 <AttendesFAQ />
               </motion.div>

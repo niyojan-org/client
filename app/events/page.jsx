@@ -54,9 +54,9 @@ export default function EventsPage() {
   });
 
   return (
-    <div className="flex min-h-screentransition-colors duration-300">
+    <div className="flex min-h-screen transition-colors duration-300">
 
-      <main className="flex-1 overflow-auto pt-[72px] px-4 sm:px-6 lg:px-8">
+      <main className="flex-1 overflow-auto mt-[20px] mb-20 px-4 sm:px-6 lg:px-8">
         {/* Compact Header */}
         <header className="mb-2 mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">

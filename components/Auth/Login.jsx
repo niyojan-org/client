@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import FloatingInput from "../ui/FloatingInput";
 import { useUserStore } from "../../store/userStore";
-import { useRef } from "react";
 import { useLoader } from "@/components/LoaderContext";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
-
 
 export default function Login({ onViewChange, userEmail, setUserEmail }) {
   const formRef = useRef(null);
@@ -18,16 +18,11 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-
   const { login, loading, error } = useUserStore();
   const { showLoader, hideLoader } = useLoader();
 
   useEffect(() => {
-    if (loading) {
-      showLoader();
-    } else {
-      hideLoader();
-    }
+    loading ? showLoader() : hideLoader();
   }, [loading, showLoader, hideLoader]);
 
   const handleInputChange = (e) => {
@@ -35,15 +30,14 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "", general: "" }));
 
-    if (name == "email") {
-      setUserEmail(e.target.value);
-    }
+    if (name === "email") setUserEmail(value);
   };
 
   const validateForm = () => {
     const newErrors = {};
     if (!formData.email) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Invalid email format";
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters";
@@ -59,8 +53,13 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
       return;
     }
 
-    const success = await login({ email: formData.email, password: formData.password });
+    const success = await login({
+      email: formData.email,
+      password: formData.password,
+    });
+
     if (success) {
+      toast.success("Login successful!");
       formRef.current.reset();
       setFormData({ email: "", password: "" });
       router.push("/events");
@@ -68,121 +67,147 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
   };
 
   return (
-    <form
-      ref={formRef}
-      value={userEmail}
-      onSubmit={handleSubmit}
-      autoComplete="off"
-      className="space-y-4 font-poppins w-full max-w-md mx-auto pb-8 flex flex-col min-h-[80vh]"
-    >
-      {/* {errors.general && <p className="text-red-500 text-sm text-center">{errors.general}</p>} */}
-
-      <div>
-        {error && (
-          <div className="text-red-500 text-sm text-center">
-            {/* <p>{error}</p> */}
-            {error.toLowerCase().includes("not verified") && formData.email && (
-              <button
-                type="button"
-                onClick={() => useUserStore.getState().resendVerificationEmail(formData.email)}
-                className="mt-2 text-blue-600 hover:underline cursor-pointer"
-              >
-                Resend Verification Email
-              </button>
-            )}
-          </div>
-        )}
-        <FloatingInput
-          label="Email address"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          autoComplete="email"
-          className="w-full p-2 rounded-full border"
-        />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-
-        <div className="relative">
-          <FloatingInput
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            autoComplete="new-password"
-            className="w-full p-2 rounded-full border pl-6"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPassword(!showPassword)}
-            aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute right-3 top-3/5 -translate-y-1/6 text-gray-500 hover:text-gray-700"
-          >
-            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-          </button>
-        </div>
-        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-
-        <Button
-          type="submit"
-          disabled={loading || !formData.email || !formData.password}
-          className="w-full mt-4 rounded-full cursor-pointer"
-        >
-          {/* loding on button */}
-          {loading ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg
-                className="animate-spin h-5 w-5 text-gray-800"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-              </svg>
-              Logging in...
-            </span>
-          ) : (
-            "Submit"
+    <Card className="w-full max-w-md  border-none shadow-none bg-transparent">
+      <form
+        ref={formRef}
+        value={userEmail}
+        onSubmit={handleSubmit}
+        autoComplete="off"
+        className="font-inter w-full flex flex-col"
+      >
+        <CardContent className="p-0">
+          {/* Error */}
+          {error && (
+            <div className="text-destructive text-sm text-center mb-0">
+              {error}
+              {error.toLowerCase().includes("not verified") &&
+                formData.email && (
+                  <Button
+                    variant="link"
+                    type="button"
+                    onClick={() =>
+                      useUserStore
+                        .getState()
+                        .resendVerificationEmail(formData.email)
+                    }
+                    className="text-primary p-0 ml-1"
+                  >
+                    Resend Verification Email
+                  </Button>
+                )}
+            </div>
           )}
-        </Button>
-      </div>
 
-      {/* forget password link */}
-      <div className="text-center text-sm text-gray-600 font-poppins whitespace-nowrap mt-2 pl-25 md:pl-70">
-        <button
-          type="button"
-          onClick={() => onViewChange("forgot")}
-          className="text-blue hover:underline mb-2 hover:cursor-pointer"
-        >
-          Forgot password?
-        </button>
-      </div>
+          {/* Email */}
+          <FloatingInput
+            label="Email address"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            autoComplete="email"
+            className="w-full p-0 rounded-full border border-border bg-background text-foreground"
+          />
+          {errors.email && (
+            <p className="text-destructive text-sm mt-1">{errors.email}</p>
+          )}
 
-      {/* Terms and Conditions */}
-      <div className="flex flex-col sm:flex-row sm:justify-between items-center text-xs text-muted-foreground gap-y-5 px-4 lg:mt-18">
-        <Link href="/terms-and-conditions" className="hover:underline whitespace-nowrap font-medium ">
-          Terms & Conditions
-        </Link>
-        <p className="whitespace-nowrap font-medium">
-          Don’t have an account?{" "}
-          <button
-            type="button"
-            onClick={() => onViewChange("signup")}
-            className="text-blue-600 hover:underline hover:cursor-pointer"
+          {/* Password */}
+          <div className="relative mt-3">
+            <FloatingInput
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              autoComplete="current-password"
+              className="w-full p-2 rounded-full border border-border bg-background text-foreground pr-10"
+            />
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-1 top-1/2 -translate-y-1/4  text-muted-foreground hover:text-foreground"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </Button>
+          </div>
+          {errors.password && (
+            <p className="text-destructive text-sm mt-1">{errors.password}</p>
+          )}
+
+          {/* Submit */}
+          <Button
+            type="submit"
+            disabled={loading || !formData.email || !formData.password}
+            className="w-full mt-5 rounded-full"
           >
-            Sign up
-          </button>
-        </p>
-      </div>
-    </form>
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg
+                  className="animate-spin h-5 w-5 text-primary-foreground"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z"
+                  />
+                </svg>
+                Logging in...
+              </span>
+            ) : (
+              "Login"
+            )}
+          </Button>
+        </CardContent>
+
+        <CardFooter className="flex flex-col items-center ">
+  {/* Forgot Password */}
+  <Button
+    variant="link"
+    type="button"
+    onClick={() => onViewChange("forgot")}
+    className="text-primary text-sm font-medium self-end -mr-1"
+  >
+    Forgot password?
+  </Button>
+
+  {/* Footer Links */}
+  <div className="flex flex-col sm:flex-row justify-between items-center w-full text-xs text-muted-foreground">
+    <Link
+      href="/terms-and-conditions"
+      className="hover:underline whitespace-nowrap font-medium hover:text-foreground transition-colors text-center sm:text-left"
+    >
+      Terms & Conditions
+    </Link>
+
+    <p className="whitespace-nowrap font-medium text-center sm:text-right">
+      Don’t have an account?{" "}
+      <Button
+        variant="link"
+        type="button"
+        onClick={() => onViewChange("signup")}
+        className="text-primary p-0 font-medium"
+      >
+        Sign up
+      </Button>
+    </p>
+  </div>
+</CardFooter>
+
+      </form>
+    </Card>
   );
 }

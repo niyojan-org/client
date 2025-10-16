@@ -2,11 +2,9 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
 import { LoaderProvider } from "@/components/LoaderContext";
-import { ScrollArea } from "@/components/ui/scroll-area"; 
-import {
-  Source_Code_Pro,
-  Source_Sans_3,
-} from "next/font/google";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 // Primary Fonts
 const sourceCodePro = Source_Code_Pro({
@@ -42,23 +40,27 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={[
-        sourceCodePro.variable,
-        sourceSans3.variable,
-      ].join(" ")}
+      className={[sourceCodePro.variable, sourceSans3.variable].join(" ")} suppressHydrationWarning
     >
       <body
-        className="relative antialiased h-[100dvh] overflow-hidden"
+        className="relative antialiased min-h-dvh overflow-hidden"
         style={{ fontFamily: "var(--font-source-sans-3)" }}
       >
-        <LoaderProvider>
-          {/* Apply ScrollArea globally */}
-          <ScrollArea className="h-full w-full">
-            <ClientLayout>{children}</ClientLayout>
-          </ScrollArea>
+        <ThemeProvider
+          attribute="class"
+          defaultThemes="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <LoaderProvider>
+            {/* Apply ScrollArea globally */}
+            <ScrollArea className="h-full w-full">
+              <ClientLayout>{children}</ClientLayout>
+            </ScrollArea>
 
-          <Toaster />
-        </LoaderProvider>
+            <Toaster />
+          </LoaderProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

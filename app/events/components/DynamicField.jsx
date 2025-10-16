@@ -17,8 +17,6 @@ import { PhoneInput } from "@/components/ui/phone-number-input"
 
 export default function DynamicField({ field, value, onChange }) {
   const { name, label, type, required, placeholder, options = [] } = field
-  // useEffect(() => setMounted(true), [])
-  // if (!mounted) return null;
 
   const Req = required ? <span className="text-red-500">*</span> : null
 
@@ -77,7 +75,7 @@ export default function DynamicField({ field, value, onChange }) {
           required={required}
           value={value || ""}
           onChange={(e) => onChange(name, e.target.value)}
-          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary min-h-[120px]"
+          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary min-h-[1px]"
         />
       </div>
     )

@@ -1,15 +1,16 @@
 'use client';
+import { Input } from "./input";
 
 export default function FloatingInput({ label, type = 'text', name = '', value: propValue, onChange, ...props }) {
   return (
-    <div className="relative w-full space-y-2">
+    <div className="relative w-full">
       <label
         htmlFor={name}
-        className="block text-sm text-muted-foreground font-inter px-4"
+        className="block text-sm text-muted-foreground font-inter "
       >
         {label}
       </label>
-      <input
+      <Input
         type={type}
         name={name}
         id={name}

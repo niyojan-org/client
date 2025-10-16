@@ -66,7 +66,7 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/20 to-background px-4 py-6 overflow-hidden overflow-y-hidden">
+    <div className="flex items-center justify-center bg-gradient-to-br from-background via-muted/20 to-background px-2  py-3 md:py-10 ">
 
       <div className="w-full max-w-5xl mx-auto h-auto md:h-[600px] flex flex-col md:flex-row md:bg-card rounded-2xl md:shadow-lg overflow-hidden md:border border-border">
 
@@ -77,7 +77,7 @@ export default function Auth() {
         <div className="w-full md:w-1/2 flex flex-col text-foreground justify-start p-1 md:p-8 bg-card/80 backdrop-blur-sm h-[500px] md:h-full overflow-y-hidden overflow-x-hidden rounded-xl border-l border-r border-border/20">
 
           <Link href="/" className="text-sm mb-2 inline-block hover:underline text-muted-foreground hover:text-foreground transition-colors">
-            ← Back to website
+            ← Back
           </Link>
 
           <Card className="w-full max-w-md mx-auto bg-transparent border-none shadow-none flex flex-col flex-1 px-4">
@@ -90,7 +90,7 @@ export default function Auth() {
 
             <GoogleAuthButton />
 
-            <CardContent className="flex flex-col flex-1 justify-between p-0">
+            <CardContent className="flex flex-col flex-1 justify-between">
               {view === 'login' &&
                 <Login userEmail={userEmail} setUserEmail={setUserEmail} onViewChange={handleViewChange} />}
 

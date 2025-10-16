@@ -14,7 +14,7 @@ export default function PaymentAssurance() {
   return (
     <>
       <section
-        className="relative bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 py-20 sm:py-28 overflow-hidden"
+        className="relative py-20 sm:py-28 overflow-hidden bg-gradient-to-r from-background via-primary/5 to-card transition-colors duration-500"
         aria-labelledby="payment-assurance-title"
       >
         {/* Background Pattern */}
@@ -29,14 +29,15 @@ export default function PaymentAssurance() {
                 height="40"
                 patternUnits="userSpaceOnUse"
               >
-                <circle cx="4" cy="4" r="1.5" fill="#7c3aed" />
-                <circle cx="20" cy="20" r="1.5" fill="#ec4899" />
+                <circle cx="4" cy="4" r="1.5" className="fill-primary" />
+                <circle cx="20" cy="20" r="1.5" className="fill-accent" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#dot-pattern)" />
           </svg>
         </div>
 
+        {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Text Section */}
@@ -49,13 +50,15 @@ export default function PaymentAssurance() {
             >
               <h2
                 id="payment-assurance-title"
-                className="text-3xl sm:text-4xl font-extrabold text-indigo-900 font-sans tracking-tight"
+                className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight text-primary dark:text-primary-foreground"
               >
                 Secure Payments with Razorpay
               </h2>
 
-              <p className="text-lg text-indigo-700 font-medium leading-relaxed max-w-xl">
-                Host and attend events with confidence. Razorpay ensures fast, secure, and reliable transactions — UPI, cards, netbanking, instant refunds, and automated payouts included.
+              <p className="text-lg leading-relaxed max-w-xl text-muted-foreground">
+                Host and attend events with confidence. Razorpay ensures fast, secure, and
+                reliable transactions — UPI, cards, netbanking, instant refunds, and automated
+                payouts included.
               </p>
 
               <div className="flex items-center gap-4 mt-4">
@@ -67,8 +70,8 @@ export default function PaymentAssurance() {
                   className="object-contain"
                   priority
                 />
-                <p className="text-sm text-indigo-500 font-medium">
-                  Trusted by 10M+ users across India
+                <p className="text-sm text-muted-foreground font-medium">
+                  Trusted by <span className="text-primary font-semibold">10M+</span> users across India
                 </p>
               </div>
             </motion.div>
@@ -86,18 +89,18 @@ export default function PaymentAssurance() {
                   src="/images/online-payment.svg"
                   alt="Secure Payment Illustration"
                   fill
-                  className="object-contain rounded-lg"
+                  className="object-contain rounded-lg drop-shadow-md"
                   loading="lazy"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-purple-400/20 rounded-full blur-2xl opacity-40" />
+                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl opacity-40" />
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Structured Data for SEO */}
+      {/* SEO Structured Data */}
       <Head>
         <script
           type="application/ld+json"

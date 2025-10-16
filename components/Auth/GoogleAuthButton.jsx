@@ -37,7 +37,7 @@ export default function GoogleAuthButton({ variant = "outline", className = "", 
             ) : (
                 <span className="flex items-center justify-center gap-3">
                     <IconBrandGoogle size={20} className="text-primary" />
-                    <span className="text-gray-700">Continue with Google</span>
+                    <span className="dark:text-foreground">Continue with Google</span>
                 </span>
             )}
         </Button>

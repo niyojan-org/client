@@ -14,14 +14,14 @@ const Error404 = () => {
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center h-dvh"
+      className="relative flex flex-col items-center justify-center"
       role="main"
     >
       <motion.div
         className="max-w-md w-full flex flex-col items-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
+        // initial={{ opacity: 0, y: 20 }}
+        // animate={{ opacity: 1, y: 0 }}
+        // transition={{ duration: 0.7 }}
       >
         <Icon404 />
 

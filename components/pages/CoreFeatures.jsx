@@ -1,6 +1,6 @@
-"use client";
-import React from "react";
-import { motion } from "framer-motion";
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
 import {
   Calendar,
   Ticket,
@@ -10,102 +10,115 @@ import {
   Settings,
   ShieldCheck,
   Sparkles,
-} from "lucide-react";
+} from 'lucide-react';
 
 export default function CoreFeatures() {
   const features = [
     {
-      title: "Effortless Event Creation",
-      description: "Plan and launch events or college fests within minutes — no tech skills required.",
+      title: 'Effortless Event Creation',
+      description:
+        'Plan and publish events or fests in minutes — no technical knowledge required. Focus on experience, not setup.',
       icon: Calendar,
     },
     {
-      title: "Secure Ticketing & Payments",
-      description: "Sell passes with Razorpay integration for instant, safe, and transparent transactions.",
+      title: 'Secure Ticketing & Payments',
+      description:
+        'Integrated Razorpay for smooth, instant, and verified payments — ensuring complete trust and transparency.',
       icon: Ticket,
     },
     {
-      title: "Smart Analytics Dashboard",
-      description: "Visualize attendance, engagement, and revenue in real-time for better decisions.",
+      title: 'Smart Analytics Dashboard',
+      description:
+        'Track attendance, sales, and engagement visually. Make confident, data-driven event decisions.',
       icon: BarChart,
     },
     {
-      title: "Automated Notifications",
-      description: "Keep your audience updated with real-time email and app alerts — effortlessly.",
+      title: 'Automated Notifications',
+      description:
+        'Stay connected with attendees via real-time email and push alerts, completely automated.',
       icon: Bell,
     },
     {
-      title: "Team Collaboration",
-      description: "Add admins, assign roles, and manage your event team with complete control.",
+      title: 'Team Collaboration',
+      description:
+        'Invite teammates, assign roles, and manage permissions — all from one secure dashboard.',
       icon: Users,
     },
     {
-      title: "Customizable Organization Panel",
-      description: "Tailor your organization’s portal — themes, settings, and permissions, all your way.",
+      title: 'Customizable Organization Panel',
+      description:
+        'Tailor your event portal — adjust themes, preferences, and layouts to match your brand.',
       icon: Settings,
     },
     {
-      title: "Data Security & Trust",
-      description: "Your data and transactions are encrypted and handled with enterprise-grade protection.",
+      title: 'Data Security & Trust',
+      description:
+        'We use enterprise-grade encryption to protect user and payment data — always safe, always private.',
       icon: ShieldCheck,
     },
     {
-      title: "Designed for Students",
-      description: "Built for the energy, creativity, and challenges of campus life — and beyond.",
+      title: 'Built for Students',
+      description:
+        'Crafted for the creativity, collaboration, and scale of campus events — flexible and future-ready.',
       icon: Sparkles,
     },
   ];
 
   return (
     <section
-      className="bg-gradient-to-b from-[#f9fafb] to-[#eef2ff] py-20 px-6 sm:px-10 lg:px-16"
-      aria-label="Core Features"
+      className="relative py-24 sm:py-12 px-6 sm:px-10 lg:px-16 bg-gradient-to-b from-background via-primary/5 to-card border-t border-border"
+      aria-labelledby="core-features-title"
     >
+      {/* Decorative Blobs */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-30 -z-10" />
+      <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl opacity-20 -z-10" />
+
       {/* Section Heading */}
       <motion.h2
+        id="core-features-title"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-4xl sm:text-5xl font-extrabold text-center text-indigo-900 mb-6"
+        transition={{ duration: 0.6 }}
+        className="text-3xl sm:text-5xl font-extrabold text-center text-primary mb-6 tracking-tight"
       >
-        <span className="bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
           Everything You Need
-        </span>{" "}
+        </span>{' '}
         to Host Smarter Events
       </motion.h2>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
         viewport={{ once: true }}
-        className="max-w-3xl mx-auto text-center text-gray-600 mb-16 text-lg"
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="max-w-3xl mx-auto text-center text-muted-foreground mb-16 text-lg leading-relaxed"
       >
-        From registrations to analytics, our tools help you plan, manage, and grow your events — all in one platform.
+        From registrations to analytics — manage, monitor, and scale your events confidently with one intuitive platform.
       </motion.p>
 
-      {/* Feature Cards */}
+      {/* Feature Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
         {features.map((feature, index) => {
           const Icon = feature.icon;
           return (
             <motion.div
               key={index}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300"
+              className="bg-card rounded-2xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-2 transition-all duration-300 flex flex-col"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05, y: -6 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="p-3 rounded-full bg-gradient-to-tr from-indigo-100 via-purple-100 to-pink-100 w-fit mb-5">
-                <Icon className="w-8 h-8 text-indigo-600" />
+              <div className="p-3 rounded-xl bg-gradient-to-tr from-primary/10 via-accent/10 to-secondary/10 w-fit mb-5">
+                <Icon className="w-8 h-8 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-indigo-900 mb-2">
+
+              <h3 className="text-lg font-semibold text-foreground mb-2">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed flex-1">
                 {feature.description}
               </p>
             </motion.div>
