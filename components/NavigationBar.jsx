@@ -26,23 +26,23 @@ import {
 
 import NotificationMenu from "@/components/navbar-components/notification-menu";
 import UserMenu, { SheetDownMenu } from "@/components/navbar-components/user-menu";
-import { ModeToggle } from "./navbar-components/settings-menu";
+import SettingsMenu from "./navbar-components/settings-menu";
 import Logo from "@/assets/Logo";
 import { useUserStore } from "@/store/userStore";
 import { IconCalendarEvent, IconInfoCircle, IconPhoneCall, IconBuilding, IconMenu2 } from "@tabler/icons-react";
 
 const baseNavigationLinks = [
-  { href: "/events", label: "Events", icon: IconCalendarEvent },
-  { href: "/features", label: "Features", icon: FileSignature },
-  { href: "/about", label: "About", icon: IconInfoCircle },
-  { href: "/contact", label: "Contact", icon: IconPhoneCall }
+  { href: "/events", label: "Events",  },
+  { href: "/features", label: "Features"},
+  { href: "/about", label: "About"},
+  { href: "/contact", label: "Contact"}
 ];
 
 const authNavigationLinks = [
-  { href: "/events", label: "Events", icon: IconCalendarEvent },
-  { href: "/about", label: "About", icon: IconInfoCircle },
-  { href: "/contact", label: "Contact", icon: IconPhoneCall },
-  { href: "/organization", label: "Organization", icon: IconBuilding }
+  { href: "/events", label: "Events"},
+  { href: "/about", label: "About",},
+  { href: "/contact", label: "Contact" },
+  { href: "/organization", label: "Organization" }
 ];
 
 export default function NavigationBar() {
@@ -78,7 +78,7 @@ export default function NavigationBar() {
               </SheetHeader>
               <nav className="flex flex-col gap-1 mt-4 flex-1">
                 {navigationLinks.map((link, idx) => {
-                  const Icon = link.icon;
+                  // const Icon = link.icon;
                   return (
                     <Link
                       key={idx}
@@ -86,7 +86,7 @@ export default function NavigationBar() {
                       onClick={() => setIsOpen(false)}
                       className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[color:var(--accent)]/10 transition-colors"
                     >
-                      <Icon size={20} className="text-[color:var(--muted-foreground)]" />
+                      {/* <Icon size={20} className="text-[color:var(--muted-foreground)]" /> */}
                       <span className="text-sm font-medium">{link.label}</span>
                     </Link>
                   );
@@ -107,14 +107,13 @@ export default function NavigationBar() {
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex gap-4">
             {navigationLinks.map((link, idx) => {
-              const Icon = link.icon;
               return (
                 <NavigationMenuItem key={idx}>
                   <NavigationMenuLink
                     href={link.href}
-                    className="flex items-center gap-2 px-2 py-1 font-medium rounded-md hover:bg-[color:var(--accent)]/10 hover:text-[color:var(--primary)] transition-colors"
+                    className="flex items-center gap-2 px-2 py-1 font-medium rounded-md hover:bg-[color:var(--accent)]/10 hover:text-primary text-lg transition-colors"
                   >
-                    <Icon size={16} className="text-[color:var(--muted-foreground)]/80" />
+                    {/* <Icon size={16} className="text-[color:var(--muted-foreground)]/80" /> */}
                     <span>{link.label}</span>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
@@ -126,7 +125,7 @@ export default function NavigationBar() {
         {/* Right: Actions */}
         <div className="flex items-center gap-3">
           <NotificationMenu />
-          <ModeToggle />
+          <SettingsMenu />
           <UserMenu />
         </div>
       </div>

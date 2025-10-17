@@ -10,7 +10,6 @@ import { Star, CheckCircle2, Mail, MapPin, Users, Award, Globe } from "lucide-re
 import { SpinnerCustom } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-
 // Tabler Icons for social links
 import { IconBrandFacebook, IconBrandInstagram, IconBrandLinkedin, IconBrandTwitter, IconBrandYoutube, IconGlobe } from "@tabler/icons-react";
 
@@ -150,7 +149,7 @@ export default function OrganizationPage() {
 
           {/* Footer */}
           <CardFooter className="flex flex-wrap gap-4 justify-between items-center">
-            <DynamicSocialLinks links={organization.socialLinks} />
+            <DynamicSocialLinks links={organization.socialLinks || {} } />
             <Button
               onClick={() => window.open(organization.website, "_blank")}
               className="bg-primary hover:bg-primary/90 text-primary-foreground"

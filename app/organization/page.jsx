@@ -139,14 +139,14 @@ export default function Organization() {
                 rel="noopener noreferrer"
               >
                 <Button className="bg-indigo-600 text-white hover:bg-indigo-700 transition font-semibold">
-                  Manage in Admin Panel
+                  Manage in Admin Panelllll
                 </Button>
               </Link>
             </CardFooter>
           </Card>
         )}
 
-        {/* --- Other Organizations --- */}
+        {/* --- Other Organizations --- without login public details showing*/}
         {organizationList.length > 0 && (
           <div className="space-y-8 ">
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -165,7 +165,7 @@ export default function Organization() {
                 <Card
                   key={org._id}
                   className="group cursor-pointer hover:shadow-2xl transition-shadow rounded-2xl flex flex-col justify-between border border-gray-200"
-                  onClick={() => router.push(`/org/${org.slug}`)}
+                  onClick={() => router.push(`/organization/${org.slug}`)}
                 >
                   {/* Card Header */}
                   <CardHeader className="px-5 pt-5">
