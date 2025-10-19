@@ -108,7 +108,7 @@ export default function RegistrationPage() {
       toast.error("Unable to load your pending registration. Please try again.");
       return false;
     }
-    console.log(details.payment)
+
     if (details.payment && (details.payment.status === "pending" || details.payment.status === "failed")) {
       setParticipant(details.participant);
       setPendingPayment(details.payment);
@@ -258,15 +258,9 @@ export default function RegistrationPage() {
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
 
-
-  // if (error && !loadingRegistrationForm) {
-  //   return <Error404 />;
-  // }
-
   if (!registrationForm && !loadingRegistrationForm) {
     return null;
   }
-
 
   // ---------- RENDER ----------
   return (
@@ -493,8 +487,6 @@ export default function RegistrationPage() {
                     />
                   )}
                 </div>
-
-
 
                 {/* Dynamic Button Label */}
                 <Button

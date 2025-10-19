@@ -10,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import api from "@/lib/api";
@@ -30,7 +33,7 @@ export default function CreateOrganization() {
   });
   const [loading, setLoading] = useState(false);
 
-  // --- AUTH REDIRECT ---
+  // --- Redirect if not authenticated ---
   useEffect(() => {
     if (!userLoading && !isAuthenticated) {
       toast.error("Please log in to create an organization");
@@ -40,25 +43,15 @@ export default function CreateOrganization() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setOrgData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setOrgData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCategoryChange = (value) => {
-    setOrgData((prev) => ({
-      ...prev,
-      category: value,
-      subCategory: "",
-    }));
+    setOrgData((prev) => ({ ...prev, category: value, subCategory: "" }));
   };
 
   const handleSubCategoryChange = (value) => {
-    setOrgData((prev) => ({
-      ...prev,
-      subCategory: value,
-    }));
+    setOrgData((prev) => ({ ...prev, subCategory: value }));
   };
 
   const getSubCategories = (category) => {
@@ -70,7 +63,7 @@ export default function CreateOrganization() {
         "Business School",
         "Community College",
         "University",
-        "Other Educational Institute"
+        "Other Educational Institute",
       ],
       corporate: [
         "Technology Company",
@@ -79,7 +72,7 @@ export default function CreateOrganization() {
         "Manufacturing Company",
         "Consulting Firm",
         "Retail Business",
-        "Other Corporate"
+        "Other Corporate",
       ],
       nonprofit: [
         "Charity Organization",
@@ -88,7 +81,7 @@ export default function CreateOrganization() {
         "Environmental Group",
         "Educational Foundation",
         "Health & Wellness",
-        "Other Non-Profit"
+        "Other Non-Profit",
       ],
       startup: [
         "Tech Startup",
@@ -97,7 +90,7 @@ export default function CreateOrganization() {
         "E-commerce",
         "SaaS Company",
         "Mobile App",
-        "Other Startup"
+        "Other Startup",
       ],
       government: [
         "Local Government",
@@ -105,7 +98,7 @@ export default function CreateOrganization() {
         "Federal Agency",
         "Public Institution",
         "Military Organization",
-        "Other Government"
+        "Other Government",
       ],
       other: [
         "Event Management",
@@ -113,8 +106,8 @@ export default function CreateOrganization() {
         "Sports Organization",
         "Cultural Organization",
         "Professional Association",
-        "Other"
-      ]
+        "Other",
+      ],
     };
     return subCategories[category] || [];
   };
@@ -124,25 +117,21 @@ export default function CreateOrganization() {
       toast.warning("Please fill all required fields");
       return false;
     }
-
     if (!orgData.category) {
       toast.warning("Please select a category");
       return false;
     }
-
     if (!orgData.subCategory) {
       toast.warning("Please select a sub-category");
       return false;
     }
 
-    // Optional: Email regex validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(orgData.email)) {
       toast.warning("Please enter a valid email address");
       return false;
     }
 
-    // Optional: Phone validation (10+ digits)
     const phoneRegex = /^[0-9]{10,}$/;
     if (!phoneRegex.test(orgData.phone)) {
       toast.warning("Please enter a valid phone number");
@@ -167,7 +156,6 @@ export default function CreateOrganization() {
       const response = await api.post("/org/register/basic", { ...orgData });
       toast.success(response.data.message || "Organization created successfully");
 
-      // Reset form
       setOrgData({
         name: "",
         email: "",
@@ -192,8 +180,10 @@ export default function CreateOrganization() {
 
   if (userLoading || !isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-6 text-center">
-        <p className="text-lg text-gray-600 animate-pulse">Checking authentication...</p>
+      <div className="min-h-screen flex items-center justify-center bg-background px-6 text-center">
+        <p className="text-lg text-muted-foreground animate-pulse">
+          Checking authentication...
+        </p>
       </div>
     );
   }
@@ -203,84 +193,85 @@ export default function CreateOrganization() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="min-h-screen pt-24 px-6 md:px-20 bg-gray-50 flex items-center justify-center"
+      className="min-h-screen bg-background flex items-center justify-center px-4 sm:px-6 md:px-16"
     >
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.3 }}
-        className="bg-white shadow-xl rounded-xl p-8 max-w-6xl mx-auto w-full"
+        className="bg-card shadow-xl rounded-xl p-6 md:p-8 w-full max-w-4xl"
       >
-        <h1 className="text-3xl font-bold text-navy mb-6">Create Organization</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-6">
+          Create Organization
+        </h1>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name */}
-          <div>
-            <label className="block text-navy font-medium mb-2">Organization Name</label>
-            <input
-              type="text"
+          <div className="space-y-2">
+            <Label htmlFor="name">Organization Name</Label>
+            <Input
+              id="name"
               name="name"
               value={orgData.name}
               onChange={handleChange}
+              placeholder="Enter organization name"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-navy"
             />
           </div>
 
           {/* Email */}
-          <div>
-            <label className="block text-navy font-medium mb-2">Organization Email</label>
-            <input
-              type="email"
+          <div className="space-y-2">
+            <Label htmlFor="email">Organization Email</Label>
+            <Input
+              id="email"
               name="email"
+              type="email"
               value={orgData.email}
               onChange={handleChange}
+              placeholder="Enter organization email"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-navy"
             />
           </div>
 
           {/* Phone */}
-          <div>
-            <label className="block text-navy font-medium mb-2">Organization Phone</label>
-            <input
-              type="tel"
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
               name="phone"
+              type="tel"
               value={orgData.phone}
               onChange={handleChange}
+              placeholder="Enter phone number"
               required
-              pattern="[0-9]{10,}"
-              title="Please enter a valid phone number"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-navy"
             />
           </div>
 
           {/* Alternative Phone */}
-          <div>
-            <label className="block text-navy font-medium mb-2">
-              Alternative Phone <span className="text-gray-500 text-sm">(Optional)</span>
-            </label>
-            <input
-              type="tel"
+          <div className="space-y-2">
+            <Label htmlFor="alternativePhone">
+              Alternative Phone (Optional)
+            </Label>
+            <Input
+              id="alternativePhone"
               name="alternativePhone"
+              type="tel"
               value={orgData.alternativePhone}
               onChange={handleChange}
-              pattern="[0-9]{10,}"
-              title="Please enter a valid phone number"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-navy"
+              placeholder="Enter alternative phone"
             />
           </div>
 
           {/* Category */}
-          <div>
-            <label className="block text-navy font-medium mb-2">Select the Category</label>
+          <div className="space-y-2">
+            <Label>Category</Label>
             <Select value={orgData.category} onValueChange={handleCategoryChange}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select the Category" />
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Categorization</SelectLabel>
+                  <SelectLabel>Categories</SelectLabel>
                   <SelectItem value="college">College</SelectItem>
                   <SelectItem value="corporate">Corporate</SelectItem>
                   <SelectItem value="nonprofit">Non Profit</SelectItem>
@@ -292,13 +283,13 @@ export default function CreateOrganization() {
             </Select>
           </div>
 
-          {/* Sub Category */}
+          {/* Sub-Category */}
           {orgData.category && (
-            <div>
-              <label className="block text-navy font-medium mb-2">Select the Sub-Category</label>
+            <div className="space-y-2">
+              <Label>Sub-Category</Label>
               <Select value={orgData.subCategory} onValueChange={handleSubCategoryChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select the Sub-Category" />
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a sub-category" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -315,15 +306,11 @@ export default function CreateOrganization() {
           )}
 
           {/* Submit */}
-          <button
-            type="submit"
-            disabled={loading}
-            className={`mt-4 bg-navy col-span-2 text-white py-2 px-6 rounded-lg font-semibold transition ${
-              loading ? "opacity-60 cursor-not-allowed" : "hover:bg-navy/90"
-            }`}
-          >
-            {loading ? "Submitting..." : "Submit"}
-          </button>
+          <div className="md:col-span-2 mt-4">
+            <Button type="submit" disabled={loading} className="w-full">
+              {loading ? "Submitting..." : "Submit"}
+            </Button>
+          </div>
         </form>
       </motion.div>
     </motion.div>

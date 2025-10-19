@@ -35,7 +35,8 @@ const baseNavigationLinks = [
   { href: "/events", label: "Events",  },
   { href: "/features", label: "Features"},
   { href: "/about", label: "About"},
-  { href: "/contact", label: "Contact"}
+  { href: "/contact", label: "Contact"},
+  { href: "/organization", label: "Organization"}
 ];
 
 const authNavigationLinks = [
@@ -55,8 +56,8 @@ export default function NavigationBar() {
   }, [isAuthenticated]);
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-[color:var(--background)] text-[color:var(--foreground)] border-b border-[color:var(--border)] transition-colors duration-300 shadow-sm">
-      <div className="flex items-center justify-between h-16 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <header className="fixed top-1 z-50 w-full bg-[color:var(--background)] text-[color:var(--foreground)] border-b border-[color:var(--border)] transition-colors duration-300 shadow-sm">
+      <div className="flex items-center justify-between  max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-2">
 
         {/* Left: Logo + Mobile Menu */}
         <div className="flex items-center gap-4">

@@ -8,19 +8,18 @@ import Link from "next/link";
 import api from "@/lib/api";
 
 export default function VerifyEmail() {
-  const [token, setToken] = useState(null);
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token"); 
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [verified, setVerified] = useState(false);
 
   useEffect(() => {
-    const searchParams = useSearchParams();
-    const t = searchParams.get("token");
-    setToken(t);
-  }, []);
-
-  useEffect(() => {
-    if (!token) return; // wait until token is set
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
     const verify = async () => {
       setLoading(true);

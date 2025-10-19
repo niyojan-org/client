@@ -106,7 +106,8 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
             value={formData.email}
             onChange={handleInputChange}
             autoComplete="email"
-            className="w-full p-0 rounded-full border border-border bg-background text-foreground"
+            className="w-full"
+            // placeHolder="Enter you email"
           />
           {errors.email && (
             <p className="text-destructive text-sm mt-1">{errors.email}</p>
@@ -121,14 +122,14 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
               value={formData.password}
               onChange={handleInputChange}
               autoComplete="current-password"
-              className="w-full p-2 rounded-full border border-border bg-background text-foreground pr-10"
+              className="w-full p-2 pr-10"
             />
             <Button
               type="button"
-              variant="ghost"
+              variant="icon"
               size="icon"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-1 top-1/2 -translate-y-1/4  text-muted-foreground hover:text-foreground"
+              className="absolute right-1 top-1/2 -translate-y-1/4 "
             >
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </Button>
@@ -174,39 +175,36 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
         </CardContent>
 
         <CardFooter className="flex flex-col items-center ">
-  {/* Forgot Password */}
-  <Button
-    variant="link"
-    type="button"
-    onClick={() => onViewChange("forgot")}
-    className="text-primary text-sm font-medium self-end -mr-1"
-  >
-    Forgot password?
-  </Button>
+          {/* Forgot Password */}
+          <Button
+            variant="link"
+            type="button"
+            onClick={() => onViewChange("forgot")}
+            className="text-primary text-sm font-medium self-end -mr-1"
+          >
+            Forgot password?
+          </Button>
 
-  {/* Footer Links */}
-  <div className="flex flex-col sm:flex-row justify-between items-center w-full text-xs text-muted-foreground">
-    <Link
-      href="/terms-and-conditions"
-      className="hover:underline whitespace-nowrap font-medium hover:text-foreground transition-colors text-center sm:text-left"
-    >
-      Terms & Conditions
-    </Link>
+          {/* Footer Links */}
+          <div className="flex flex-col sm:flex-row justify-between items-center w-full text-xs text-muted-foreground">
+            <Link
+              href="/terms-and-conditions"
+              className="hover:underline whitespace-nowrap font-medium hover:text-foreground transition-colors text-center sm:text-left"
+            >
+              Terms & Conditions
+            </Link>
 
-    <p className="whitespace-nowrap font-medium text-center sm:text-right">
-      Don’t have an account?{" "}
-      <Button
-        variant="link"
-        type="button"
-        onClick={() => onViewChange("signup")}
-        className="text-primary p-0 font-medium"
-      >
-        Sign up
-      </Button>
-    </p>
-  </div>
-</CardFooter>
-
+            <p className="whitespace-nowrap font-medium text-center sm:text-right flex">
+              Don’t have an account?{" "}
+              <span
+                onClick={() => onViewChange("signup")}
+                className="text-primary p-0 font-medium pl-2 hover:underline underline-offset-2 cursor-pointer"
+              >
+                Sign up
+              </span>
+            </p>
+          </div>
+        </CardFooter>
       </form>
     </Card>
   );

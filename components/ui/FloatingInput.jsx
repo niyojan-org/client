@@ -16,7 +16,6 @@ export default function FloatingInput({ label, type = 'text', name = '', value: 
         id={name}
         value={propValue}
         onChange={onChange}
-        className="w-full text-sm sm:text-base border border-border bg-background text-foreground focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring transition-colors"
         {...props}
       />
     </div>

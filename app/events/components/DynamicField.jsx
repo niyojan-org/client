@@ -1,27 +1,37 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
+import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Checkbox } from "@/components/ui/checkbox"
-import { PhoneInput } from "@/components/ui/phone-number-input"
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { PhoneInput } from "@/components/ui/phone-number-input";
+import { min } from "date-fns";
 
 export default function DynamicField({ field, value, onChange }) {
-  const { name, label, type, required, placeholder, options = [] } = field
+  const {
+    name,
+    label,
+    type,
+    required,
+    placeholder,
+    min,
+    max,
+    options = [],
+  } = field;
 
-  const Req = required ? <span className="text-red-500">*</span> : null
+  const Req = required ? <span className="text-red-500">*</span> : null;
 
   // -------- Inputs --------
-  if (["text", "email", "number", "url", "date"].includes(type)) {
+  if (["text", "email", "url", "date"].includes(type)) {
     return (
       <div className="space-y-2">
         <Label htmlFor={name} className="font-medium">
@@ -38,11 +48,35 @@ export default function DynamicField({ field, value, onChange }) {
           className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
         />
       </div>
-    )
+    );
   }
 
+  if (type === "number") {
+    {
+      // console.log(type);
+    }
+    return (
+      <div className="space-y-2">
+        <Label htmlFor={name} className="font-medium">
+          {label} {Req}
+        </Label>
+        <Input
+          id={name}
+          name={name}
+          placeholder={placeholder}
+          type={type}
+          required={required}
+          value={value || ""}
+          min={min}
+          max={max}
+          onChange={(e) => onChange(name, e.target.value)}
+          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
+        />
+      </div>
+    );
+  }
 
-  if (type === 'tel') {
+  if (type === "tel") {
     return (
       <div className="space-y-2">
         <Label htmlFor={name} className="font-medium">
@@ -59,7 +93,7 @@ export default function DynamicField({ field, value, onChange }) {
           defaultCountry="IN"
         />
       </div>
-    )
+    );
   }
 
   if (type === "textarea") {
@@ -78,7 +112,7 @@ export default function DynamicField({ field, value, onChange }) {
           className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary min-h-[1px]"
         />
       </div>
-    )
+    );
   }
 
   if (type === "dropdown") {
@@ -103,7 +137,7 @@ export default function DynamicField({ field, value, onChange }) {
           </SelectContent>
         </Select>
       </div>
-    )
+    );
   }
 
   if (type === "radio") {
@@ -127,14 +161,17 @@ export default function DynamicField({ field, value, onChange }) {
                 value={opt.value}
                 className="border-primary text-primary"
               />
-              <Label htmlFor={`${name}-${opt.value}`} className="cursor-pointer">
+              <Label
+                htmlFor={`${name}-${opt.value}`}
+                className="cursor-pointer"
+              >
                 {opt.label}
               </Label>
             </div>
           ))}
         </RadioGroup>
       </div>
-    )
+    );
   }
 
   if (type === "checkbox") {
@@ -145,7 +182,7 @@ export default function DynamicField({ field, value, onChange }) {
         </Label>
         <div className="flex flex-wrap gap-3">
           {options.map((opt) => {
-            const checked = Array.isArray(value) && value.includes(opt.value)
+            const checked = Array.isArray(value) && value.includes(opt.value);
             return (
               <div
                 key={opt.value}
@@ -155,22 +192,25 @@ export default function DynamicField({ field, value, onChange }) {
                   id={`${name}-${opt.value}`}
                   checked={checked}
                   onCheckedChange={(c) => {
-                    let newVal = Array.isArray(value) ? [...value] : []
-                    if (c) newVal.push(opt.value)
-                    else newVal = newVal.filter((v) => v !== opt.value)
-                    onChange(name, newVal)
+                    let newVal = Array.isArray(value) ? [...value] : [];
+                    if (c) newVal.push(opt.value);
+                    else newVal = newVal.filter((v) => v !== opt.value);
+                    onChange(name, newVal);
                   }}
                 />
-                <Label htmlFor={`${name}-${opt.value}`} className="cursor-pointer">
+                <Label
+                  htmlFor={`${name}-${opt.value}`}
+                  className="cursor-pointer"
+                >
                   {opt.label}
                 </Label>
               </div>
-            )
+            );
           })}
         </div>
       </div>
-    )
+    );
   }
 
-  return null
+  return null;
 }

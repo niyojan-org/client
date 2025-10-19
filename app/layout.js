@@ -43,7 +43,7 @@ export default function RootLayout({ children }) {
       className={[sourceCodePro.variable, sourceSans3.variable].join(" ")} suppressHydrationWarning
     >
       <body
-        className="relative antialiased min-h-dvh overflow-hidden"
+        className="relative antialiased min-h-dvh"
         style={{ fontFamily: "var(--font-source-sans-3)" }}
       >
         <ThemeProvider
@@ -54,9 +54,9 @@ export default function RootLayout({ children }) {
         >
           <LoaderProvider>
             {/* Apply ScrollArea globally */}
-            <ScrollArea className="h-full w-full">
+            {/* <ScrollArea className="h-full w-full"> */}
               <ClientLayout>{children}</ClientLayout>
-            </ScrollArea>
+            {/* </ScrollArea> */}
 
             <Toaster />
           </LoaderProvider>
