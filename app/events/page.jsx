@@ -1,66 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { IconSparkles } from "@tabler/icons-react";
-
 import EventsList from "./components/EventList";
-import useEventStore from "@/store/eventStore";
 import SearchBar from "./components/SearchBar";
 import { EventCardSkeleton } from "./components/EventCardSkeleton";
-import {
-  Status,
-  StatusIndicator,
-  StatusLabel,
-} from "@/components/ui/shadcn-io/status";
+import { Status, StatusIndicator, StatusLabel } from "@/components/ui/shadcn-io/status";
+import useEvents from "@/hooks/useEvents";
 
 export default function EventsPage() {
-  const {
-    fetchAllEvents,
-    fetchFeaturedEvents,
-    fetchEventCategories,
-    allEvents,
-    eventCategories,
-    availableModes,
-    error,
-    loading,
-  } = useEventStore();
-
-  useEffect(() => {
-    const loadAll = async () => {
-      try {
-        await Promise.all([
-          fetchFeaturedEvents(),
-          fetchAllEvents(),
-          fetchEventCategories(),
-        ]);
-      } catch {
-        console.error("Failed to load data");
-      }
-    };
-    loadAll();
-  }, []);
-
-  // 🧠 Sort events: Featured → Open → Ended
-  const sortedEvents = [...allEvents].sort((a, b) => {
-    // Helper: assign a priority based on status/type
-    const getPriority = (event) => {
-      if (event.featured) return 1; // Highest priority
-      if (event.status === "open" || event.registrationOpen) return 2;
-      if (event.status === "ended" || event.isEnded) return 3;
-      return 4;
-    };
-
-    return getPriority(a) - getPriority(b);
-  });
+  const { allEvents, categories, loading, error } = useEvents();
 
   return (
     <div className="flex min-h-screen transition-colors duration-300">
-
       <main className="flex-1 overflow-auto mt-[20px] mb-20 px-4 sm:px-6 lg:px-8">
-        {/* Compact Header */}
+        {/* Header */}
         <header className="mb-2 mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">
-            {/* Title Section */}
             <div className="">
               <div className="flex items-center gap-3">
                 <div className="h-12 w-1.5 bg-gradient-to-b from-primary via-accent to-primary/50 rounded-full shadow-sm" />
@@ -75,10 +30,8 @@ export default function EventsPage() {
                 </div>
               </div>
               <p className="text-muted-foreground text-sm sm:text-base max-w-full leading-relaxed mt-1">
-                Find amazing events happening around you and connect with your
-                community
+                Find amazing events happening around you and connect with your community
               </p>
-
               <Status
                 variant="outline"
                 status="online"
@@ -86,22 +39,13 @@ export default function EventsPage() {
               >
                 <div className="flex items-center gap-1">
                   <StatusIndicator />
-                  <StatusLabel className="font-medium text-primary">
-                    Live
-                  </StatusLabel>
+                  <StatusLabel className="font-medium text-primary">Live</StatusLabel>
                 </div>
-                <span className="text-muted-foreground">
-                  • Updated just now
-                </span>
+                <span className="text-muted-foreground">• Updated just now</span>
               </Status>
             </div>
-
-            {/* Search Section */}
             <div className="w-full lg:max-w-md lg:min-w-96">
-              <SearchBar
-                eventCategories={eventCategories}
-                availableModes={availableModes}
-              />
+              <SearchBar eventCategories={categories} />
             </div>
           </div>
         </header>
@@ -113,8 +57,12 @@ export default function EventsPage() {
               <EventCardSkeleton key={idx} />
             ))}
           </div>
+        ) : error ? (
+          <p className="text-red-500 font-medium">Failed to load events. Please try again later.</p>
+        ) : allEvents.length === 0 ? (
+          <p className="text-center text-muted">No events found.</p>
         ) : (
-          <EventsList events={sortedEvents} />
+          <EventsList events={allEvents} />
         )}
       </main>
     </div>

@@ -5,6 +5,7 @@ import { LoaderProvider } from "@/components/LoaderContext";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ProvidersSwr from "@/components/ProvidersSwr";
 
 // Primary Fonts
 const sourceCodePro = Source_Code_Pro({
@@ -55,8 +56,10 @@ export default function RootLayout({ children }) {
           <LoaderProvider>
             {/* Apply ScrollArea globally */}
             {/* <ScrollArea className="h-full w-full"> */}
-              <ClientLayout>{children}</ClientLayout>
+              <ProvidersSwr>
+                <ClientLayout>{children}</ClientLayout>
             {/* </ScrollArea> */}
+              </ProvidersSwr>
 
             <Toaster />
           </LoaderProvider>

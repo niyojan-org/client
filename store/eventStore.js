@@ -2,7 +2,6 @@
 import { create } from "zustand";
 import api from "@/lib/api";
 
-
 const useEventStore = create((set, get) => ({
   // ---------------------------
   // State
@@ -26,12 +25,11 @@ const useEventStore = create((set, get) => ({
   },
 
   //  Coupon-relateds state
-  couponCode: null,          
-  couponData: null,          
-  couponDiscount: 0,         
-  couponFinalPrice: null,   
+  couponCode: null,
+  couponData: null,
+  couponDiscount: 0,
+  couponFinalPrice: null,
   verifyingCoupon: false,
-
 
   // Filters
   setFilters: (newPartialFilters) =>
@@ -42,26 +40,39 @@ const useEventStore = create((set, get) => ({
       },
     })),
 
-
   // Fetch Events
-  fetchFeaturedEvents: async () => {
-    try {
-      const res = await api.get("/event/featured");
-      set({ featuredEvents: res.data.data.events });
-    } catch (err) {
-      set({ error: err.message || "Failed to fetch featured events" });
-    }
-  },
-
   fetchAllEvents: async ({ params } = {}) => {
     try {
       set({ loading: true });
       const res = await api.get("/event", { params });
-      set({ allEvents: res.data.data.events });
+      const events = Array.isArray(res.data.data.events)
+        ? res.data.data.events
+        : [];
+      set({ allEvents: events });
     } catch (err) {
-      set({ error: err.message || "Failed to fetch all events" });
+      console.error(err);
+      set({
+        error: err.message || "Failed to fetch all events",
+        allEvents: [],
+      });
     } finally {
       set({ loading: false });
+    }
+  },
+
+  fetchFeaturedEvents: async () => {
+    try {
+      const res = await api.get("/event/featured");
+      const events = Array.isArray(res.data.data.events)
+        ? res.data.data.events
+        : [];
+      set({ featuredEvents: events });
+    } catch (err) {
+      console.error(err);
+      set({
+        error: err.message || "Failed to fetch featured events",
+        featuredEvents: [],
+      });
     }
   },
 
@@ -151,7 +162,6 @@ const useEventStore = create((set, get) => ({
     return { finalPrice, discount };
   },
 
-  
   //   Verify coupon from backend + compute frontend discount preview
   verifyCouponCode: async (eventSlug, code, ticketPrice = null) => {
     set({
@@ -224,29 +234,31 @@ const useEventStore = create((set, get) => ({
       couponDiscount: 0,
       couponFinalPrice: null,
       error: null,
-  }),
+    }),
 
   //fetch organization by sluggg
   fetchOrganizationBySlug: async (slug) => {
-    set({loading: true, error: null, organization: null});
+    set({ loading: true, error: null, organization: null });
     try {
       const res = await api.get(`/org/public/${slug}`);
-      set({organization: res.data.organization, loading: false});
+      set({ organization: res.data.organization, loading: false });
     } catch (err) {
       console.log(err);
       set({
-        error:err.response?.data?.message || err.message || "Failed to fetch organization",
+        error:
+          err.response?.data?.message ||
+          err.message ||
+          "Failed to fetch organization",
         loading: false,
       });
     }
   },
-  
 
-  
   // Cleanup helpers
   clearSingleEvent: () => set({ singleEvent: null, error: null }),
   clearRegistrationForm: () => set({ registrationForm: null, error: null }),
-  clearOrganization: () => set({organization: null, loading: false, error: null}),
+  clearOrganization: () =>
+    set({ organization: null, loading: false, error: null }),
 }));
 
 export default useEventStore;
