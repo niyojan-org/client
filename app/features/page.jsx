@@ -49,12 +49,12 @@ export default function Features() {
   ];
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-background to-muted py-24 px-4 sm:px-12 md:px-20 lg:px-32 transition-colors duration-700">
-      
+    <section className="min-h-dvh sm:px-12 md:px-20 lg:px-32 transition-colors duration-700 pb-10 scroll-smooth">
+
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
+      <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-16">
         <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-          Everything You Need to Run Events 
+          Everything You Need to Run Events
         </h1>
         <p className="text-lg text-muted-foreground">
           Whether you're an organizer or attendee — Orgatic gives you all the tools to create, manage, and experience events seamlessly.
@@ -63,7 +63,7 @@ export default function Features() {
 
       {/* Features Grid */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -82,7 +82,7 @@ export default function Features() {
                 visible: { opacity: 1, y: 0 },
               }}
             >
-              <Card className="bg-card border border-border shadow-sm hover:shadow-xl hover:scale-[1.03] transition-transform duration-300">
+              <Card className="bg-card border border-border gap-3 sm:gap-4 shadow-sm hover:shadow-xl hover:scale-[1.03] transition-transform duration-300">
                 <CardHeader className="flex items-center gap-3">
                   <Icon className="w-10 h-10 text-primary" />
                   <CardTitle className="text-xl text-foreground">{feature.title}</CardTitle>
@@ -97,15 +97,15 @@ export default function Features() {
       </motion.div>
 
       {/* CTA Section */}
-      <div className="mt-24 text-center">
-        <div className="bg-primary/10 text-primary-foreground rounded-2xl p-10 shadow-lg inline-block max-w-3xl">
+      <div className="sm:mt-24 text-center mt-6">
+        <div className="rounded-2xl sm:p-10 inline-block max-w-3xl">
           <h2 className="text-3xl font-bold mb-4">
             Start Hosting or Attending Events Effortlessly
           </h2>
           <p className="mb-6 opacity-90">
             Join thousands simplifying event management with Orgatic.
           </p>
-          <Link href="/events"> 
+          <Link href="/events">
             <Button size="lg" className="hover:scale-105 transition-transform">
               Explore Events
             </Button>

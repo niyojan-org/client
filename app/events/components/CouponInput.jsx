@@ -19,8 +19,14 @@ export default function CouponInput({
   discountAmount,
   finalPrice,
   ticketPrice,
+  initialCode = "",
 }) {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(initialCode);
+
+  // Update code when initialCode changes (e.g., from URL param)
+  useEffect(() => {
+    setCode(initialCode);
+  }, [initialCode]);
 
   //  Confetti animation when coupon successfully applied
   useEffect(() => {

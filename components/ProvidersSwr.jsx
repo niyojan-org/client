@@ -1,10 +1,10 @@
 "use client"
 
-import { SWRConfig} from "swr"
+import { SWRConfig } from "swr"
 import fetcher from "@/lib/fetcher"
 
-export default function ProvidersSwr ({ children })  {
-    return  (
+export default function ProvidersSwr({ children }) {
+    return (
         <SWRConfig
             value={{
                 fetcher,

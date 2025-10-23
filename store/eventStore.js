@@ -100,27 +100,18 @@ const useEventStore = create((set, get) => ({
   fetchRegistrationForm: async (slug) => {
     set({ loadingRegistrationForm: true, error: null, registrationForm: null });
     try {
-      const [eventRes, regRes] = await Promise.all([
-        api.get(`/event/${slug}`),
-        api.get(`/event/${slug}/registration`),
-      ]);
+      const regRes = await api.get(`/event/${slug}/registration`);
 
-      const eventData = eventRes.data.event;
       const regData = regRes.data.data;
 
       set({
         registrationForm: {
-          ...regData,
-          eventDetails: eventData,
-          allowCoupons: eventData?.allowCoupons ?? false,
+          ...regData
         },
       });
     } catch (err) {
       set({
-        error:
-          err.response?.data?.message ||
-          err.message ||
-          "Failed to fetch registration form",
+        error: err.response?.data
       });
     } finally {
       set({ loadingRegistrationForm: false });

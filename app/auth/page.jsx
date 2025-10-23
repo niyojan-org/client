@@ -19,8 +19,6 @@ export default function AuthPage() {
   if (loading) return <Loader />;
 
   return (
-    <Suspense fallback={<Loader />}>
-      <Auth />
-    </Suspense>
-  );
+    <Auth />
+  )
 }

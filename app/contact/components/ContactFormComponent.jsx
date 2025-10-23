@@ -44,7 +44,7 @@ export const ContactFormComponent = ({
 
   return (
     <Card className="shadow-none p-0">
-      <CardContent className="p-2 sm:p-6 md:p-8">
+      <CardContent className="p-3 sm:p-6 md:p-8">
         <form onSubmit={onSubmit} className="space-y-2">
           {/* Show general error message */}
           {hasErrors && (
@@ -72,7 +72,7 @@ export const ContactFormComponent = ({
                 className={cn(
                   "h-10 shadow-none",
                   errors.name &&
-                    "border-destructive focus-visible:ring-destructive"
+                  "border-destructive focus-visible:ring-destructive"
                 )}
                 disabled={loading}
                 maxLength={100}
@@ -97,7 +97,7 @@ export const ContactFormComponent = ({
                 className={cn(
                   "h-10 shadow-none",
                   errors.email &&
-                    "border-destructive focus-visible:ring-destructive"
+                  "border-destructive focus-visible:ring-destructive"
                 )}
                 disabled={loading}
               />
@@ -122,7 +122,7 @@ export const ContactFormComponent = ({
                 className={cn(
                   "h-10 shadow-none",
                   errors.phone &&
-                    "border-destructive focus-visible:ring-destructive"
+                  "border-destructive focus-visible:ring-destructive"
                 )}
                 disabled={loading}
               />
@@ -175,7 +175,7 @@ export const ContactFormComponent = ({
               className={cn(
                 "h-10 shadow-none",
                 errors.subject &&
-                  "border-destructive focus-visible:ring-destructive"
+                "border-destructive focus-visible:ring-destructive"
               )}
               disabled={loading}
               maxLength={200}
@@ -199,7 +199,7 @@ export const ContactFormComponent = ({
               className={cn(
                 "shadow-none min-h-[100px] resize-y",
                 errors.message &&
-                  "border-destructive focus-visible:ring-destructive"
+                "border-destructive focus-visible:ring-destructive"
               )}
               disabled={loading}
               rows={3}

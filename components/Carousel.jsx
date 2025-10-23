@@ -48,7 +48,7 @@ const Carousel = ({ images = [], interval = 4000 }) => {
   };
 
   return (
-    <div className="w-full md:w-1/2 relative h-[170px] md:h-full  overflow-hidden rounded-2xl   bg-black">
+    <div className="w-full md:w-1/2 relative h-[170px] md:h-full overflow-hidden">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentImage}
@@ -63,8 +63,8 @@ const Carousel = ({ images = [], interval = 4000 }) => {
           <Image
             src={images[currentImage]?.url}
             alt={images[currentImage]?.title || "Carousel Image"}
+            className="object-cover size-full"
             fill
-            className="object-cover"
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
           />
@@ -77,9 +77,8 @@ const Carousel = ({ images = [], interval = 4000 }) => {
           <button
             key={idx}
             onClick={() => handleDotClick(idx)}
-            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-              idx === currentImage ? "bg-blue-600" : "bg-gray-300"
-            }`}
+            className={`w-2 h-2 rounded-full transition-colors duration-300 ${idx === currentImage ? "bg-blue-600" : "bg-gray-300"
+              }`}
           />
         ))}
       </div>

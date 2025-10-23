@@ -175,7 +175,7 @@ export default function TicketsPage() {
 
     return (
         <>
-            <div className="min-h-dvh bg-background pt-16 w-full">
+            <div className="min-h-dvh bg-background w-full">
                 {/* Compact Header */}
                 <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                     <div className="container mx-auto px-3 sm:px-4 py-3">

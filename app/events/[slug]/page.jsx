@@ -3,8 +3,6 @@
 import { useEffect, use } from "react";
 import useSWR from "swr";
 import { motion } from "framer-motion";
-import { Skeleton } from "@/components/ui/skeleton"; // shadcn
-import { Loader2 } from "lucide-react"; // spinner icon
 
 import fetcher from "@/lib/fetcher";
 import HeroSection from "../components/HeroSection";
@@ -43,7 +41,7 @@ export default function EventSlugPage({ params }) {
   // --- Loading skeleton
   if (!data && !error) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen space-y-4 px-4">
+      <div className="flex flex-col items-center justify-center h-screen space-y-4 ">
         {/* <Skeleton className="h-8 w-1/3" />
         <Skeleton className="h-64 w-full rounded-lg" /> */}
         {/* <div className="flex items-center space-x-2">
@@ -74,11 +72,11 @@ export default function EventSlugPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-dvh w-full">
       <HeroSection event={singleEvent} />
 
       <motion.div
-        className="px-2 sm:px-10 lg:px-20 pt-5 space-y-4 pb-8 w-full max-w-full"
+        className="pt-5 space-y-4 pb-8 w-full max-w-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}

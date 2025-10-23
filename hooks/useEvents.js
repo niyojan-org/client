@@ -9,11 +9,7 @@ export default function useEvents() {
   // --- Fetch all events with client-side refresh every 1 minutes
   const { data: allData, error: allError, isLoading: loadingAll } = useSWR(
     "/event",
-    fetcher,
-    {
-      refreshInterval: 60000, // 1 minutes
-      revalidateOnFocus: true,
-    }
+    fetcher
   );
   const allEvents = Array.isArray(allData?.data?.events) ? allData.data.events : [];
 

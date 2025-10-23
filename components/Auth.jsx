@@ -66,22 +66,22 @@ export default function Auth() {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-background via-muted/20 to-background px-2  py-3 md:py-10 ">
+    <div className="flex items-center justify-center my-auto px-2 h-dvh bg-background w-full">
 
-      <div className="w-full max-w-5xl mx-auto h-auto md:h-[600px] flex flex-col md:flex-row md:bg-card rounded-2xl md:shadow-lg overflow-hidden md:border border-border">
+      <div className="w-full bg-card max-w-5xl mx-auto flex flex-col md:flex-row sm:h-full sm:max-h-[80vh] md:bg-card rounded-2xl md:shadow-lg overflow-hidden md:border border-border items-center justify-center">
 
         {/* Carousel Section */}
         {isLoading ? <GlobalLoader /> : <Carousel images={carouselImages} />}
 
         {/* Form Section */}
-        <div className="w-full md:w-1/2 flex flex-col text-foreground justify-start p-1 md:p-8 bg-card/80 backdrop-blur-sm h-[500px] md:h-full overflow-y-hidden overflow-x-hidden rounded-xl border-l border-r border-border/20">
+        <div className="w-full md:w-1/2 flex flex-col text-foreground justify-start p-1 md:p-8  backdrop-blur-sm md:h-full overflow-y-hidden overflow-x-hidden">
 
           <Link href="/" className="text-sm mb-2 inline-block hover:underline text-muted-foreground hover:text-foreground transition-colors">
             ← Back
           </Link>
 
-          <Card className="w-full max-w-md mx-auto bg-transparent border-none shadow-none flex flex-col flex-1 px-4">
-            <CardHeader className="text-center space-y-2">
+          <Card className="w-full max-w-md mx-auto bg-transparent border-none shadow-none flex flex-col flex-1 px-4 h-full pb-0">
+            <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold text-foreground font-inter">
                 {getTitleText()}
               </CardTitle>
@@ -90,7 +90,7 @@ export default function Auth() {
 
             <GoogleAuthButton />
 
-            <CardContent className="flex flex-col flex-1 justify-between">
+            <CardContent className="flex flex-col flex-1 justify-between w-full p-0 h-full">
               {view === 'login' &&
                 <Login userEmail={userEmail} setUserEmail={setUserEmail} onViewChange={handleViewChange} />}
 

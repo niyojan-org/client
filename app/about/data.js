@@ -124,7 +124,7 @@ export const team = [
     bio: 'Architected and developed the entire platform from frontend to backend, including payments and system design.',
     linkedin: 'https://linkedin.com/in/iamabhi0619',
     github: 'https://github.com/iamabhi0619',
-    portfolio: 'https://iamabhi.tech',
+    portfolio: 'https://iamabhi.dev',
     avatar: '/images/abhishek.webp',
   },
   {

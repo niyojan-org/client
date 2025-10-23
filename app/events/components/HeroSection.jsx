@@ -48,7 +48,7 @@ export default function HeroSection({ event }) {
         transition={{ duration: 0.6 }}
       >
         <Image
-          src={event.bannerImage || "/fallback.jpg"}
+          src={event.bannerImage || "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761137533/orgatickBanner_vdyzdk.png"}
           alt={event.title || "Event banner"}
           priority
           fill
@@ -64,10 +64,10 @@ export default function HeroSection({ event }) {
           aria-label="Go back to previous page"
         >
           <IconArrowLeft className="w-4 h-4" /> Back
-        
+
 
         </Button>
-        
+
         {/* Gradient overlays for text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />

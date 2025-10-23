@@ -33,7 +33,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden pt-18 space-y-4 pb-2">
+    <div className="flex flex-col overflow-hidden space-y-4 pb-4">
       {/* Profile Header */}
       <ProfileHeader user={user} onLogout={handleLogout} className="pb-4" />
 

@@ -4,9 +4,9 @@ import dynamic from "next/dynamic";
 
 
 const Hero = dynamic(() => import("@/components/pages/Hero"));
-const WhyChooseOrgatic  = dynamic(() => import("@/components/pages/WhyChooseOrgatic"));
+const WhyChooseOrgatic = dynamic(() => import("@/components/pages/WhyChooseOrgatic"));
 const CoreFeatures = dynamic(() => import("@/components/pages/CoreFeatures"));
-const HowItWorks = dynamic(() => import ("@/components/pages/HowItWorks"))
+const HowItWorks = dynamic(() => import("@/components/pages/HowItWorks"))
 const PaymentTrustSection = dynamic(() => import("@/components/pages/PaymentTrustSection"));
 
 const TestimonialsSection = dynamic(() => import("@/components/pages/TestimonialsSection"), {
@@ -28,10 +28,10 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <WhyChooseOrgatic  />
+      <WhyChooseOrgatic />
       <CoreFeatures />
-      <HowItWorks /> 
-      <TestimonialsSection />
+      <HowItWorks />
+      {/* <TestimonialsSection /> */}
       <PaymentTrustSection />
       <FAQSection />
       <FinalCTASection />

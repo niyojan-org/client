@@ -16,36 +16,52 @@ import { SpinnerCustom } from "@/components/ui/spinner";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import TicketCardSelectable from "../../components/TicketCardSelectable";
 import confetti from "canvas-confetti";
-import CouponInput from "../../components/CouponInput";
-import Error404 from "@/app/not-found";
+import CouponManager from "../../components/CouponManager";
+import ErrorCard from "@/components/Card/Error";
 
 export default function RegistrationPage() {
   const { slug } = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
   const referralCode = searchParams.get("ref") || null;
-  // include coupon-related store values
-  const { fetchRegistrationForm, registrationForm, verifyCouponCode, couponData, verifyingCoupon, couponFinalPrice, couponDiscount, clearCoupon, error, loadingRegistrationForm } = useEventStore();
+  const { fetchRegistrationForm, registrationForm, error, loadingRegistrationForm } = useEventStore();
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [formData, setFormData] = useState({});
   const [groupName, setGroupName] = useState("");
   const [couponCode, setCouponCode] = useState("");
+  const [couponData, setCouponData] = useState(null);
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponFinalPrice, setCouponFinalPrice] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
   const [participant, setParticipant] = useState(null);
   const [confirmationMsg, setConfirmationMsg] = useState("");
   const [pendingPayment, setPendingPayment] = useState(null);
   const [showPendingDialog, setShowPendingDialog] = useState(false);
+  const [errorForm, setErrorForm] = useState(null);
   //read ticket id from url param and set selected ticket
   const ticketIdFromUrl = searchParams.get("ticketId") || null;
 
   //select ticket if ticketIdFromUrl is present and registrationForm is loaded 
   useEffect(() => {
-    if (registrationForm?.tickets && ticketIdFromUrl) {
-      const ticket = registrationForm.tickets.find((t) => t._id == ticketIdFromUrl);
-      if (ticket) setSelectedTicket(ticket);
+    if (registrationForm?.tickets) {
+      if (ticketIdFromUrl) {
+        const ticket = registrationForm.tickets.find((t) => t._id == ticketIdFromUrl);
+        if (ticket) setSelectedTicket(ticket);
+      } else if (registrationForm.tickets.length === 1) {
+        // Auto-select if only one ticket is available
+        setSelectedTicket(registrationForm.tickets[0]);
+      }
     }
   }, [registrationForm, ticketIdFromUrl]);
+
+  // Handle coupon changes from CouponManager
+  const handleCouponChange = (code, data, discount, finalPrice) => {
+    setCouponCode(code);
+    setCouponData(data);
+    setCouponDiscount(discount);
+    setCouponFinalPrice(finalPrice);
+  };
 
   useEffect(() => {
     if (slug) fetchRegistrationForm(slug);
@@ -69,7 +85,7 @@ export default function RegistrationPage() {
 
   if (loadingRegistrationForm) {
     return (
-      <div className="flex items-center justify-center h-screen bg-background">
+      <div className="flex items-center justify-center h-dvh bg-background">
         <SpinnerCustom className="text-primary" />
       </div>
     );
@@ -134,7 +150,10 @@ export default function RegistrationPage() {
       };
 
       const res = await api.post(`/event/${slug}/register`, payload);
-      const { code, data } = res.data;
+      const { code, data, participant, message } = res.data;
+      console.log("CODE: " + code);
+      console.log("DATA: " + data);
+      console.log("PARTICIPANT: " + participant);
       const { participant: part, payment } = data || {};
 
       if (code === "PAYMENT_PENDING") {
@@ -161,9 +180,10 @@ export default function RegistrationPage() {
           setConfirmationMsg(verifyRes.data.message || "Payment failed.");
         }
       } else {
+        console.log("I am here 3")
         setPaymentStatus("success");
-        setConfirmationMsg("Registration successful!");
-        setParticipant(part);
+        setConfirmationMsg(message || "Registration successful!");
+        setParticipant(part ? part : participant);
         setShowPendingDialog(false);
       }
     } catch (err) {
@@ -172,10 +192,7 @@ export default function RegistrationPage() {
         handlePendingPaymentResponse(res.error);
         return;
       }
-      if (res?.code === "PARTICIPANT_CONFIRMED" || res?.code === "ALREADY_REGISTERED") {
-        toast.success("You are already registered!");
-        return;
-      }
+      setErrorForm(res || null);
       toast.error(res?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
@@ -244,10 +261,7 @@ export default function RegistrationPage() {
         handlePendingPaymentResponse(res.details);
         return;
       }
-      if (res?.code === "PARTICIPANT_CONFIRMED" || res?.code === "ALREADY_REGISTERED") {
-        toast.success("You are already registered!");
-        return;
-      }
+      setErrorForm(res || null);
       toast.error(res?.message || "Registration failed!");
     } finally {
       setSubmitting(false);
@@ -258,21 +272,51 @@ export default function RegistrationPage() {
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
 
+  if (error) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <ErrorCard
+          error={error}
+          onRetry={() => router.reload()}
+          onBrowseEvents={() => router.push("/events")}
+          onGoHome={() => router.push("/")}
+          className="w-full max-w-5xl mx-auto"
+        />
+      </div>
+    );
+  }
+
+
+  if (errorForm) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <ErrorCard
+          error={errorForm}
+          onRetry={() => window.location.reload()}
+          onBrowseEvents={() => router.push("/events")}
+          onGoHome={() => router.push("/")}
+          className="w-full max-w-5xl mx-auto"
+        />
+      </div>
+    );
+  }
+
   if (!registrationForm && !loadingRegistrationForm) {
     return null;
   }
 
   // ---------- RENDER ----------
   return (
-    <div className="max-w-5xl mx-auto p-4 sm:p-6 space-y-8">
+    <div className="w-full max-w-5xl mx-auto">
       {/* Banner */}
       {registrationForm?.eventDetails?.bannerImage && (
-        <div className="relative w-full h-48 sm:h-72 rounded-2xl overflow-hidden shadow-lg border border-border">
+        <div className="relative w-full aspect-[21/9] max-h-52 rounded-lg overflow-hidden shadow-md border border-border mb-4">
           <Image
             src={registrationForm.eventDetails.bannerImage}
             alt={registrationForm.eventDetails.title}
             fill
             className="object-cover"
+            priority
           />
           <Button
             variant="outline"
@@ -362,8 +406,8 @@ export default function RegistrationPage() {
             <p className="text-foreground">
               Thank you <strong>{participant.name}</strong> for registering.
             </p>
-            <p className="text-muted-foreground">
-              A confirmation email has been sent to <strong>{participant.email}</strong>.
+            <p className="text-muted-foreground max-w-md">
+              A confirmation email has been sent to <strong>{participant.email}</strong>. If you do not receive it within a few minutes, then try logging into our platform with same email.
             </p>
 
             {confirmationMsg && (
@@ -391,7 +435,7 @@ export default function RegistrationPage() {
 
       {/* ❌ FAILED */}
       {paymentStatus === "failed" && (
-        <div className="min-h-[50vh] flex items-center justify-center bg-muted rounded-xl p-6">
+        <div className="flex items-center justify-center bg-muted rounded-xl p-6">
           <div className="bg-card border border-border rounded-xl shadow-md p-8 space-y-4 text-center">
             <h2 className="text-2xl font-bold text-destructive">Payment Failed</h2>
             <p className="text-muted-foreground">
@@ -427,7 +471,6 @@ export default function RegistrationPage() {
                   selected={selectedTicket?._id === t._id}
                   onClick={() => {
                     setSelectedTicket(t);
-                    clearCoupon();
                   }}
                 />
               ))}
@@ -453,39 +496,14 @@ export default function RegistrationPage() {
                       }
                     />
                   ))}
-                  {/* Coupon Input */}
-                  {registrationForm?.allowCoupons && (
-                    <CouponInput
-                      verifying={verifyingCoupon}
-                      couponData={couponData}
-                      appliedCode={couponData?.code}
-                      discountAmount={couponDiscount}
-                      finalPrice={finalPrice}
-                      ticketPrice={originalPrice}
-                      onApply={async (code) => {
-                        try {
-                          const { discountAmount } = await verifyCouponCode(
-                            slug,
-                            code,
-                            selectedTicket?.price
-                          );
-                          setCouponCode(code);
-                          toast.success(
-                            `Coupon applied! ₹${discountAmount} off your ticket`
-                          );
-                        } catch (err) {
-                          toast.error(
-                            err.response?.data?.message || "Invalid coupon code"
-                          );
-                        }
-                      }}
-                      onClear={() => {
-                        clearCoupon();
-                        setCouponCode("");
-                      }}
-                      className="max-w-sm"
-                    />
-                  )}
+
+                  {/* Coupon Manager */}
+                  <CouponManager
+                    slug={slug}
+                    selectedTicket={selectedTicket}
+                    onCouponChange={handleCouponChange}
+                    allowCoupons={registrationForm?.allowCoupons}
+                  />
                 </div>
 
                 {/* Dynamic Button Label */}
@@ -511,7 +529,14 @@ export default function RegistrationPage() {
                 onSubmit={handleSubmitGroup}
                 slug={slug}
                 selectedTicket={selectedTicket}
-                setCouponCode={setCouponCode}
+                couponManager={
+                  <CouponManager
+                    slug={slug}
+                    selectedTicket={selectedTicket}
+                    onCouponChange={handleCouponChange}
+                    allowCoupons={registrationForm?.allowCoupons}
+                  />
+                }
               />
             )}
           </CardContent>

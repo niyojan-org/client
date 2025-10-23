@@ -6,11 +6,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "@/public/icon.png";
-import {
-  InstagramLogoIcon,
-  TwitterLogoIcon,
-  LinkedInLogoIcon,
-} from "@radix-ui/react-icons";
+import { IconBrandInstagram, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -28,11 +24,11 @@ export default function Footer() {
 
   return (
     <footer
-      className="bg-card text-foreground pt-10 pb-5 px-6 sm:px-10 relative overflow-hidden transition-colors duration-700"
+      className="sm:bg-card text-foreground pt-10 pb-5 px-1 sm:px-10 relative overflow-hidden transition-colors duration-700"
       role="contentinfo"
     >
       {/* Social & Newsletter */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-16 md:gap-0">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-4 md:gap-0">
         {/* Newsletter Signup */}
         <section className="flex-1 max-w-md mx-auto md:mx-0 text-center md:text-left">
           <header className="flex items-center justify-center md:justify-start gap-3 mb-6">
@@ -45,8 +41,8 @@ export default function Footer() {
             Subscribe for updates on student events, career boosters, and more.
           </p>
           <form
-            className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4"
-            
+            className="flex items-center justify-center md:justify-start gap-2 sm:gap-4"
+
           >
             <Input
               type="email"
@@ -80,7 +76,7 @@ export default function Footer() {
               aria-label="Instagram"
               className="hover:text-primary transition-colors"
             >
-              <InstagramLogoIcon className="w-6 h-6" />
+              <IconBrandInstagram className="w-6 h-6" />
             </Link>
             <Link
               href="https://twitter.com/orgatic"
@@ -89,7 +85,7 @@ export default function Footer() {
               aria-label="Twitter"
               className="hover:text-primary transition-colors"
             >
-              <TwitterLogoIcon className="w-6 h-6" />
+              <IconBrandX className="w-6 h-6" />
             </Link>
             <Link
               href="https://linkedin.com/company/orgatic"
@@ -98,19 +94,19 @@ export default function Footer() {
               aria-label="LinkedIn"
               className="hover:text-primary transition-colors"
             >
-              <LinkedInLogoIcon className="w-6 h-6" />
+              <IconBrandLinkedin className="w-6 h-6" />
             </Link>
           </div>
         </section>
 
         {/* Footer Links (Now using GRID) */}
-        <section className="flex-1 max-w-4xl mx-auto md:mx-0 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-10 text-sm md:text-base">
+        <section className="flex-1 max-w-4xl mx-auto md:mx-0 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-10 text-sm md:text-base w-full justify-between">
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-5 text-primary">
+            <h4 className="text-lg font-semibold mb-2 sm:mb-5 text-primary">
               Quick Links
             </h4>
-            <ul className="space-y-3 text-muted-foreground">
+            <ul className="space-y-1 sm:space-y-3 text-muted-foreground">
               <li>
                 <Link href="/about" className="hover:text-primary transition">
                   About
@@ -134,8 +130,8 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h4 className="text-lg font-semibold mb-5 text-primary">Legal</h4>
-            <ul className="space-y-3 text-muted-foreground">
+            <h4 className="text-lg font-semibold mb-2 sm:mb-5 text-primary">Legal</h4>
+            <ul className="space-y-1 sm:space-y-3 text-muted-foreground">
               <li>
                 <Link
                   href="/privacy-policy"
@@ -165,7 +161,7 @@ export default function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="text-lg font-semibold mb-5 text-primary">
+            <h4 className="text-lg font-semibold mb-2 sm:mb-5 text-primary">
               Support
             </h4>
             <p className="text-muted-foreground leading-relaxed text-sm">
@@ -204,8 +200,8 @@ export default function Footer() {
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Orgatic Event",
-            url: "https://orgatic.events",
-            logo: "https://orgatic.events/logo.png",
+            url: "https://orgatic.in",
+            logo: "https://orgatic.in/logo.png",
             sameAs: [
               "https://instagram.com/orgatic",
               "https://twitter.com/orgatic",

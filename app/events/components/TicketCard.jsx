@@ -23,7 +23,7 @@ const Ticket = ({ ticketName, price }) => {
           <div className="ticket-star" />
 
           <p className="ticket-admit text-lg sm:text-xl md:text-2xl font-semibold text-primary">
-            {price} /-
+            {price === '0' ? "Free Admission" : `${price} /-`}
           </p>
         </div>
 
@@ -34,18 +34,11 @@ const Ticket = ({ ticketName, price }) => {
 
       <style jsx>{`
         .ticket {
-          background: var(--card);
-          border-radius: var(--radius);
           max-width: 100%;
           margin: 0 auto;
           position: relative;
           overflow: hidden;
           transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        @media (max-width: 640px) {
-          .ticket {
-            height: 10rem;
-          }
         }
 
         .ticket:hover {
@@ -54,7 +47,6 @@ const Ticket = ({ ticketName, price }) => {
         }
 
         .ticket-inner {
-          background: var(--ticket-inner-bg, #fff);
           box-shadow: 0 0 0 0.3rem var(--border);
           border-radius: var(--radius);
           margin: 1.5rem 2rem;

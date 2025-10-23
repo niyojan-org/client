@@ -7,15 +7,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTheme } from 'next-themes';
-import { 
-  keyFeatures, 
-  platformFeatures, 
-  techStack, 
-  team, 
-  contactInfo, 
-  containerVariants, 
-  itemVariants, 
-  cardVariants 
+import {
+  keyFeatures,
+  platformFeatures,
+  techStack,
+  team,
+  contactInfo,
+  containerVariants,
+  itemVariants,
+  cardVariants
 } from './data';
 import { IconBrandGithub, IconBrandLinkedin, IconGlobe } from '@tabler/icons-react';
 
@@ -82,21 +82,21 @@ const About = () => {
   const { theme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-700 overflow-x-hidden">
-      
+    <div className="min-h-dvh space-y-5 bg-background text-foreground transition-colors duration-700 overflow-x-hidden pb-10 scroll-smooth">
+
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 px-4 text-center">
+      <section className="relative text-center">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl font-bold pb-6 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">
             Orgatic
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            A <span className="font-semibold text-primary">student-friendly event management platform</span> 
+            A <span className="font-semibold text-primary">student-friendly event management platform</span>
             for hosting, discovering, and attending college events seamlessly.
           </p>
 
           {/* Key Features */}
-          <motion.div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
             {keyFeatures.map((feature, index) => {
               const Icon = feature.icon;
               return (
@@ -112,16 +112,16 @@ const About = () => {
       </section>
 
       {/* Platform Features Section */}
-      <section className="py-24 px-4 bg-muted/30">
+      <section className="">
         <div className="max-w-7xl mx-auto">
-          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div className="text-center mb-4" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Platform Features</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Discover the tools that make Orgatic the ultimate event management solution
             </p>
           </motion.div>
 
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             {platformFeatures.map((feature) => (
               <FeatureCard key={feature.id} feature={feature} />
             ))}
@@ -130,16 +130,16 @@ const About = () => {
       </section>
 
       {/* Tech Stack */}
-      <section className="py-24 px-4">
+      <section className="">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Powered by Modern Tech</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">Powered by Modern Tech</h2>
           <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
             Built with cutting-edge technologies for performance, security, and scalability
           </p>
-          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <motion.div className="grid grid-cols-2 md:grid-cols-3 gap-4" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             {techStack.map((tech, index) => (
-              <motion.div key={index} variants={cardVariants} className="bg-card dark:bg-gray-800 border border-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
-                <tech.icon className={`w-10 h-10 mx-auto mb-4 ${tech.color}`} />
+              <motion.div key={index} variants={cardVariants} className="bg-card dark:bg-gray-800 border border-border rounded-2xl p-2 sm:p-6 hover:shadow-lg transition-all duration-300">
+                <tech.icon className={`w-10 h-10 mx-auto ${tech.color}`} />
                 <h3 className="font-bold text-lg mb-1">{tech.name}</h3>
                 <p className="text-sm text-muted-foreground">{tech.category}</p>
               </motion.div>
@@ -149,11 +149,11 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-24 px-4 bg-muted/20">
+      <section className="">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Meet Our Team</h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">The passionate developers behind Orgatic</p>
-          <motion.div className="grid md:grid-cols-3 gap-12" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <h2 className="text-4xl font-bold mb-3">Meet Our Team</h2>
+          <p className="text-lg text-muted-foreground mb-5 max-w-2xl mx-auto">The passionate developers behind Orgatic</p>
+          <motion.div className="grid md:grid-cols-3 gap-5 sm:gap-12" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             {team.map((member, index) => (
               <motion.div key={index} variants={cardVariants} className="bg-card dark:bg-gray-800 border border-border rounded-3xl p-8 text-center hover:shadow-2xl transition-all duration-500">
                 <div className="relative w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-4 border-border">
@@ -174,13 +174,13 @@ const About = () => {
       </section>
 
       {/* Contact Section */}
-      <section className="py-24 px-4 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
+      <section className="">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Let's Connect</h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto">Ready to transform your event experience? Get in touch!</p>
-          <div className="grid md:grid-cols-4 gap-6 mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">Let's Connect</h2>
+          <p className="text-lg text-muted-foreground mb-4 sm:mb-12 max-w-3xl mx-auto">Ready to transform your event experience? Get in touch!</p>
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-4 sm:gap-6 mb-4 sm:mb-12">
             {contactInfo.map((contact, index) => (
-              <motion.div key={index} className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300">
+              <motion.div key={index} className="bg-card border border-border rounded-2xl p-3 sm:p-6 hover:shadow-lg transition-all duration-300">
                 <div className={`w-12 h-12 mx-auto mb-4 rounded-xl ${contact.bg} flex items-center justify-center`}>
                   <contact.icon className={`w-6 h-6 ${contact.iconColor}`} />
                 </div>
@@ -190,7 +190,7 @@ const About = () => {
             ))}
           </div>
           <Link href="/contact">
-            <Button size="lg" className="hover:scale-105 transition-transform">
+            <Button size="lg" className="hover:scale-105 transition-transform w-full">
               Contact Us
             </Button>
           </Link>

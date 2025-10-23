@@ -61,13 +61,13 @@ export default function PaymentAssurance() {
                 payouts included.
               </p>
 
-              <div className="flex items-center gap-4 mt-4">
+              <div className="flex items-center gap-4 mt-4 w-auto">
                 <Image
                   src="/images/razorpay.svg"
                   alt="Razorpay"
                   width={80}
                   height={40}
-                  className="object-contain"
+                  className="object-contain w-auto"
                   priority
                 />
                 <p className="text-sm text-muted-foreground font-medium">

@@ -18,8 +18,8 @@ export default function TicketCards({ event }) {
     ticketCount === 1
       ? "grid-cols-1"
       : ticketCount === 2
-      ? "sm:grid-cols-2"
-      : "sm:grid-cols-2 lg:grid-cols-3";
+        ? "sm:grid-cols-2"
+        : "sm:grid-cols-2 lg:grid-cols-3";
 
   return (
     <motion.section
@@ -37,32 +37,32 @@ export default function TicketCards({ event }) {
           Choose the ticket that best fits your needs
         </p>
 
-      {/* Grid */}
-      <div
-        className={`grid ${gridCols} gap-6 sm:gap-8 px-4 sm:px-6 md:px-10 place-items-center`}
-      >
-        {event.tickets.map((ticket, index) => (
-          <motion.div
-            key={ticket._id || index}
-            variants={cardHoverVariants}
-            whileHover="hover"
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            className="w-full flex justify-center"
-          >
-            <Link
-              href={`/events/${event.slug}/registration?ticketId=${ticket._id}`}
-              className="block w-full max-w-sm sm:max-w-md md:max-w-[22rem]"
+        {/* Grid */}
+        <div
+          className={`grid ${gridCols} gap-6 sm:gap-8 px-4 sm:px-6 md:px-10 place-items-center`}
+        >
+          {event.tickets.map((ticket, index) => (
+            <motion.div
+              key={ticket._id || index}
+              variants={cardHoverVariants}
+              whileHover="hover"
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+              className="w-full flex justify-center"
             >
-              <Ticket
-                ticketName={ticket.type || "General"}
-                price={`₹${ticket.price?.toLocaleString() || 0}`}
-              />
-            </Link>
-          </motion.div>
-        ))}
-      </div>
+              <Link
+                href={`/events/${event.slug}/registration?ticketId=${ticket._id}`}
+                className="block w-full max-w-sm sm:max-w-md md:max-w-[22rem]"
+              >
+                <Ticket
+                  ticketName={ticket.type || "General"}
+                  price={`${ticket.price || 0}`}
+                />
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </motion.section>
   );

@@ -81,11 +81,11 @@ export default function RegistrationWidget({ event }) {
         diff <= 0
           ? null
           : {
-              days: Math.floor(diff / 86400),
-              hours: Math.floor((diff % 86400) / 3600),
-              minutes: Math.floor((diff % 3600) / 60),
-              seconds: diff % 60,
-            }
+            days: Math.floor(diff / 86400),
+            hours: Math.floor((diff % 86400) / 3600),
+            minutes: Math.floor((diff % 3600) / 60),
+            seconds: diff % 60,
+          }
       );
     };
     update();
@@ -105,13 +105,13 @@ export default function RegistrationWidget({ event }) {
         bg-gradient-to-br from-background/80 to-card/80
         backdrop-blur-md border border-border/40
         shadow-lg hover:shadow-xl
-        transition-all duration-300
+        transition-all duration-300 p-0 px-0 sm:px-0 py-4
       "
     >
-      <CardContent className="sm:p-4 space-y-6 sm:space-y-3 ">
+      <CardContent className="sm:p-4 space-y-6 sm:space-y-3 w-full  p-0">
         {/* Event Info */}
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 "
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -178,8 +178,8 @@ export default function RegistrationWidget({ event }) {
                   {!regIsOpen
                     ? "Registration is closed for this event."
                     : spotsRemaining <= 0
-                    ? "Event is fully booked."
-                    : "Registration period has ended."}
+                      ? "Event is fully booked."
+                      : "Registration period has ended."}
                 </AlertDescription>
               </div>
             </Alert>
@@ -232,12 +232,12 @@ function CountdownCard({
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      // transition={{ duration: 0.5 }}
+    // transition={{ duration: 0.5 }}
     >
-      <Card className="rounded-xl bg-gradient-to-br from-card to-muted/10 border border-border/50 shadow-md">
-        <CardContent className="p-4 sm:p-5 space-y-4">
+      <Card className="rounded-xl bg-gradient-to-br from-card to-muted/10 0 shadow-md bg-transparent border-none">
+        <CardContent className=" sm:p-5 space-y-4">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <motion.div
                 className="w-2.5 h-2.5 bg-destructive rounded-full"
@@ -253,21 +253,20 @@ function CountdownCard({
             <div
               className={`
                 flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold shadow-sm
-                ${
-                  availability.variant === "destructive"
-                    ? "bg-destructive/10 text-destructive"
-                    : "bg-success/10 text-success"
+                ${availability.variant === "destructive"
+                  ? "bg-destructive/10 text-destructive"
+                  : "bg-success/10 text-success"
                 }
               `}
             >
               {availability.text}
               {(spotsRemaining <= 0 ||
                 (spotsRemaining / totalCapacity) * 100 <= 25) && (
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <IconUsers className="w-4 h-4" />
-                  {totalSold}/{totalCapacity}
-                </span>
-              )}
+                  <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <IconUsers className="w-4 h-4" />
+                    {totalSold}/{totalCapacity}
+                  </span>
+                )}
             </div>
           </div>
 

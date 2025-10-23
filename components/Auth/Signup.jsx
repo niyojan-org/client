@@ -162,13 +162,13 @@ export default function Signup({ onViewChange }) {
         </Link>
         <p className="whitespace-nowrap flex">
           Already have an account?{" "}
-          <p
+          <span
             type="button"
             onClick={() => onViewChange("login")}
             className="text-primary hover:underline cursor-pointer underline-offset-2 pl-2"
           >
             Log In
-          </p>
+          </span>
         </p>
       </div>
     </form>

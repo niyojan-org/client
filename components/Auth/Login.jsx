@@ -67,7 +67,7 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
   };
 
   return (
-    <Card className="w-full max-w-md  border-none shadow-none bg-transparent">
+    <Card className="w-full max-w-md border-none shadow-none bg-transparent">
       <form
         ref={formRef}
         value={userEmail}
@@ -107,7 +107,7 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
             onChange={handleInputChange}
             autoComplete="email"
             className="w-full"
-            // placeHolder="Enter you email"
+          // placeHolder="Enter you email"
           />
           {errors.email && (
             <p className="text-destructive text-sm mt-1">{errors.email}</p>

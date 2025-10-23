@@ -66,7 +66,7 @@ export default function EventCard({ event }) {
 
       <CardHeader className={"px-0 relative"}>
         <Image
-          src={event.bannerImage || event.banner_image || "/fallback.jpg"}
+          src={event.bannerImage || event.banner_image || "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761137533/orgatickBanner_vdyzdk.png"}
           alt={event.title || event.name || "Event"}
           width={800}
           height={400}
@@ -214,9 +214,11 @@ export default function EventCard({ event }) {
           {/* FREE / PAID */}
           <div className="flex items-center wrap gap-2">
             {event.tickets.map((t) => (
-              <Badge key={t._id} variant={t.price > 0 ? "default" : "success"}>
-                {t.price > 0 ? <IconCurrencyRupee size={14} className="inline" /> : <IconConfetti size={14} className="inline" />}
-                {t.price > 0 ? t.price : "Free"} - {t.type || "General"}
+              <Badge key={t._id} variant={t.price > 0 ? "default" : "success"} asChild>
+                <Link href={`/events/${event.slug || event._id}/registration?ticketId=${t._id}`}>
+                  {t.price > 0 ? <IconCurrencyRupee size={14} className="inline" /> : <IconConfetti size={14} className="inline" />}
+                  {t.price > 0 ? t.price : "Free"} - {t.type || "General"}
+                </Link>
               </Badge>
             ))}
           </div>
@@ -224,7 +226,7 @@ export default function EventCard({ event }) {
 
         {/* VIEW DETAILS */}
         <Button asChild className="mt-5 mb-4 text-primary-foreground cursor-pointer">
-          <Link  href={`/events/${event.slug || event.id}`}>View Event Details</Link>
+          <Link href={`/events/${event.slug || event.id}`}>View Event Details</Link>
         </Button>
       </CardContent>
     </Card>
