@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
     Ticket,
@@ -23,7 +23,7 @@ import { TicketDetailDialog } from "./components/TicketDetailDialog";
 import api from "@/lib/api";
 import { toast } from "sonner";
 
-export default function TicketsPage() {
+export default function TicketsPage({ searchParams }) {
     const [tickets, setTickets] = useState([]);
     const [filteredTickets, setFilteredTickets] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -33,7 +33,6 @@ export default function TicketsPage() {
     const [dialogOpen, setDialogOpen] = useState(false);
 
     const router = useRouter();
-    const searchParams = useSearchParams();
 
     useEffect(() => {
         fetchTickets();
@@ -45,14 +44,18 @@ export default function TicketsPage() {
 
     // Handle URL parameters for opening dialog
     useEffect(() => {
-        const ticketCode = searchParams.get('ticketCode');
-        if (ticketCode && tickets.length > 0) {
-            const ticket = tickets.find(t => t.ticket?.code === ticketCode);
-            if (ticket) {
-                setSelectedTicket(ticket);
-                setDialogOpen(true);
+        const handleTicketCodeParam = async () => {
+            const ticketCode = (await searchParams).ticketCode;
+            if (ticketCode && tickets.length > 0) {
+                const ticket = tickets.find(t => t.ticket?.code === ticketCode);
+                if (ticket) {
+                    setSelectedTicket(ticket);
+                    setDialogOpen(true);
+                }
             }
-        }
+        };
+
+        handleTicketCodeParam();
     }, [searchParams, tickets]);
 
     const fetchTickets = async () => {

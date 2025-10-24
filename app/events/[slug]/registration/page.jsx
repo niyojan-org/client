@@ -1,108 +1,81 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import useEventStore from "@/store/eventStore";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { IconArrowLeft } from "@tabler/icons-react";
-import api from "@/lib/api";
-import openRazorpay from "@/lib/openRazorpay";
-import DynamicField from "../../components/DynamicField";
-import GroupMultiStepForm from "../../components/GroupMultiStepForm";
 import { SpinnerCustom } from "@/components/ui/spinner";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
-import TicketCardSelectable from "../../components/TicketCardSelectable";
-import confetti from "canvas-confetti";
-import CouponManager from "../../components/CouponManager";
+import api from "@/lib/api";
 import ErrorCard from "@/components/Card/Error";
+import RegistrationBanner from "./components/RegistrationBanner";
+import PendingPaymentDialog from "./components/PendingPaymentDialog";
+import SuccessMessage from "./components/SuccessMessage";
+import FailureMessage from "./components/FailureMessage";
+import RegistrationForm from "./components/RegistrationForm";
+import { useConfetti } from "./hooks/useConfetti";
+import { useRegistration } from "./hooks/useRegistration";
 
 export default function RegistrationPage() {
   const { slug } = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
   const referralCode = searchParams.get("ref") || null;
+  const ticketIdFromUrl = searchParams.get("ticketId") || null;
+
   const { fetchRegistrationForm, registrationForm, error, loadingRegistrationForm } = useEventStore();
+
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [formData, setFormData] = useState({});
   const [groupName, setGroupName] = useState("");
   const [couponCode, setCouponCode] = useState("");
-  const [couponData, setCouponData] = useState(null);
   const [couponDiscount, setCouponDiscount] = useState(0);
-  const [couponFinalPrice, setCouponFinalPrice] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [paymentStatus, setPaymentStatus] = useState(null);
-  const [participant, setParticipant] = useState(null);
-  const [confirmationMsg, setConfirmationMsg] = useState("");
-  const [pendingPayment, setPendingPayment] = useState(null);
-  const [showPendingDialog, setShowPendingDialog] = useState(false);
-  const [errorForm, setErrorForm] = useState(null);
-  //read ticket id from url param and set selected ticket
-  const ticketIdFromUrl = searchParams.get("ticketId") || null;
+  // const [couponFinalPrice, setCouponFinalPrice] = useState(null);
 
-  //select ticket if ticketIdFromUrl is present and registrationForm is loaded 
+  const {
+    submitting,
+    setSubmitting,
+    paymentStatus,
+    participant,
+    confirmationMsg,
+    pendingPayment,
+    showPendingDialog,
+    errorForm,
+    setErrorForm,
+    normalizeDynamicFields,
+    handlePendingPaymentResponse,
+    processPayment,
+    handleRegistrationResponse,
+    resetPendingDialog,
+    couponFinalPrice,
+  } = useRegistration();
+
+  useConfetti(paymentStatus === "success");
+
+  useEffect(() => {
+    if (slug) fetchRegistrationForm(slug);
+  }, [slug]);
+
   useEffect(() => {
     if (registrationForm?.tickets) {
       if (ticketIdFromUrl) {
         const ticket = registrationForm.tickets.find((t) => t._id == ticketIdFromUrl);
         if (ticket) setSelectedTicket(ticket);
       } else if (registrationForm.tickets.length === 1) {
-        // Auto-select if only one ticket is available
         setSelectedTicket(registrationForm.tickets[0]);
       }
     }
   }, [registrationForm, ticketIdFromUrl]);
 
-  // Handle coupon changes from CouponManager
   const handleCouponChange = (code, data, discount, finalPrice) => {
     setCouponCode(code);
-    setCouponData(data);
     setCouponDiscount(discount);
-    setCouponFinalPrice(finalPrice);
+    // setCouponFinalPrice(finalPrice);
   };
-
-  useEffect(() => {
-    if (slug) fetchRegistrationForm(slug);
-  }, [slug]);
-
-  // 🎉 Confetti animation on success
-  useEffect(() => {
-    if (paymentStatus === "success") {
-      const colors = ["#A786FF", "#FD8BBC", "#FF9B64", "#FFD66B", "#7A5CFF", "#26C485"];
-      const end = Date.now() + 3 * 1000;
-      const frame = () => {
-        if (Date.now() > end) return;
-        confetti({ particleCount: 3, angle: 60, spread: 55, startVelocity: 60, origin: { x: 0, y: 0.5 }, colors });
-        confetti({ particleCount: 3, angle: 120, spread: 55, startVelocity: 60, origin: { x: 1, y: 0.5 }, colors });
-        requestAnimationFrame(frame);
-      };
-      frame();
-      return () => cancelAnimationFrame(frame);
-    }
-  }, [paymentStatus]);
-
-  if (loadingRegistrationForm) {
-    return (
-      <div className="flex items-center justify-center h-dvh bg-background">
-        <SpinnerCustom className="text-primary" />
-      </div>
-    );
-  }
 
   const allFields = [
     ...(registrationForm?.defaultFields || []),
     ...(registrationForm?.customFields || []),
   ];
-
-  const normalizeDynamicFields = (fields) => {
-    const out = {};
-    for (const [key, val] of Object.entries(fields || {})) {
-      out[key] = Array.isArray(val) ? val.join(", ") : val ?? "";
-    }
-    return out;
-  };
 
   const validateLeader = () => {
     for (const f of allFields) {
@@ -118,25 +91,10 @@ export default function RegistrationPage() {
     return true;
   };
 
-  // 🧩 handle pending states
-  const handlePendingPaymentResponse = (details) => {
-    if (!details?.payment) {
-      toast.error("Unable to load your pending registration. Please try again.");
-      return false;
-    }
-
-    if (details.payment && (details.payment.status === "pending" || details.payment.status === "failed")) {
-      setParticipant(details.participant);
-      setPendingPayment(details.payment);
-      setShowPendingDialog(true);
-      return true;
-    }
-    return false;
-  };
-
-  // -------- INDIVIDUAL Submit ----------
-  const handleSubmitSingle = async () => {
+  const handleSubmitSingle = async (e) => {
+    e.preventDefault();
     if (!validateLeader()) return;
+
     try {
       setSubmitting(true);
       const payload = {
@@ -151,41 +109,8 @@ export default function RegistrationPage() {
 
       const res = await api.post(`/event/${slug}/register`, payload);
       const { code, data, participant, message } = res.data;
-      console.log("CODE: " + code);
-      console.log("DATA: " + data);
-      console.log("PARTICIPANT: " + participant);
-      const { participant: part, payment } = data || {};
 
-      if (code === "PAYMENT_PENDING") {
-        setParticipant(part);
-        setPendingPayment(payment);
-        setShowPendingDialog(true);
-        return;
-      }
-
-      if (code === "PAYMENT_REQUIRED" && payment) {
-        const payRes = await openRazorpay(payment, part?.name, part?.email);
-        if (payRes.status === "cancelled") {
-          toast.info("Payment cancelled by user.");
-          return;
-        }
-        const verifyRes = await api.post(`/payment/status`, payRes);
-        if (verifyRes.data.success) {
-          setPaymentStatus("success");
-          setConfirmationMsg(verifyRes.data.message);
-          setParticipant(part);
-          setShowPendingDialog(false);
-        } else {
-          setPaymentStatus("failed");
-          setConfirmationMsg(verifyRes.data.message || "Payment failed.");
-        }
-      } else {
-        console.log("I am here 3")
-        setPaymentStatus("success");
-        setConfirmationMsg(message || "Registration successful!");
-        setParticipant(part ? part : participant);
-        setShowPendingDialog(false);
-      }
+      await handleRegistrationResponse(code, data, message, participant);
     } catch (err) {
       const res = err.response?.data;
       if (res?.code === "PARTICIPANT_PENDING_PAYMENT" && res?.error) {
@@ -199,12 +124,12 @@ export default function RegistrationPage() {
     }
   };
 
-  // -------- GROUP Submit ----------
   const handleSubmitGroup = async ({ leader, groupName, groupMembers }) => {
     if (!selectedTicket) {
       toast.error("Please select a ticket before continuing.");
       return;
     }
+
     try {
       setSubmitting(true);
       const payload = {
@@ -224,37 +149,8 @@ export default function RegistrationPage() {
 
       const res = await api.post(`/event/${slug}/register`, payload);
       const { code, data } = res.data;
-      const { participant: part, payment } = data || {};
 
-      if (code === "PAYMENT_PENDING") {
-        setParticipant(part);
-        setPendingPayment(payment);
-        setShowPendingDialog(true);
-        return;
-      }
-
-      if (code === "PAYMENT_REQUIRED" && payment) {
-        const payRes = await openRazorpay(payment, part?.name, part?.email);
-        if (payRes.status === "cancelled") {
-          toast.info("Payment cancelled by user.");
-          return;
-        }
-        const verifyRes = await api.post(`/payment/status`, payRes);
-        if (verifyRes.data.success) {
-          setPaymentStatus("success");
-          setConfirmationMsg(verifyRes.data.message);
-          setParticipant(part);
-          setShowPendingDialog(false);
-        } else {
-          setPaymentStatus("failed");
-          setConfirmationMsg(verifyRes.data.message || "Payment failed.");
-        }
-      } else {
-        setPaymentStatus("success");
-        setConfirmationMsg("Registration successful!");
-        setParticipant(part);
-        setShowPendingDialog(false);
-      }
+      await handleRegistrationResponse(code, data);
     } catch (err) {
       const res = err.response?.data.error;
       if (res?.code === "PARTICIPANT_PENDING_PAYMENT" && res?.details?.payment) {
@@ -268,9 +164,30 @@ export default function RegistrationPage() {
     }
   };
 
-  // Final ticket price after coupon
+  const handleRetryPayment = async () => {
+    setSubmitting(true);
+    try {
+      const result = await processPayment(pendingPayment, participant);
+      if (!result) {
+        setSubmitting(false);
+      }
+    } catch {
+      toast.error("Retry payment failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const originalPrice = selectedTicket?.price || 0;
   const finalPrice = couponFinalPrice || originalPrice;
+
+  if (loadingRegistrationForm) {
+    return (
+      <div className="flex items-center justify-center h-dvh bg-background">
+        <SpinnerCustom className="text-primary" />
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -285,7 +202,6 @@ export default function RegistrationPage() {
       </div>
     );
   }
-
 
   if (errorForm) {
     return (
@@ -305,242 +221,59 @@ export default function RegistrationPage() {
     return null;
   }
 
-  // ---------- RENDER ----------
   return (
     <div className="w-full max-w-5xl mx-auto">
-      {/* Banner */}
-      {registrationForm?.eventDetails?.bannerImage && (
-        <div className="relative w-full aspect-[21/9] max-h-52 rounded-lg overflow-hidden shadow-md border border-border mb-4">
-          <Image
-            src={registrationForm.eventDetails.bannerImage}
-            alt={registrationForm.eventDetails.title}
-            fill
-            className="object-cover"
-            priority
-          />
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => router.back()}
-            className="absolute top-4 left-4 flex items-center gap-2 rounded-lg backdrop-blur-sm bg-background/30 text-white border border-white/40 hover:bg-background/50"
-          >
-            <IconArrowLeft size={16} /> Back
-          </Button>
-        </div>
-      )}
+      <RegistrationBanner
+        bannerImage={registrationForm?.eventDetails?.bannerImage}
+        title={registrationForm?.eventDetails?.title}
+        onBack={() => router.back()}
+      />
 
-      {/* 🟡 Pending Payment Dialog */}
       {showPendingDialog && participant && pendingPayment && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 animate-fadeIn">
-          <div className="bg-card text-card-foreground rounded-xl shadow-xl p-6 w-full max-w-lg space-y-4 border border-border">
-            <h2 className="text-xl font-bold text-primary text-center">
-              Pending Registration
-            </h2>
-            <p className="text-center text-muted-foreground">
-              You have a pending payment of ₹{(pendingPayment.amount / 100).toFixed(2)} for
-              <b> {registrationForm?.eventDetails?.title}</b>.
-            </p>
-
-            <div className="flex gap-4 justify-center pt-4">
-              <Button
-                onClick={async () => {
-                  setSubmitting(true);
-                  try {
-                    const payRes = await openRazorpay(
-                      pendingPayment,
-                      participant.name,
-                      participant.email
-                    );
-                    if (payRes.status === "cancelled") {
-                      toast.info("Payment cancelled by user.");
-                      return;
-                    }
-                    const verifyRes = await api.post(`/payment/status`, payRes);
-                    if (verifyRes.data.success) {
-                      setPaymentStatus("success");
-                      setConfirmationMsg(verifyRes.data.message);
-                      setShowPendingDialog(false);
-                    } else {
-                      setPaymentStatus("failed");
-                      setConfirmationMsg("Payment failed again.");
-                      setShowPendingDialog(false);
-                    }
-                  } catch {
-                    toast.error("Retry payment failed. Please try again.");
-                  } finally {
-                    setSubmitting(false);
-                  }
-                }}
-                disabled={submitting}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 rounded-full"
-              >
-                {submitting ? "Processing..." : "Pay Now"}
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setShowPendingDialog(false);
-                  setPaymentStatus(null);
-                  setParticipant(null);
-                  setPendingPayment(null);
-                }}
-              >
-                Start Over
-              </Button>
-            </div>
-          </div>
-        </div>
+        <PendingPaymentDialog
+          participant={participant}
+          pendingPayment={pendingPayment}
+          eventTitle={registrationForm?.eventDetails?.title}
+          submitting={submitting}
+          onPayNow={handleRetryPayment}
+          onStartOver={resetPendingDialog}
+        />
       )}
 
-      {/*  SUCCESS */}
       {paymentStatus === "success" && (participant || pendingPayment) && (
-        <div className="flex items-center justify-center bg-card rounded-2xl p-8 border border-border shadow-md text-center">
-          <div className="flex flex-col items-center space-y-4">
-            <div className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center shadow-md border border-success/20">
-              <CheckCircledIcon className="text-success w-12 h-12" />
-            </div>
-            <h2 className="text-2xl font-bold text-success">
-              Registration Successful!
-            </h2>
-            <p className="text-foreground">
-              Thank you <strong>{participant.name}</strong> for registering.
-            </p>
-            <p className="text-muted-foreground max-w-md">
-              A confirmation email has been sent to <strong>{participant.email}</strong>. If you do not receive it within a few minutes, then try logging into our platform with same email.
-            </p>
-
-            {confirmationMsg && (
-              <div className="mt-2 w-full p-4 bg-success/10 border border-success/30 rounded-lg">
-                <p className="text-success">{confirmationMsg}</p>
-              </div>
-            )}
-            <div className="flex flex-wrap gap-4 mt-4 justify-center">
-              <Button
-                onClick={() => router.push("/events")}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 rounded-full"
-              >
-                Go to Events
-              </Button>
-              <Button
-                onClick={() => router.push("/")}
-                className="bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 rounded-full"
-              >
-                Home
-              </Button>
-            </div>
-          </div>
-        </div>
+        <SuccessMessage
+          participant={participant}
+          confirmationMsg={confirmationMsg}
+          onGoToEvents={() => router.push("/events")}
+          onGoHome={() => router.push("/")}
+        />
       )}
 
-      {/* ❌ FAILED */}
       {paymentStatus === "failed" && (
-        <div className="flex items-center justify-center bg-muted rounded-xl p-6">
-          <div className="bg-card border border-border rounded-xl shadow-md p-8 space-y-4 text-center">
-            <h2 className="text-2xl font-bold text-destructive">Payment Failed</h2>
-            <p className="text-muted-foreground">
-              {confirmationMsg || "Your payment was not completed."}
-            </p>
-            <Button
-              onClick={() => window.location.reload()}
-              className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 rounded-full"
-            >
-              Try Again
-            </Button>
-          </div>
-        </div>
+        <FailureMessage
+          confirmationMsg={confirmationMsg}
+          onTryAgain={() => window.location.reload()}
+        />
       )}
 
-      {/* 📝 FORM */}
       {!paymentStatus && !showPendingDialog && (
-        <Card className="shadow-md border border-border rounded-xl bg-card text-card-foreground">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl font-semibold">
-              {registrationForm?.eventDetails?.title || "Register"}
-            </CardTitle>
-          </CardHeader>
-
-          <CardContent className="space-y-8 w-full">
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full">
-              {registrationForm?.tickets?.map((t) => (
-                <TicketCardSelectable
-                  key={t._id}
-                  ticketName={t.type}
-                  price={t.price}
-                  soldOut={t.soldOut}
-                  selected={selectedTicket?._id === t._id}
-                  onClick={() => {
-                    setSelectedTicket(t);
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* INDIVIDUAL FORM */}
-            {!selectedTicket || !selectedTicket.isGroupTicket ? (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSubmitSingle();
-                }}
-                className="space-y-5"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {allFields.map((f) => (
-                    <DynamicField
-                      key={f.name}
-                      field={f}
-                      value={formData[f.name] || ""}
-                      onChange={(name, val) =>
-                        setFormData((prev) => ({ ...prev, [name]: val }))
-                      }
-                    />
-                  ))}
-
-                  {/* Coupon Manager */}
-                  <CouponManager
-                    slug={slug}
-                    selectedTicket={selectedTicket}
-                    onCouponChange={handleCouponChange}
-                    allowCoupons={registrationForm?.allowCoupons}
-                  />
-                </div>
-
-                {/* Dynamic Button Label */}
-                <Button
-                  type="submit"
-                  disabled={submitting || !selectedTicket}
-                  className="w-full rounded-full"
-                >
-                  {submitting
-                    ? "Submitting..."
-                    : couponDiscount > 0
-                      ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
-                      : selectedTicket ? `Submit & Pay ₹${originalPrice}` : "Please select a ticket"}
-                </Button>
-              </form>
-            ) : (
-              <GroupMultiStepForm
-                allFields={allFields}
-                groupSettings={selectedTicket.groupSettings}
-                leaderData={formData}
-                groupName={groupName}
-                setGroupName={setGroupName}
-                onSubmit={handleSubmitGroup}
-                slug={slug}
-                selectedTicket={selectedTicket}
-                couponManager={
-                  <CouponManager
-                    slug={slug}
-                    selectedTicket={selectedTicket}
-                    onCouponChange={handleCouponChange}
-                    allowCoupons={registrationForm?.allowCoupons}
-                  />
-                }
-              />
-            )}
-          </CardContent>
-        </Card>
+        <RegistrationForm
+          registrationForm={registrationForm}
+          selectedTicket={selectedTicket}
+          setSelectedTicket={setSelectedTicket}
+          formData={formData}
+          setFormData={setFormData}
+          groupName={groupName}
+          setGroupName={setGroupName}
+          submitting={submitting}
+          onSubmitSingle={handleSubmitSingle}
+          onSubmitGroup={handleSubmitGroup}
+          slug={slug}
+          onCouponChange={handleCouponChange}
+          couponDiscount={couponDiscount}
+          originalPrice={originalPrice}
+          finalPrice={finalPrice}
+        />
       )}
     </div>
   );

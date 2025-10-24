@@ -54,6 +54,15 @@ const ErrorCard = ({
           color: "warning"
         };
 
+      case "PARTICIPANT_EXISTS":
+        return {
+          icon: IconExclamationCircle,
+          title: "Participant Exists",
+          message: error?.message || "Your registration with this email already exists for this event",
+          details: error?.error?.details || "If you believe this is an error, please contact support.",
+          color: "warning"
+        };
+
       case "PARTICIPANT_CONFIRMED":
         return {
           icon: IconCalendarCheck,

@@ -9,6 +9,7 @@ import { SpinnerCustom } from "@/components/ui/spinner";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, TicketPercent, XCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function CouponInput({
   onApply,
@@ -20,6 +21,7 @@ export default function CouponInput({
   finalPrice,
   ticketPrice,
   initialCode = "",
+  className
 }) {
   const [code, setCode] = useState(initialCode);
 
@@ -65,18 +67,18 @@ export default function CouponInput({
   };
 
   return (
-    <div className="w-full max-w-md flex flex-col gap-3 transition-colors duration-700">
+    <div className={cn("w-full max-w-md flex flex-col gap-3 transition-colors duration-700", className)} >
       {/* Label */}
-      <Label
+      < Label
         htmlFor="coupon-input"
         className="font-semibold text-foreground flex items-center gap-2 text-sm sm:text-base"
       >
         <TicketPercent className="w-4 h-4 text-primary" />
         Apply Coupon
-      </Label>
+      </Label >
 
       {/* Input & Button */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      < div className="flex flex-col sm:flex-row gap-3" >
         <Input
           id="coupon-input"
           placeholder="Enter your coupon code"
@@ -91,38 +93,40 @@ export default function CouponInput({
           "
         />
 
-        {appliedCode ? (
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={handleClear}
-            className="rounded-full w-full sm:w-auto flex items-center gap-2"
-          >
-            <XCircle className="w-4 h-4" />
-            Remove
-          </Button>
-        ) : (
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={handleApply}
-            disabled={verifying}
-            className="rounded-full w-full sm:w-auto flex items-center gap-2"
-          >
-            {verifying ? (
-              <SpinnerCustom className="h-4 w-4" />
-            ) : (
-              <>
-                <TicketPercent className="w-4 h-4" />
-                Apply
-              </>
-            )}
-          </Button>
-        )}
-      </div>
+        {
+          appliedCode ? (
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleClear}
+              className="rounded-full w-full sm:w-auto flex items-center gap-2"
+            >
+              <XCircle className="w-4 h-4" />
+              Remove
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={handleApply}
+              disabled={verifying}
+              className="rounded-full w-full sm:w-auto flex items-center gap-2"
+            >
+              {verifying ? (
+                <SpinnerCustom className="h-4 w-4" />
+              ) : (
+                <>
+                  <TicketPercent className="w-4 h-4" />
+                  Apply
+                </>
+              )}
+            </Button>
+          )
+        }
+      </div >
 
       {/* Coupon applied message */}
-      <AnimatePresence mode="wait">
+      < AnimatePresence mode="wait" >
         {appliedCode && couponData && (
           <motion.div
             key="applied"
@@ -160,15 +164,17 @@ export default function CouponInput({
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence >
 
       {/* Info text */}
-      {!appliedCode && (
-        <p className="text-xs text-muted-foreground flex items-center gap-1">
-          <TicketPercent className="w-3 h-3 text-primary" />
-          Enter a coupon to unlock special student discounts.
-        </p>
-      )}
-    </div>
+      {
+        !appliedCode && (
+          <p className="text-xs text-muted-foreground flex items-center gap-1">
+            <TicketPercent className="w-3 h-3 text-primary" />
+            Enter a coupon to unlock special student discounts.
+          </p>
+        )
+      }
+    </div >
   );
 }

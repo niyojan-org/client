@@ -123,6 +123,9 @@ const useEventStore = create((set, get) => ({
     if (!coupon || typeof originalPrice !== "number" || originalPrice <= 0) {
       return { finalPrice: originalPrice, discount: 0 };
     }
+    const finalPrice = Math.max(0, originalPrice - coupon.discountValue);
+    const discount = Math.min(originalPrice, coupon.discountValue);
+    return { finalPrice, discount };
 
     // Minimum order value
     if (coupon.minOrderValue && originalPrice < coupon.minOrderValue) {
@@ -133,24 +136,24 @@ const useEventStore = create((set, get) => ({
       };
     }
 
-    let discount = 0;
+    // let discount = 0;
 
-    if (coupon.discountType === "flat") {
-      discount = coupon.discountValue;
-    } else if (coupon.discountType === "percent") {
-      discount = Math.round((originalPrice * coupon.discountValue) / 100);
-    }
+    // if (coupon.discountType === "flat") {
+    //   discount = coupon.discountValue;
+    // } else if (coupon.discountType === "percent") {
+    //   discount = Math.round((originalPrice * coupon.discountValue) / 100);
+    // }
 
-    // Apply maxDiscount if present
-    if (coupon.maxDiscount && discount > coupon.maxDiscount) {
-      discount = coupon.maxDiscount;
-    }
+    // // Apply maxDiscount if present
+    // if (coupon.maxDiscount && discount > coupon.maxDiscount) {
+    //   discount = coupon.maxDiscount;
+    // }
 
-    // Never exceed the price
-    discount = Math.min(discount, originalPrice);
-    const finalPrice = Math.max(0, originalPrice - discount);
+    // // Never exceed the price
+    // discount = Math.min(discount, originalPrice);
+    // // const finalPrice = Math.max(0, originalPrice - discount);
 
-    return { finalPrice, discount };
+    // return { finalPrice, discount };
   },
 
   //   Verify coupon from backend + compute frontend discount preview

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { useSearchParams } from "next/navigation";
 import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import api from "@/lib/api";
@@ -16,7 +15,6 @@ const Loader = () => (
 );
 
 export default function ChangePassword() {
-  const params = useSearchParams();
   
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
@@ -26,7 +24,7 @@ export default function ChangePassword() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(null);
-  const [email, setEmail] = useState(nul);
+  const [email, setEmail] = useState(null);
 
   // for removing the error
   
