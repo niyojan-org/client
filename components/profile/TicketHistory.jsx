@@ -30,7 +30,7 @@ import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 import { toast } from "sonner";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 2;
 
 export function TicketHistory({ className }) {
   const [tickets, setTickets] = useState([]);
