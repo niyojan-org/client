@@ -137,8 +137,6 @@ export default function TicketsPage({ searchParams }) {
             window.URL.revokeObjectURL(url);
             toast.success('Ticket downloaded successfully');
         } catch (error) {
-            console.error('Error downloading ticket:', error);
-
             // Handle blob error response
             if (error.response?.data instanceof Blob) {
                 try {
@@ -181,7 +179,7 @@ export default function TicketsPage({ searchParams }) {
             <div className="min-h-dvh bg-background w-full">
                 {/* Compact Header */}
                 <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                    <div className="container mx-auto px-3 sm:px-4 py-3">
+                    <div className="container mx-auto py-3">
                         {/* Header Content */}
                         <div className="flex flex-col gap-3">
                             {/* Top Row - Title, Back & Count */}
@@ -274,7 +272,7 @@ export default function TicketsPage({ searchParams }) {
 
 
                 {/* Content */}
-                <div className="container mx-auto px-4 py-6 md:py-8">
+                <div className="container mx-auto py-6 md:py-8">
                     {filteredTickets.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-12 md:py-20">
                             <div className="text-center space-y-4 max-w-md">

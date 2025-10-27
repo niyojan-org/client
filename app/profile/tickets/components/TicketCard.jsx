@@ -49,7 +49,7 @@ export function TicketCard({ ticket, onViewDetails, onDownload, className }) {
     return (
         <Card
             className={cn(
-                "group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer border-2 hover:border-primary/50 py-0",
+                "group overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer w-full border-2 hover:border-primary/50 py-0",
                 className
             )}
             onClick={() => onViewDetails(ticket.ticket.code)}
@@ -97,7 +97,7 @@ export function TicketCard({ ticket, onViewDetails, onDownload, className }) {
             </div>
 
             {/* Content */}
-            <div className="p-4 space-y-1">
+            <div className="p-4 space-y-1 w-full">
                 {/* Ticket Code */}
                 <div className="flex items-center justify-between p-2.5 bg-primary/5 rounded-lg border border-primary/20">
                     <div className="flex-1">
@@ -130,11 +130,11 @@ export function TicketCard({ ticket, onViewDetails, onDownload, className }) {
                 )}
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-2">
+                <div className="flex w-full gap-2 pt-2">
                     <Button
                         size="sm"
                         variant="default"
-                        className="gap-1.5"
+                        className="gap-1.5 flex-1"
                         onClick={(e) => {
                             e.stopPropagation();
                             onViewDetails(ticket.ticket.code);
@@ -143,18 +143,20 @@ export function TicketCard({ ticket, onViewDetails, onDownload, className }) {
                         <Eye className="h-3.5 w-3.5" />
                         View
                     </Button>
-                    <Button
-                        size="sm"
-                        variant="outline"
-                        className="gap-1.5"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onDownload(ticket.ticket.code);
-                        }}
-                    >
-                        <Download className="h-3.5 w-3.5" />
-                        Ticket
-                    </Button>
+                    {
+                        ticket?.status?.toLowerCase() === "confirmed" && (<Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-1.5 "
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDownload(ticket.ticket.code);
+                            }}
+                        >
+                            <Download className="h-3.5 w-3.5" />
+                            Ticket
+                        </Button>)
+                    }
                 </div>
             </div>
         </Card>

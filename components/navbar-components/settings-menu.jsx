@@ -1,5 +1,5 @@
 import { SettingsIcon } from "lucide-react"
-import { IconMoon, IconSun, IconLanguage, IconHelpCircle, IconShieldCheck } from "@tabler/icons-react"
+import { IconMoon, IconSun, IconLanguage, IconHelpCircle, IconShieldCheck, IconContrast2 } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -67,8 +67,8 @@ export default function SettingsMenu() {
 
         <DropdownMenuItem asChild>
           <Link href={'/terms-and-conditions'} className="cursor-pointer">
-            <IconHelpCircle size={16} className="opacity-60" aria-hidden="true" />
-            <span>Help & Support</span>
+            <IconContrast2 size={16} className="opacity-60" aria-hidden="true" />
+            <span>Terms & Conditions</span>
           </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>

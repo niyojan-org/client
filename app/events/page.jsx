@@ -11,7 +11,7 @@ export default function EventsPage() {
   const { allEvents, categories, loading, error } = useEvents();
 
   return (
-    <div className="flex transition-colors duration-300">
+    <div className="flex transition-colors duration-300 pt-12">
       <main className="flex-1 overflow-auto mt-[20px] mb-20">
         {/* Header */}
         <header className="mb-2 mx-auto">

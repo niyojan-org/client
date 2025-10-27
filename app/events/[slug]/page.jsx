@@ -72,7 +72,7 @@ export default function EventSlugPage({ params }) {
   }
 
   return (
-    <div className="min-h-dvh w-full">
+    <div className="min-h-dvh w-full pt-14">
       <HeroSection event={singleEvent} />
 
       <motion.div

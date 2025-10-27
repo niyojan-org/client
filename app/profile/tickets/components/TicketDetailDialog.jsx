@@ -84,7 +84,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-full max-w-[95vw] sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl p-0 overflow-hidden bg-card">
-                <ScrollArea className="h-[95vh] w-full">
+                <ScrollArea className="sm:h-[95vh] h-[80vh] w-full">
                     {/* Banner Header */}
                     <div className="relative h-48 md:h-64 w-full overflow-hidden">
                         <img

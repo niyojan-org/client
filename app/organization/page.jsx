@@ -69,22 +69,34 @@ export default function Organization() {
   };
 
   const renderField = (label, value, highlight = false) => (
-    <div className="flex justify-between border-b border-border py-2 flex-wrap">
-      <span className="font-semibold text-muted-foreground">{label}</span>
-      <span
-        className={`${
-          highlight ? "font-bold text-primary" : "text-foreground"
-        } break-words max-w-full sm:max-w-[60%]`}
+    <div className="space-y-1 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors">
+      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+        {label}
+      </p>
+      <p
+        className={`${highlight ? "font-bold text-primary text-base" : "text-foreground font-medium"
+          } break-words`}
       >
         {value || "—"}
-      </span>
+      </p>
     </div>
   );
 
   const renderRating = (rating) => (
     <div className="flex items-center space-x-1">
-      <Star className="w-4 h-4 text-warning" />
+      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
       <span className="font-semibold">{rating ?? 0}</span>
+    </div>
+  );
+
+  const renderSection = (title, children) => (
+    <div className="space-y-4">
+      <h3 className="text-lg font-bold text-foreground border-l-4 border-primary pl-3">
+        {title}
+      </h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {children}
+      </div>
     </div>
   );
 
@@ -114,50 +126,84 @@ export default function Organization() {
   }
 
   return (
-    <main className="min-h-screen py-5 px-4 sm:px-6 md:px-16 bg-background text-foreground">
-      <div className="max-w-6xl mx-auto space-y-10">
+    <main className="pb-8">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* --- User Organization --- */}
         {orgData && (
-          <Card className="rounded-2xl shadow-sm hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <CardTitle className="text-3xl text-primary font-bold">
-                Your Organization
-              </CardTitle>
-              <CardDescription className="text-muted-foreground">
-                Manage your organization directly from here
-              </CardDescription>
-            </CardHeader>
+          <Card className="border-2 shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden">
+            <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-background p-6 border-b">
+              <div className="flex items-start justify-between flex-wrap gap-4">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <CardTitle className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                      {orgData.name}
+                    </CardTitle>
+                    {orgData.verified && (
+                      <Badge className="bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20">
+                        ✓ Verified
+                      </Badge>
+                    )}
+                  </div>
+                  <CardDescription className="text-base flex items-center gap-2 flex-wrap">
+                    <span className="font-semibold">{orgData.category}</span>
+                    {orgData.subCategory && (
+                      <>
+                        <span className="text-muted-foreground/50">•</span>
+                        <span>{orgData.subCategory}</span>
+                      </>
+                    )}
+                  </CardDescription>
+                  <div className="flex items-center gap-4 flex-wrap">
+                    {renderRating(orgData.rating?.averageRating)}
+                    <span className="text-sm text-muted-foreground">
+                      ({orgData.rating?.totalRatings ?? 0} ratings)
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_ADMIN_URL}?auth=${localStorage.getItem(
+                    "token"
+                  )}&orgId=${orgData._id}`}
+                  target="_blank"
+                >
+                  <Button size="lg" className="shadow-lg hover:shadow-xl transition-all">
+                    Manage Dashboard
+                  </Button>
+                </Link>
+              </div>
+            </div>
 
-            <CardContent className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              {/* Basic Info */}
-              {renderField("Name", orgData.name, true)}
-              {renderField("Email", orgData.email)}
-              {renderField("Phone", orgData.phone)}
-              {renderField("Alternative Phone", orgData.alternativePhone)}
-              {renderField("Category", orgData.category, true)}
-              {renderField("Sub-Category", orgData.subCategory)}
-              {renderField("Website", orgData.website)}
-              {renderField("Verified", orgData.verified ? "Yes" : "No", true)}
-              {renderField("Active", orgData.active ? "Yes" : "No")}
-              {renderField("Trust Score", orgData.trustScore)}
-              {renderField("Risk Level", orgData.riskLevel)}
-              {renderField("Platform Share", `${orgData.platformShare}%`)}
-              {renderField(
-                "Created At",
-                new Date(orgData.createdAt).toLocaleString()
+            <CardContent className="p-6 space-y-8">
+              {/* Contact Information */}
+              {renderSection(
+                "Contact Information",
+                <>
+                  {renderField("Email", orgData.email, true)}
+                  {renderField("Phone", orgData.phone)}
+                  {renderField("Alternative Phone", orgData.alternativePhone)}
+                  {renderField("Website", orgData.website)}
+                </>
               )}
-              {renderField(
-                "Rating",
-                renderRating(orgData.rating?.averageRating),
-                true
+
+              {/* Organization Details */}
+              {renderSection(
+                "Organization Details",
+                <>
+                  {renderField("Trust Score", orgData.trustScore, true)}
+                  {renderField("Risk Level", orgData.riskLevel)}
+                  {renderField("Platform Share", `${orgData.platformShare}%`)}
+                  {renderField("Status", orgData.active ? "Active" : "Inactive", true)}
+                  {renderField(
+                    "Registered",
+                    new Date(orgData.createdAt).toLocaleDateString()
+                  )}
+                </>
               )}
 
               {/* Address */}
-              {orgData.address && (
+              {orgData.address && renderSection(
+                "Address",
                 <>
-                  <div className="col-span-2 mt-4 font-semibold text-lg text-primary">
-                    Address
-                  </div>
                   {renderField("Street", orgData.address.street)}
                   {renderField("City", orgData.address.city)}
                   {renderField("State", orgData.address.state)}
@@ -167,26 +213,22 @@ export default function Organization() {
               )}
 
               {/* Bank Details */}
-              {orgData.bankDetails && (
+              {orgData.bankDetails && renderSection(
+                "Bank Details",
                 <>
-                  <div className="col-span-2 mt-4 font-semibold text-lg text-primary">
-                    Bank Details
-                  </div>
                   {renderField("Account Holder", orgData.bankDetails.accountHolderName)}
                   {renderField("Bank Name", orgData.bankDetails.bankName)}
                   {renderField("Branch", orgData.bankDetails.branchName)}
-                  {renderField("Account Number", orgData.bankDetails.accountNumber)}
-                  {renderField("IFSC", orgData.bankDetails.ifscCode)}
+                  {renderField("Account Number", "****" + orgData.bankDetails.accountNumber?.slice(-4))}
+                  {renderField("IFSC Code", orgData.bankDetails.ifscCode)}
                   {renderField("UPI ID", orgData.bankDetails.upiId)}
                 </>
               )}
 
               {/* Support Contact */}
-              {orgData.supportContact && (
+              {orgData.supportContact && renderSection(
+                "Support Contact",
                 <>
-                  <div className="col-span-2 mt-4 font-semibold text-lg text-primary">
-                    Support Contact
-                  </div>
                   {renderField("Name", orgData.supportContact.name)}
                   {renderField("Email", orgData.supportContact.email)}
                   {renderField("Phone", orgData.supportContact.phone)}
@@ -194,11 +236,9 @@ export default function Organization() {
               )}
 
               {/* Event Preferences */}
-              {orgData.eventPreferences && (
+              {orgData.eventPreferences && renderSection(
+                "Event Preferences",
                 <>
-                  <div className="col-span-2 mt-4 font-semibold text-lg text-primary">
-                    Event Preferences
-                  </div>
                   {renderField(
                     "Max Events Per Month",
                     orgData.eventPreferences.maxEventsPerMonth
@@ -220,24 +260,41 @@ export default function Organization() {
 
               {/* Stats */}
               {orgData.stats && (
-                <>
-                  <div className="col-span-2 mt-4 font-semibold text-lg text-primary">
-                    Stats
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-foreground border-l-4 border-primary pl-3">
+                    Statistics
+                  </h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className="text-center p-4 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-500/5 border border-blue-500/20">
+                      <p className="text-2xl font-bold text-blue-600">{orgData.stats.totalEventsHosted}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Events Hosted</p>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20">
+                      <p className="text-2xl font-bold text-green-600">{orgData.stats.totalTicketsSold}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Tickets Sold</p>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-gradient-to-br from-purple-500/10 to-purple-500/5 border border-purple-500/20">
+                      <p className="text-2xl font-bold text-purple-600">₹{orgData.stats.totalRevenueGenerated}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Revenue</p>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-gradient-to-br from-red-500/10 to-red-500/5 border border-red-500/20">
+                      <p className="text-2xl font-bold text-red-600">{orgData.stats.totalBlockedEvents}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Blocked Events</p>
+                    </div>
+                    <div className="text-center p-4 rounded-lg bg-gradient-to-br from-yellow-500/10 to-yellow-500/5 border border-yellow-500/20">
+                      <p className="text-2xl font-bold text-yellow-600">{orgData.stats.totalWarnings}</p>
+                      <p className="text-xs text-muted-foreground mt-1">Warnings</p>
+                    </div>
                   </div>
-                  {renderField("Total Events Hosted", orgData.stats.totalEventsHosted)}
-                  {renderField("Total Tickets Sold", orgData.stats.totalTicketsSold)}
-                  {renderField("Total Revenue Generated", orgData.stats.totalRevenueGenerated)}
-                  {renderField("Total Blocked Events", orgData.stats.totalBlockedEvents)}
-                  {renderField("Total Warnings", orgData.stats.totalWarnings)}
-                </>
+                </div>
               )}
 
-              {/* Social Links as Icons */}
-              {orgData.socialLinks && (
-                <>
-                  <div className="col-span-2 mt-4 font-semibold text-lg text-primary">
+              {/* Social Links */}
+              {orgData.socialLinks && Object.values(orgData.socialLinks).some(v => v) && (
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-foreground border-l-4 border-primary pl-3">
                     Social Links
-                  </div>
+                  </h3>
                   <div className="flex flex-wrap gap-3">
                     {Object.entries(orgData.socialLinks).map(([key, value]) => {
                       if (!value) return null;
@@ -247,96 +304,113 @@ export default function Organization() {
                           key={key}
                           href={value}
                           target="_blank"
-                          className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition"
+                          rel="noopener noreferrer"
+                          className="group flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 border border-primary/20 hover:border-primary"
                         >
-                          <Icon className="w-5 h-5" />
+                          <Icon className="w-4 h-4" />
+                          <span className="text-sm font-medium capitalize">{key}</span>
                         </a>
                       );
                     })}
                   </div>
-                </>
+                </div>
               )}
             </CardContent>
-
-            <CardFooter className="flex justify-end flex-wrap gap-2">
-              <Link
-                href={`${process.env.NEXT_PUBLIC_ADMIN_URL}?auth=${localStorage.getItem(
-                  "token"
-                )}&orgId=${orgData._id}`}
-                target="_blank"
-              >
-                <Button>Manage in Admin Panel</Button>
-              </Link>
-            </CardFooter>
           </Card>
         )}
 
         {/* --- Public Organizations --- */}
         {organizationList.length > 0 && (
-          <div className="space-y-8 pb-10">
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-              <h2 className="text-3xl font-extrabold text-primary">
-                Public Organizations
-              </h2>
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                  Discover Organizations
+                </h2>
+                <p className="text-muted-foreground mt-2">
+                  Explore {organizationList.length} verified organizations
+                </p>
+              </div>
               {!orgData && (
-                <Button onClick={handleCreateClick}>Create New Organization</Button>
+                <Button onClick={handleCreateClick} size="lg" className="shadow-lg hover:shadow-xl transition-all">
+                  Create Organization
+                </Button>
               )}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {organizationList.map((org) => (
                 <Card
                   key={org._id}
-                  className="group cursor-pointer hover:shadow-lg transition-shadow rounded-2xl flex flex-col justify-between border border-border"
+                  className="group cursor-pointer hover:shadow-2xl transition-all duration-300 border-2 hover:border-primary/50 overflow-hidden"
                   onClick={() => router.push(`/organization/${org.slug}`)}
                 >
-                  <CardHeader className="px-5 pt-5">
-                    <div className="flex justify-between items-center">
-                      <CardTitle className="text-xl font-bold truncate">
+                  <div className="h-2 bg-gradient-to-r from-primary via-primary/60 to-primary/40 group-hover:h-3 transition-all duration-300" />
+                  
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <CardTitle className="text-xl font-bold truncate group-hover:text-primary transition-colors">
                         {org.name}
                       </CardTitle>
-                      <span className="px-2 py-1 bg-primary/20 text-xs font-semibold rounded-full text-primary">
+                      <Badge variant="secondary" className="shrink-0">
                         {org.category}
-                      </span>
+                      </Badge>
                     </div>
-                    <CardDescription className="truncate text-muted-foreground">
-                      Admin: <span>{org.admin?.name}</span> ({org.admin?.email})
-                    </CardDescription>
-                  </CardHeader>
-
-                  <CardContent className="px-5 text-sm space-y-2">
-                    <div className="flex items-center space-x-2 flex-wrap">
-                      <span className="font-semibold">Rating:</span>
+                    
+                    <div className="flex items-center gap-2 mt-2">
                       {renderRating(org.rating?.averageRating)}
                       <span className="text-xs text-muted-foreground">
                         ({org.rating?.totalRatings ?? 0})
                       </span>
                     </div>
-                    <div>
-                      <span className="font-semibold">Created:</span>{" "}
-                      {new Date(org.createdAt).toLocaleDateString()}
+                  </CardHeader>
+
+                  <CardContent className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <span className="text-primary font-bold text-xs">
+                          {org.admin?.name?.charAt(0)?.toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-medium truncate">{org.admin?.name}</p>
+                        <p className="text-xs text-muted-foreground truncate">{org.admin?.email}</p>
+                      </div>
                     </div>
-                    <div className="truncate">
-                      <span className="font-semibold">Address:</span>{" "}
-                      {org.address?.street}, {org.address?.city}
+
+                    {org.address && (
+                      <div className="text-sm p-2 rounded-lg bg-muted/30">
+                        <p className="text-muted-foreground text-xs mb-1">Location</p>
+                        <p className="font-medium truncate">
+                          {org.address?.city}, {org.address?.state}
+                        </p>
+                      </div>
+                    )}
+
+                    <div className="text-xs text-muted-foreground">
+                      Registered {new Date(org.createdAt).toLocaleDateString()}
                     </div>
                   </CardContent>
 
-                  <CardFooter className="px-5 pb-5 flex gap-2 flex-wrap">
-                    {Object.entries(org.socialLinks || {}).map(([key, value]) => {
-                      if (!value) return null;
-                      const Icon = socialIconMap[key];
-                      return (
-                        <a
-                          key={key}
-                          href={value}
-                          target="_blank"
-                          className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition"
-                        >
-                          <Icon className="w-4 h-4" />
-                        </a>
-                      );
-                    })}
+                  <CardFooter className="bg-muted/20 pt-4">
+                    <div className="flex gap-2 flex-wrap w-full">
+                      {Object.entries(org.socialLinks || {}).map(([key, value]) => {
+                        if (!value) return null;
+                        const Icon = socialIconMap[key];
+                        return (
+                          <a
+                            key={key}
+                            href={value}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                          >
+                            <Icon className="w-4 h-4" />
+                          </a>
+                        );
+                      })}
+                    </div>
                   </CardFooter>
                 </Card>
               ))}
@@ -346,15 +420,24 @@ export default function Organization() {
 
         {/* --- No Data --- */}
         {!orgData && organizationList.length === 0 && (
-          <div className="text-center py-16">
-            <h2 className="text-4xl font-extrabold mb-6 text-primary">
-              No Organizations Found
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              You haven’t created an organization yet.
-            </p>
-            <Button onClick={handleCreateClick}>Create Organization</Button>
-          </div>
+          <Card className="text-center py-16 border-2 border-dashed">
+            <CardContent className="space-y-6">
+              <div className="w-24 h-24 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                <Globe className="w-12 h-12 text-primary" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-3xl md:text-4xl font-bold">
+                  Start Your Journey
+                </h2>
+                <p className="text-muted-foreground max-w-md mx-auto">
+                  Create your organization and connect with thousands of event attendees
+                </p>
+              </div>
+              <Button onClick={handleCreateClick} size="lg" className="shadow-lg hover:shadow-xl transition-all">
+                Create Your Organization
+              </Button>
+            </CardContent>
+          </Card>
         )}
       </div>
     </main>

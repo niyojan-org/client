@@ -11,7 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 const hiddenNavbarRoutes = ["/auth"];
 
 // Routes where scroll area should be hidden
-const hiddenScrollAreaRoutes = ["/auth", "/profile", "/events/", ""];
+const hiddenScrollAreaRoutes = ["/auth", "/events/"];
 
 export default function ClientLayout({ children }) {
   const { fetchUser } = useUserStore();
@@ -49,7 +49,7 @@ export default function ClientLayout({ children }) {
       <main className="h-dvh w-full flex flex-col">
         {shouldHideScrollArea ? (
           // Without ScrollArea - for routes that need full control
-          <div className="flex-1 pt-15 px-2 pb-6 sm:px-6 md:px-8">
+          <div className="flex-1 ">
             <div className="w-full h-full">
               {children}
             </div>
@@ -62,7 +62,7 @@ export default function ClientLayout({ children }) {
             </div>
           </ScrollArea>
         )}
-      </main>   
+      </main>
     </>
   );
 }
