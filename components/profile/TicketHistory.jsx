@@ -113,7 +113,7 @@ export function TicketHistory({ className }) {
         return {
           variant: "destructive",
           icon: XCircle,
-          label: "Cancelled",
+          label: "Ineligible",
           color: "text-destructive",
         };
       default:
@@ -276,16 +276,17 @@ export function TicketHistory({ className }) {
                           <ExternalLink className="h-3 w-3" />
                           View Details
                         </Button>
-
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="gap-1.5 h-8 text-xs"
-                          onClick={() => handleDownloadTicket(ticket.ticket.code)}
-                        >
-                          <Download className="h-3 w-3" />
-                          Ticket
-                        </Button>
+                        {ticket.status === 'confirmed' && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="gap-1.5 h-8 text-xs"
+                            onClick={() => handleDownloadTicket(ticket.ticket.code)}
+                          >
+                            <Download className="h-3 w-3" />
+                            Ticket
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </div>

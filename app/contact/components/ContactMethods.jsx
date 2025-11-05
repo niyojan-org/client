@@ -8,22 +8,22 @@ const contactMethods = [
   {
     icon: IconMail,
     title: "Email",
-    description: "Our friendly team is here to help.",
+    description: "Reach out to our support team for assistance.",
     value: "support@orgatick.in",
     href: "mailto:support@orgatick.in",
     type: "link"
   },
   {
     icon: IconMessageCircle2,
-    title: "Live chat",
-    description: "Our friendly team is here to help.",
-    value: "Open Chat",
+    title: "Live Chat",
+    description: "Connect with us instantly for real-time support.",
+    value: "Start Conversation",
     type: "dialog"
   },
   {
     icon: IconMapPin2,
-    title: "Office",
-    description: "Come say hello at our up.",
+    title: "Office Location",
+    description: "Visit us at our campus office.",
     value: "Lovely Professional University\nPhagwara, Punjab, India",
     href: "https://map.google.com",
     type: "link"
@@ -31,7 +31,7 @@ const contactMethods = [
   {
     icon: IconPhoneCall,
     title: "Phone",
-    description: "Mon-Fri from 8am to 5pm.",
+    description: "Mon-Fri, 8:00 AM - 5:00 PM IST.",
     value: "+91 6206418701",
     href: "tel:+91 6206418701",
     type: "link"

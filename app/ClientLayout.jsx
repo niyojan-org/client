@@ -5,13 +5,9 @@ import { useUserStore } from "@/store/userStore";
 
 import { useEffect, useMemo, useState } from "react";
 import NavigationBar from "@/components/NavigationBar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Routes where navbar should be hidden
 const hiddenNavbarRoutes = ["/auth"];
-
-// Routes where scroll area should be hidden
-const hiddenScrollAreaRoutes = ["/auth", "/events/"];
 
 export default function ClientLayout({ children }) {
   const { fetchUser } = useUserStore();
@@ -24,12 +20,6 @@ export default function ClientLayout({ children }) {
   const shouldHideNavbar = useMemo(() => {
     if (!isHydrated || !pathname) return false;
     return hiddenNavbarRoutes.some((route) => pathname.startsWith(route));
-  }, [pathname, isHydrated]);
-
-  // Calculate whether to hide scroll area
-  const shouldHideScrollArea = useMemo(() => {
-    if (!isHydrated || !pathname) return false;
-    return hiddenScrollAreaRoutes.some((route) => pathname.startsWith(route));
   }, [pathname, isHydrated]);
 
   // Ensure hydration is complete before making pathname-based decisions
@@ -47,21 +37,11 @@ export default function ClientLayout({ children }) {
       {!shouldHideNavbar && <NavigationBar />}
       {/* MAIN CONTENT */}
       <main className="h-dvh w-full flex flex-col">
-        {shouldHideScrollArea ? (
-          // Without ScrollArea - for routes that need full control
-          <div className="flex-1 ">
-            <div className="w-full h-full">
-              {children}
-            </div>
+        <div className="flex-1">
+          <div className="w-full h-full pt-12">
+            {children}
           </div>
-        ) : (
-          // With ScrollArea - default behavior
-          <ScrollArea className="flex-1 pt-15 px-2 pb-6 sm:px-6 md:px-8">
-            <div className="w-full h-full">
-              {children}
-            </div>
-          </ScrollArea>
-        )}
+        </div>
       </main>
     </>
   );

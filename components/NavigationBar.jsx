@@ -2,13 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  Hash,
-  Home,
-  Users,
-  Building2,
-  FileSignature,
-} from "lucide-react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -29,7 +23,7 @@ import UserMenu, { SheetDownMenu } from "@/components/navbar-components/user-men
 import SettingsMenu from "./navbar-components/settings-menu";
 import Logo from "@/assets/Logo";
 import { useUserStore } from "@/store/userStore";
-import { IconCalendarEvent, IconInfoCircle, IconPhoneCall, IconBuilding, IconMenu2 } from "@tabler/icons-react";
+import { IconMenu2 } from "@tabler/icons-react";
 
 const baseNavigationLinks = [
   { href: "/events", label: "Events", },
@@ -50,6 +44,7 @@ export default function NavigationBar() {
   const { isAuthenticated } = useUserStore();
   const [isOpen, setIsOpen] = useState(false);
   const [navigationLinks, setNavigationLinks] = useState(baseNavigationLinks);
+  const pathname = usePathname();
 
   useEffect(() => {
     setNavigationLinks(isAuthenticated ? authNavigationLinks : baseNavigationLinks);
@@ -80,12 +75,14 @@ export default function NavigationBar() {
               <nav className="flex flex-col gap-1 mt-4 flex-1">
                 {navigationLinks.map((link, idx) => {
                   // const Icon = link.icon;
+                  const isActive = pathname === link.href;
                   return (
                     <Link
                       key={idx}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[color:var(--accent)]/10 transition-colors"
+                      className={`flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[color:var(--accent)]/10 transition-colors ${isActive ? 'underline' : ''
+                        }`}
                     >
                       {/* <Icon size={20} className="text-[color:var(--muted-foreground)]" /> */}
                       <span className="text-sm font-medium">{link.label}</span>
@@ -108,11 +105,13 @@ export default function NavigationBar() {
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex gap-4">
             {navigationLinks.map((link, idx) => {
+              const isActive = pathname === link.href;
               return (
                 <NavigationMenuItem key={idx}>
                   <NavigationMenuLink
                     href={link.href}
-                    className="flex items-center gap-2 px-2 py-1 font-medium rounded-md hover:bg-[color:var(--accent)]/10 hover:text-primary text-lg transition-colors"
+                    className={`flex items-center gap-2 px-2 py-1 font-medium rounded-md hover:bg-[color:var(--accent)]/10 hover:text-primary text-lg transition-colors ${isActive ? 'underline underline-offset-4 text-primary' : ''
+                      }`}
                   >
                     {/* <Icon size={16} className="text-[color:var(--muted-foreground)]/80" /> */}
                     <span>{link.label}</span>

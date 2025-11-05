@@ -76,10 +76,6 @@ export function ProfileHeader({ user, className, onLogout }) {
                 )}
               </Badge>
 
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <User className="h-3 w-3" />
-                <span>ID: {user?.id?.slice(-8) || "N/A"}</span>
-              </div>
             </div>
           </div>
         </div>

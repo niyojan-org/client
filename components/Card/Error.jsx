@@ -5,19 +5,19 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
-  IconExclamationCircle,
-  IconLock,
-  IconCalendarOff,
   IconRefresh,
   IconHome,
   IconArrowLeft,
-  IconWifi,
-  IconShieldX,
-  IconServerOff,
-  IconCalendarCheck,
-  IconTicketOff
+  IconCalendarOff
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
+import {
+  errorConfigs,
+  statusCodeConfigs,
+  defaultErrorConfig,
+  sizeClasses,
+  colorClasses
+} from "./error-data";
 
 const ErrorCard = ({
   error,
@@ -31,177 +31,50 @@ const ErrorCard = ({
 }) => {
   // Helper function to get error icon and message
   const getErrorDisplay = (error) => {
+    // Handle string errors
     if (typeof error === 'string') {
       return {
-        icon: IconExclamationCircle,
-        title: "Error",
-        message: error,
-        details: null,
-        color: "destructive"
+        ...defaultErrorConfig,
+        message: error
       };
     }
 
+    // Extract error information from API response structure
     const errorCode = error?.error?.code || error?.code || error?.status;
-    const errorMessage = error?.message || error?.error?.details || error?.error?.message || "Something went wrong";
-
-    switch (errorCode) {
-      case "REGISTRATION_CLOSED":
-        return {
-          icon: IconLock,
-          title: "Registration Closed",
-          message: "Registration is currently closed for this event",
-          details: "The registration period has ended. Please contact the organizer for more information.",
-          color: "warning"
-        };
-
-      case "PARTICIPANT_EXISTS":
-        return {
-          icon: IconExclamationCircle,
-          title: "Participant Exists",
-          message: error?.message || "Your registration with this email already exists for this event",
-          details: error?.error?.details || "If you believe this is an error, please contact support.",
-          color: "warning"
-        };
-
-      case "PARTICIPANT_CONFIRMED":
-        return {
-          icon: IconCalendarCheck,
-          title: "Already Registered",
-          message: error?.message || "You are already registered for this event",
-          details: error?.error?.details.message || "If you have not received your ticket, please try logging in to our platform with the same email.",
-          color: "warning"
-        };
-
-      case "PARTICIPANT_PENDING":
-        return {
-          icon: IconCalendarCheck,
-          title: "Registration Pending",
-          message: error?.message || "Your registration is pending",
-          details: error?.error?.details.message || "Please complete the payment to confirm your registration.",
-          color: "warning"
-        };
-
-      case "PARTICIPANT_CANCELLED":
-        return {
-          icon: IconCalendarOff,
-          title: "Registration Cancelled",
-          message: error?.message || "Your registration has been cancelled",
-          details: error?.error?.details.message || "If this is a mistake, please contact the event organizer for assistance via our platform.",
-          color: "destructive"
-        };
-
-      case "TICKET_SOLD_OUT":
-        return {
-          icon: IconTicketOff,
-          title: "Ticket Sold Out",
-          message: error?.message || "The selected ticket is sold out",
-          details: error?.error?.details || "Please select a different ticket or check back later.",
-          color: "destructive"
-        };
-
-      case "EVENT_NOT_FOUND":
-        return {
-          icon: IconCalendarOff,
-          title: "Event Not Found",
-          message: "The event you're looking for doesn't exist",
-          details: "Please check the event URL or browse our available events.",
-          color: "destructive"
-        };
-
-      case "NETWORK_ERROR":
-      case "ERR_NETWORK":
-        return {
-          icon: IconWifi,
-          title: "Network Error",
-          message: "Unable to connect to the server",
-          details: "Please check your internet connection and try again.",
-          color: "warning"
-        };
-
-      case "UNAUTHORIZED":
-      case 401:
-        return {
-          icon: IconShieldX,
-          title: "Unauthorized",
-          message: "You don't have permission to access this resource",
-          details: "Please log in or contact support if you believe this is an error.",
-          color: "warning"
-        };
-
-      case "SERVER_ERROR":
-      case 500:
-        return {
-          icon: IconServerOff,
-          title: "Server Error",
-          message: "Something went wrong on our end",
-          details: "Our team has been notified. Please try again in a few minutes.",
-          color: "destructive"
-        };
-
-      case 404:
-        return {
-          icon: IconCalendarOff,
-          title: "Not Found",
-          message: "The requested resource was not found",
-          details: "Please check the URL or go back to the previous page.",
-          color: "warning"
-        };
-
-      default:
-        return {
-          icon: IconExclamationCircle,
-          title: "Something Went Wrong",
-          message: errorMessage,
-          details: "Please try refreshing the page or contact support if the issue persists.",
-          color: "destructive"
-        };
+    const apiMessage = error?.message; // Main API message
+    const apiDetails = error?.error?.details; // Detailed error message from API
+    
+    // Check error configs first
+    let config = errorConfigs[errorCode];
+    
+    // If not found, check status code configs
+    if (!config) {
+      config = statusCodeConfigs[errorCode];
     }
+    
+    // If still not found, use default
+    if (!config) {
+      config = { ...defaultErrorConfig };
+    }
+
+    // Priority for message: API message > config message
+    const finalMessage = apiMessage || config.message;
+    
+    // Priority for details: API details > config details
+    const finalDetails = apiDetails || config.details;
+
+    // Return config with API messages taking priority
+    return {
+      icon: config.icon,
+      title: config.title,
+      color: config.color,
+      message: finalMessage,
+      details: finalDetails
+    };
   };
 
   const errorDisplay = getErrorDisplay(error);
   const ErrorIcon = errorDisplay.icon;
-
-  const sizeClasses = {
-    sm: {
-      container: "max-w-sm",
-      icon: "w-12 h-12",
-      iconContainer: "w-12 h-12",
-      title: "text-lg",
-      message: "text-sm",
-      details: "text-xs"
-    },
-    md: {
-      container: "max-w-md",
-      icon: "w-8 h-8",
-      iconContainer: "w-16 h-16",
-      title: "text-xl",
-      message: "text-base",
-      details: "text-sm"
-    },
-    lg: {
-      container: "max-w-lg",
-      icon: "w-10 h-10",
-      iconContainer: "w-20 h-20",
-      title: "text-2xl",
-      message: "text-lg",
-      details: "text-base"
-    }
-  };
-
-  const colorClasses = {
-    destructive: {
-      bg: "bg-destructive/10",
-      border: "border-destructive/20",
-      icon: "text-destructive",
-      title: "text-destructive"
-    },
-    warning: {
-      bg: "bg-yellow-500/10",
-      border: "border-yellow-500/20",
-      icon: "text-yellow-600",
-      title: "text-yellow-700"
-    }
-  };
 
   const currentSize = sizeClasses[size];
   const currentColor = colorClasses[errorDisplay.color];

@@ -66,7 +66,7 @@ export default function Auth() {
   };
 
   return (
-    <div className="flex items-center justify-center my-auto px-2 h-dvh bg-background w-full">
+    <div className="flex items-center justify-center my-auto px-2 h-full bg-background w-full">
 
       <div className="w-full bg-card max-w-5xl mx-auto flex flex-col md:flex-row sm:h-full sm:max-h-[80vh] md:bg-card rounded-2xl md:shadow-lg overflow-hidden md:border border-border items-center justify-center">
 

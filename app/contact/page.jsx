@@ -21,7 +21,7 @@ const Contact02Page = () => {
   } = useContactForm();
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-col gap-8 my-auto h-full pb-10">
+    <div className="w-full max-w-7xl mx-auto flex flex-col gap-8 my-auto h-full items-center justify-center">
       {/* Intro text */}
       {/* <p className="text-base sm:text-lg text-muted-foreground text-center lg:text-left">
         We&apos;d love to hear from you. Please fill out this form or shoot us

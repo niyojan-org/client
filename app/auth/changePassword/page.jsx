@@ -1,21 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { toast } from "sonner";
-import { Eye, EyeOff, CheckCircle, XCircle } from "lucide-react";
+import { IconEye, IconEyeOff, IconCircleCheck, IconCircleX, IconLoader2, IconLock, IconShieldCheck } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import api from "@/lib/api";
 import Link from "next/link";
+import ErrorCard from "@/components/Card/Error";
+import { redirect } from "next/navigation";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
 
-// Simple CSS loader (spinning circle)
-const Loader = () => (
-  <div className="flex justify-center items-center min-h-screen">
-    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-  </div>
-);
+export default function ChangePassword({ searchParams }) {
+  // Unwrap searchParams promise using React.use()
+  const params = use(searchParams);
 
-export default function ChangePassword() {
-  
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,33 +29,51 @@ export default function ChangePassword() {
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState(null);
 
-  // for removing the error
-  
-  // Simulate page loading
+  // Extract token and email from URL query parameters
   useEffect(() => {
+    const tokenParam = params?.token;
+    const emailParam = params?.email;
+
+    setToken(tokenParam);
+    setEmail(emailParam);
     setLoading(false);
-  }, []);
+    if (!tokenParam || !emailParam) {
+      setError({ code: 'TOKEN_EMAIL_MISSING' })
+    }
+  }, [params]);
 
   // Password validation
-  const validatePassword = (password) => {
-    return (
-      password.length >= 8 &&
-      /[A-Z]/.test(password) &&
-      /[a-z]/.test(password) &&
-      /[0-9]/.test(password) &&
-      /[!@#$%^&*(),.?":{}|<>]/.test(password)
-    );
+  const passwordCriteria = {
+    minLength: password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(password),
+    hasLowerCase: /[a-z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
   };
 
-  const isPasswordMatching = password === cpassword;
-  const isFormValid = validatePassword(password) && isPasswordMatching;
+  const validatePassword = (password) => {
+    return Object.values(passwordCriteria).every(Boolean);
+  };
 
-  // Check token & email
-  useEffect(() => {
-    if (!token || !email) {
-      setError("Invalid or missing password reset link. Please request a new one.");
-    }
-  }, [token, email]);
+  // Calculate password strength
+  const getPasswordStrength = () => {
+    if (!password) return 0;
+    const criteriaCount = Object.values(passwordCriteria).filter(Boolean).length;
+    return (criteriaCount / 5) * 100;
+  };
+
+  const getPasswordStrengthLabel = () => {
+    const strength = getPasswordStrength();
+    if (strength === 0) return { label: "", color: "" };
+    if (strength < 40) return { label: "Weak", color: "text-red-500" };
+    if (strength < 80) return { label: "Fair", color: "text-yellow-500" };
+    if (strength < 100) return { label: "Good", color: "text-blue-500" };
+    return { label: "Strong", color: "text-green-500" };
+  };
+
+  const isPasswordMatching = password === cpassword && cpassword.length > 0;
+  const showPasswordMismatch = cpassword.length > 0 && password !== cpassword;
+  const isFormValid = validatePassword(password) && isPasswordMatching;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,26 +103,25 @@ export default function ChangePassword() {
   };
 
   // Show loader initially
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-center">
+          <IconLoader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Show error
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-screen p-4">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="bg-red-50 border border-red-400 p-8 rounded-xl shadow-xl max-w-md text-center"
-        >
-          <XCircle className="text-red-500 w-16 h-16 mx-auto mb-4" />
-          <p className="text-red-700 text-lg font-semibold mb-4">{error}</p>
-          <Link
-            href="/auth"
-            className="inline-block bg-gray-700 text-white font-medium px-6 py-2 rounded-lg hover:bg-gray-800 transition"
-          >
-            Go to Login Page
-          </Link>
-        </motion.div>
+      <div className="flex justify-center items-center h-full p-4">
+        {error && (<ErrorCard error={error}
+          onRetry={() => redirect('/auth?view=forgot')}
+          onGoHome={() => redirect('/')}
+        />)}
       </div>
     );
   }
@@ -111,106 +131,195 @@ export default function ChangePassword() {
     return (
       <div className="flex justify-center items-center min-h-screen p-4">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="bg-green-50 border border-green-400 p-8 rounded-xl shadow-xl max-w-md text-center"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-md w-full"
         >
-          <CheckCircle className="text-green-500 w-16 h-16 mx-auto mb-4" />
-          <p className="text-green-700 text-lg font-semibold mb-4">
-            🎉 Your password has been changed successfully!
-          </p>
-          <Link
-            href="/auth"
-            className="inline-block bg-green-600 text-white font-medium px-6 py-2 rounded-lg hover:bg-green-700 transition"
-          >
-            Go to Login Page
-          </Link>
+          <Card className="border-green-200 bg-green-50/50">
+            <CardContent className="pt-6 text-center">
+              <div className="mb-6 mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                <IconCircleCheck className="text-green-600 w-10 h-10" />
+              </div>
+              <CardTitle className="text-2xl mb-2 text-green-900">
+                Password Changed Successfully!
+              </CardTitle>
+              <CardDescription className="text-green-700 mb-6">
+                Your password has been updated. You can now log in with your new password.
+              </CardDescription>
+              <Button asChild className="w-full" size="lg">
+                <Link href="/auth">
+                  Go to Login Page
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
         </motion.div>
       </div>
     );
   }
 
   // Main form
+  const strengthInfo = getPasswordStrengthLabel();
+
   return (
-    <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-white via-blue-50 to-blue-100">
+    <div className="flex justify-center items-center h-full">
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
-        className="bg-white border-0 p-8 rounded-xl shadow-xl max-w-md w-full text-center"
-        aria-live="polite"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md w-full"
       >
-        <h1 className="text-2xl font-bold mb-6">Change Password</h1>
-        <form onSubmit={handleSubmit} autoComplete="off" className="space-y-6">
-          {/* Password */}
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="New Password"
-              className="w-full p-3 border border-gray-300 rounded-md text-base"
-            />
-            <span
-              className="absolute right-3 top-3 cursor-pointer"
-              onClick={() => setShowPassword((prev) => !prev)}
-              role="button"
-              aria-label={showPassword ? "Hide password" : "Show password"}
-            >
-              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-            </span>
-          </div>
+        <Card className="shadow-lg border-0">
+          <CardHeader className="space-y-1 text-center pb-4">
+            <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
+              <IconShieldCheck className="w-6 h-6 text-primary" />
+            </div>
+            <CardTitle className="text-2xl font-bold">Change Password</CardTitle>
+            <CardDescription>
+              Create a strong password to secure your account
+            </CardDescription>
+          </CardHeader>
 
-          {/* Confirm Password */}
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="cpassword"
-              value={cpassword}
-              onChange={(e) => setCPassword(e.target.value)}
-              placeholder="Confirm New Password"
-              className="w-full p-3 border border-gray-300 rounded-md text-base"
-            />
-          </div>
+          <CardContent>
+            <form onSubmit={handleSubmit} autoComplete="off" className="space-y-5">
+              {/* New Password Field */}
+              <div className="space-y-2">
+                <Label htmlFor="password" className="flex items-center gap-2">
+                  <IconLock className="w-4 h-4" />
+                  New Password
+                </Label>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your new password"
+                    className="pr-10"
+                    aria-invalid={password.length > 0 && !validatePassword(password)}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <IconEyeOff className="w-4 h-4" /> : <IconEye className="w-4 h-4" />}
+                  </button>
+                </div>
 
-          {!isPasswordMatching && (
-            <p className="text-red-600 text-sm">Passwords do not match.</p>
-          )}
+                {/* Password Strength Indicator */}
+                {password.length > 0 && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-muted-foreground">Password strength:</span>
+                      <span className={`font-medium ${strengthInfo.color}`}>
+                        {strengthInfo.label}
+                      </span>
+                    </div>
+                    <Progress value={getPasswordStrength()} className="h-1.5" />
+                  </div>
+                )}
+              </div>
 
-          <button
-            type="submit"
-            disabled={!isFormValid || isSubmitting}
-            className={`w-full py-2 rounded-md text-white font-medium transition duration-200 ${
-              isFormValid && !isSubmitting
-                ? "bg-blue-500 hover:bg-blue-600 cursor-pointer"
-                : "bg-gray-300 cursor-not-allowed"
-            }`}
+              {/* Confirm Password Field */}
+              <div className="space-y-2">
+                <Label htmlFor="cpassword" className="flex items-center gap-2">
+                  <IconLock className="w-4 h-4" />
+                  Confirm Password
+                </Label>
+                <Input
+                  id="cpassword"
+                  type={showPassword ? "text" : "password"}
+                  name="cpassword"
+                  value={cpassword}
+                  onChange={(e) => setCPassword(e.target.value)}
+                  placeholder="Re-enter your new password"
+                  aria-invalid={showPasswordMismatch}
+                />
+
+                {/* Password Match Feedback */}
+                {showPasswordMismatch && (
+                  <Alert variant="destructive" className="py-2">
+                    <IconCircleX className="h-4 w-4" />
+                    <AlertDescription className="text-xs">
+                      Passwords do not match
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                {isPasswordMatching && (
+                  <Alert className="py-2 bg-green-50 text-green-700 border-green-200">
+                    <IconCircleCheck className="h-4 w-4" />
+                    <AlertDescription className="text-xs">
+                      Passwords match
+                    </AlertDescription>
+                  </Alert>
+                )}
+              </div>
+
+              {/* Password Requirements */}
+              <div className="space-y-2 pt-2">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Password requirements:
+                </p>
+                <div className="grid gap-1.5">
+                  {[
+                    { key: 'minLength', label: 'At least 8 characters', met: passwordCriteria.minLength },
+                    { key: 'hasUpperCase', label: 'One uppercase letter', met: passwordCriteria.hasUpperCase },
+                    { key: 'hasLowerCase', label: 'One lowercase letter', met: passwordCriteria.hasLowerCase },
+                    { key: 'hasNumber', label: 'One number', met: passwordCriteria.hasNumber },
+                    { key: 'hasSpecialChar', label: 'One special character', met: passwordCriteria.hasSpecialChar },
+                  ].map(({ key, label, met }) => (
+                    <div
+                      key={key}
+                      className={`flex items-center gap-2 text-sm transition-colors ${met ? 'text-green-600' : 'text-muted-foreground'
+                        }`}
+                    >
+                      {met ? (
+                        <IconCircleCheck className="w-4 h-4" />
+                      ) : (
+                        <div className="w-4 h-4 rounded-full border-2 border-muted-foreground/30" />
+                      )}
+                      <span className={met ? 'font-medium' : ''}>{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                disabled={!isFormValid || isSubmitting}
+                className="w-full"
+                size="lg"
+              >
+                {isSubmitting ? (
+                  <>
+                    <IconLoader2 className="w-4 h-4 animate-spin" />
+                    Changing Password...
+                  </>
+                ) : (
+                  <>
+                    <IconShieldCheck className="w-4 h-4" />
+                    Change Password
+                  </>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Back to Login Link */}
+        <div className="text-center mt-6">
+          <Link
+            href="/auth"
+            className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
           >
-            {isSubmitting ? "Changing..." : "Change Password"}
-          </button>
-        </form>
-
-        {/* Password rules */}
-        <div className="mt-6 text-sm text-gray-600 text-left">
-          <p className="font-medium mb-1">Password must include:</p>
-          <ul className="space-y-1">
-            <li className={password.match(/[A-Z]/) ? "text-green-600" : "text-red-500"}>
-              • Uppercase letter (A-Z)
-            </li>
-            <li className={password.match(/[a-z]/) ? "text-green-600" : "text-red-500"}>
-              • Lowercase letter (a-z)
-            </li>
-            <li className={password.match(/[0-9]/) ? "text-green-600" : "text-red-500"}>
-              • Number (0-9)
-            </li>
-            <li className={password.match(/[!@#$%^&*(),.?":{}|<>]/) ? "text-green-600" : "text-red-500"}>
-              • Special character (!@#$%^&*...)
-            </li>
-            <li className={password.length >= 8 ? "text-green-600" : "text-red-500"}>
-              • At least 8 characters
-            </li>
-          </ul>
+            ← Back to Login
+          </Link>
         </div>
       </motion.div>
     </div>
