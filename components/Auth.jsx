@@ -34,7 +34,7 @@ export default function Auth() {
     } else {
       setView('login');
     }
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -44,7 +44,7 @@ export default function Auth() {
         setCarouselImages(response.data.resources);
       } catch (error) {
         toast.error("Failed to fetch carousel images");
-        console.log(error);
+        // console.log(error);
       } finally {
         setIsLoading(false);
       }
