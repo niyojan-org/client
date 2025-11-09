@@ -4,7 +4,6 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { IconBrandEvernote, IconTimelineEventExclamation, IconTimelineEventFilled } from "@tabler/icons-react";
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
@@ -28,10 +27,10 @@ export default function Hero() {
 
   return (
     <section
-      aria-label="Hero"
+      aria-label="Hero section - Event Management Platform"
       className="relative overflow-hidden bg-[color:var(--background)] text-[color:var(--foreground)] transition-colors duration-300"
     >
-      {/* Background blobs */}
+      {/* Background animation */}
       <svg
         aria-hidden="true"
         className="absolute -top-16 left-[10%] w-[360px] h-[360px] md:w-[520px] md:h-[520px] opacity-20 pointer-events-none"
@@ -57,8 +56,8 @@ export default function Hero() {
         </g>
       </svg>
 
-      {/* Main content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-28 md:py-32 lg:py-36 text-center">
+      {/*  Main content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-4 py-28 md:py-32 lg:py-36 text-center">
         <motion.h1
           {...v.fadeUp}
           initial="initial"
@@ -67,12 +66,13 @@ export default function Hero() {
           className="mx-auto text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl"
           style={{ lineHeight: 1.06, letterSpacing: "0.02em", fontFamily: "var(--font-source-sans-3)" }}
         >
-          Build Events.{" "}
+          Create Experiences That{" "}
           <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent shape-moments">
-            Shape Moments.
+            Inspire
           </span>{" "}
-          Inspire Audiences.
+          and Connect People.
         </motion.h1>
+
 
         <motion.p
           {...v.fadeUp}
@@ -81,11 +81,11 @@ export default function Hero() {
           transition={{ delay: 0.18, duration: 0.6 }}
           className="mt-6 text-lg sm:text-xl max-w-3xl mx-auto text-[color:var(--muted-foreground)]"
         >
-          <strong className="text-[color:var(--primary)] italic">Design, discover, and connect</strong>{" "}
-          through a seamless platform — built to help you create, manage, and elevate events from concept to experience.
+          <strong className="text-[color:var(--primary)] italic">All-in-one event management platform</strong>{" "}
+          built to help you plan, promote, and deliver unforgettable experiences — from concept to celebration.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/*  CTA Buttons */}
         <motion.div
           {...v.fadeUp}
           initial="initial"
@@ -93,17 +93,32 @@ export default function Hero() {
           transition={{ delay: 0.36, duration: 0.6 }}
           className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center"
         >
-          <Button asChild className="px-7 py-3 rounded-xl shadow-lg font-semibold bg-gradient-to-r from-primary via-accent to-secondary text-card hover:scale-105 transition-transform duration-300">
-            <motion.span whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}} whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}} transition={{ type: "spring", stiffness: 300 }}>
-              <Link href="/auth" aria-label="Host Events">
-                Host Events
+          <Button
+            asChild
+            className="px-7 py-3 rounded-xl shadow-lg font-semibold bg-gradient-to-r from-primary via-accent to-secondary text-card hover:scale-105 transition-transform duration-300"
+          >
+            <motion.span
+              whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}}
+              whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link href="/host" aria-label="Start Hosting Events">
+                Host an Event
               </Link>
             </motion.span>
           </Button>
 
-          <Button asChild variant="outline" className="px-7 py-3 rounded-xl font-semibold border-primary text-primary hover:bg-primary/10 hover:border-primary transition-all duration-300">
-            <motion.span whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}} whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}} transition={{ type: "spring", stiffness: 300 }}>
-              <Link href="/events" aria-label="Explore Events">
+          <Button
+            asChild
+            variant="outline"
+            className="px-7 py-3 rounded-xl font-semibold border-primary text-primary hover:bg-primary/10 hover:border-primary transition-all duration-300"
+          >
+            <motion.span
+              whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}}
+              whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              <Link href="/events" aria-label="Discover Live Events">
                 Explore Events
               </Link>
             </motion.span>
@@ -115,13 +130,13 @@ export default function Hero() {
           initial="initial"
           animate="animate"
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-45 text-sm text-[color:var(--muted-foreground)]"
+          className="mt-12 text-sm text-[color:var(--muted-foreground)]"
         >
-          Trusted by <strong>1000+</strong> of Organizer & Participants
+          Trusted by <strong>1,000+</strong> organizers & attendees worldwide
         </motion.div>
       </div>
 
-      {/* ✨ Local Styles */}
+      {/* Localw Styles */}
       <style jsx>{`
         .shape-moments {
           position: relative;
@@ -133,10 +148,13 @@ export default function Hero() {
           animation: shine-text 1.4s linear infinite;
         }
         @keyframes shine-text {
-          0% { background-position: 120% center; }
-          100% { background-position: -20% center; }
+          0% {
+            background-position: 120% center;
+          }
+          100% {
+            background-position: -20% center;
+          }
         }
-
         a:focus,
         button:focus {
           outline: none;

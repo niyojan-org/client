@@ -75,7 +75,7 @@ export default function TermsAndConditions() {
         }
       ].map((section, index) => (
         <section className="space-y-3" key={index}>
-          <h2 className="text-2xl font-semibold text-secondary">{section.title}</h2>
+          <h2 className="text-2xl font-semibold text-primary/75">{section.title}</h2>
           {section.text && <p className="text-foreground">{section.text}</p>}
           {section.items && (
             <ul className="list-disc list-inside space-y-2 text-muted-foreground">

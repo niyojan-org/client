@@ -68,7 +68,7 @@ export default function RefundPolicy() {
         }
       ].map((section, index) => (
         <section key={index} className="space-y-4">
-          <h2 className="text-2xl font-semibold text-secondary">{section.title}</h2>
+          <h2 className="text-2xl font-semibold text-primary/75">{section.title}</h2>
           {section.text && <p className="text-foreground">{section.text}</p>}
           {section.list && (
             <ul className="list-disc list-inside space-y-2 text-muted-foreground">

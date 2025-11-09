@@ -29,7 +29,6 @@ import {
     FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
 export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
     if (!ticket) return null;
@@ -88,11 +87,10 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                 <ScrollArea className="sm:h-[95vh] h-[80vh] w-full">
                     {/* Banner Header */}
                     <div className="relative h-48 md:h-64 w-full overflow-hidden">
-                        <Image
+                        <img
                             src={ticket.event?.bannerImage}
                             alt={ticket.event?.title}
-                            fill
-                            className="h-full w-full object-cover size-full"
+                            className="h-full w-full object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 

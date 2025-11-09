@@ -30,9 +30,9 @@ export default function Home() {
       <Hero />
       <WhyChooseOrgatic />
       <CoreFeatures />
+      <PaymentTrustSection />
       <HowItWorks />
       {/* <TestimonialsSection /> */}
-      <PaymentTrustSection />
       <FAQSection />
       <FinalCTASection />
       <Footer />

@@ -3,8 +3,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const FinalCTA = () => {
+  const router = useRouter();
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
@@ -14,7 +16,7 @@ const FinalCTA = () => {
     <section
       className="
         relative 
-        py-20 
+        py-12 
         text-center 
         overflow-hidden 
         transition-colors duration-700
@@ -26,7 +28,7 @@ const FinalCTA = () => {
       {/* Decorative subtle glow */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/10 to-transparent dark:from-primary/5 dark:to-transparent pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto px-6 sm:px-8">
+      <div className="relative max-w-6xl mx-auto px-2 sm:px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -47,7 +49,7 @@ const FinalCTA = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center mt-8">
             <Button
-              asChild
+              onClick={() => router.push('/auth')}
               size="lg"
               className="
                 px-8 py-3 rounded-full font-semibold shadow-md 
@@ -56,7 +58,7 @@ const FinalCTA = () => {
                 transition-all duration-300
               "
             >
-              <Link href="/auth">Start Hosting</Link>
+              Start Hosting
             </Button>
 
             <Button
@@ -71,7 +73,7 @@ const FinalCTA = () => {
                 dark:border-primary/40 dark:text-primary dark:hover:bg-primary dark:hover:text-primary-foreground
               "
             >
-              <Link href="/explore">Discover Events</Link>
+              <Link href="/events">Discover Events</Link>
             </Button>
           </div>
         </motion.div>

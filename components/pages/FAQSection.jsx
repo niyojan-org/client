@@ -16,10 +16,10 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-8 bg-gradient-to-b from-background via-primary/5 to-card transition-colors duration-700">
+    <section className="py-4 sm:px-8 bg-gradient-to-b from-background via-primary/5 to-card transition-colors duration-700">
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
-        <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 font-sans text-primary dark:text-primary-foreground">
+        <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 font-sans text-primary dark:text-primary">
           FAQs for Hosts & Attendees
         </h2>
 
@@ -46,7 +46,7 @@ const FAQSection = () => {
         </div>
 
         {/* FAQ Panels */}
-        <div className="mt-6 relative min-h-[300px]">
+        <div className="mt-4 relative min-h-[300px]">
           <AnimatePresence mode="wait">
             {activeTab === "organizer" ? (
               <motion.div
@@ -55,7 +55,7 @@ const FAQSection = () => {
                 animate="visible"
                 exit="exit"
                 variants={fadeVariants}
-                className="rounded-xl p-6 bg-card/80 backdrop-blur-sm shadow-lg border border-border/50 transition-colors duration-500"
+                className="rounded-xl p-4 bg-card/80 backdrop-blur-sm shadow-lg border border-border/50 transition-colors duration-500"
               >
                 <OrganizerFAQ />
               </motion.div>
@@ -66,7 +66,7 @@ const FAQSection = () => {
                 animate="visible"
                 exit="exit"
                 variants={fadeVariants}
-                className="rounded-xl p-6 bg-card/80 backdrop-blur-sm shadow-lg border border-border/50 transition-colors duration-500"
+                className="rounded-xl p-4 bg-card/80 backdrop-blur-sm shadow-lg border border-border/50 transition-colors duration-500"
               >
                 <AttendesFAQ />
               </motion.div>

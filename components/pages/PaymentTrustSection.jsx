@@ -14,7 +14,7 @@ export default function PaymentAssurance() {
   return (
     <>
       <section
-        className="relative py-20 sm:py-28 overflow-hidden bg-gradient-to-r from-background via-primary/5 to-card transition-colors duration-500"
+        className="relative py-12 sm:py-20 overflow-hidden bg-gradient-to-r from-background via-primary/5 to-card transition-colors duration-500"
         aria-labelledby="payment-assurance-title"
       >
         {/* Background Pattern */}
@@ -38,7 +38,7 @@ export default function PaymentAssurance() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+        <div className="relative z-10 max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Text Section */}
             <motion.div
@@ -50,12 +50,12 @@ export default function PaymentAssurance() {
             >
               <h2
                 id="payment-assurance-title"
-                className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight text-primary dark:text-primary-foreground"
+                className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight text-primary dark:text-primary"
               >
                 Secure Payments with Razorpay
               </h2>
 
-              <p className="text-lg leading-relaxed max-w-xl text-muted-foreground">
+              <p className="text-lg leading-relaxed max-w-xl">
                 Host and attend events with confidence. Razorpay ensures fast, secure, and
                 reliable transactions — UPI, cards, netbanking, instant refunds, and automated
                 payouts included.
@@ -67,11 +67,11 @@ export default function PaymentAssurance() {
                   alt="Razorpay"
                   width={80}
                   height={40}
-                  className="object-contain w-auto"
+                  className="object-contain w-auto dark:bg-white rounded"
                   priority
                 />
                 <p className="text-sm text-muted-foreground font-medium">
-                  Trusted by <span className="text-primary font-semibold">10M+</span> users across India
+                  Trusted by <span className="text-primary  font-semibold">10M+</span> users across India
                 </p>
               </div>
             </motion.div>

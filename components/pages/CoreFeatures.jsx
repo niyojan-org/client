@@ -1,126 +1,125 @@
-'use client';
-import React from 'react';
-import { motion } from 'framer-motion';
+"use client";
+
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Calendar,
   Ticket,
   BarChart,
   Bell,
   Users,
-  Settings,
   ShieldCheck,
-  Sparkles,
-} from 'lucide-react';
+} from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export default function CoreFeatures() {
   const features = [
     {
-      title: 'Effortless Event Creation',
+      title: "Effortless Event Creation",
       description:
-        'Plan and publish events or fests in minutes — no technical knowledge required. Focus on experience, not setup.',
+        "Create and publish events in minutes — no technical barriers, just intuitive tools that let you focus on delivering memorable experiences.",
       icon: Calendar,
     },
     {
-      title: 'Secure Ticketing & Payments',
+      title: "Secure Ticketing & Payments",
       description:
-        'Integrated Razorpay for smooth, instant, and verified payments — ensuring complete trust and transparency.',
+        "Integrated with Razorpay for smooth, trusted, and transparent transactions — every ticket purchase is safe and verified.",
       icon: Ticket,
     },
     {
-      title: 'Smart Analytics Dashboard',
+      title: "Smart Analytics Dashboard",
       description:
-        'Track attendance, sales, and engagement visually. Make confident, data-driven event decisions.',
+        "Get real-time insights into attendance, engagement, and revenue — helping you make confident, data-driven decisions.",
       icon: BarChart,
     },
     {
-      title: 'Automated Notifications',
+      title: "Automated Notifications",
       description:
-        'Stay connected with attendees via real-time email and push alerts, completely automated.',
+        "Keep attendees informed with automated email, SMS, and push notifications — ensuring no one misses an update.",
       icon: Bell,
     },
     {
-      title: 'Team Collaboration',
+      title: "Team Collaboration",
       description:
-        'Invite teammates, assign roles, and manage permissions — all from one secure dashboard.',
+        "Invite teammates, assign roles, and manage access effortlessly — making event management truly collaborative and secure.",
       icon: Users,
     },
     {
-      title: 'Customizable Organization Panel',
+      title: "Enterprise-Grade Security",
       description:
-        'Tailor your event portal — adjust themes, preferences, and layouts to match your brand.',
-      icon: Settings,
-    },
-    {
-      title: 'Data Security & Trust',
-      description:
-        'We use enterprise-grade encryption to protect user and payment data — always safe, always private.',
+        "Built with advanced encryption and privacy controls to safeguard every user, payment, and organization record.",
       icon: ShieldCheck,
-    },
-    {
-      title: 'Built for Students',
-      description:
-        'Crafted for the creativity, collaboration, and scale of campus events — flexible and future-ready.',
-      icon: Sparkles,
     },
   ];
 
   return (
     <section
-      className="relative py-24 sm:py-12 px-6 sm:px-10 lg:px-16 bg-gradient-to-b from-background via-primary/5 to-card border-t border-border"
+      className="relative py-16 sm:py-20 px-2 sm:px-8 bg-gradient-to-b from-background via-primary/5 to-card border-t border-border"
       aria-labelledby="core-features-title"
     >
-      {/* Decorative Blobs */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl opacity-30 -z-10" />
-      <div className="absolute bottom-0 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl opacity-20 -z-10" />
+      {/* ✨ Background Elements */}
+      <div className="absolute top-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl opacity-30 -z-10" />
+      <div className="absolute bottom-0 right-0 w-56 h-56 bg-secondary/20 rounded-full blur-3xl opacity-20 -z-10" />
 
-      {/* Section Heading */}
-      <motion.h2
-        id="core-features-title"
+      {/* Section Header */}
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="text-3xl sm:text-5xl font-extrabold text-center text-primary mb-6 tracking-tight"
+        className="text-center max-w-3xl mx-auto mb-14"
       >
-        <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-          Everything You Need
-        </span>{' '}
-        to Host Smarter Events
-      </motion.h2>
+        <h2
+          id="core-features-title"
+          className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4"
+        >
+          <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+            Everything You Need
+          </span>{" "}
+          to Host Smarter Events
+        </h2>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        className="max-w-3xl mx-auto text-center text-muted-foreground mb-16 text-lg leading-relaxed"
-      >
-        From registrations to analytics — manage, monitor, and scale your events confidently with one intuitive platform.
-      </motion.p>
+        <p className="text-muted-foreground text-lg leading-relaxed">
+          Manage registrations, payments, analytics, and engagement — all from
+          one intuitive platform designed to make events seamless, secure, and
+          scalable.
+        </p>
+      </motion.div>
 
-      {/* Feature Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+      {/* Feature Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {features.map((feature, index) => {
           const Icon = feature.icon;
           return (
             <motion.div
               key={index}
-              className="bg-card rounded-2xl p-6 border border-border shadow-sm hover:shadow-md hover:-translate-y-2 transition-all duration-300 flex flex-col"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="p-3 rounded-xl bg-gradient-to-tr from-primary/10 via-accent/10 to-secondary/10 w-fit mb-5">
-                <Icon className="w-8 h-8 text-primary" />
-              </div>
+              <Card className="bg-transparent border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 h-full">
+                <CardHeader className="flex flex-row items-center gap-3">
+                  <div className="p-3 bg-gradient-to-tr from-primary/10 via-accent/10 to-secondary/10 rounded-full flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-lg font-semibold text-foreground leading-tight">
+                    {feature.title}
+                  </CardTitle>
+                </CardHeader>
 
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed flex-1">
-                {feature.description}
-              </p>
+                <CardContent>
+                  <CardDescription className="text-base text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
             </motion.div>
           );
         })}

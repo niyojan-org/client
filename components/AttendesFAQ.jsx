@@ -9,24 +9,30 @@ import {
 export const AttendesFAQ = () => {
   const faqs = [
     {
-      q: "How do I register for an event?",
-      a: "Click “Register” or “Get Tickets.” After payment (if any), you’ll get a confirmation email with your ticket and event details.",
+      q: "How do I find events I’m interested in?",
+      a: "You can browse events by category, date, or location on our platform. Each event page shows the schedule, ticket options, and organizer details so you can make an informed choice.",
     },
     {
-      q: "Can I cancel or get a refund?",
-      a: "Refunds depend on the organizer. If allowed, you can cancel your ticket from your account and get the refund automatically.",
+      q: "What is the registration process like?",
+      a: "Select your preferred ticket type, fill in your details, and complete payment if required. Once registered, you’ll receive confirmation with your ticket and all event information.",
     },
     {
-      q: "Do I need to print my ticket?",
-      a: "No! Just show the ticket on your phone via email or the event dashboard during check-in.",
+      q: "What if I entered my information incorrectly during registration?",
+      a: "Once you submit your registration, the information cannot be changed from your side. If you entered something incorrectly, contact the event organizer directly — their contact details are available on the event page. They can help correct the information if needed.",
+    },
+
+    {
+  q: "How will I receive my ticket?",
+  a: "After successful registration, tickets are sent instantly via email and WhatsApp. If for some reason you do not receive your ticket, you can create an account on our platform. Once logged in, your tickets will be available in your profile under the 'My Tickets' section. No printing is necessary; QR scanning at the event is all you need.",
+}
+,
+    {
+      q: "What happens if event gets canceled?",
+      a: "If the event is canceled, you’ll get a notification and a refund if applicable. Refunds are processed automatically through the original payment method within 5-7 business days.",
     },
     {
-      q: "What if an event is canceled?",
-      a: "You’ll be notified by email. Paid tickets will be refunded automatically to your original payment method.",
-    },
-    {
-      q: "Can I register multiple people at once?",
-      a: "Yes! Add multiple tickets to your cart and register friends or groups if the event allows group bookings.",
+      q: "Is my personal and payment information safe?",
+      a: "Absolutely! All data is encrypted and securely processed through trusted payment gateways. We never share your information with third parties without your consent.",
     },
   ];
 
@@ -35,14 +41,14 @@ export const AttendesFAQ = () => {
       <Accordion type="single" collapsible className="w-full space-y-4">
         {faqs.map((faq, i) => (
           <AccordionItem
-            key={i}
-            value={`item-${i}`}
+            key={`faq-item-${i}`}
+            value={`faq-item-${i}`}
             className="rounded-md border border-border/40 bg-card shadow-sm px-5 transition-colors duration-300"
           >
-            <AccordionTrigger className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200">
+            <AccordionTrigger className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200 cursor-pointer">
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent className="text-muted-foreground text-sm sm:text-base px-2 pt-1 pb-4 leading-relaxed">
+            <AccordionContent className="text-muted-foreground text-sm sm:text-base px-2 pt-1 pb-4 leading-relaxed text-left">
               {faq.a}
             </AccordionContent>
           </AccordionItem>

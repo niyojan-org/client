@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -9,6 +10,13 @@ import {
   CalendarDays,
   Star,
 } from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export default function HowItWorks() {
   const sections = [
@@ -16,25 +24,25 @@ export default function HowItWorks() {
       id: "organizers",
       title: "For Organizers",
       subtitle:
-        "Plan, manage, and grow your student events with confidence — from idea to celebration.",
+        "Plan, manage, and scale your events effortlessly — from concept to celebration.",
       color: "from-primary/10 via-primary/5 to-transparent",
       steps: [
         {
           title: "Create Your Organization",
           description:
-            "Set up your club, college, or society profile in minutes. Customize your event categories and branding.",
+            "Set up your club, college, or community profile in minutes. Customize branding and event categories effortlessly.",
           icon: ClipboardCheck,
         },
         {
           title: "Host & Manage Events",
           description:
-            "Add schedules, tickets, and team roles. Manage registrations and updates effortlessly in real time.",
+            "Add schedules, ticket types, and team roles. Manage registrations and updates from one powerful dashboard.",
           icon: Settings2,
         },
         {
           title: "Launch & Grow",
           description:
-            "Go live instantly. Track engagement, analytics, and payments. Expand your community with ease.",
+            "Go live instantly, track engagement and payments, and grow your reach with data-driven insights.",
           icon: Rocket,
         },
       ],
@@ -43,25 +51,25 @@ export default function HowItWorks() {
       id: "participants",
       title: "For Participants",
       subtitle:
-        "Discover, join, and experience incredible student events — all in one place.",
+        "Discover, join, and enjoy campus events designed to inspire and connect you.",
       color: "from-secondary/10 via-accent/5 to-transparent",
       steps: [
         {
-          title: "Explore Exciting Events",
+          title: "Explore Events",
           description:
-            "Browse fests, workshops, hackathons, and meetups curated for students like you.",
+            "Browse curated fests, workshops, and hackathons tailored to your interests and skills.",
           icon: CalendarDays,
         },
         {
           title: "Join & Connect",
           description:
-            "Grab your tickets instantly, connect with other attendees, and stay updated on upcoming events.",
+            "Register instantly, secure tickets, and engage with peers through shared experiences.",
           icon: Users2,
         },
         {
-          title: "Enjoy & Earn Rewards",
+          title: "Experience & Earn",
           description:
-            "Attend, share feedback, and earn participation rewards that boost your student profile.",
+            "Attend, share feedback, and collect rewards that highlight your achievements.",
           icon: Star,
         },
       ],
@@ -70,60 +78,60 @@ export default function HowItWorks() {
 
   return (
     <section
-      className="relative py-24 sm:py-28 px-6 sm:px-10 lg:px-16 border-t border-border bg-gradient-to-b from-background via-card/50 to-background"
+      className="relative py-12 sm:py-16 border-t border-border bg-gradient-to-b from-background via-card/80 to-background"
       aria-labelledby="how-it-works-title"
     >
-      {/* Subtle blobs for light/dark mode depth */}
+      {/* ✨ Background Blobs */}
       <div className="absolute top-0 left-0 w-72 h-72 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl opacity-20 -z-10" />
       <div className="absolute bottom-0 right-0 w-72 h-72 bg-secondary/10 dark:bg-secondary/20 rounded-full blur-3xl opacity-20 -z-10" />
 
-      {/* Main Heading */}
-      <div className="max-w-4xl mx-auto text-center mb-20">
+      {/* 🔹 Section Header */}
+      <div className="max-w-4xl mx-auto text-center mb-16">
         <motion.h2
           id="how-it-works-title"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-primary"
+          className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground"
         >
           How Orgatic Works for Everyone
         </motion.h2>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed"
+          className="mt-3 text-base sm:text-lg text-muted-foreground leading-relaxed"
         >
-          Orgatic bridges the gap between <span className="text-primary font-semibold">organizers</span> and{" "}
-          <span className="text-secondary font-semibold">participants</span> —
-          making campus events simple, inclusive, and exciting.
+          Orgatic unites{" "}
+          <span className="text-primary font-semibold">organizers</span> and{" "}
+          <span className="text-secondary font-semibold">participants</span>{" "}
+          — making campus events simple, social, and unforgettable.
         </motion.p>
       </div>
 
-      {/* Organizer + Participant Sections */}
-      <div className="flex flex-col gap-24 max-w-6xl mx-auto">
+      {/* 🔹 Organizer + Participant Sections */}
+      <div className="flex flex-col gap-8 max-w-7xl mx-auto">
         {sections.map((group, gIndex) => (
-          <div
+          <motion.div
             key={group.id}
-            className={`rounded-3xl p-10 border border-border shadow-sm bg-gradient-to-b ${group.color}`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: gIndex * 0.15 }}
+            className={`rounded-3xl p-8 sm:p-8 border border-border shadow-sm bg-gradient-to-b ${group.color}`}
           >
             {/* Subheading */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-14"
-            >
-              <h3 className="text-3xl font-bold text-foreground mb-3">
+            <div className="text-center mb-5">
+              <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 {group.title}
               </h3>
               <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
                 {group.subtitle}
               </p>
-            </motion.div>
+            </div>
 
             {/* Steps */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -132,29 +140,34 @@ export default function HowItWorks() {
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{
                       duration: 0.5,
                       delay: gIndex * 0.2 + index * 0.1,
                     }}
-                    className="flex flex-col items-center text-center p-8 rounded-2xl bg-card border border-border hover:shadow-md hover:-translate-y-2 transition-all duration-300"
                   >
-                    <div className="w-16 h-16 mb-5 flex items-center justify-center rounded-full bg-gradient-to-tr from-primary/10 via-accent/10 to-secondary/10">
-                      <Icon className="w-8 h-8 text-primary" />
-                    </div>
-                    <h4 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
-                      {step.title}
-                    </h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-                      {step.description}
-                    </p>
+                    <Card className=" bg-card border border-border hover:border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-2 h-full">
+                      <CardHeader className="flex flex-row items-center gap-3">
+                        <div className="p-3 rounded-full bg-gradient-to-tr from-primary/10 via-accent/10 to-secondary/10 flex items-center justify-center">
+                          <Icon className="w-6 h-6 text-primary" />
+                        </div>
+                        <CardTitle className="text-base sm:text-lg font-semibold text-foreground leading-tight">
+                          {step.title}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="text-base text-muted-foreground leading-relaxed">
+                          {step.description}
+                        </CardDescription>
+                      </CardContent>
+                    </Card>
                   </motion.div>
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
