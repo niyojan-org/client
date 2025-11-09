@@ -68,7 +68,7 @@ function DialogContent({
             data-slot="dialog-close"
             className="absolute right-4 top-4"
             asChild>
-            <Button size="icon" variant="ghost" className="h-8 w-8 bg-primary">
+            <Button size="icon" variant="ghost" className="h-8 w-8 bg-primary text-primary-foreground">
               <XIcon className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </Button>
