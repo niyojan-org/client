@@ -1,25 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   parseISO,
-  isValid,
-  differenceInSeconds,
   isAfter,
   isBefore,
 } from "date-fns";
 
 // Import all the smaller components
 import HeroSection from "./HeroSection";
-import RegistrationWidget from "./RegistrationWidget";
-import OrganizationCard from "./OrganizationCard";
-import EventDescription from "./EventDescription";
-import EventBenefits from "./EventBenefits";
-import SessionsTimeline from "./SessionsTimeline";
-// import TicketCards from "./TicketCards";
-import SpeakersSection from "./SpeakersSection";
-import SimilarEvents from "./SimilarEvents";
-import CallToAction from "./CallToAction";
 import Footer from "@/components/pages/Footer";
 
 export default function EventDetails({ event, similarEvents = [] }) {
