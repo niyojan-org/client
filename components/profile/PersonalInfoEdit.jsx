@@ -12,6 +12,7 @@ import { Save, X, User, Mail, Phone, MapPin, Users, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { IconMapPin } from "@tabler/icons-react";
+import { PhoneInput } from "../ui/phone-number-input";
 
 export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
     const [formData, setFormData] = useState({
@@ -150,11 +151,12 @@ export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
                             <Phone className="h-4 w-4 text-muted-foreground" />
                             Phone Number
                         </Label>
-                        <Input
+                        <PhoneInput
                             id="phone"
                             type="tel"
+                            defaultCountry="IN"
                             value={formData.phone}
-                            onChange={(e) => handleInputChange("phone", e.target.value)}
+                            onChange={(e) => handleInputChange("phone", e)}
                             placeholder="Enter your phone number"
                             className={errors.phone ? "border-destructive" : ""}
                         />

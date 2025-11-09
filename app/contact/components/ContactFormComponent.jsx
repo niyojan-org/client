@@ -16,6 +16,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { IconAlertCircle, IconLoader2 } from "@tabler/icons-react";
 import { AttachmentDialog } from "./AttachmentDialog";
 import { cn } from "@/lib/utils";
+import { PhoneInput } from "@/components/ui/phone-number-input";
 
 const CATEGORIES = [
   { value: "general", label: "General Inquiry" },
@@ -112,13 +113,16 @@ export const ContactFormComponent = ({
             {/* Phone Field */}
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number (Optional)</Label>
-              <Input
+              <PhoneInput
                 id="phone"
                 name="phone"
                 type="tel"
-                placeholder="+1 (555) 000-0000"
                 value={formData.phone}
-                onChange={onChange}
+                defaultCountry="IN"
+                onChange={(value) =>
+                  onChange({ target: { name: "phone", value } })
+                }
+                placeholder="123-456-7890"
                 className={cn(
                   "h-10 shadow-none",
                   errors.phone &&

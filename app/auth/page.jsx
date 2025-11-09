@@ -1,9 +1,9 @@
 'use client'; // MUST be first line
 
 import { use, useEffect } from 'react';
-import Auth from '../../components/Auth';
 import { setAccessToken } from '@/lib/api';
 import { useRouter } from 'next/navigation';
+import Auth from '@/components/Auth';
 
 
 
@@ -20,6 +20,6 @@ export default function AuthPage({ searchParams }) {
   }, [param]);
 
   return (
-    <Auth />
+    <Auth view={param.view} />
   )
 }

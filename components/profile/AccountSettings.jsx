@@ -170,21 +170,21 @@ export function AccountSettings({ user, onLogout, className }) {
         </div>
       ),
     },
-    {
-      title: "Data Export",
-      description: "Download a copy of your account data",
-      icon: IconDownload,
-      content: (
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={handleDownloadData}
-          disabled={isLoading.downloadData}
-        >
-          {isLoading.downloadData ? "Preparing..." : "Download Data"}
-        </Button>
-      ),
-    },
+    // {
+    //   title: "Data Export",
+    //   description: "Download a copy of your account data",
+    //   icon: IconDownload,
+    //   content: (
+    //     <Button
+    //       size="sm"
+    //       variant="outline"
+    //       onClick={handleDownloadData}
+    //       disabled={isLoading.downloadData}
+    //     >
+    //       {isLoading.downloadData ? "Preparing..." : "Download Data"}
+    //     </Button>
+    //   ),
+    // },
   ];
 
   return (

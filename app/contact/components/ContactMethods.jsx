@@ -16,14 +16,14 @@ const contactMethods = [
   {
     icon: IconMessageCircle2,
     title: "Live chat",
-    description: "Our friendly team is here to help.",
+    description: "Chat with us in real-time.",
     value: "Open Chat",
     type: "dialog"
   },
   {
     icon: IconMapPin2,
     title: "Office",
-    description: "Come say hello at our up.",
+    description: "Come say hello at our office.",
     value: "Lovely Professional University\nPhagwara, Punjab, India",
     href: "https://map.google.com",
     type: "link"

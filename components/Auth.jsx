@@ -11,30 +11,21 @@ import Link from 'next/link';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
 import ForgotPassword from './Auth/ForgetPassword';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import GoogleAuthButton from './Auth/GoogleAuthButton';
 
-export default function Auth() {
+export default function Auth({ view: initialView }) {
   const router = useRouter();
   const [carouselImages, setCarouselImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userEmail, setUserEmail] = useState('');
 
-  const searchParams = useSearchParams();
-  const initialView = searchParams.get('view');
   const [view, setView] = useState(initialView || 'login');
   const handleViewChange = (newView) => {
-    router.push(`/auth?view=${newView}`)
+    router.replace(`/auth?view=${newView}`)
+    setView(newView);
   };
 
-  useEffect(() => {
-    const currentView = searchParams.get('view');
-    if (currentView === 'login' || currentView === 'signup' || currentView === 'forgot') {
-      setView(currentView);
-    } else {
-      setView('login');
-    }
-  }, []);
 
   useEffect(() => {
     const fetchImages = async () => {
