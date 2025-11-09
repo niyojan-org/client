@@ -22,7 +22,7 @@ export function PersonalInfoView({ user, onEdit, className }) {
         },
         {
             label: "Phone Number",
-            value: user?.phone,
+            value: user?.phone_number,
             icon: Phone,
             placeholder: "Not provided"
         },

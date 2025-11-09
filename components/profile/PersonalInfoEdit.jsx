@@ -62,7 +62,7 @@ export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
         setIsLoading(true);
         try {
             await onSave(formData);
-            toast.success("Profile updated successfully!");
+            // toast.success("Profile updated successfully!");
         } catch (error) {
             toast.error("Failed to update profile. Please try again.");
         } finally {

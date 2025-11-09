@@ -27,8 +27,9 @@ import {
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import api from "@/lib/api";
 
-export function ChangePassword({ className }) {
+export function ChangePassword({ className, user }) {
   const [formData, setFormData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -53,8 +54,7 @@ export function ChangePassword({ className }) {
   });
 
   // Mock last password change date
-  //TODO: Replace with actual data from user profile
-  const lastPasswordChange = new Date(Date.now() - 45 * 24 * 60 * 60 * 1000); // 45 days ago
+  const lastPasswordChange = new Date(user?.lastPasswordChange); // 45 days ago
 
   const validatePassword = (password) => {
     const checks = {
@@ -110,11 +110,11 @@ export function ChangePassword({ className }) {
 
     setIsLoading(true);
     try {
-      // Here you would call your API to change the password
-      // await changePassword(formData);
-
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const response = await api.post("/auth/change-password", {
+        oldPassword: formData.currentPassword,
+        newPassword: formData.newPassword,
+      });
+      // await new Promise(resolve => setTimeout(resolve, 2000));
 
       toast.success("Password changed successfully!");
       setFormData({
@@ -125,18 +125,19 @@ export function ChangePassword({ className }) {
       setPasswordStrength({ score: 0, checks: {} });
       setIsOpen(false);
     } catch (error) {
-      toast.error("Failed to change password. Please try again.");
+      toast.error(error.response?.data?.message || "Failed to change password. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) return "Set a password";
     return new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
-    }).format(date);
+    }).format(new Date(date));
   };
 
   const getDaysAgo = (date) => {

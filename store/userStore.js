@@ -108,17 +108,7 @@ export const useUserStore = create((set, get) => ({
       const { user, organization } = response.data.data;
 
       set({
-        user: {
-          id: user._id,
-          name: user.name,
-          email: user.email,
-          avatar: user.avatar,
-          isVerified: user.isVerified,
-          phone: user.phone_number,
-          gender: user.gender,
-          address: user.address,
-        },
-        organization,
+        user,
         isAuthenticated: true,
       });
 
@@ -141,7 +131,6 @@ export const useUserStore = create((set, get) => ({
   updateUser: async (updatedData) => {
     try {
       set({ loading: true, error: null });
-
       const response = await api.patch("/user/me", updatedData);
 
       const updatedUser = response.data.data;
@@ -149,10 +138,13 @@ export const useUserStore = create((set, get) => ({
         user: { ...state.user, ...updatedUser },
         message: "Profile updated successfully",
       }));
-      toast.success("Profile updated successfully");
+      toast.success(response.data.message || "Profile updated successfully");
       return true;
     } catch (error) {
       const msg = error?.response?.data?.message || "Failed to update profile";
+      toast.error(msg, {
+        description: error?.response?.data?.error?.details,
+      });
       set({ error: msg });
       toast.error(msg);
 
