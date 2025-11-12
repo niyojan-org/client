@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import GlobalLoader from "@/components/GlobalLoader";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { PersonalInformation } from "@/components/profile/PersonalInformation";
 import { ChangePassword } from "@/components/profile/ChangePassword";
-import { AccountSettings } from "@/components/profile/AccountSettings";
 import { TicketHistory } from "@/components/profile/TicketHistory";
 
 export default function Profile() {
@@ -25,25 +22,30 @@ export default function Profile() {
     await updateUser(updatedData);
   };
 
+  if (!user) {
+    return <div className="h-dvh flex items-center justify-center">
+      <p>Hey there! Please log in to access your profile.</p>
+    </div>;
+  }
+
   return (
-    <div className="pb-4 h-full py-2">
-      <div className="mx-auto max-w-7xl px-4 space-y-4">
-        {/* Profile Header */}
-        <ProfileHeader user={user} onLogout={handleLogout} className="md:pb-6" />
+    <div className="flex flex-col overflow-hidden space-y-4 pb-4">
+      {/* Profile Header */}
+      <ProfileHeader user={user} onLogout={handleLogout} className="pb-4" />
 
-        {/* Main Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-4">
-          {/* Left Column - Personal Info & Security */}
-          <div className="lg:col-span-2 space-y-2 md:space-y-4 overflow-hidden">
-            <PersonalInformation user={user} onUpdate={handleUpdateUser} className="h-fit" />
-            <ChangePassword className="h-fit" />
-          </div>
-
-          {/* Right Column - Ticket History & Settings */}
-          <div className="lg:col-span-1 space-y-6 overflow-hidden">
-            <TicketHistory className="h-96" />
-          </div>
+      {/* Main Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-4 flex-1 overflow-hidden">
+        {/* Left Column - Personal Info & Security */}
+        <div className="lg:col-span-2 flex flex-col gap-2 md:gap-4 overflow-y-auto h-full">
+          <PersonalInformation user={user} onUpdate={handleUpdateUser} className="flex-1" />
+          <ChangePassword className="flex-shrink-0" />
         </div>
+
+        {/* Right Column - Ticket History & Settings */}
+        <div className="lg:col-span-1 flex flex-col overflow-hidden min-h-0">
+          <TicketHistory className="flex-1 min-h-0" />
+        </div>
+
       </div>
     </div>
   );

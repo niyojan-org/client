@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button";
 export default function CallToAction({ event, registrationActive }) {
   return (
     <motion.section
-      className="text-center py-16 px-4 sm:px-6 lg:px-8"
+      className="text-center py-16 px-4 sm:px-6 lg:px-8  rounded-2xl"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.5 }}
     >
       <motion.article
-        className="bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-3xl p-8 sm:p-12 border border-primary/20 shadow-lg max-w-3xl mx-auto"
+        className="bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-3xl p-8 sm:p-12 border border-primary/20 shadow-lg max-w-7xl mx-auto"
         whileHover={{ scale: 1.02 }}
       >
         {/* Heading */}

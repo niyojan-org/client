@@ -1,9 +1,12 @@
+'use client';
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const FinalCTA = () => {
+  const router = useRouter();
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
@@ -11,47 +14,66 @@ const FinalCTA = () => {
 
   return (
     <section
-      className="relative bg-[#1E3A8A] py-12 sm:py-16 text-white overflow-hidden"
+      className="
+        relative 
+        py-12 
+        text-center 
+        overflow-hidden 
+        transition-colors duration-700
+        bg-gradient-to-br from-primary/90 via-primary/60 to-primary/90 
+        dark:from-background dark:via-primary/20 dark:to-background
+      "
       aria-label="Final Call to Action"
     >
-      {/* Mandala Border */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-[#F97316] opacity-20" />
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-[#F97316] opacity-20" />
+      {/* Decorative subtle glow */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background/10 to-transparent dark:from-primary/5 dark:to-transparent pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative max-w-6xl mx-auto px-2 sm:px-4">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeIn}
-          className="space-y-6"
+          className="space-y-8"
         >
           {/* Title */}
-          <h2 className="text-3xl sm:text-4xl font-extrabold font-poppins tracking-tight">
-            Ready for the Orgatic Experience?
+          <h2 className="text-3xl sm:text-4xl font-extrabold font-sans tracking-tight text-primary-foreground dark:text-primary">
+            Ready to Host or Join Amazing Events?
           </h2>
 
           {/* Subtext */}
-          <p className="text-lg sm:text-xl text-gray-200 font-poppins max-w-2xl mx-auto leading-relaxed">
-            Join 1,000+ LPU students hosting and attending events with Orgatic’s seamless platform.
+          <p className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-primary-foreground/90 dark:text-muted-foreground">
+            Thousands of students are already creating unforgettable experiences. Jump in and be part of it!
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mt-8">
             <Button
-              asChild
+              onClick={() => router.push('/auth')}
               size="lg"
-              className="bg-[#F97316] hover:bg-[#e86a15] text-white px-8 py-3 rounded-full font-semibold font-poppins"
+              className="
+                px-8 py-3 rounded-full font-semibold shadow-md 
+                bg-primary text-primary-foreground 
+                hover:bg-primary/90 
+                transition-all duration-300
+              "
             >
-              <Link href="/auth">Start Hosting</Link>
+              Start Hosting
             </Button>
+
             <Button
               asChild
               size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-[#1E3A8A] px-8 py-3 rounded-full font-semibold font-poppins"
+              variant="primary"
+              className="
+                px-8 py-3 rounded-full font-semibold transition-all duration-300
+                border border-primary-foreground/40 
+                text-primary-foreground 
+                hover:bg-primary-foreground hover:text-primary
+                dark:border-primary/40 dark:text-primary dark:hover:bg-primary dark:hover:text-primary-foreground
+              "
             >
-              <Link href="/explore">Discover Events</Link>
+              <Link href="/events">Discover Events</Link>
             </Button>
           </div>
         </motion.div>

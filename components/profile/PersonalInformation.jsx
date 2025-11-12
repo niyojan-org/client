@@ -24,7 +24,7 @@ export function PersonalInformation({ onUpdate, className }) {
   };
 
   return (
-    <div className={cn("", className)}>
+    <div className={cn("h-full", className)}>
       {isEditing ? (
         <PersonalInfoEdit
           user={user}

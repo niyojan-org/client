@@ -88,7 +88,6 @@ export default function SearchBar({
           params.sortOrder = activeFilters.sortOrder || 'desc';
         }
 
-        console.log('SearchBar: Making API call with params:', params);
         await fetchAllEvents({ params });
       } catch (error) {
         console.error('SearchBar: Search failed:', error);
@@ -100,8 +99,6 @@ export default function SearchBar({
   );
 
   useEffect(() => {
-    console.log('SearchBar: Filters or search query changed:', { searchQuery, filters });
-    console.log('SearchBar: Active filters count:', getActiveFiltersCount());
     searchEvents(searchQuery, filters);
     return () => searchEvents.cancel();
   }, [searchQuery, filters, searchEvents]);

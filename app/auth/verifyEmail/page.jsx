@@ -1,26 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, XCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 import api from "@/lib/api";
 
-export default function VerifyEmail() {
-  const [token, setToken] = useState(null);
+function VerifyEmailContent() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token"); 
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [verified, setVerified] = useState(false);
 
   useEffect(() => {
-    const searchParams = useSearchParams();
-    const t = searchParams.get("token");
-    setToken(t);
-  }, []);
-
-  useEffect(() => {
-    if (!token) return; // wait until token is set
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
     const verify = async () => {
       setLoading(true);
@@ -83,5 +82,17 @@ export default function VerifyEmail() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmail() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex justify-center items-center">
+        <Loader2 className="animate-spin w-12 h-12 text-blue-500" />
+      </div>
+    }>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

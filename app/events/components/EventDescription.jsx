@@ -13,44 +13,44 @@ import { IconStar, IconUsers, IconClock } from "@tabler/icons-react";
 import { format } from "date-fns";
 
 export default function EventDescription({ event }) {
-  if (!event) return null;
+  // if (!event) return null;
 
   // 🔹 AI-style quick summary generator (kept but commented in render)
-  const generateEventSummary = () => {
-    const parts = [];
-    if (event.organization?.name) {
-      parts.push(
-        `${event.title} by ${event.organization.name}${
-          event.organization.verified ? " ✓" : ""
-        }`
-      );
-    } else {
-      parts.push(event.title);
-    }
+  // const generateEventSummary = () => {
+  //   const parts = [];
+  //   if (event.organization?.name) {
+  //     parts.push(
+  //       `${event.title} by ${event.organization.name}${
+  //         event.organization.verified ? " ✓" : ""
+  //       }`
+  //     );
+  //   } else {
+  //     parts.push(event.title);
+  //   }
 
-    if (event.sessions?.length > 0) {
-      const count = event.sessions.length;
-      const firstDate = format(
-        new Date(event.sessions[0].startTime),
-        "MMM dd, yyyy"
-      );
-      parts.push(`${count} session${count > 1 ? "s" : ""} starting on ${firstDate}`);
-    }
+  //   if (event.sessions?.length > 0) {
+  //     const count = event.sessions.length;
+  //     const firstDate = format(
+  //       new Date(event.sessions[0].startTime),
+  //       "MMM dd, yyyy"
+  //     );
+  //     parts.push(`${count} session${count > 1 ? "s" : ""} starting on ${firstDate}`);
+  //   }
 
-    if (event.tickets?.length > 0) {
-      const prices = event.tickets.map((t) => t.price).filter((p) => p > 0);
-      if (prices.length > 0) {
-        const min = Math.min(...prices);
-        const max = Math.max(...prices);
-        parts.push(`Tickets from ₹${min}${min !== max ? ` – ₹${max}` : ""}`);
-      } else {
-        parts.push("Free entry");
-      }
-    }
-    return parts.join(" • ");
-  };
+  //   if (event.tickets?.length > 0) {
+  //     const prices = event.tickets.map((t) => t.price).filter((p) => p > 0);
+  //     if (prices.length > 0) {
+  //       const min = Math.min(...prices);
+  //       const max = Math.max(...prices);
+  //       parts.push(`Tickets from ₹${min}${min !== max ? ` – ₹${max}` : ""}`);
+  //     } else {
+  //       parts.push("Free entry");
+  //     }
+  //   }
+  //   return parts.join(" • ");
+  // };
 
-  const aiSummary = generateEventSummary();
+  // const aiSummary = generateEventSummary();
   const wordCount = event.description ? event.description.split(/\s+/).length : 0;
   const readMinutes = wordCount > 0 ? Math.ceil(wordCount / 200) : 0;
 
@@ -61,38 +61,16 @@ export default function EventDescription({ event }) {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full"
     >
-      <Card className="border-t-4 border-t-primary shadow-lg rounded-xl overflow-hidden bg-card mt-10">
+      <Card className="border-t-4 border-t-primary backdrop-blur-md mb-1 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-card mt-10 ">
         {/* 🔹 Header */}
-        <CardHeader className="text-center py-6 px-4 sm:px-8">
+        <CardHeader className="text-center px-4 sm:px-8 ">
           <CardTitle className="text-2xl sm:text-3xl font-bold text-primary">
             About This Event
           </CardTitle>
         </CardHeader>
 
         <CardContent className="px-4 sm:px-8 md:px-12 lg:px-16 pb-10">
-          {/* 🔹 Quick Overview (KEEP COMMENTED) */}
-          {/*
-          {aiSummary && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.4 }}
-              className="max-w-4xl mx-auto mb-8"
-            >
-              <div className="bg-primary/5 rounded-lg p-5 border border-primary/10 shadow-sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <IconStar className="h-4 w-4 text-primary" />
-                  <h3 className="text-sm font-semibold text-foreground">
-                    Quick Overview
-                  </h3>
-                </div>
-                <p className="text-sm sm:text-base leading-relaxed text-muted-foreground">
-                  {aiSummary}
-                </p>
-              </div>
-            </motion.div>
-          )}
-          */}
+         
 
           {/* 🔹 Full Description */}
           {event.description?.trim() && (

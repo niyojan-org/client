@@ -1,9 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { IconStar, IconTag, IconMapPin, IconCheck } from "@tabler/icons-react";
+import { IconStar, IconTag, IconMapPin, IconCheck, IconArrowLeft } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,6 +25,9 @@ const itemVariants = {
 };
 
 export default function HeroSection({ event }) {
+  const router = useRouter();
+
+  // render
   return (
     <motion.section
       role="banner"
@@ -43,7 +48,7 @@ export default function HeroSection({ event }) {
         transition={{ duration: 0.6 }}
       >
         <Image
-          src={event.bannerImage || "/fallback.jpg"}
+          src={event.bannerImage || "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761137533/orgatickBanner_vdyzdk.png"}
           alt={event.title || "Event banner"}
           priority
           fill
@@ -51,6 +56,18 @@ export default function HeroSection({ event }) {
           quality={85}
           className="object-cover object-center"
         />
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => router.back()}
+          className="absolute top-4 left-4 md:left-20 z-20 bg-black/40 text-white backdrop-blur-md"
+          aria-label="Go back to previous page"
+        >
+          <IconArrowLeft className="w-4 h-4" /> Back
+
+
+        </Button>
+
         {/* Gradient overlays for text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
@@ -60,9 +77,9 @@ export default function HeroSection({ event }) {
       <div
         className="
           relative z-10 w-full max-w-7xl
-          px-4 sm:px-6 md:px-10 lg:px-14
-          pb-6 sm:pb-8 md:pb-12
-          flex flex-col gap-3 sm:gap-4
+          px-4 sm:px-6 md:px-10 lg:px-20
+          pb-4 sm:pb-8 md:pb-10
+          flex flex-col gap-3 sm:gap-4 space-y-0
         "
       >
         {/* Badges */}
@@ -129,12 +146,12 @@ export default function HeroSection({ event }) {
         >
           {event.organization && (
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
               <span className="font-medium">
                 {event.organization.name}
               </span>
               {event.organization.verified && (
-                <IconCheck className="w-4 h-4 text-blue-400" aria-label="Verified organization" />
+                <IconCheck className="w-4 h-4 text-success" aria-label="Verified organization" />
               )}
             </div>
           )}

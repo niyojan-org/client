@@ -9,7 +9,7 @@ const Toaster = ({ ...props }) => {
       richColors
       toastOptions={{
         className:
-          "rounded-xl border border-neutral-200 bg-white text-black shadow-md px-4 py-3 font-medium",
+          "rounded-xl border border-neutral-200 bg-white text-black shadow-md py-3 font-medium",
       }}
       visibleToasts={1}
       expand

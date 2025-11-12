@@ -7,22 +7,40 @@ import Image from 'next/image';
 export default function Testimonials() {
   const testimonials = [
     {
-      quote: "Rasa simplified our LPU fest! Easy setup and ticketing.",
-      name: "Alok",
-      role: "Student Organizer",
-      avatar: "https://images.unsplash.com/photo-1614282213165-04cdafedee6c",
+      quote: "Orgatic simplified our event fest! Easy setup and ticketing.",
+      name: "Abhiraj",
+      role: "Organizer",
+      avatar: "https://avatar.iran.liara.run/public/boy",
     },
     {
       quote: "Tickets arrived instantly! Loved the seamless experience.",
       name: "Priya",
       role: "Attendee",
-      avatar: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39",
+      avatar: "https://avatar.iran.liara.run/public/girl",
     },
     {
       quote: "Analytics saved our event! This is a game-changer.",
-      name: "Abhishek",
-      role: "Student Organizer",
-      avatar: "https://images.unsplash.com/photo-1629115108446-6819f42c0f42",
+      name: "Sanjay",
+      role: "Organizer",
+      avatar: "https://avatar.iran.liara.run/public/boy",
+    },
+    {
+      quote: "Orgatic simplified our LPU fest! Easy setup and ticketing.",
+      name: "Kumar Ayush",
+      role: "Organizer",
+      avatar: "https://avatar.iran.liara.run/public/boy",
+    },
+    {
+      quote: "Tickets arrived instantly! Loved the seamless experience.",
+      name: "Saumya",
+      role: "Attendee",
+      avatar: "https://avatar.iran.liara.run/public/girl",
+    },
+    {
+      quote: "Analytics saved our event! This is a game-changer.",
+      name: "Sanjana",
+      role: "Organizer",
+      avatar: "https://avatar.iran.liara.run/public/girl",
     },
   ];
 
@@ -30,76 +48,89 @@ export default function Testimonials() {
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Animation direction (horizontal for desktop, vertical for mobile)
   const animationVariant = isMobile
     ? {
         animate: {
-          y: ["0%", "-50%"],
-          transition: { repeat: Infinity, duration: 50, ease: "linear" },
+          x: ['0%', '50%'],
+          transition: { repeat: Infinity, duration: 60, ease: 'linear' },
         },
       }
     : {
         animate: {
-          x: ["0%", "-50%"],
-          transition: { repeat: Infinity, duration: 60, ease: "linear" },
+          x: ['0%', '-50%'],
+          transition: { repeat: Infinity, duration: 40, ease: 'linear' },
         },
       };
 
   return (
-    <section className="relative bg-white py-28 overflow-hidden" aria-label="Testimonials">
-      {/* Background Blobs */}
-      <div className="absolute -top-10 -left-10 w-72 h-72 bg-[#DBEAFE] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse z-0" />
-      <div className="absolute bottom-[-3rem] right-[-3rem] w-72 h-72 bg-[#FDE68A] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-ping z-0" />
+    <section
+      className="relative py-24 sm:py-28 overflow-hidden bg-gradient-to-b from-background via-primary/5 to-card"
+      aria-label="Testimonials"
+    >
+      {/* Decorative Blobs */}
+      <div className="absolute -top-20 -left-20 w-80 h-80 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-pulse" />
+      <div className="absolute bottom-[-3rem] right-[-3rem] w-72 h-72 bg-accent/30 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-ping" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-8 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto  sm:px-0 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl font-extrabold text-indigo-900 font-poppins"
+          className="text-2xl sm:text-4xl font-extrabold text-primary font-sans"
         >
-          Loved by Hosts & Attendees
+          Loved by Organizer & Attendees
         </motion.h2>
-        <p className="text-gray-600 mt-3 text-base font-medium max-w-xl mx-auto">
-          Real voices. Real stories. See why people trust Rasa.
+
+        <p className="text-muted-foreground mt-3 text-base font-medium max-w-xl mx-auto">
+          Real voices. Real stories. See why people trust Orgatic.
         </p>
 
-        <div className={`relative overflow-hidden ${isMobile ? "h-[700px]" : "h-[350px]"} mt-16`}>
+        {/* Moving Testimonials */}
+        <div
+          className={`relative overflow-hidden ${
+            isMobile ? 'h-[700px]' : 'h-[320px]'
+          } mt-16`}
+        >
           <motion.div
-            className={`flex ${isMobile ? "flex-col" : "flex-row"} gap-8 w-max`}
+            className={`flex ${
+              isMobile ? 'flex-col' : 'flex-row'
+            } gap-8 w-max`}
             variants={animationVariant}
             animate="animate"
           >
-            {[...testimonials, ...testimonials].map((testimonial, index) => (
+            {[...testimonials, ...testimonials].map((t, index) => (
               <Card
-                key={`${testimonial.name}-${index}`}
-                className="bg-[#f0f9ff] border-none shadow-xl hover:shadow-2xl transition-all rounded-2xl w-[300px] flex-shrink-0"
+                key={`${t.name}-${index}`}
+                className="bg-card border border-border shadow-md hover:shadow-lg transition-all duration-300 rounded-xl w-[280px] flex-shrink-0"
               >
-                <CardContent className="p-6 flex flex-col gap-4">
-                  {/* Avatar */}
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-14 h-14">
+                <CardContent className="px-4 flex flex-col gap-3">
+                  {/* Avatar & Info */}
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-12 h-12">
                       <Image
-                        src={testimonial.avatar}
-                        alt={`Avatar of ${testimonial.name}`}
+                        src={t.avatar}
+                        alt={`Avatar of ${t.name}`}
+                        sizes='20'
                         fill
-                        className="rounded-full object-cover border-4 border-white shadow-md"
+                        // loading='lazy'
+                        className="rounded-full object-cover border border-primary/20"
                       />
-                      <div className="absolute inset-0 rounded-full animate-ping bg-[#F97316]/10 z-[-1]" />
                     </div>
                     <div>
-                      <p className="text-indigo-900 font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-gray-500">{testimonial.role}</p>
+                      <p className="text-primary font-semibold">{t.name}</p>
+                      <p className="text-sm text-muted-foreground">{t.role}</p>
                     </div>
                   </div>
 
                   {/* Quote */}
-                  <blockquote className="text-gray-700 italic leading-relaxed mt-2">
-                    “{testimonial.quote}”
+                  <blockquote className="text-foreground/80 italic leading-snug">
+                    “{t.quote}”
                   </blockquote>
                 </CardContent>
               </Card>
@@ -108,22 +139,22 @@ export default function Testimonials() {
         </div>
       </div>
 
-      {/* Schema Markup for SEO */}
+      {/* SEO Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Review",
+            '@context': 'https://schema.org',
+            '@type': 'Review',
             itemReviewed: {
-              "@type": "Product",
-              name: "Rasa Event Management System",
+              '@type': 'Product',
+              name: 'Orgatic Event Management System',
             },
             review: testimonials.map((t) => ({
-              "@type": "Review",
-              author: { "@type": "Person", name: t.name },
+              '@type': 'Review',
+              author: { '@type': 'Person', name: t.name },
               reviewBody: t.quote,
-              reviewRating: { "@type": "Rating", ratingValue: 5 },
+              reviewRating: { '@type': 'Rating', ratingValue: 5 },
             })),
           }),
         }}

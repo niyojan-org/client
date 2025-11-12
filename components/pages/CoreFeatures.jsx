@@ -1,76 +1,125 @@
 "use client";
+
 import React from "react";
 import { motion } from "framer-motion";
-import { Calendar, Ticket, BarChart, Bell } from "lucide-react";
+import {
+  Calendar,
+  Ticket,
+  BarChart,
+  Bell,
+  Users,
+  ShieldCheck,
+} from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 export default function CoreFeatures() {
   const features = [
     {
-      title: "Easy Creation",
-      description: "Set up college fests or events in minutes with intuitive tools.",
+      title: "Effortless Event Creation",
+      description:
+        "Create and publish events in minutes — no technical barriers, just intuitive tools that let you focus on delivering memorable experiences.",
       icon: Calendar,
     },
     {
-      title: "Secure Ticketing",
-      description: "Sell tickets with Razorpay-powered secure payments and instant delivery.",
+      title: "Secure Ticketing & Payments",
+      description:
+        "Integrated with Razorpay for smooth, trusted, and transparent transactions — every ticket purchase is safe and verified.",
       icon: Ticket,
     },
     {
-      title: "Real-Time Analytics",
-      description: "Track fest revenue and attendance live with actionable insights.",
+      title: "Smart Analytics Dashboard",
+      description:
+        "Get real-time insights into attendance, engagement, and revenue — helping you make confident, data-driven decisions.",
       icon: BarChart,
     },
     {
-      title: "Notifications",
-      description: "Keep attendees updated with automated email reminders.",
+      title: "Automated Notifications",
+      description:
+        "Keep attendees informed with automated email, SMS, and push notifications — ensuring no one misses an update.",
       icon: Bell,
+    },
+    {
+      title: "Team Collaboration",
+      description:
+        "Invite teammates, assign roles, and manage access effortlessly — making event management truly collaborative and secure.",
+      icon: Users,
+    },
+    {
+      title: "Enterprise-Grade Security",
+      description:
+        "Built with advanced encryption and privacy controls to safeguard every user, payment, and organization record.",
+      icon: ShieldCheck,
     },
   ];
 
   return (
     <section
-      className="bg-gradient-to-b from-[#f9fafb] to-[#e5e7eb] py-20 px-6 sm:px-10 lg:px-16"
-      aria-label="Core Features"
+      className="relative py-16 sm:py-20 px-2 sm:px-8 bg-gradient-to-b from-background via-primary/5 to-card border-t border-border"
+      aria-labelledby="core-features-title"
     >
-      {/* Section Heading */}
-      <motion.h2
+      {/* ✨ Background Elements */}
+      <div className="absolute top-0 left-0 w-48 h-48 bg-primary/10 rounded-full blur-3xl opacity-30 -z-10" />
+      <div className="absolute bottom-0 right-0 w-56 h-56 bg-secondary/20 rounded-full blur-3xl opacity-20 -z-10" />
+
+      {/* Section Header */}
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-4xl sm:text-5xl font-extrabold text-center text-indigo-900 mb-16"
+        transition={{ duration: 0.6 }}
+        className="text-center max-w-3xl mx-auto mb-14"
       >
-        <span className="bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-          Amazing Tools
-        </span>{" "}
-        for Event Creators
-      </motion.h2>
+        <h2
+          id="core-features-title"
+          className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4"
+        >
+          <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+            Everything You Need
+          </span>{" "}
+          to Host Smarter Events
+        </h2>
+
+        <p className="text-muted-foreground text-lg leading-relaxed">
+          Manage registrations, payments, analytics, and engagement — all from
+          one intuitive platform designed to make events seamless, secure, and
+          scalable.
+        </p>
+      </motion.div>
 
       {/* Feature Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {features.map((feature, index) => {
           const Icon = feature.icon;
-
           return (
             <motion.div
               key={index}
-              className="bg-white rounded-xl p-6 shadow-md border border-gray-200 cursor-pointer transition-all"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              transition={{ duration: 0.4, delay: index * 0.15 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              {/* Icon */}
-              <div className="p-3 rounded-full bg-gradient-to-tr from-indigo-100 via-purple-100 to-pink-100 w-fit mb-4">
-                <Icon className="w-8 h-8 text-indigo-600" />
-              </div>
+              <Card className="bg-transparent border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 h-full">
+                <CardHeader className="flex flex-row items-center gap-3">
+                  <div className="p-3 bg-gradient-to-tr from-primary/10 via-accent/10 to-secondary/10 rounded-full flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-lg font-semibold text-foreground leading-tight">
+                    {feature.title}
+                  </CardTitle>
+                </CardHeader>
 
-              {/* Title */}
-              <h3 className="text-xl font-semibold text-indigo-900 mb-2">{feature.title}</h3>
-
-              {/* Description */}
-              <p className="text-gray-600 text-sm">{feature.description}</p>
+                <CardContent>
+                  <CardDescription className="text-base text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
             </motion.div>
           );
         })}

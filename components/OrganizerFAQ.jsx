@@ -7,66 +7,56 @@ import {
 } from "@/components/ui/accordion";
 
 const OrganizerFAQ = () => {
+  const faqs = [
+    {
+      q: "Can I host both free and paid events?",
+      a: (
+        <>
+          Yes! You can host both free and paid events on our platform. <br />
+          For free events, we charge only a minimal service fee to cover operational costs such as hosting, messaging, and support. <br />
+          For paid events, you can set your own ticket prices, and payments are processed securely through Razorpay.
+        </>
+      ),
+    },
+    {
+      q: "How do I receive payments from ticket sales?",
+      a: "All ticket payments are processed through Razorpay. Once your organization account is verified, you can link your bank account and receive payments directly — either instantly or after the event, depending on your payout settings.",
+    },
+    {
+      q: "Can I edit event details after publishing?",
+      a: "Yes, We provide you with a dedicated organizer admin panel where you can manage all your events in one place. From there, you can easily update event information, monitor registrations, track ticket sales, and make adjustments in real time",
+    },
+    {
+      q: "How are refunds handled if I cancel an event?",
+      a: "You can cancel your event anytime from the organizer dashboard. If you’ve set up a refund policy, the system will automatically notify registered participants and process refunds through Razorpay. If the event is marked as “non-refundable,” no automatic refunds will be issued.",
+    },
+    {
+      q: "Can I add team members to help manage events?",
+      a: "Yes! You can invite team members, such as volunteers or co-organizers, to your admin panel. You can assign specific roles for tasks like managing registrations, scanning tickets, or tracking analytics — all under your organization account.",
+    },
+    {
+      q: "Is My data secure?",
+      a: "Yes — all data and payment information is securely encrypted and handled via Razorpay’s PCI-DSS-compliant systems. We never share user data with third parties or use it for marketing without consent.",
+    },
+  ];
+
   return (
     <div className="w-full">
-      <Accordion
-        type="single"
-        collapsible
-        className="w-full space-y-4"
-        // defaultValue="item-1"
-      >
-        {/* FAQ 1 */}
-        <AccordionItem value="item-1" className="rounded-md border px-5 border-gray-200 shadow-sm bg-white">
-          <AccordionTrigger className="text-lg font-medium">
-            Can I host free events?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-700 px-2 pt-1 pb-4 leading-relaxed">
-            Yes! You can create both free and paid events. For free events, attendees won’t be charged and you won’t need to set up a payment method.
-            <p className="text-sm text-gray-500 mt-2">
-              *Note: Platform may still charge minimal handling fees.
-            </p>
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* FAQ 2 */}
-        <AccordionItem value="item-2" className="rounded-md border px-5 border-gray-200 shadow-sm bg-white">
-          <AccordionTrigger className="text-lg font-medium">
-            How do I receive payments?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-700 px-2 pt-1 pb-4 leading-relaxed">
-            Payments from ticket sales are automatically transferred to your linked bank account or payment processor (like Razorpay) after the event or on a scheduled basis.
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* FAQ 3 */}
-        <AccordionItem value="item-3" className="rounded-md border px-5 border-gray-200 shadow-sm bg-white">
-          <AccordionTrigger className="text-lg font-medium">
-            Can I edit event details after publishing?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-700 px-2 pt-1 pb-4 leading-relaxed">
-            Yes, you can update your event’s description, time, and location anytime. Attendees will be notified.
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* FAQ 4 */}
-        <AccordionItem value="item-4" className="rounded-md border px-5 border-gray-200 shadow-sm bg-white">
-          <AccordionTrigger className="text-lg font-medium">
-            Can I cancel an event?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-700 px-2 pt-1 pb-4 leading-relaxed">
-            Yes, events can be canceled from your dashboard. Attendees will be notified and refunded if applicable.
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Optional fun one */}
-        <AccordionItem value="item-5" className="rounded-md border px-5 border-gray-200 shadow-sm bg-white">
-          <AccordionTrigger className="text-lg font-medium">
-            How are you?
-          </AccordionTrigger>
-          <AccordionContent className="text-gray-700 px-2 pt-1 pb-4 leading-relaxed">
-            I’m good — thanks for asking! 😄
-          </AccordionContent>
-        </AccordionItem>
+      <Accordion type="true" collapsible className="w-full space-y-4">
+        {faqs.map((faq, i) => (
+          <AccordionItem
+            key={`faq-item-${i}`}
+            value={`faq-item-${i}`}
+            className="rounded-md border border-border/40 bg-card shadow-sm px-5"
+          >
+            <AccordionTrigger className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors duration-200 cursor-pointer">
+              {faq.q}
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground text-sm sm:text-base px-2 pt-1 pb-4 leading-relaxed text-left">
+              {faq.a}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
       </Accordion>
     </div>
   );

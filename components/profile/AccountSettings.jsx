@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -14,12 +15,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { 
-  IconSettings, 
-  IconLogout, 
-  IconShield, 
-  IconMail, 
-  IconTrash, 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  IconSettings,
+  IconLogout,
+  IconShield,
+  IconMail,
+  IconTrash,
   IconDownload,
   IconAlertTriangle,
   IconCircleCheck,
@@ -28,6 +39,8 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import api from "@/lib/api";
+import { useUserStore } from "@/store/userStore";
 
 export function AccountSettings({ user, onLogout, className }) {
   const [isLoading, setIsLoading] = useState({
@@ -36,20 +49,19 @@ export function AccountSettings({ user, onLogout, className }) {
     deleteAccount: false,
   });
   const [isOpen, setIsOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState("");
   const router = useRouter();
 
   const handleResendVerification = async () => {
     setIsLoading(prev => ({ ...prev, resendVerification: true }));
     try {
-      // Call your resendVerificationEmail function here
-      // await resendVerificationEmail(user.email);
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast.success("Verification email sent! Check your inbox.");
+
+      const response = await api.post("/auth/resend-verification", { email: user.email });
+
+      toast.success(response.data.message || "Verification email sent! Check your inbox.");
     } catch (error) {
-      toast.error("Failed to send verification email. Please try again.");
+      toast.error(error.response?.data?.message || "Failed to send verification email. Please try again.");
     } finally {
       setIsLoading(prev => ({ ...prev, resendVerification: false }));
     }
@@ -60,10 +72,10 @@ export function AccountSettings({ user, onLogout, className }) {
     try {
       // Here you would call your API to generate and download user data
       // await downloadUserData();
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       toast.success("Your data download will be ready shortly. Check your email.");
     } catch (error) {
       toast.error("Failed to initiate data download. Please try again.");
@@ -73,16 +85,8 @@ export function AccountSettings({ user, onLogout, className }) {
   };
 
   const handleDeleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-      return;
-    }
-
-    const confirmation = window.prompt(
-      "Type 'DELETE' to confirm account deletion:"
-    );
-    
-    if (confirmation !== "DELETE") {
-      toast.error("Account deletion cancelled.");
+    if (deleteConfirmation !== "DELETE") {
+      toast.error("Please type 'DELETE' to confirm account deletion.");
       return;
     }
 
@@ -90,20 +94,37 @@ export function AccountSettings({ user, onLogout, className }) {
     try {
       // Here you would call your API to delete the account
       // await deleteAccount();
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      toast.success("Account deleted successfully.");
+
+      const response = await api.delete("/user/me");
+
+      toast.success(response.data.message || "Account deleted successfully.");
+      setDeleteDialogOpen(false);
       setIsOpen(false);
       onLogout();
       router.push("/");
     } catch (error) {
-      toast.error("Failed to delete account. Please try again.");
+      toast.error(error.response?.data?.message || "Failed to delete account. Please try again.");
     } finally {
       setIsLoading(prev => ({ ...prev, deleteAccount: false }));
     }
   };
+
+  // Determine the delete account message based on organization status
+  const getDeleteAccountMessage = () => {
+    if (user.organization) {
+      const isOwner = user.organization.role === 'owner';
+
+      if (isOwner) {
+        return "As you are the owner of an organization, you cannot delete your account. Please transfer ownership or delete the organization first.";
+      } else {
+        return "You are part of an organization. If you delete your account, you will be removed from the organization. Your personal data will be deleted, but any events you have participated in will remain as part of the organization's records.";
+      }
+    }
+
+    return "Your personal data will be permanently deleted. Note that events you have participated in will remain as part of organization records, as they are managed by event organizers.";
+  };
+
+  const canDeleteAccount = !user?.organization || user.organization.role !== 'owner';
 
   const accountSettings = [
     {
@@ -149,21 +170,21 @@ export function AccountSettings({ user, onLogout, className }) {
         </div>
       ),
     },
-    {
-      title: "Data Export",
-      description: "Download a copy of your account data",
-      icon: IconDownload,
-      content: (
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={handleDownloadData}
-          disabled={isLoading.downloadData}
-        >
-          {isLoading.downloadData ? "Preparing..." : "Download Data"}
-        </Button>
-      ),
-    },
+    // {
+    //   title: "Data Export",
+    //   description: "Download a copy of your account data",
+    //   icon: IconDownload,
+    //   content: (
+    //     <Button
+    //       size="sm"
+    //       variant="outline"
+    //       onClick={handleDownloadData}
+    //       disabled={isLoading.downloadData}
+    //     >
+    //       {isLoading.downloadData ? "Preparing..." : "Download Data"}
+    //     </Button>
+    //   ),
+    // },
   ];
 
   return (
@@ -249,7 +270,7 @@ export function AccountSettings({ user, onLogout, className }) {
             {/* Danger Zone */}
             <div className="space-y-4">
               <h3 className="text-sm font-medium text-destructive">Danger Zone</h3>
-              
+
               <Alert variant="destructive">
                 <IconAlertTriangle className="h-4 w-4" />
                 <AlertDescription>
@@ -271,7 +292,7 @@ export function AccountSettings({ user, onLogout, className }) {
                   <Button
                     size="sm"
                     variant="destructive"
-                    onClick={handleDeleteAccount}
+                    onClick={() => setDeleteDialogOpen(true)}
                     disabled={isLoading.deleteAccount}
                     className="gap-2"
                   >
@@ -284,6 +305,58 @@ export function AccountSettings({ user, onLogout, className }) {
           </div>
         </ScrollArea>
       </DialogContent>
+
+      {/* Delete Account Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2 text-destructive">
+              <IconAlertTriangle className="h-5 w-5" />
+              Delete Account
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-4">
+                <div className="text-foreground font-medium">
+                  {getDeleteAccountMessage()}
+                </div>
+
+                {canDeleteAccount && (
+                  <>
+                    <div className="text-sm">
+                      This action cannot be undone. Please type <span className="font-bold">DELETE</span> to confirm:
+                    </div>
+                    <Input
+                      type="text"
+                      placeholder="Type DELETE to confirm"
+                      value={deleteConfirmation}
+                      onChange={(e) => setDeleteConfirmation(e.target.value)}
+                      className="mt-2"
+                    />
+                  </>
+                )}
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                setDeleteConfirmation("");
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            {canDeleteAccount && (
+              <AlertDialogAction
+                onClick={handleDeleteAccount}
+                disabled={isLoading.deleteAccount || deleteConfirmation !== "DELETE"}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {isLoading.deleteAccount ? "Deleting..." : "Delete Account"}
+              </AlertDialogAction>
+            )}
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Dialog>
   );
 }

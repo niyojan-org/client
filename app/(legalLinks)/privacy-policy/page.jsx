@@ -1,107 +1,114 @@
-"use client";
+'use client';
 
 import { motion } from "framer-motion";
 
 export default function PrivacyPolicy() {
   return (
     <motion.main
-      className="max-w-3xl mx-auto px-6 py-24 text-gray-800 space-y-8 leading-relaxed"
+      className="max-w-4xl mx-auto px-6 py-24 space-y-10 leading-relaxed bg-background text-foreground transition-colors duration-700"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       aria-label="Privacy Policy"
     >
-      <h1 className="text-4xl font-bold text-indigo-700">Privacy Policy</h1>
-      <p className="text-sm text-gray-500">Effective Date: June 15, 2025</p>
+      {/* Header */}
+      <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-primary">
+        Privacy Policy
+      </h1>
+      <p className="text-muted-foreground text-sm">Effective Date: June 15, 2025</p>
 
-      <p>
-        At <strong>Orgatic</strong>, operated by Niyojan ("we", "us", or "our"), your privacy is one of our highest priorities. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform, including our website and services.
+      <p className="text-foreground">
+        At <strong>Orgatic</strong>, operated by Niyojan (“we”, “us”, or “our”), your privacy is a top priority. 
+        This policy explains how we collect, use, and protect your information while you use our platform, including our website and services.
       </p>
 
-      <h2 className="text-2xl font-semibold text-indigo-700">1. Information We Collect</h2>
-      <ul className="list-disc list-inside space-y-2 text-gray-700">
-        <li>Personal Identifiers: Name, email address, phone number</li>
-        <li>Event Data: Events you create, attend, or interact with</li>
-        <li>Billing Information: Payment details via Razorpay (we do <strong>not</strong> store card details)</li>
-        <li>Usage Information: IP address, browser type, pages visited, date/time of visits</li>
-        <li>Cookies and Tracking Technologies</li>
-      </ul>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">2. How We Use Your Data</h2>
-      <ul className="list-disc list-inside space-y-2 text-gray-700">
-        <li>To register users and manage accounts</li>
-        <li>To process event registrations and payments</li>
-        <li>To provide customer support and notify users about updates</li>
-        <li>To improve platform functionality, security, and experience</li>
-        <li>To comply with legal obligations and prevent fraud</li>
-      </ul>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">3. Cookies & Tracking</h2>
-      <p className="text-gray-700">
-        We use cookies and similar tracking technologies to analyze trends, administer the website, and understand user behavior. You can control or disable cookies through your browser settings.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">4. Sharing of Data</h2>
-      <p className="text-gray-700">
-        We do <strong>not</strong> sell your personal data. We may share data with trusted third parties such as:
-      </p>
-      <ul className="list-disc list-inside space-y-2 text-gray-700">
-        <li>Payment processors like Razorpay</li>
-        <li>Analytics tools for platform improvement</li>
-        <li>Service providers under strict confidentiality agreements</li>
-      </ul>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">5. Data Retention</h2>
-      <p className="text-gray-700">
-        We retain your personal data only as long as necessary for the purposes outlined in this policy or to comply with legal requirements.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">6. Security</h2>
-      <p className="text-gray-700">
-        Your data is encrypted in transit using HTTPS and stored securely using best-in-class security practices, including limited access control and continuous monitoring. In case of any data breach, we will notify affected users promptly in accordance with applicable laws.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">7. Your Rights</h2>
-      <ul className="list-disc list-inside space-y-2 text-gray-700">
-        <li>Access your data</li>
-        <li>Request correction of inaccurate data</li>
-        <li>Request deletion (subject to legal exceptions)</li>
-        <li>Withdraw consent at any time (if applicable)</li>
-        <li>Opt-out of marketing communications</li>
-      </ul>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">8. Children’s Privacy</h2>
-      <p className="text-gray-700">
-        Our platform is not intended for children under 13. We do not knowingly collect personal data from children. If we discover such data, we will delete it immediately.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">9. Third-Party Links</h2>
-      <p className="text-gray-700">
-        Our website may contain links to third-party websites. We are not responsible for their privacy practices. We encourage users to review the privacy policies of external sites.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">10. International Users</h2>
-      <p className="text-gray-700">
-        If you access our services from outside India, your information may be transferred, stored, and processed in India or other countries where our infrastructure is located.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">11. Consent</h2>
-      <p className="text-gray-700">
-        By using our platform, you consent to the collection and use of your data as outlined in this Privacy Policy.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">12. Updates to This Policy</h2>
-      <p className="text-gray-700">
-        We may update this Privacy Policy periodically. Significant changes will be communicated via email or prominent notices on our platform.
-      </p>
-
-      <h2 className="text-2xl font-semibold text-indigo-700">13. Contact Information</h2>
-      <p className="text-gray-700">
-        For any questions or concerns regarding this policy, please contact us at{' '}
-        <a href="mailto:support@orgatic.events" className="text-orange-600 underline">
-          support@orgatic.events
-        </a>.
-      </p>
+      {/* Sections */}
+      {[
+        {
+          title: "1. Information We Collect",
+          items: [
+            "Personal Info: Name, email, phone number",
+            "Event Info: Events you create, attend, or interact with",
+            "Billing Info: Payment details via Razorpay (we never store card info)",
+            "Usage Data: IP address, browser type, pages visited, timestamps",
+            "Cookies & Tracking: To improve your experience and analyze trends"
+          ]
+        },
+        {
+          title: "2. How We Use Your Data",
+          items: [
+            "Account registration & management",
+            "Processing event registrations and payments",
+            "Providing support and notifications",
+            "Enhancing platform features, security, and usability",
+            "Compliance with legal obligations and fraud prevention"
+          ]
+        },
+        {
+          title: "3. Cookies & Tracking",
+          text: "We use cookies and similar tech to improve site functionality and understand user behavior. You can manage or disable cookies in your browser settings."
+        },
+        {
+          title: "4. Sharing & Disclosure",
+          text: "We do not sell personal information. Data may be shared only with trusted partners, such as:",
+          items: [
+            "Payment processors (Razorpay)",
+            "Analytics and improvement tools",
+            "Service providers under confidentiality agreements"
+          ]
+        },
+        {
+          title: "5. Data Retention & Security",
+          text: "We retain your data only as long as necessary. All sensitive data is encrypted in transit and stored securely. Access is limited and monitored to prevent unauthorized use."
+        },
+        {
+          title: "6. Your Rights",
+          items: [
+            "Access your data",
+            "Correct inaccuracies",
+            "Request deletion (as permitted by law)",
+            "Withdraw consent if applicable",
+            "Opt-out of marketing emails"
+          ]
+        },
+        {
+          title: "7. Children’s Privacy",
+          text: "Our platform is not intended for children under 13. We do not knowingly collect data from children, and any such data is deleted immediately."
+        },
+        {
+          title: "8. Third-Party Links",
+          text: "We may link to external sites. Orgatic is not responsible for their privacy practices. Users should review each site’s privacy policies."
+        },
+        {
+          title: "9. International Users",
+          text: "By accessing from outside India, your information may be transferred and processed in India or other countries where our infrastructure operates."
+        },
+        {
+          title: "10. Updates & Contact",
+          text: "We may update this policy occasionally. Major changes will be communicated on our platform or via email.",
+          contact: "support@orgatic.events"
+        }
+      ].map((section, index) => (
+        <section className="space-y-4" key={index}>
+          <h2 className="text-2xl font-semibold text-primary/75 ">{section.title}</h2>
+          {section.text && <p className="text-foreground">{section.text}</p>}
+          {section.items && (
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+              {section.items.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+          )}
+          {section.contact && (
+            <p className="text-foreground">
+              Questions? Contact us at{' '}
+              <a href={`mailto:${section.contact}`} className="text-accent underline">
+                {section.contact}
+              </a>.
+            </p>
+          )}
+        </section>
+      ))}
     </motion.main>
   );
 }

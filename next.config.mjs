@@ -1,4 +1,4 @@
-// After (ES module)
+
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const analyzer = withBundleAnalyzer({
