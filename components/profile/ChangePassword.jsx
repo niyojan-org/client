@@ -200,7 +200,7 @@ export function ChangePassword({ className, user }) {
 
 
           {/* Change Password Button */}
-          <div className="flex justify-end pt-4">
+          <div className="flex justify-end mt-4">
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-2 cursor-pointer">

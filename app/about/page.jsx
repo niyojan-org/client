@@ -20,14 +20,14 @@ import {
 import { IconBrandGithub, IconBrandLinkedin, IconGlobe } from '@tabler/icons-react';
 
 // Expandable Card for Platform Features
-const FeatureCard = ({ feature }) => {
+function FeatureCard({ feature }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const Icon = feature.icon;
 
   return (
     <motion.div
       variants={cardVariants}
-      className={`bg-card border ${feature.colorScheme.border} rounded-2xl p-6 hover:shadow-lg transition-all duration-300`}
+      className={`bg-card mt-5  border-l-2 ${feature.colorScheme.border} border-border rounded-2xl p-4 px-0 hover:shadow-lg transition-all duration-300`}
     >
       <CardHeader className="flex items-center gap-4 mb-4">
         <div className={`p-3 rounded-xl ${feature.colorScheme.bg} flex-shrink-0`}>
@@ -85,7 +85,7 @@ const About = () => {
     <div className="min-h-dvh space-y-5 bg-background text-foreground transition-colors duration-700 overflow-x-hidden pb-10 scroll-smooth">
 
       {/* Hero Section */}
-      <section className="relative text-center">
+      <section className="relative text-center justify-center flex flex-col items-center pt-5 sm:pt-15 ">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <h1 className="text-5xl md:text-7xl font-bold pb-6 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">
             Orgatic
@@ -112,8 +112,8 @@ const About = () => {
       </section>
 
       {/* Platform Features Section */}
-      <section className="">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-4">
+        <div className="max-w-7xl mx-auto mt-10">
           <motion.div className="text-center mb-4" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Platform Features</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -201,3 +201,4 @@ const About = () => {
 };
 
 export default About;
+

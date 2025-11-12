@@ -92,7 +92,7 @@ export const platformFeatures = [
     icon: IconCertificate,
     title: 'Automated Certification & Analytics',
     shortDescription: 'Generate professional certificates and track attendee analytics.',
-    colorScheme: { border: 'border-chart-1', bg: 'bg-chart-1/10', icon: 'text-chart-1' },
+    colorScheme: { border: 'border-success', bg: 'bg-chart-1/10', icon: 'text-chart-1' },
     fullContent: {
       overview: 'Automatically generate verified certificates and track performance metrics.',
       keyFeatures: [

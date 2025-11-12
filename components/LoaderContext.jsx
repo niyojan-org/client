@@ -30,7 +30,7 @@ export function LoaderProvider({ children }) {
 export function useLoader() {
   const context = useContext(LoaderContext);
   if (!context) {
-    throw new Error("useLoader must be used within LoaderProvider");
+    throw new Error("useLoader must be used within LoaderProvider...alok");
   }
   return context;
 }

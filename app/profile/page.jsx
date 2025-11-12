@@ -1,16 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import GlobalLoader from "@/components/GlobalLoader";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { PersonalInformation } from "@/components/profile/PersonalInformation";
 import { ChangePassword } from "@/components/profile/ChangePassword";
-import { AccountSettings } from "@/components/profile/AccountSettings";
 import { TicketHistory } from "@/components/profile/TicketHistory";
-import { DropdownMenuItem, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 
 export default function Profile() {
   const { user, logout, updateUser } = useUserStore();

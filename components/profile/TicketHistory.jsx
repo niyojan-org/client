@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { SpinnerCustom } from "../ui/spinner";
 import {
   Pagination,
   PaginationContent,
@@ -163,8 +164,9 @@ export function TicketHistory({ className }) {
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="text-sm text-muted-foreground mt-4">Loading tickets...</p>
+          {/* <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div> */}
+          {/* <p className="text-sm text-muted-foreground mt-4">Loading tickets...asfdasfd</p> */}
+          <SpinnerCustom />
         </CardContent>
       </Card>
     );
@@ -211,9 +213,9 @@ export function TicketHistory({ className }) {
               const StatusIcon = statusConfig.icon;
               const eventDate = getEventDate(ticket);
               const eventVenue = getEventVenue(ticket);
-
+              console.log(ticket)
               return (
-                <div key={ticket.ticket.code}>
+                <div key={index}>
                   <div className="p-4 hover:bg-muted/50 transition-colors">
                     <div className="space-y-3">
                       {/* Header */}

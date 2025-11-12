@@ -132,7 +132,7 @@ export function ProfileHeader({ user, className, onLogout }) {
   return (
     <Card className={cn("w-full overflow-hidden p-0 py-2", className)}>
       <CardContent className="">
-        <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+        <div className="flex flex-row gap-6 items-center sm:items-start">
           {/* Avatar Section with Enhanced Design */}
           <div className="relative group">
             <div className="relative">
@@ -175,8 +175,8 @@ export function ProfileHeader({ user, className, onLogout }) {
                 {/* Enhanced Verification Badge */}
                 <div className="absolute -bottom-1 -right-1 z-10">
                   {user?.isVerified ? (
-                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500 shadow-lg ring-4 ring-background">
-                      <IconCircleCheck className="h-4 w-4 text-white" stroke={2.5} />
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-success shadow-lg ring-4 ring-background">
+                      <IconCircleCheck className="h-4 w-4 text-background " stroke={2.5} />
                     </div>
                   ) : (
                     <div className="flex h-7 w-7 items-center justify-center rounded-full bg-destructive shadow-lg ring-4 ring-background">
@@ -207,7 +207,7 @@ export function ProfileHeader({ user, className, onLogout }) {
                 variant={user?.isVerified ? "default" : "destructive"}
                 className={cn(
                   "gap-1.5 text-xs font-medium px-3 py-1 shadow-sm",
-                  user?.isVerified && "bg-green-500 hover:bg-green-600"
+                  user?.isVerified && "bg-success hover:bg-success"
                 )}
               >
                 {user?.isVerified ? (
