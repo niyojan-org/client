@@ -11,12 +11,19 @@ export default function GoogleAuthButton({ variant = "outline", className = "", 
     const handleGoogleAuth = () => {
         try {
             setIsLoading(true);
+            if (!process.env.NEXT_PUBLIC_API_URL) {
+                toast.error('Google authentication not available at this time.');
+                setIsLoading(false);
+                return;
+            }
             // Direct redirect to backend Google OAuth endpoint
-            const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5050';
+            const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050';
             window.location.href = `${baseUrl}/auth/google`;
         } catch (error) {
             console.error('Google auth error:', error);
             toast.error('Failed to authenticate with Google');
+            setIsLoading(false);
+        } finally {
             setIsLoading(false);
         }
     };
