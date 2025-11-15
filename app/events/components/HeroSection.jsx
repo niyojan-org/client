@@ -48,12 +48,11 @@ export default function HeroSection({ event }) {
         transition={{ duration: 0.6 }}
       >
         <Image
-          src={event.bannerImage || "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761137533/orgatickBanner_vdyzdk.png"}
+          src={event.bannerImage || "default-banner.jpg"}
           alt={event.title || "Event banner"}
           priority
           fill
           sizes="100vw"
-          quality={85}
           className="object-cover object-center"
         />
         <Button
