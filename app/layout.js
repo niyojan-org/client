@@ -6,7 +6,7 @@ import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ProvidersSwr from "@/components/ProvidersSwr";
 
-// Primary Fonts
+// Fonts
 const sourceCodePro = Source_Code_Pro({
   variable: "--font-source-code-pro",
   subsets: ["latin"],
@@ -20,27 +20,85 @@ const sourceSans3 = Source_Sans_3({
   display: "swap",
 });
 
+/* ----------------------------------------------------------
+   GLOBAL PRODUCTION SEO
+---------------------------------------------------------- */
 export const metadata = {
-  title: "Orgatick",
+  metadataBase: new URL("https://iamabhi.me"),
+
+  title: {
+    default: "Orgatick",
+    template: "%s | Orgatick",
+  },
+
   description:
-    "Orgatick simplifies event management with secure ticketing, analytics, and real-time updates.",
+    "Orgatick simplifies college event management with secure ticketing, organizer tools, analytics, and real-time updates.",
+
+  keywords: [
+    "Orgatick",
+    "event management",
+    "ticket booking",
+    "college events",
+    "esports events",
+    "tech events",
+    "fest management",
+    "event hosting platform",
+  ],
+
+  applicationName: "Orgatick",
+  generator: "Next.js",
+  category: "Events",
+  creator: "Orgatick Team",
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
   openGraph: {
     title: "Orgatick",
     description:
-      "Effortlessly host and attend college events with ticketing, payments, analytics & more.",
-    url: "https://orgatick.com",
+      "Effortlessly host and attend events with ticketing, analytics & payments.",
+    url: "https://iamabhi.me",
     siteName: "Orgatick",
     locale: "en_IN",
     type: "website",
+    images: ["/og_default.png"], // fallback image
   },
-  appleWebApp: { title: "Orgatick" },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Orgatick",
+    description: "A modern event hosting & ticketing platform.",
+    images: ["/og_default.png"],
+    site: "@orgatick",
+    creator: "@orgatick",
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+
+  alternates: {
+    canonical: "https://iamabhi.me",
+  },
+
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
+
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={[sourceCodePro.variable, sourceSans3.variable].join(" ")} suppressHydrationWarning
+      className={[sourceCodePro.variable, sourceSans3.variable].join(" ")}
+      suppressHydrationWarning
     >
       <body
         className="relative antialiased"
@@ -48,18 +106,12 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider
           attribute="class"
-          defaultThemes="system"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <LoaderProvider>
-            {/* Apply ScrollArea globally */}
-            {/* <ScrollArea className="h-full w-full"> */}
-            {/* <ProvidersSwr> */}
             <ClientLayout>{children}</ClientLayout>
-            {/* </ScrollArea> */}
-            {/* </ProvidersSwr> */}
-
             <Toaster />
           </LoaderProvider>
         </ThemeProvider>

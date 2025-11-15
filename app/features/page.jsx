@@ -26,7 +26,6 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 export default function Features() {
-
   const features = [
     { icon: Globe, title: 'Event Discovery', description: 'Easily browse online & offline events with smart filters and location-aware results.' },
     { icon: Ticket, title: 'Easy Ticketing', description: 'Secure payments. Instant ticket delivery (PDF + QR). Refund policy included.' },
