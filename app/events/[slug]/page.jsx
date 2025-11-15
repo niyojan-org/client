@@ -5,7 +5,7 @@ import ClientEventPage from "./ClientEventsPage";
 // DYNAMIC SEO METADATA
 // =========================
 export async function generateMetadata({ params }) {
-  const { slug } = params;  // ❗DO NOT use await here
+  const { slug } = params;  
 
   try {
     const { data } = await api.get(`/event/${slug}`);
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }) {
           "@type": "Event",
           name: event.title,
           description: event.shortDescription || event.description,
-          image: [event.bannerImage || event.ogImage || "/og_default.png"],
+          image: [event.bannerImage || "/og_image.png"],
           startDate: event.startDate,
           endDate: event.endDate,
           eventStatus: "EventScheduled",

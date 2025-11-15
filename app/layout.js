@@ -63,14 +63,14 @@ export const metadata = {
     siteName: "Orgatick",
     locale: "en_IN",
     type: "website",
-    images: ["/og_default.png"], // fallback image
+    images: ["/og_image.png"], // fallback image
   },
 
   twitter: {
     card: "summary_large_image",
     title: "Orgatick",
     description: "A modern event hosting & ticketing platform.",
-    images: ["/og_default.png"],
+    images: ["/og_image.png"],
     site: "@orgatick",
     creator: "@orgatick",
   },
