@@ -20,9 +20,20 @@ const sourceSans3 = Source_Sans_3({
   display: "swap",
 });
 
-/* ----------------------------------------------------------
-   GLOBAL PRODUCTION SEO
----------------------------------------------------------- */
+/* ------------------------------------------
+   FIXED: MOVE THESE OUT OF metadata
+------------------------------------------ */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
+export const themeColor = "#ffffff";
+
+/* ------------------------------------------
+   GLOBAL SEO
+------------------------------------------ */
 export const metadata = {
   metadataBase: new URL("https://iamabhi.me"),
 
@@ -63,14 +74,14 @@ export const metadata = {
     siteName: "Orgatick",
     locale: "en_IN",
     type: "website",
-    images: ["/og_image.png"], // fallback image
+    images: ["https://iamabhi.me/og_image.png"],
   },
 
   twitter: {
     card: "summary_large_image",
     title: "Orgatick",
     description: "A modern event hosting & ticketing platform.",
-    images: ["/og_image.png"],
+    images: ["https://iamabhi.me/og_image.png"],
     site: "@orgatick",
     creator: "@orgatick",
   },
@@ -83,14 +94,6 @@ export const metadata = {
   alternates: {
     canonical: "https://iamabhi.me",
   },
-
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
-
-  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }) {
