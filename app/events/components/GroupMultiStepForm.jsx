@@ -349,20 +349,49 @@ export default function GroupMultiStepForm({
               }}
               className="max-w-sm"
             />
+            <div className="pt-6">
+              {/* Terms notice */}
+              <p className="text-sm text-gray-500 my-2">
+                By proceeding, you agree to our{" "}
+                <a
+                  href="/terms-and-conditions"
+                  className="underline text-primary"
+                  target="_blank"
+                >
+                  T&C{" "}
+                </a>
+                ,{" "}
+                <a
+                  href="/refund-policy"
+                  className="underline text-primary"
+                  target="_blank"
+                >
+                  Refund Policy
+                </a>
+                , and{" "}
+                <a
+                  href="/delivery-policy"
+                  className="underline text-primary"
+                  target="_blank"
+                >
+                  Delivery Policy
+                </a>
+              </p>
 
-            <div className="pt-6 flex justify-center">
-              <Button
-                size="lg"
-                className="w-full sm:w-1/2 bg-primary text-card rounded-full"
-                onClick={handleSubmit}
-                disabled={loading}
-              >
-                {loading
-                  ? "Submitting..."
-                  : couponDiscount > 0
+              <div className="flex justify-center">
+                <Button
+                  size="lg"
+                  className="w-full sm:w-1/2 bg-primary text-card rounded-full"
+                  onClick={handleSubmit}
+                  disabled={loading}
+                >
+                  {loading
+                    ? "Submitting..."
+                    : couponDiscount > 0
                     ? `Pay ₹${originalPrice} → ₹${finalPrice} after coupon`
-                    : ` Submit & Pay ₹${originalPrice}`}
-              </Button>
+                    : `Submit & Pay ₹${originalPrice}`}
+                </Button>
+              </div>
             </div>
           </>
         )}

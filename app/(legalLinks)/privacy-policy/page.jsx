@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 
@@ -15,100 +15,106 @@ export default function PrivacyPolicy() {
       <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-primary">
         Privacy Policy
       </h1>
-      <p className="text-muted-foreground text-sm">Effective Date: June 15, 2025</p>
+      <p className="text-muted-foreground text-sm">Effective Date: 01 Nov 2025</p>
 
-      <p className="text-foreground">
-        At <strong>Orgatic</strong>, operated by Niyojan (“we”, “us”, or “our”), your privacy is a top priority. 
-        This policy explains how we collect, use, and protect your information while you use our platform, including our website and services.
+      <p>
+        This Privacy Policy describes how <strong>Orgatick</strong> 
+        (“we,” “our,” or “us”) collects, uses, stores, and protects your 
+        personal information when you access or use our platform at 
+        <strong> orgatick.in</strong>. By creating an account, registering 
+        for an event, browsing the platform, or making a payment, 
+        you acknowledge and agree to the practices outlined in this policy. 
+        If you do not agree with any part of this policy, you must discontinue 
+        use of the platform immediately.
       </p>
 
-      {/* Sections */}
-      {[
-        {
-          title: "1. Information We Collect",
-          items: [
-            "Personal Info: Name, email, phone number",
-            "Event Info: Events you create, attend, or interact with",
-            "Billing Info: Payment details via Razorpay (we never store card info)",
-            "Usage Data: IP address, browser type, pages visited, timestamps",
-            "Cookies & Tracking: To improve your experience and analyze trends"
-          ]
-        },
-        {
-          title: "2. How We Use Your Data",
-          items: [
-            "Account registration & management",
-            "Processing event registrations and payments",
-            "Providing support and notifications",
-            "Enhancing platform features, security, and usability",
-            "Compliance with legal obligations and fraud prevention"
-          ]
-        },
-        {
-          title: "3. Cookies & Tracking",
-          text: "We use cookies and similar tech to improve site functionality and understand user behavior. You can manage or disable cookies in your browser settings."
-        },
-        {
-          title: "4. Sharing & Disclosure",
-          text: "We do not sell personal information. Data may be shared only with trusted partners, such as:",
-          items: [
-            "Payment processors (Razorpay)",
-            "Analytics and improvement tools",
-            "Service providers under confidentiality agreements"
-          ]
-        },
-        {
-          title: "5. Data Retention & Security",
-          text: "We retain your data only as long as necessary. All sensitive data is encrypted in transit and stored securely. Access is limited and monitored to prevent unauthorized use."
-        },
-        {
-          title: "6. Your Rights",
-          items: [
-            "Access your data",
-            "Correct inaccuracies",
-            "Request deletion (as permitted by law)",
-            "Withdraw consent if applicable",
-            "Opt-out of marketing emails"
-          ]
-        },
-        {
-          title: "7. Children’s Privacy",
-          text: "Our platform is not intended for children under 13. We do not knowingly collect data from children, and any such data is deleted immediately."
-        },
-        {
-          title: "8. Third-Party Links",
-          text: "We may link to external sites. Orgatic is not responsible for their privacy practices. Users should review each site’s privacy policies."
-        },
-        {
-          title: "9. International Users",
-          text: "By accessing from outside India, your information may be transferred and processed in India or other countries where our infrastructure operates."
-        },
-        {
-          title: "10. Updates & Contact",
-          text: "We may update this policy occasionally. Major changes will be communicated on our platform or via email.",
-          contact: "support@orgatic.events"
-        }
-      ].map((section, index) => (
-        <section className="space-y-4" key={index}>
-          <h2 className="text-2xl font-semibold text-primary/75 ">{section.title}</h2>
-          {section.text && <p className="text-foreground">{section.text}</p>}
-          {section.items && (
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-              {section.items.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-          )}
-          {section.contact && (
-            <p className="text-foreground">
-              Questions? Contact us at{' '}
-              <a href={`mailto:${section.contact}`} className="text-accent underline">
-                {section.contact}
-              </a>.
-            </p>
-          )}
-        </section>
-      ))}
+      <p>
+        When you interact with Orgatick, we may collect certain information 
+        to support registration, ticketing, payments, and platform usage. 
+        This includes basic personal details such as your name, phone number, 
+        and email address, as well as optional information you voluntarily 
+        provide when participating in an event. We also collect technical data 
+        such as IP addresses, device identifiers, browser type, and usage logs 
+        to ensure security and improve platform performance. If you register 
+        for or host events, we store details related to events you create, 
+        attend, or interact with. For payment processing, we use Razorpay and 
+        do not store sensitive financial information such as card numbers, UPI IDs, 
+        or banking details.
+      </p>
+
+      <p>
+        The information we collect is used to operate and improve the platform, 
+        process event registrations and payments, communicate important event updates, 
+        verify identity when necessary, prevent fraud, and maintain compliance with 
+        applicable laws. We may also use your details to provide reminders, 
+        confirmations, or support responses. Limited usage data may be processed 
+        for analytics to help us improve user experience, performance, and security.
+      </p>
+
+      <p>
+        We use cookies and similar technologies to support essential functions 
+        such as login persistence, session tracking, and personalization. 
+        You may disable cookies through your browser settings; however, doing so 
+        may affect platform performance or restrict access to certain features.
+      </p>
+
+      <p>
+        We do not sell or trade your personal information. However, we may share 
+        necessary data with trusted partners who assist with payment processing, 
+        notifications, ticket delivery, analytics, or operational support. 
+        These service providers are bound by confidentiality and are permitted 
+        to use your information only as required to perform their assigned functions 
+        on behalf of Orgatick.
+      </p>
+
+      <p>
+        We retain personal information only for as long as it is reasonably necessary 
+        for operational, legal, or security purposes. All sensitive data transmitted 
+        to or from the platform is encrypted and stored securely. We use internal 
+        access controls to prevent unauthorized access, misuse, or modification 
+        of stored data.
+      </p>
+
+      <p>
+        You may request access to personal information associated with your account, 
+        request corrections if details are inaccurate, or request deletion where 
+        applicable under law. Certain information may be retained where required 
+        for compliance, fraud prevention, or financial reconciliation.
+      </p>
+
+      <p>
+        Orgatick is not intended for individuals under the age of 13. 
+        We do not knowingly collect data from children. If such data is submitted 
+        unintentionally, it will be deleted upon verification.
+      </p>
+
+      <p>
+        The platform may include links to third-party websites or systems. 
+        We do not control or take responsibility for the privacy policies, 
+        security practices, or content of external services. We encourage users 
+        to review third-party terms before interacting with external systems.
+      </p>
+
+      <p>
+        If you are accessing Orgatick from outside India, you acknowledge that your 
+        information may be transferred to and processed in India or other regions 
+        where our service providers operate.
+      </p>
+
+      <p>
+        We may update this Privacy Policy periodically to reflect product changes, 
+        legal requirements, or system enhancements. Any material updates will be 
+        posted on this page. Continued use of the platform after such updates 
+        constitutes acceptance of the revised policy.
+      </p>
+
+      <p>
+        For privacy concerns, data-related inquiries, or deletion requests, 
+        you may contact us at:{" "}
+        <a href="mailto:support@orgatick.in" className="text-accent underline">
+          support@orgatick.in
+        </a>.
+      </p>
     </motion.main>
   );
 }

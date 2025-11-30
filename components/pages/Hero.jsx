@@ -102,7 +102,7 @@ export default function Hero() {
               whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Link href="/host" aria-label="Start Hosting Events">
+              <Link href="/auth" aria-label="Start Hosting Events">
                 Host an Event
               </Link>
             </motion.span>
@@ -132,7 +132,7 @@ export default function Hero() {
           transition={{ delay: 0.6, duration: 0.6 }}
           className="mt-12 text-sm text-[color:var(--muted-foreground)]"
         >
-          Trusted by <strong>1,000+</strong> organizers & attendees worldwide
+          Trusted by <strong>1,000+</strong> organizers & attendees.
         </motion.div>
       </div>
 

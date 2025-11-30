@@ -8,37 +8,36 @@ import {
 
 const OrganizerFAQ = () => {
   const faqs = [
-    {
-      q: "Can I host both free and paid events?",
-      a: (
-        <>
-          Yes! You can host both free and paid events on our platform. <br />
-          For free events, we charge only a minimal service fee to cover operational costs such as hosting, messaging, and support. <br />
-          For paid events, you can set your own ticket prices, and payments are processed securely through Razorpay.
-        </>
-      ),
-    },
-    {
-      q: "How do I receive payments from ticket sales?",
-      a: "All ticket payments are processed through Razorpay. Once your organization account is verified, you can link your bank account and receive payments directly — either instantly or after the event, depending on your payout settings.",
-    },
-    {
-      q: "Can I edit event details after publishing?",
-      a: "Yes, We provide you with a dedicated organizer admin panel where you can manage all your events in one place. From there, you can easily update event information, monitor registrations, track ticket sales, and make adjustments in real time",
-    },
-    {
-      q: "How are refunds handled if I cancel an event?",
-      a: "You can cancel your event anytime from the organizer dashboard. If you’ve set up a refund policy, the system will automatically notify registered participants and process refunds through Razorpay. If the event is marked as “non-refundable,” no automatic refunds will be issued.",
-    },
-    {
-      q: "Can I add team members to help manage events?",
-      a: "Yes! You can invite team members, such as volunteers or co-organizers, to your admin panel. You can assign specific roles for tasks like managing registrations, scanning tickets, or tracking analytics — all under your organization account.",
-    },
-    {
-      q: "Is My data secure?",
-      a: "Yes — all data and payment information is securely encrypted and handled via Razorpay’s PCI-DSS-compliant systems. We never share user data with third parties or use it for marketing without consent.",
-    },
-  ];
+  {
+    q: "Can I host both free and paid events?",
+    a: "Yes. You can host both free and paid events. Paid event ticketing is processed securely through Razorpay. A small platform service fee applies to all events to support verification, ticketing, messaging, and platform maintenance."
+  },
+  {
+    q: "How do I receive payments from ticket sales?",
+    a: "All payments collected from attendees are processed through Razorpay. After fees and charges are deducted, settlements are transferred to your verified bank account according to Razorpay's standard settlement timeline."
+  },
+  {
+    q: "Can I edit event details after publishing?",
+    a: "Yes. You can edit event details such as description, venue, schedule, and ticket count from your organizer dashboard. However, changes affecting pricing or ticket validity may be restricted once registrations have begun."
+  },
+  {
+    q: "How are refunds handled if an event is cancelled?",
+    a: "If an event is officially cancelled, Orgatick will automatically initiate full refunds to attendees through Razorpay. Organizers cannot issue refunds individually, and no refunds are allowed once tickets are sold unless the event is cancelled."
+  },
+  {
+    q: "Can I add team members to help manage my event?",
+    a: "Yes. You can invite additional members to your organizer panel and assign roles such as ticket scanning, analytics monitoring, volunteer management, or event updates."
+  },
+  {
+    q: "Will attendees see my name or the platform name on their bank statements?",
+    a: "Payments are processed via Razorpay. Attendees may see the registered legal proprietor name “Abhishek Kumar Mandal” on their bank record or SMS payment confirmation."
+  },
+  {
+    q: "Is my data secure?",
+    a: "Yes. All payment and event data is encrypted and processed through industry-standard security systems. Orgatick does not store card or banking information. We comply with Razorpay PCI-DSS requirements."
+  }
+];
+
 
   return (
     <div className="w-full">

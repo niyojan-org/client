@@ -119,7 +119,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/explore"
+                  href="/events"
                   className="hover:text-primary transition"
                 >
                   Explore Events
@@ -156,6 +156,14 @@ export default function Footer() {
                   Refund Policy
                 </Link>
               </li>
+                            <li>
+                <Link
+                  href="/delivery-policy"
+                  className="hover:text-primary transition"
+                >
+                  Delivery Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -170,7 +178,7 @@ export default function Footer() {
                 href="mailto:support@orgatic.events"
                 className="text-primary hover:underline"
               >
-                support@orgatic.events
+                support@orgatick.in
               </Link>
             </p>
           </div>
@@ -182,7 +190,7 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()}{" "}
           <span className="text-primary font-semibold">
-            <Link href="https://orgaticevent.in">Orgatic Event</Link>
+            <Link href="https://orgatick.in">Orgatick</Link>
           </span>
           . All rights reserved.
         </p>
@@ -204,7 +212,6 @@ export default function Footer() {
             logo: "https://orgatic.in/logo.png",
             sameAs: [
               "https://instagram.com/orgatic",
-              "https://twitter.com/orgatic",
               "https://linkedin.com/company/orgatic",
             ],
           }),

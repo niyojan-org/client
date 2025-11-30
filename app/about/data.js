@@ -150,7 +150,7 @@ export const team = [
 // ------------------- Contact Info -------------------
 export const contactInfo = [
   { icon: IconMail, title: 'Email Us', info: 'contact@orgatic.com', bg: 'bg-primary/10', iconColor: 'text-primary' },
-  { icon: IconMapPin, title: 'Location', info: 'LPU, Punjab, India', bg: 'bg-secondary/10', iconColor: 'text-secondary' },
+  { icon: IconMapPin, title: 'Location', info: 'Delhi, India', bg: 'bg-secondary/10', iconColor: 'text-secondary' },
   { icon: IconPhone, title: 'Support', info: '24/7 Available', bg: 'bg-accent/10', iconColor: 'text-accent' },
   { icon: IconGlobe, title: 'Website', info: 'orgatic.com', bg: 'bg-destructive/10', iconColor: 'text-destructive' },
 ];
