@@ -91,7 +91,7 @@ const About = () => {
             Orgatic
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            A <span className="font-semibold text-primary">student-friendly event management platform</span>
+            A <span className="font-semibold text-primary">user-friendly event management platform </span>
             for hosting, discovering, and attending college events seamlessly.
           </p>
 

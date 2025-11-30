@@ -7,13 +7,13 @@ export default function RegistrationBanner({ bannerImage, title, onBack }) {
   if (!bannerImage) return null;
 
   return (
-    <div className="relative w-full aspect-[21/9] max-h-52 rounded-lg overflow-hidden shadow-md border border-border mb-4">
+    <div className="relative w-full aspect-[16/9] md:aspect-[3.5/1.5] rounded-lg overflow-hidden shadow-md border border-border mb-4">
       <Image
         src={bannerImage}
         alt={title}
         fill
-        className="object-cover"
         priority
+        className="object-cover object-center"
       />
       <Button
         variant="outline"

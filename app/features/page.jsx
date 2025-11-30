@@ -35,7 +35,6 @@ export default function Features() {
     { icon: CheckCircle, title: 'Unique Event Pages', description: 'Each event gets its own beautiful shareable page.' },
     { icon: Palette, title: 'Modern Design', description: 'Built with Next.js, Tailwind, and Framer Motion — clean and mobile-first.' },
     { icon: Lock, title: 'Secure Auth', description: 'Verification, rate limiting, and encrypted data keep you safe.' },
-    { icon: GraduationCap, title: 'Student-Friendly', description: 'Built by students, for students — simple and powerful.' },
     { icon: Megaphone, title: 'Marketing Tools', description: 'Email campaigns, social media integrations, and promotion tools.' },
     { icon: Smartphone, title: 'Personalized Recommendations', description: 'Discover events tailored to your interests and location.' },
     { icon: LifeBuoy, title: '24/7 Support', description: 'We’re always here to help — organizers and attendees alike.' },

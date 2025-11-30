@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 
@@ -7,90 +7,115 @@ export default function TermsAndConditions() {
     <motion.main
       role="main"
       aria-label="Terms and Conditions"
-      className="max-w-4xl mx-auto px-6 py-24 space-y-8 leading-relaxed bg-background text-foreground transition-colors duration-700"
+      className="max-w-4xl mx-auto px-6 py-8 space-y-8 leading-relaxed bg-background text-foreground transition-colors duration-700"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       {/* Header */}
       <h1 className="text-4xl font-bold text-primary">Terms & Conditions</h1>
-      <p className="text-sm text-muted-foreground">Last Updated: October 12, 2025</p>
+      <p className="text-sm text-muted-foreground">Effective Date: 01 Nov 2025</p>
 
       <p>
-        By using <strong>Orgatic Events</strong> (the "Platform"), you agree to comply with and be bound by these Terms & Conditions. Please read them carefully.
+        These Terms & Conditions (“Terms”) govern your access to and use of 
+        <strong> Orgatick</strong>, available at <strong>orgatick.in</strong> 
+        (“Platform”). By accessing, browsing, registering, or using the Platform 
+        in any manner, whether as an attendee, organizer, or visitor, you confirm 
+        that you have read, understood, and agreed to comply with these Terms. 
+        If you do not agree to these Terms, you must discontinue use of the Platform 
+        immediately.
       </p>
 
-      {[
-        {
-          title: "1. Eligibility",
-          text: "You must be at least 18 years old or have the legal capacity to enter into a binding agreement to host or register for events on our Platform."
-        },
-        {
-          title: "2. Account Responsibility",
-          text: "You are responsible for maintaining the confidentiality of your login credentials and any activity under your account. Notify us immediately of any unauthorized use."
-        },
-        {
-          title: "3. Event Guidelines",
-          items: [
-            "No hosting of illegal, fraudulent, misleading, or harmful events.",
-            "Ensure all event details (title, date, venue, pricing) are accurate and complete.",
-            "Organizers are solely responsible for event execution, attendee safety, and fulfillment of services or tickets."
-          ]
-        },
-        {
-          title: "4. Payments & Fees",
-          text: "All payments are processed securely via Razorpay. A service fee may apply for transactions. This fee is non-refundable unless otherwise stated in our Refund Policy. Orgatic does not store your financial information."
-        },
-        {
-          title: "5. Cancellations & Refunds",
-          text: "Event cancellations and refunds are primarily managed by event organizers. Attendees should review each event's refund policy before booking. Orgatic may facilitate communication but is not financially liable unless an event is cancelled by the organizer."
-        },
-        {
-          title: "6. Termination of Account",
-          text: "We reserve the right to suspend or terminate accounts that violate these terms, misuse the Platform, or engage in harmful or illegal activities. Termination does not relieve you of outstanding obligations."
-        },
-        {
-          title: "7. Intellectual Property",
-          text: "All content, branding, designs, and code associated with Orgatic are protected by copyright, trademark, and other intellectual property laws. You may not copy, distribute, modify, or use our intellectual property without prior written permission."
-        },
-        {
-          title: "8. Limitation of Liability",
-          text: "To the maximum extent permitted by law, Orgatic is not responsible for any direct, indirect, incidental, or consequential damages arising from use of the Platform, including but not limited to event cancellations, technical issues, or payment disputes."
-        },
-        {
-          title: "9. Indemnification",
-          text: "You agree to indemnify and hold harmless Orgatic, its affiliates, employees, and partners from any claims, liabilities, damages, or expenses arising from your use of the Platform or violation of these Terms."
-        },
-        {
-          title: "10. Privacy",
-          text: "Our Privacy Policy governs the collection, use, and storage of your personal information. By using the Platform, you consent to the terms outlined in our Privacy Policy."
-        },
-        {
-          title: "11. Governing Law",
-          text: "These terms are governed by the laws of India, with exclusive jurisdiction in the state of Punjab."
-        },
-        {
-          title: "12. Modifications",
-          text: "Orgatic reserves the right to modify these Terms & Conditions at any time. Updated terms will be effective immediately upon posting on the Platform. Continued use constitutes acceptance of the updated terms."
-        }
-      ].map((section, index) => (
-        <section className="space-y-3" key={index}>
-          <h2 className="text-2xl font-semibold text-primary/75">{section.title}</h2>
-          {section.text && <p className="text-foreground">{section.text}</p>}
-          {section.items && (
-            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-              {section.items.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-          )}
-        </section>
-      ))}
+      <p>
+        Orgatick is a digital event platform that enables verified organizers to 
+        create and publish events and allows participants to register and purchase 
+        digital tickets. Orgatick does not host or run events and is not responsible 
+        for event execution, safety, schedule changes, or content accuracy. All event 
+        details, including pricing, venue, eligibility, and rules, are determined by 
+        individual organizers.
+      </p>
+
+      <p>
+        To use the Platform, you must be at least 18 years old or have legal consent. 
+        If you choose to create an account, you are responsible for maintaining the 
+        confidentiality of your login credentials and for all activity associated with 
+        your account. You must inform us immediately if you believe your account has 
+        been accessed without authorization.
+      </p>
+
+      <p>
+        Organizers using the Platform agree that all events must comply with applicable 
+        laws, institutional rules, and safety standards. Illegal, harmful, fraudulent, 
+        or misleading activities are strictly prohibited. Organizers are solely 
+        responsible for delivering the announced event experience and ensuring the 
+        authenticity of the information they provide.
+      </p>
+
+      <p>
+        All paid registrations and ticket purchases are processed securely through 
+        Razorpay. Orgatick does not store card numbers, UPI IDs, or banking details. 
+        A platform service fee may apply and is non-refundable. Users acknowledge that 
+        bank statements or SMS confirmations may display the name 
+        <strong> “Abhishek Kumar Mandal”</strong> as the legal account holder for payment 
+        settlements.
+      </p>
+
+      <p>
+        All ticket purchases made through Orgatick are final and non-refundable. Once issued,
+        tickets cannot be cancelled or transferred by attendees. Refunds will only be issued
+        if the organizer officially cancels the event. In such cases, the refund amount will
+        be processed after deducting applicable service charges. Refunds processed through 
+        Razorpay may take approximately 5–10 business days to reflect. </p>
+      <p>
+        Upon successful payment, tickets are delivered digitally by email and/or 
+        WhatsApp. No physical tickets are printed or shipped. Organizers receive 
+        settlements based on Razorpay’s payout timeline after deduction of applicable 
+        platform fees and payment gateway charges. Orgatick is not responsible for 
+        delays caused by banks, payment processors, or compliance reviews.
+      </p>
+
+      <p>
+        We reserve the right to suspend or terminate access to the Platform at our 
+        discretion if users violate these Terms, engage in fraud, misuse Platform 
+        features, or negatively impact the experience or safety of other users. 
+        Termination does not remove obligations incurred before the suspension date.
+      </p>
+
+      <p>
+        All content on the Platform, including branding, text, software, design, 
+        logos, and digital assets, is protected under applicable intellectual property 
+        laws. Users may not copy, reproduce, modify, resell, or distribute Platform 
+        content without prior written permission.
+      </p>
+
+      <p>
+        Orgatick provides access to the Platform on an “as-is” and “as-available” basis. 
+        To the maximum extent permitted by law, Orgatick is not liable for event issues, 
+        cancellations. Our total liability, if applicable, will not exceed the total
+        amount paid by the affected user for the transaction in question.
+      </p>
+
+      <p>
+        Use of the Platform is subject to our <strong>Privacy Policy</strong>, which 
+        explains how personal information is collected, processed, and stored.
+      </p>
+
+      <p>
+        These Terms are governed by the laws of India. Any disputes arising from the use 
+        of the Platform will fall under the exclusive jurisdiction of courts located in 
+        Punjab, India.
+      </p>
+
+      <p>
+        Orgatick may update or revise these Terms periodically. Any changes will be 
+        posted on this page, and continued use of the Platform will constitute acceptance 
+        of the updated Terms.
+      </p>
 
       <p className="text-sm text-muted-foreground">
-        For questions, concerns, or disputes, contact us at{' '}
-        <a href="mailto:support@orgatic.events" className="text-accent underline">
-          support@orgatic.events
+        For questions, concerns, or dispute assistance, contact us at{" "}
+        <a href="mailto:support@orgatick.in" className="text-accent underline">
+          support@orgatick.in
         </a>.
       </p>
     </motion.main>
