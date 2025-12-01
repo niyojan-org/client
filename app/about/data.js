@@ -120,7 +120,7 @@ export const techStack = [
 export const team = [
   {
     name: 'Abhishek Kumar',
-    role: 'CEO & Full Stack Developer',
+    role: 'Founder & Full Stack Developer',
     bio: 'Architected and developed the entire platform from frontend to backend, including payments and system design.',
     linkedin: 'https://linkedin.com/in/iamabhi0619',
     github: 'https://github.com/iamabhi0619',
@@ -170,4 +170,5 @@ export const cardVariants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
 };
+
 
