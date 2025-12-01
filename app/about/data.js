@@ -149,10 +149,10 @@ export const team = [
 
 // ------------------- Contact Info -------------------
 export const contactInfo = [
-  { icon: IconMail, title: 'Email Us', info: 'contact@orgatic.com', bg: 'bg-primary/10', iconColor: 'text-primary' },
+  { icon: IconMail, title: 'Email Us', info: 'support@orgatic.in', bg: 'bg-primary/10', iconColor: 'text-primary' },
   { icon: IconMapPin, title: 'Location', info: 'Delhi, India', bg: 'bg-secondary/10', iconColor: 'text-secondary' },
   { icon: IconPhone, title: 'Support', info: '24/7 Available', bg: 'bg-accent/10', iconColor: 'text-accent' },
-  { icon: IconGlobe, title: 'Website', info: 'orgatic.com', bg: 'bg-destructive/10', iconColor: 'text-destructive' },
+  { icon: IconGlobe, title: 'Website', info: 'orgatic.in', bg: 'bg-destructive/10', iconColor: 'text-destructive' },
 ];
 
 // ------------------- Animation Variants -------------------
@@ -170,3 +170,4 @@ export const cardVariants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
 };
+
