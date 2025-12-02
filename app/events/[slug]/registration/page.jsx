@@ -109,6 +109,7 @@ export default function RegistrationPage() {
 
       const res = await api.post(`/event/${slug}/register`, payload);
       const { code, data, participant, message } = res.data;
+      console.log(data.payment)
 
       await handleRegistrationResponse(code, data, message, participant);
     } catch (err) {
