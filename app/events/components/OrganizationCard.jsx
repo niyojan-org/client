@@ -104,13 +104,13 @@ export default function OrganizationCard({ event }) {
               {org.supportContact.email && (
                 <div className="flex items-center gap-2 text-muted-foreground truncate">
                   <IconMail className="h-4 w-4" />
-                  <span className="truncate">{org.supportContact.email}</span>
+                  <span className="truncate">{org?.supportContact?.email}</span>
                 </div>
               )}
               {org.supportContact.phone && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <IconPhone className="h-4 w-4" />
-                  <span>{org.supportContact.phone}</span>
+                  <span>{org?.supportContact?.phone}</span>
                 </div>
               )}
               {org.website && (
