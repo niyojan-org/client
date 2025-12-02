@@ -1,4 +1,5 @@
 "use client";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CheckCircle2, XCircle, Clock } from "lucide-react";
 import api from "@/lib/api";
@@ -8,7 +9,8 @@ import { SpinnerCustom } from "@/components/ui/spinner";
 import { useConfetti } from "@/app/events/[slug]/registration/hooks/useConfetti";
 
 
-export default function PaymentReturnPage({ searchParams }) {
+export default function PaymentReturnPage() {
+  const searchParams = useSearchParams();
   const [status, setStatus] = useState("loading");  // loading | success | error | idle
   const [message, setMessage] = useState("");
 
@@ -35,10 +37,13 @@ export default function PaymentReturnPage({ searchParams }) {
   };
 
   useEffect(() => {
-    if (searchParams?.order_id) {
-      verifyPayment(searchParams.order_id);
+    const orderId = searchParams.get("order_id");
+    if (orderId) {
+      verifyPayment(orderId);
     }
   }, [searchParams]);
+
+  console.log("All good")
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
@@ -88,7 +93,7 @@ export default function PaymentReturnPage({ searchParams }) {
                 </Button>
               </Link>
               <Button
-                onClick={() => verifyPayment(searchParams.order_id)}
+                onClick={() => verifyPayment(searchParams.get("order_id"))}
                 className="w-full rounded-full"
               >
                 Retry Verification
