@@ -19,7 +19,7 @@ export function useConfetti(isActive) {
         colors,
       });
       confetti({
-        particleCount: 3,
+        particleCount: 1,
         angle: 120,
         spread: 55,
         startVelocity: 60,

@@ -37,14 +37,14 @@ export function useRegistration() {
 
   const processPayment = async (payment, participantData) => {
     const payRes = await openRazorpay(payment, participantData?.name, participantData?.email);
-    
+
     if (payRes.status === "cancelled") {
       toast.info("Payment cancelled by user.");
       return null;
     }
 
     const verifyRes = await api.post(`/payment/status`, payRes);
-    
+
     if (verifyRes.data.success) {
       setPaymentStatus("success");
       setConfirmationMsg(verifyRes.data.message);

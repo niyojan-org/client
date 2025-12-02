@@ -37,6 +37,7 @@ export default function OrganizationCard({ event }) {
   if (!event?.organization) return null;
 
   const org = event.organization;
+  // console.log(org)
 
   /* 🔹 Memoized social links (avoid recalculation every render) */
   const socialLinks = useMemo(() => {
@@ -100,16 +101,16 @@ export default function OrganizationCard({ event }) {
 
             {/* Contact Info */}
             <div className="space-y-2 text-sm">
-              {org.email && (
+              {org.supportContact.email && (
                 <div className="flex items-center gap-2 text-muted-foreground truncate">
                   <IconMail className="h-4 w-4" />
-                  <span className="truncate">{org.email}</span>
+                  <span className="truncate">{org.supportContact.email}</span>
                 </div>
               )}
-              {org.phone && (
+              {org.supportContact.phone && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <IconPhone className="h-4 w-4" />
-                  <span>{org.phone}</span>
+                  <span>{org.supportContact.phone}</span>
                 </div>
               )}
               {org.website && (
