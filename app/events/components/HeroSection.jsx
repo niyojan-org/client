@@ -48,7 +48,7 @@ export default function HeroSection({ event }) {
         transition={{ duration: 0.6 }}
       >
         <Image
-          src={event.bannerImage || "default-banner.jpg"}
+          src={event.bannerImage || "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761138208/orgatickBanner_vdyzdk.png"}
           alt={event.title || "Event banner"}
           priority
           fill
