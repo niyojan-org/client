@@ -267,7 +267,7 @@ const landingPageContent = {
 
   footer: {
     quickLinks: ["About", "Benefits", "Contact", "Privacy Policy"],
-    supportEmail: "support@orgatic.events",
+    supportEmail: "support@orgatick.events",
     socialLinks: ["Instagram", "LinkedIn"],
     credit: "Built with ❤️ by Alok & Team",
   },

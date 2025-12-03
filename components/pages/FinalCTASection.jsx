@@ -86,17 +86,17 @@ const FinalCTA = () => {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "CallToAction",
-            name: "Orgatic Event Management CTA",
-            description: "Join Orgatic to host or attend events seamlessly.",
+            name: "orgatick Event Management CTA",
+            description: "Join orgatick to host or attend events seamlessly.",
             target: [
               {
                 "@type": "EntryPoint",
-                urlTemplate: "https://orgatic.events/auth",
+                urlTemplate: "https://orgatick.events/auth",
                 actionName: "Start Hosting",
               },
               {
                 "@type": "EntryPoint",
-                urlTemplate: "https://orgatic.events/explore",
+                urlTemplate: "https://orgatick.events/explore",
                 actionName: "Discover Events",
               },
             ],

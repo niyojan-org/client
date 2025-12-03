@@ -95,7 +95,7 @@ export default function HowItWorks() {
           transition={{ duration: 0.6 }}
           className="text-4xl sm:text-5xl font-extrabold tracking-tight text-foreground"
         >
-          How Orgatic Works for Everyone
+          How orgatick Works for Everyone
         </motion.h2>
 
         <motion.p
@@ -105,7 +105,7 @@ export default function HowItWorks() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mt-3 text-base sm:text-lg text-muted-foreground leading-relaxed"
         >
-          Orgatic unites{" "}
+          orgatick unites{" "}
           <span className="text-primary font-semibold">organizers</span> and{" "}
           <span className="text-secondary font-semibold">participants</span>{" "}
           — making campus events simple, social, and unforgettable.

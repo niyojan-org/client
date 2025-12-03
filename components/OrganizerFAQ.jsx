@@ -22,7 +22,7 @@ const OrganizerFAQ = () => {
   },
   {
     q: "How are refunds handled if an event is cancelled?",
-    a: "If an event is officially cancelled, Orgatick will automatically initiate full refunds to attendees through Razorpay. Organizers cannot issue refunds individually, and no refunds are allowed once tickets are sold unless the event is cancelled."
+    a: "If an event is officially cancelled, orgatick will automatically initiate full refunds to attendees through Razorpay. Organizers cannot issue refunds individually, and no refunds are allowed once tickets are sold unless the event is cancelled."
   },
   {
     q: "Can I add team members to help manage my event?",
@@ -34,7 +34,7 @@ const OrganizerFAQ = () => {
   },
   {
     q: "Is my data secure?",
-    a: "Yes. All payment and event data is encrypted and processed through industry-standard security systems. Orgatick does not store card or banking information. We comply with Razorpay PCI-DSS requirements."
+    a: "Yes. All payment and event data is encrypted and processed through industry-standard security systems. orgatick does not store card or banking information. We comply with Razorpay PCI-DSS requirements."
   }
 ];
 

@@ -97,7 +97,7 @@ export default function NavigationBar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Logo className="h-9 w-9" />
-            <span className="hidden md:block text-[color:var(--primary)] font-bold text-lg">Orgatick</span>
+            <span className="hidden md:block text-[color:var(--primary)] font-bold text-lg">orgatick</span>
           </Link>
         </div>
 

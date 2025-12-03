@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import FloatingInput from "../ui/FloatingInput";
 import { useUserStore } from "../../store/userStore";
-import { useLoader } from "@/components/LoaderContext";
+// import { useLoader } from "@/components/LoaderContext";
+import { useLoaderStore } from "@/store/loaderStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -19,7 +20,7 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading, error } = useUserStore();
-  const { showLoader, hideLoader } = useLoader();
+  const { showLoader, hideLoader } = useLoaderStore();
 
   useEffect(() => {
     loading ? showLoader() : hideLoader();

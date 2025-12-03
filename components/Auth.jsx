@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Carousel from './Carousel';
-// import CarouselLoader from './CarouselLoader';
-import GlobalLoader from './GlobalLoader';
+
 import { toast } from 'sonner';
 import api from '../lib/api';
 import Link from 'next/link';
@@ -13,6 +12,7 @@ import Signup from './Auth/Signup';
 import ForgotPassword from './Auth/ForgetPassword';
 import { useRouter } from 'next/navigation';
 import GoogleAuthButton from './Auth/GoogleAuthButton';
+import { SpinnerCustom } from './ui/spinner';
 
 export default function Auth({ view: initialView }) {
   const router = useRouter();
@@ -62,7 +62,7 @@ export default function Auth({ view: initialView }) {
       <div className="w-full bg-card max-w-5xl mx-auto flex flex-col md:flex-row sm:h-full sm:max-h-[80vh] md:bg-card rounded-2xl md:shadow-lg overflow-hidden md:border border-border items-center justify-center">
 
         {/* Carousel Section */}
-        {isLoading ? <GlobalLoader /> : <Carousel images={carouselImages} />}
+        {isLoading ? <SpinnerCustom /> : <Carousel images={carouselImages} />}
 
         {/* Form Section */}
         <div className="w-full md:w-1/2 flex flex-col text-foreground justify-start p-1 md:p-8  backdrop-blur-sm md:h-full overflow-y-hidden overflow-x-hidden">

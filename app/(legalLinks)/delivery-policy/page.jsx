@@ -21,9 +21,9 @@ export default function DeliveryPolicy() {
       <p>
         This Digital Ticket Delivery Policy outlines how tickets, confirmations, 
         and event access details are provided when a booking is completed through 
-        <strong> Orgatick</strong> at <strong>orgatick.in</strong>. By purchasing 
+        <strong> orgatick</strong> at <strong>orgatick.in</strong>. By purchasing 
         a ticket or registering for an event, you agree to the terms described 
-        within this Policy. Orgatick operates as a digital platform and does not 
+        within this Policy. orgatick operates as a digital platform and does not 
         issue or dispatch any physical tickets or printed passes.
       </p>
 
@@ -49,10 +49,10 @@ export default function DeliveryPolicy() {
 
       <p>
         Because digital ticket delivery relies on the information submitted by the 
-        attendee at the time of purchase, Orgatick is not responsible for delivery 
+        attendee at the time of purchase, orgatick is not responsible for delivery 
         failures caused by incorrect or incomplete contact details. If incorrect 
         information was submitted, the attendee should contact the event organizer 
-        or Orgatick support so efforts can be made to assist where feasible.
+        or orgatick support so efforts can be made to assist where feasible.
       </p>
 
       <p>
@@ -66,19 +66,19 @@ export default function DeliveryPolicy() {
       <p>
         Receipt of a digital ticket does not guarantee eligibility for a refund. 
         Refunds are only issued if an event is officially cancelled and not 
-        rescheduled. Attendees are encouraged to review Orgatick’s Refund Policy 
+        rescheduled. Attendees are encouraged to review orgatick’s Refund Policy 
         for full details.
       </p>
 
       <p>
         If a technical malfunction, server disruption, or verified platform error 
         prevents the successful delivery of a ticket despite confirmed payment, 
-        Orgatick will promptly resend or regenerate the ticket without additional 
+        orgatick will promptly resend or regenerate the ticket without additional 
         cost once the issue has been verified.
       </p>
 
       <p>
-        Orgatick may update this Delivery Policy from time to time to reflect 
+        orgatick may update this Delivery Policy from time to time to reflect 
         operational improvements or compliance requirements. Continued use of 
         the Platform after such updates signifies agreement with the revised terms.
       </p>

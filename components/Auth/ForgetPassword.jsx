@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import FloatingInput from "../ui/FloatingInput";
 import { toast } from "sonner";
 import api from "@/lib/api";
-import { useLoader } from "@/components/LoaderContext";
+// import { useLoader } from "@/components/LoaderContext";
+import { useLoaderStore } from "@/store/loaderStore";
 import Link from "next/link";
 
 export default function ForgotPassword({ onViewChange, userEmail, setUserEmail }) {
   const [formData, setFormData] = useState({ email: userEmail || "" });
   const [errors, setErrors] = useState({});
-  const { showLoader, hideLoader } = useLoader();
+  const { showLoader, hideLoader } = useLoaderStore();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target; 

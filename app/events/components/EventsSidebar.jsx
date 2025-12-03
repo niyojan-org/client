@@ -54,10 +54,10 @@ export default function EventsSidebar({ onLogout }) {
         {/* Logo */}
         <div className="flex items-center mb-10 select-none cursor-default">
           <div className="relative w-10 h-10">
-            <Image src="/icon1.png" sizes='26' alt="Orgatick Logo" fill style={{ objectFit: 'contain' }} />
+            <Image src="/icon1.png" sizes='26' alt="orgatick Logo" fill style={{ objectFit: 'contain' }} />
           </div>
           {!collapsed && (
-            <span className="ml-3 text-2xl font-bold text-slate-700">Orgatick</span>
+            <span className="ml-3 text-2xl font-bold text-slate-700">orgatick</span>
           )}
         </div>
 
