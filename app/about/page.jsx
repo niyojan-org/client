@@ -88,7 +88,7 @@ const About = () => {
       <section className="relative text-center justify-center flex flex-col items-center pt-5 sm:pt-15 ">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <h1 className="text-5xl md:text-7xl font-bold pb-6 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">
-            Orgatic
+            orgatick
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             A <span className="font-semibold text-primary">user-friendly event management platform </span>
@@ -117,7 +117,7 @@ const About = () => {
           <motion.div className="text-center mb-4" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Platform Features</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Discover the tools that make Orgatic the ultimate event management solution
+              Discover the tools that make orgatick the ultimate event management solution
             </p>
           </motion.div>
 
@@ -152,7 +152,7 @@ const About = () => {
       <section className="">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-3">Meet Our Team</h2>
-          <p className="text-lg text-muted-foreground mb-5 max-w-2xl mx-auto">The passionate developers behind Orgatic</p>
+          <p className="text-lg text-muted-foreground mb-5 max-w-2xl mx-auto">The passionate developers behind orgatick</p>
           <motion.div className="grid md:grid-cols-3 gap-5 sm:gap-12" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             {team.map((member, index) => (
               <motion.div key={index} variants={cardVariants} className="bg-card dark:bg-gray-800 border border-border rounded-3xl p-8 text-center hover:shadow-2xl transition-all duration-500">

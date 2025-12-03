@@ -23,8 +23,6 @@ export default function GoogleAuthButton({ variant = "outline", className = "", 
             console.error('Google auth error:', error);
             toast.error('Failed to authenticate with Google');
             setIsLoading(false);
-        } finally {
-            setIsLoading(false);
         }
     };
 

@@ -1,6 +1,6 @@
-# 🎉 Orgatick - Event Management Platform
+# 🎉 orgatick - Event Management Platform
 
-**Orgatick** is a comprehensive event management platform that simplifies event creation, registration, and management for organizers while providing a seamless experience for attendees. Built with modern web technologies, it supports everything from college fests to professional conferences.
+**orgatick** is a comprehensive event management platform that simplifies event creation, registration, and management for organizers while providing a seamless experience for attendees. Built with modern web technologies, it supports everything from college fests to professional conferences.
 
 ## ✨ Features
 
@@ -169,7 +169,7 @@ The application can be deployed on any platform that supports Node.js:
 
 ## 📄 License
 
-This project is part of the Orgatick Event Management System. Please refer to the main repository for licensing information.
+This project is part of the orgatick Event Management System. Please refer to the main repository for licensing information.
 
 ## 🔗 Related Repositories
 
@@ -179,7 +179,7 @@ This project is part of the Orgatick Event Management System. Please refer to th
 ## 📞 Support
 
 For support and queries:
-- **Email**: support@orgatic.events
+- **Email**: support@orgatick.events
 - **GitHub Issues**: Create an issue for bug reports or feature requests
 
 ---

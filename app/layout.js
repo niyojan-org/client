@@ -1,7 +1,7 @@
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
-import { LoaderProvider } from "@/components/LoaderContext";
+// import { LoaderProvider } from "@/components/LoaderContext";
 import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ProvidersSwr from "@/components/ProvidersSwr";
@@ -39,15 +39,15 @@ export const metadata = {
   metadataBase: new URL("https://iamabhi.me"),
 
   title: {
-    default: "Orgatick",
-    template: "%s | Orgatick",
+    default: "orgatick",
+    template: "%s | orgatick",
   },
 
   description:
-    "Orgatick simplifies college event management with secure ticketing, organizer tools, analytics, and real-time updates.",
+    "orgatick simplifies college event management with secure ticketing, organizer tools, analytics, and real-time updates.",
 
   keywords: [
-    "Orgatick",
+    "orgatick",
     "event management",
     "ticket booking",
     "college events",
@@ -57,10 +57,10 @@ export const metadata = {
     "event hosting platform",
   ],
 
-  applicationName: "Orgatick",
+  applicationName: "orgatick",
   generator: "Next.js",
   category: "Events",
-  creator: "Orgatick Team",
+  creator: "orgatick Team",
 
   robots: {
     index: true,
@@ -68,11 +68,11 @@ export const metadata = {
   },
 
   openGraph: {
-    title: "Orgatick",
+    title: "orgatick",
     description:
       "Effortlessly host and attend events with ticketing, analytics & payments.",
     url: "https://iamabhi.me",
-    siteName: "Orgatick",
+    siteName: "orgatick",
     locale: "en_IN",
     type: "website",
     images: ["https://iamabhi.me/og_image.png"],
@@ -80,7 +80,7 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Orgatick",
+    title: "orgatick",
     description: "A modern event hosting & ticketing platform.",
     images: ["https://iamabhi.me/og_image.png"],
     site: "@orgatick",
@@ -120,10 +120,10 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          <LoaderProvider>
+          {/* <LoaderProvider> */}
             <ClientLayout>{children}</ClientLayout>
             <Toaster />
-          </LoaderProvider>
+          {/* </LoaderProvider> */}
         </ThemeProvider>
       </body>
     </html>

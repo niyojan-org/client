@@ -19,7 +19,7 @@ export default async function OGImage({ params }) {
     org = null;
   }
 
-  const title = org?.name || "Organization | Orgatick";
+  const title = org?.name || "Organization | orgatick";
 
   const banner =
     org?.bannerImage ||

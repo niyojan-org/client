@@ -11,8 +11,8 @@ export async function generateMetadata({ params }) {
 
     if (!org) {
       return {
-        title: "Organization Not Found | Orgatick",
-        description: "This organization does not exist on Orgatick.",
+        title: "Organization Not Found | orgatick",
+        description: "This organization does not exist on orgatick.",
       };
     }
 
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
       org.bannerImage || org.logo || "https://iamabhi.me/og_image.png";
 
     return {
-      title: `${org.name} | Orgatick`,
+      title: `${org.name} | orgatick`,
       description:
         `${org.name} • ${org.category} / ${org.subCategory}. ` +
         `Trusted and Loved by many students.`,
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: org.name,
         description:
-          org.description || `Learn more about ${org.name} on Orgatick.`,
+          org.description || `Learn more about ${org.name} on orgatick.`,
         url: `https://iamabhi.me/organization/${slug}`,
         images: [ogImage],
         type: "website",
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
     };
   } catch {
     return {
-      title: "Organization | Orgatick",
+      title: "Organization | orgatick",
       description: "View organization details and events.",
     };
   }

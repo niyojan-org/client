@@ -26,7 +26,7 @@ export default function TicketCardSelectable({
         <p className="ticket-price">₹{price}</p>
 
         {/* Side text */}
-        <div className={`absolute rotate-90 text-sm top-1/2 -left-9 h-full px-2 translate-y-[-50%]  border-t ${selected ? "bg-primary text-muted" : "text-muted-foreground"}`}>ORGATIC</div>
+        <div className={`absolute rotate-90 text-sm top-1/2 -left-9 h-full px-2 translate-y-[-50%]  border-t ${selected ? "bg-primary text-muted" : "text-muted-foreground"}`}>orgatick</div>
       </div>
 
       {soldOut && (
