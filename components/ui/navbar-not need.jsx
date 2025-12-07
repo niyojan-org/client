@@ -204,8 +204,8 @@ export const NavbarLogo = () => {
 
   return (
     <div className="flex items-center space-x-2 font-bold text-lg text-black dark:text-white">
-      <Image src={logo} width={40} height={40} alt="Orgatick Logo" />
-      <Link href={isAuthenticated ? "/events" : "/"}>Orgatick</Link>
+      <Image src={logo} width={40} height={40} alt="orgatick Logo" />
+      <Link href={isAuthenticated ? "/events" : "/"}>orgatick</Link>
     </div>
   );
 };

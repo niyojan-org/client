@@ -13,13 +13,13 @@ export async function generateMetadata({ params }) {
 
     if (!event) {
       return {
-        title: "Event Not Found | Orgatick",
+        title: "Event Not Found | orgatick",
         description: "The event you are looking for does not exist.",
       };
     }
 
     return {
-      title: `${event.title} | Orgatick`,
+      title: `${event.title} | orgatick`,
       description: event.shortDescription || event.description,
       alternates: {
         canonical: `https://iamabhi.me/events/${slug}`,
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }) {
           eventAttendanceMode: "OnlineEventAttendanceMode",
           organizer: {
             "@type": "Organization",
-            name: event.organization?.name || "Orgatick Organizer",
+            name: event.organization?.name || "orgatick Organizer",
             url: `https://iamabhi.me/organization/${event.organization?.slug}`
           },
           location: {
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }) {
     };
   } catch {
     return {
-      title: "Event | Orgatick",
+      title: "Event | orgatick",
       description: "Event details and information.",
     };
   }

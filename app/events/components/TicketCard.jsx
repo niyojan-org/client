@@ -28,7 +28,7 @@ const Ticket = ({ ticketName, price }) => {
         </div>
 
         <div className="font-semibold tracking-widest absolute rotate-90 text-sm top-1/2 -left-18 translate-y-[-50%] translate-x-[50%] px-3 py-1  border-t-2">
-          ORGATIC
+          orgatick
         </div>
       </div>
 

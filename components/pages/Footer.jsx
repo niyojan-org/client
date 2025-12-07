@@ -32,7 +32,7 @@ export default function Footer() {
         {/* Newsletter Signup */}
         <section className="flex-1 max-w-md mx-auto md:mx-0 text-center md:text-left">
           <header className="flex items-center justify-center md:justify-start gap-3 mb-6">
-            <Image src={logo} alt="Orgatic Logo" width={40} height={40} />
+            <Image src={logo} alt="orgatick Logo" width={40} height={40} />
             <h4 className="text-3xl font-extrabold text-primary tracking-tight">
               Stay in the Loop
             </h4>
@@ -70,7 +70,7 @@ export default function Footer() {
           {/* Social Links */}
           <div className="flex gap-4 mt-6 justify-center md:justify-start">
             <Link
-              href="https://instagram.com/orgatic"
+              href="https://instagram.com/orgatick"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -79,7 +79,7 @@ export default function Footer() {
               <IconBrandInstagram className="w-6 h-6" />
             </Link>
             <Link
-              href="https://twitter.com/orgatic"
+              href="https://twitter.com/orgatick"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
@@ -88,7 +88,7 @@ export default function Footer() {
               <IconBrandX className="w-6 h-6" />
             </Link>
             <Link
-              href="https://linkedin.com/company/orgatic"
+              href="https://linkedin.com/company/orgatick"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -175,7 +175,7 @@ export default function Footer() {
             <p className="text-muted-foreground leading-relaxed text-sm">
               Email us at: <br />
               <Link
-                href="mailto:support@orgatic.events"
+                href="mailto:support@orgatick.events"
                 className="text-primary hover:underline"
               >
                 support@orgatick.in
@@ -190,7 +190,7 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()}{" "}
           <span className="text-primary font-semibold">
-            <Link href="https://orgatick.in">Orgatick</Link>
+            <Link href="https://orgatick.in">orgatick</Link>
           </span>
           . All rights reserved.
         </p>
@@ -207,12 +207,12 @@ export default function Footer() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "Orgatic Event",
-            url: "https://orgatic.in",
-            logo: "https://orgatic.in/logo.png",
+            name: "orgatick Event",
+            url: "https://orgatick.in",
+            logo: "https://orgatick.in/logo.png",
             sameAs: [
-              "https://instagram.com/orgatic",
-              "https://linkedin.com/company/orgatic",
+              "https://instagram.com/orgatick",
+              "https://linkedin.com/company/orgatick",
             ],
           }),
         }}

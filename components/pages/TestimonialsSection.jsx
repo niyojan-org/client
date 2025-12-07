@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function Testimonials() {
   const testimonials = [
     {
-      quote: "Orgatic simplified our event fest! Easy setup and ticketing.",
+      quote: "orgatick simplified our event fest! Easy setup and ticketing.",
       name: "Abhiraj",
       role: "Organizer",
       avatar: "https://avatar.iran.liara.run/public/boy",
@@ -25,7 +25,7 @@ export default function Testimonials() {
       avatar: "https://avatar.iran.liara.run/public/boy",
     },
     {
-      quote: "Orgatic simplified our LPU fest! Easy setup and ticketing.",
+      quote: "orgatick simplified our LPU fest! Easy setup and ticketing.",
       name: "Kumar Ayush",
       role: "Organizer",
       avatar: "https://avatar.iran.liara.run/public/boy",
@@ -88,7 +88,7 @@ export default function Testimonials() {
         </motion.h2>
 
         <p className="text-muted-foreground mt-3 text-base font-medium max-w-xl mx-auto">
-          Real voices. Real stories. See why people trust Orgatic.
+          Real voices. Real stories. See why people trust orgatick.
         </p>
 
         {/* Moving Testimonials */}
@@ -148,7 +148,7 @@ export default function Testimonials() {
             '@type': 'Review',
             itemReviewed: {
               '@type': 'Product',
-              name: 'Orgatic Event Management System',
+              name: 'orgatick Event Management System',
             },
             review: testimonials.map((t) => ({
               '@type': 'Review',

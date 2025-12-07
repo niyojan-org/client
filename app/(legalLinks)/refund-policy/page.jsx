@@ -20,16 +20,16 @@ export default function RefundPolicy() {
 
       <p>
         This Refund Policy explains how refunds are handled for transactions made 
-        through <strong>Orgatick</strong> at <strong>orgatick.in</strong>. By purchasing 
+        through <strong>orgatick</strong> at <strong>orgatick.in</strong>. By purchasing 
         a ticket or registering for any event listed on the Platform, you acknowledge 
-        and agree to the terms described below. Orgatick operates solely as a digital 
+        and agree to the terms described below. orgatick operates solely as a digital 
         platform enabling organizers to publish events and attendees to register. 
-        Orgatick does not host or run events and is not responsible for event execution, 
+        orgatick does not host or run events and is not responsible for event execution, 
         changes, delays, or experience outcomes.
       </p>
 
       <p>
-        All ticket purchases made through Orgatick are considered final. Since tickets 
+        All ticket purchases made through orgatick are considered final. Since tickets 
         are issued immediately after payment, refunds for voluntary cancellations are 
         not allowed under any circumstances. This includes, but is not limited to, 
         changes in personal plans, duplicate bookings, incorrect registration details, 
@@ -40,7 +40,7 @@ export default function RefundPolicy() {
 
       <p>
         In rare cases where an event is officially cancelled by the event organizer or 
-        host institution, Orgatick will automatically initiate a full refund to 
+        host institution, orgatick will automatically initiate a full refund to 
         attendees. This refund includes ticket value and any applicable processing or 
         platform charges. Attendees do not need to take any action to request such a 
         refund. If an event is rescheduled or postponed, the originally issued ticket 
@@ -49,10 +49,10 @@ export default function RefundPolicy() {
       </p>
 
       <p>
-        Tickets purchased on Orgatick are delivered digitally via email and/or WhatsApp 
+        Tickets purchased on orgatick are delivered digitally via email and/or WhatsApp 
         immediately after successful payment processing. No physical tickets are shipped. 
         If a ticket is not received within a reasonable timeframe (typically within 10–15 
-        minutes), attendees are required to contact the organizer or Orgatick support as 
+        minutes), attendees are required to contact the organizer or orgatick support as 
         soon as possible so the issue can be resolved. Failure to report non-delivery in a 
         timely manner may affect eligibility for escalation or dispute handling.
       </p>
@@ -62,14 +62,14 @@ export default function RefundPolicy() {
         to the original payment method used at checkout. Refunds typically take between 
         5–10 business days to appear depending on the attendee’s bank, card provider, or 
         UPI wallet. Additional processing time may apply for certain payment methods or 
-        during banking delays, regulatory reviews, or holidays. Orgatick cannot expedite 
+        during banking delays, regulatory reviews, or holidays. orgatick cannot expedite 
         banking timelines outside its control.
       </p>
 
       <p>
         If an attendee believes there has been a payment-related error, technical 
-        processing issue, or duplicate charge, they may contact Orgatick support for 
-        review. Orgatick may mediate such cases when necessary; however, chargebacks or 
+        processing issue, or duplicate charge, they may contact orgatick support for 
+        review. orgatick may mediate such cases when necessary; however, chargebacks or 
         unauthorized payment disputes raised directly with financial institutions without 
         first attempting resolution through support may result in account restrictions or 
         inability to participate in future events.

@@ -108,12 +108,12 @@ export default function PaymentAssurance() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "PaymentService",
-              name: "Orgatic Payment Processing",
+              name: "orgatick Payment Processing",
               description:
                 "Secure payments for events via Razorpay, supporting UPI, cards, and netbanking.",
               provider: {
                 "@type": "Organization",
-                name: "Orgatic",
+                name: "orgatick",
               },
               paymentMethod: ["CreditCard", "UPIPayment", "NetBanking"],
             }),

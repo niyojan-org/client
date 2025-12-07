@@ -18,7 +18,7 @@ export default function PrivacyPolicy() {
       <p className="text-muted-foreground text-sm">Effective Date: 01 Nov 2025</p>
 
       <p>
-        This Privacy Policy describes how <strong>Orgatick</strong> 
+        This Privacy Policy describes how <strong>orgatick</strong> 
         (“we,” “our,” or “us”) collects, uses, stores, and protects your 
         personal information when you access or use our platform at 
         <strong> orgatick.in</strong>. By creating an account, registering 
@@ -29,7 +29,7 @@ export default function PrivacyPolicy() {
       </p>
 
       <p>
-        When you interact with Orgatick, we may collect certain information 
+        When you interact with orgatick, we may collect certain information 
         to support registration, ticketing, payments, and platform usage. 
         This includes basic personal details such as your name, phone number, 
         and email address, as well as optional information you voluntarily 
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
         notifications, ticket delivery, analytics, or operational support. 
         These service providers are bound by confidentiality and are permitted 
         to use your information only as required to perform their assigned functions 
-        on behalf of Orgatick.
+        on behalf of orgatick.
       </p>
 
       <p>
@@ -83,7 +83,7 @@ export default function PrivacyPolicy() {
       </p>
 
       <p>
-        Orgatick is not intended for individuals under the age of 13. 
+        orgatick is not intended for individuals under the age of 13. 
         We do not knowingly collect data from children. If such data is submitted 
         unintentionally, it will be deleted upon verification.
       </p>
@@ -96,7 +96,7 @@ export default function PrivacyPolicy() {
       </p>
 
       <p>
-        If you are accessing Orgatick from outside India, you acknowledge that your 
+        If you are accessing orgatick from outside India, you acknowledge that your 
         information may be transferred to and processed in India or other regions 
         where our service providers operate.
       </p>

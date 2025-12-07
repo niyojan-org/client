@@ -23,7 +23,7 @@ export default async function OGImage({ params }) {
     event = null;
   }
 
-  const title = event?.title || "Orgatick";
+  const title = event?.title || "orgatick";
 
   const banner =
     event?.bannerImage ||
@@ -51,7 +51,7 @@ export default async function OGImage({ params }) {
           {title}
         </div>
         <div style={{ fontSize: 32, marginTop: "20px", opacity: 0.8 }}>
-          Powered by Orgatick
+          Powered by orgatick
         </div>
       </div>
     ),

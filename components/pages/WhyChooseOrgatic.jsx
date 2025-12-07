@@ -12,7 +12,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 
-export default function WhyChooseOrgatic() {
+export default function WhyChooseorgatick() {
   const features = [
     {
       icon: <Users className="w-8 h-8 text-primary" />,
@@ -44,7 +44,7 @@ export default function WhyChooseOrgatic() {
     <>
       <section
         className="relative bg-background py-16 sm:py-20 transition-colors duration-300 border-t border-border"
-        aria-labelledby="why-choose-orgatic"
+        aria-labelledby="why-choose-orgatick"
       >
         {/* Decorative Blobs */}
         <div className="absolute -top-16 -left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl opacity-30" />
@@ -57,11 +57,11 @@ export default function WhyChooseOrgatic() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            id="why-choose-orgatic"
+            id="why-choose-orgatick"
             className="text-4xl sm:text-5xl font-extrabold mb-6 text-foreground"
           >
             <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-              Why Choose Orgatic?
+              Why Choose orgatick?
             </span>
           </motion.h2>
 
@@ -78,7 +78,7 @@ export default function WhyChooseOrgatic() {
             <span className="text-primary font-semibold"> organizing </span>
             or
             <span className="text-secondary font-semibold"> participating</span>.
-            Orgatic helps you connect, manage, and grow — together.
+            orgatick helps you connect, manage, and grow — together.
           </motion.p>
 
           {/* Feature Cards */}
@@ -118,21 +118,21 @@ export default function WhyChooseOrgatic() {
 
       {/* SEO Structured Data using next/script (safe + SSR compatible) */}
       <Script
-        id="orgatic-schema"
+        id="orgatick-schema"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "Orgatic EMS",
+            name: "orgatick EMS",
             description:
-              "Orgatic helps organizers and participants connect, manage, and grow through college events, fests, and collaborations.",
+              "orgatick helps organizers and participants connect, manage, and grow through college events, fests, and collaborations.",
             url: "https://rasaems.com",
             logo: "https://rasaems.com/logo.png",
             sameAs: [
-              "https://twitter.com/orgaticems",
-              "https://linkedin.com/company/orgaticems",
+              "https://twitter.com/orgatickems",
+              "https://linkedin.com/company/orgatickems",
             ],
           }),
         }}

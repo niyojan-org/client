@@ -55,7 +55,7 @@ export default function Features() {
           Everything You Need to Run Events
         </h1>
         <p className="text-lg text-muted-foreground">
-          Whether you're an organizer or attendee — Orgatic gives you all the tools to create, manage, and experience events seamlessly.
+          Whether you're an organizer or attendee — orgatick gives you all the tools to create, manage, and experience events seamlessly.
         </p>
       </div>
 
@@ -101,7 +101,7 @@ export default function Features() {
             Start Hosting or Attending Events Effortlessly
           </h2>
           <p className="mb-6 opacity-90">
-            Join thousands simplifying event management with Orgatic.
+            Join thousands simplifying event management with orgatick.
           </p>
           <Link href="/events">
             <Button size="lg" className="hover:scale-105 transition-transform">

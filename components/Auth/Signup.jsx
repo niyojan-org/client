@@ -7,7 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import FloatingInput from "@/components/ui/FloatingInput";
 import { useUserStore } from "../../store/userStore";
 import { useRef } from "react";
-import { useLoader } from "@/components/LoaderContext";
+import { useLoaderStore } from "@/store/loaderStore";
 import Link from "next/link";
 import GoogleAuthButton from "./GoogleAuthButton";
 import { IconLoader2 } from "@tabler/icons-react";
@@ -23,7 +23,7 @@ export default function Signup({ onViewChange }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const { register, loading } = useUserStore();
-  const { showLoader, hideLoader } = useLoader();
+  const { showLoader, hideLoader } = useLoaderStore();
 
   useEffect(() => {
     if (loading) {

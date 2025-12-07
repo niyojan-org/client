@@ -18,7 +18,7 @@ export default function TermsAndConditions() {
 
       <p>
         These Terms & Conditions (“Terms”) govern your access to and use of 
-        <strong> Orgatick</strong>, available at <strong>orgatick.in</strong> 
+        <strong> orgatick</strong>, available at <strong>orgatick.in</strong> 
         (“Platform”). By accessing, browsing, registering, or using the Platform 
         in any manner, whether as an attendee, organizer, or visitor, you confirm 
         that you have read, understood, and agreed to comply with these Terms. 
@@ -27,9 +27,9 @@ export default function TermsAndConditions() {
       </p>
 
       <p>
-        Orgatick is a digital event platform that enables verified organizers to 
+        orgatick is a digital event platform that enables verified organizers to 
         create and publish events and allows participants to register and purchase 
-        digital tickets. Orgatick does not host or run events and is not responsible 
+        digital tickets. orgatick does not host or run events and is not responsible 
         for event execution, safety, schedule changes, or content accuracy. All event 
         details, including pricing, venue, eligibility, and rules, are determined by 
         individual organizers.
@@ -53,7 +53,7 @@ export default function TermsAndConditions() {
 
       <p>
         All paid registrations and ticket purchases are processed securely through 
-        Razorpay. Orgatick does not store card numbers, UPI IDs, or banking details. 
+        Razorpay. orgatick does not store card numbers, UPI IDs, or banking details. 
         A platform service fee may apply and is non-refundable. Users acknowledge that 
         bank statements or SMS confirmations may display the name 
         <strong> “Abhishek Kumar Mandal”</strong> as the legal account holder for payment 
@@ -61,7 +61,7 @@ export default function TermsAndConditions() {
       </p>
 
       <p>
-        All ticket purchases made through Orgatick are final and non-refundable. Once issued,
+        All ticket purchases made through orgatick are final and non-refundable. Once issued,
         tickets cannot be cancelled or transferred by attendees. Refunds will only be issued
         if the organizer officially cancels the event. In such cases, the refund amount will
         be processed after deducting applicable service charges. Refunds processed through 
@@ -70,7 +70,7 @@ export default function TermsAndConditions() {
         Upon successful payment, tickets are delivered digitally by email and/or 
         WhatsApp. No physical tickets are printed or shipped. Organizers receive 
         settlements based on Razorpay’s payout timeline after deduction of applicable 
-        platform fees and payment gateway charges. Orgatick is not responsible for 
+        platform fees and payment gateway charges. orgatick is not responsible for 
         delays caused by banks, payment processors, or compliance reviews.
       </p>
 
@@ -89,8 +89,8 @@ export default function TermsAndConditions() {
       </p>
 
       <p>
-        Orgatick provides access to the Platform on an “as-is” and “as-available” basis. 
-        To the maximum extent permitted by law, Orgatick is not liable for event issues, 
+        orgatick provides access to the Platform on an “as-is” and “as-available” basis. 
+        To the maximum extent permitted by law, orgatick is not liable for event issues, 
         cancellations. Our total liability, if applicable, will not exceed the total
         amount paid by the affected user for the transaction in question.
       </p>
@@ -107,7 +107,7 @@ export default function TermsAndConditions() {
       </p>
 
       <p>
-        Orgatick may update or revise these Terms periodically. Any changes will be 
+        orgatick may update or revise these Terms periodically. Any changes will be 
         posted on this page, and continued use of the Platform will constitute acceptance 
         of the updated Terms.
       </p>

@@ -37,6 +37,7 @@ export default function OrganizationCard({ event }) {
   if (!event?.organization) return null;
 
   const org = event.organization;
+  console.log(org)
 
   /* 🔹 Memoized social links (avoid recalculation every render) */
   const socialLinks = useMemo(() => {
@@ -100,16 +101,16 @@ export default function OrganizationCard({ event }) {
 
             {/* Contact Info */}
             <div className="space-y-2 text-sm">
-              {org.email && (
+              {org.supportContact.email && (
                 <div className="flex items-center gap-2 text-muted-foreground truncate">
                   <IconMail className="h-4 w-4" />
-                  <span className="truncate">{org.email}</span>
+                  <span className="truncate">{org?.supportContact?.email}</span>
                 </div>
               )}
-              {org.phone && (
+              {org.supportContact.phone && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <IconPhone className="h-4 w-4" />
-                  <span>{org.phone}</span>
+                  <span>{org?.supportContact?.phone}</span>
                 </div>
               )}
               {org.website && (
@@ -210,13 +211,13 @@ export default function OrganizationCard({ event }) {
                     {org.email && (
                       <div className="flex items-center gap-2 text-muted-foreground truncate">
                         <IconMail className="h-4 w-4" />
-                        <span className="truncate">{org.email}</span>
+                        <span className="truncate">{org?.supportContact?.email}</span>
                       </div>
                     )}
                     {org.phone && (
                       <div className="flex items-center gap-2 text-muted-foreground">
                         <IconPhone className="h-4 w-4" />
-                        <span>{org.phone}</span>
+                        <span>{org?.supportContact?.phone}</span>
                       </div>
                     )}
                   </div>
@@ -278,7 +279,7 @@ export default function OrganizationCard({ event }) {
                     asChild
                     className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300 min-w-[160px]"
                   >
-                    <Link href={`/org/${org.slug}`}>
+                    <Link href={`/organization/${org.slug}`}>
                       <IconExternalLink className="h-4 w-4 mr-2" />
                       View Organization
                     </Link>
