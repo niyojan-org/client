@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ProvidersSwr from "@/components/ProvidersSwr";
+import { Analytics } from "@vercel/analytics/next";
 
 import Head from "next/head";
 // Fonts
@@ -123,6 +124,7 @@ export default function RootLayout({ children }) {
           {/* <LoaderProvider> */}
             <ClientLayout>{children}</ClientLayout>
             <Toaster />
+            <Analytics />
           {/* </LoaderProvider> */}
         </ThemeProvider>
       </body>
