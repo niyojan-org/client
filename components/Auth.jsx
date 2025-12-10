@@ -35,7 +35,7 @@ export default function Auth({ view: initialView }) {
         setCarouselImages(response.data.resources);
       } catch (error) {
         toast.error("Failed to fetch carousel images");
-        // console.log(error);
+
       } finally {
         setIsLoading(false);
       }

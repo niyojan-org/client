@@ -27,7 +27,7 @@ export default async function OGImage({ params }) {
 
   const banner =
     event?.bannerImage ||
-    "https://iamabhi.me/og_image.png";
+    "https://orgatick.in/og_image.png";
 
   return new ImageResponse(
     (

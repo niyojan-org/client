@@ -5,7 +5,6 @@ import { Calendar, MapPin, Eye, Download, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function TicketCard({ ticket, onViewDetails, onDownload, className, key }) {
-    console.log(key)
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case "confirmed":

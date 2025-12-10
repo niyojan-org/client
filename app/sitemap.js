@@ -1,6 +1,6 @@
 export default async function sitemap() {
-  const API = process.env.NEXT_PUBLIC_API_URL || "https://api.iamabhi.me";
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://iamabhi.me";
+  const API = process.env.NEXT_PUBLIC_API_URL || "https://api.orgatick.in";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://orgatick.in";
 
   async function fetchSafe(url, field) {
     try {
@@ -31,6 +31,7 @@ export default async function sitemap() {
     "privacy-policy",
     "refund-policy",
     "terms-and-conditions",
+    "delivery-policy",
   ].map((page) => ({
     url: `${base}/${page}`,
     lastModified: new Date(),

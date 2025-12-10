@@ -2,11 +2,11 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
 // import { LoaderProvider } from "@/components/LoaderContext";
-import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
+import {Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ProvidersSwr from "@/components/ProvidersSwr";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import Head from "next/head";
 // Fonts
 const sourceCodePro = Source_Code_Pro({
   variable: "--font-source-code-pro",
@@ -36,11 +36,11 @@ export const themeColor = "#ffffff";
    GLOBAL SEO
 ------------------------------------------ */
 export const metadata = {
-  metadataBase: new URL("https://iamabhi.me"),
+  metadataBase: new URL("https://orgatick.in"),
 
   title: {
     default: "orgatick",
-    template: "%s | orgatick",
+    template: "%s | Orgatick",
   },
 
   description:
@@ -71,18 +71,18 @@ export const metadata = {
     title: "orgatick",
     description:
       "Effortlessly host and attend events with ticketing, analytics & payments.",
-    url: "https://iamabhi.me",
+    url: "https://orgatick.in",
     siteName: "orgatick",
     locale: "en_IN",
     type: "website",
-    images: ["https://iamabhi.me/og_image.png"],
+    images: ["https://orgatick.in/og_image.png"],
   },
 
   twitter: {
     card: "summary_large_image",
     title: "orgatick",
     description: "A modern event hosting & ticketing platform.",
-    images: ["https://iamabhi.me/og_image.png"],
+    images: ["https://orgatick.in/og_image.png"],
     site: "@orgatick",
     creator: "@orgatick",
   },
@@ -93,7 +93,7 @@ export const metadata = {
   },
 
   alternates: {
-    canonical: "https://iamabhi.me",
+    canonical: "https://orgatick.in",
   },
 };
 
@@ -120,10 +120,13 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          {/* <LoaderProvider> */}
-            <ClientLayout>{children}</ClientLayout>
+            <ClientLayout>
+              {children}
+              
+            </ClientLayout>
+            <SpeedInsights />
             <Toaster />
-          {/* </LoaderProvider> */}
+
         </ThemeProvider>
       </body>
     </html>

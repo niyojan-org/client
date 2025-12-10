@@ -237,7 +237,6 @@ const useEventStore = create((set, get) => ({
       const res = await api.get(`/org/public/${slug}`);
       set({ organization: res.data.organization, loading: false });
     } catch (err) {
-      console.log(err);
       set({
         error:
           err.response?.data?.message ||

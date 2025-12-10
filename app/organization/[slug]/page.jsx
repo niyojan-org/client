@@ -1,9 +1,10 @@
 import api from "@/lib/api";
 import ClientOrganizationPage from "./ClientOrganizationPage";
+import Error404 from "@/app/not-found";
 
 // ========== DYNAMIC SEO ========== //
 export async function generateMetadata({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const res = await api.get(`/org/public/${slug}`);
@@ -16,8 +17,7 @@ export async function generateMetadata({ params }) {
       };
     }
 
-    const ogImage =
-      org.bannerImage || org.logo || "https://iamabhi.me/og_image.png";
+    const ogImage = org.bannerImage || org.logo || "https://orgatick.in/og_image.png";
 
     return {
       title: `${org.name} | orgatick`,
@@ -26,14 +26,14 @@ export async function generateMetadata({ params }) {
         `Trusted and Loved by many students.`,
 
       alternates: {
-        canonical: `https://iamabhi.me/organization/${slug}`,
+        canonical: `https://orgatick.in/organization/${slug}`,
       },
 
       openGraph: {
         title: org.name,
         description:
           org.description || `Learn more about ${org.name} on orgatick.`,
-        url: `https://iamabhi.me/organization/${slug}`,
+        url: `https://orgatick.in/organization/${slug}`,
         images: [ogImage],
         type: "website",
       },
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }) {
           "@type": "Organization",
           name: organization.name,
           description: `${organization.name} - ${organization.category} / ${organization.subCategory}`,
-          url: `https://iamabhi.me/organization/${slug}`,
+          url: `https://orgatick.in/organization/${slug}`,
           logo: organization.logo || "/org_logo_default.png",
           sameAs: Object.values(organization.socialLinks || {}).filter(Boolean),
           address: {
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
     };
   } catch {
     return {
-      title: "Organization | orgatick",
+      title: "Organization",
       description: "View organization details and events.",
     };
   }
@@ -95,6 +95,6 @@ export default async function OrgPage({ params }) {
 
     return <ClientOrganizationPage initialOrg={organization} />;
   } catch {
-    return <div className="p-10 text-center">Failed to load organization.</div>;
+    return <Error404 />
   }
 }

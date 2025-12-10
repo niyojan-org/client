@@ -1,11 +1,12 @@
 import api from "@/lib/api";
 import ClientEventPage from "./ClientEventsPage";
+import Error404 from "@/app/not-found";
 
 // =========================
 // DYNAMIC SEO METADATA
 // =========================
 export async function generateMetadata({ params }) {
-  const { slug } = params;  
+  const { slug } =  await params;  
 
   try {
     const { data } = await api.get(`/event/${slug}`);
@@ -22,19 +23,19 @@ export async function generateMetadata({ params }) {
       title: `${event.title} | orgatick`,
       description: event.shortDescription || event.description,
       alternates: {
-        canonical: `https://iamabhi.me/events/${slug}`,
+        canonical: `https://orgatick.in/events/${slug}`,
       },
       openGraph: {
         title: event.title,
         description: event.shortDescription || event.description,
-        images: [`https://iamabhi.me/events/${slug}/opengraph-image`],
-        url: `https://iamabhi.me/events/${slug}`,
+        images: [`https://orgatick.in/events/${slug}/opengraph-image`],
+        url: `https://orgatick.in/events/${slug}`,
       },
       twitter: {
         card: "summary_large_image",
         title: event.title,
         description: event.shortDescription || event.description,
-        images: [`https://iamabhi.me/events/${slug}/opengraph-image`],
+        images: [`https://orgatick.in/events/${slug}/opengraph-image`],
       },
       other: {
         "script:ld+json": {
@@ -50,14 +51,14 @@ export async function generateMetadata({ params }) {
           organizer: {
             "@type": "Organization",
             name: event.organization?.name || "orgatick Organizer",
-            url: `https://iamabhi.me/organization/${event.organization?.slug}`
+            url: `https://orgatick.in/organization/${event.organization?.slug}`
           },
           location: {
             "@type": "Place",
             name: event.locationName || "Venue",
             address: event.location
           },
-          url: `https://iamabhi.me/events/${slug}`,
+          url: `https://orgatick.in/events/${slug}`,
         },
       },
     };
@@ -69,20 +70,12 @@ export async function generateMetadata({ params }) {
   }
 }
 
-// // =========================
-// // NEXT.JS 15 VIEWPORT EXPORT
-// // =========================
-// export const viewport = {
-//   width: "device-width",
-//   initialScale: 1,
-//   themeColor: "#ffffff", // you can change color
-// };
 
 // =========================
 // PAGE COMPONENT (SSR + CLIENT WRAPPER)
 // =========================
 export default async function EventPage({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const { data } = await api.get(`/event/${slug}`);
@@ -94,6 +87,6 @@ export default async function EventPage({ params }) {
 
     return <ClientEventPage initialEvent={event} />;
   } catch {
-    return <div>Failed to load event.</div>;
+    return <Error404 />
   }
 }

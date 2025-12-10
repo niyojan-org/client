@@ -1,5 +1,5 @@
 export default function robots() {
-  const baseUrl = "https://iamabhi.me";
+  const baseUrl = "https://orgatick.in";
 
   return {
     rules: [

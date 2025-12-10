@@ -5,7 +5,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OGImage({ params }) {
-  const { slug } = params; // FIXED
+  const { slug } = await params;
   const API = process.env.NEXT_PUBLIC_API_URL;
 
   let org = null;
@@ -19,12 +19,12 @@ export default async function OGImage({ params }) {
     org = null;
   }
 
-  const title = org?.name || "Organization | orgatick";
+  const title = org?.name;
 
   const banner =
     org?.bannerImage ||
     org?.logo ||
-    "https://iamabhi.me/og_image.png";
+    "https://orgatick.in/og_image.png";
 
   return new ImageResponse(
     (

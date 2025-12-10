@@ -213,7 +213,6 @@ export function TicketHistory({ className }) {
               const StatusIcon = statusConfig.icon;
               const eventDate = getEventDate(ticket);
               const eventVenue = getEventVenue(ticket);
-              console.log(ticket)
               return (
                 <div key={index}>
                   <div className="p-4 hover:bg-muted/50 transition-colors">
