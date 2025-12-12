@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 // import { LoaderProvider } from "@/components/LoaderContext";
 import {Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ProvidersSwr from "@/components/ProvidersSwr";
+
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 // Fonts
@@ -36,7 +36,7 @@ export const themeColor = "#ffffff";
    GLOBAL SEO
 ------------------------------------------ */
 export const metadata = {
-  metadataBase: new URL("https://orgatick.in"),
+  metadataBase: new URL("https://iamabhi.me"),
 
   title: {
     default: "orgatick",
@@ -58,7 +58,6 @@ export const metadata = {
   ],
 
   applicationName: "orgatick",
-  generator: "Next.js",
   category: "Events",
   creator: "orgatick Team",
 
@@ -71,18 +70,18 @@ export const metadata = {
     title: "orgatick",
     description:
       "Effortlessly host and attend events with ticketing, analytics & payments.",
-    url: "https://orgatick.in",
+    url: "https://iamabhi.me",
     siteName: "orgatick",
     locale: "en_IN",
     type: "website",
-    images: ["https://orgatick.in/og_image.png"],
+    images: ["https://iamabhi.me/og_image.png"],
   },
 
   twitter: {
     card: "summary_large_image",
     title: "orgatick",
     description: "A modern event hosting & ticketing platform.",
-    images: ["https://orgatick.in/og_image.png"],
+    images: ["https://iamabhi.me/og_image.png"],
     site: "@orgatick",
     creator: "@orgatick",
   },
@@ -93,7 +92,7 @@ export const metadata = {
   },
 
   alternates: {
-    canonical: "https://orgatick.in",
+    canonical: "https://iamabhi.me",
   },
 };
 
