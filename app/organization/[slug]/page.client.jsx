@@ -6,7 +6,7 @@ import { Star, Globe } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 
-export default function ClientOrganizationPage({ initialOrg }) {
+export default function OrganizationPageClient({ initialOrg }) {
   const organization = initialOrg;
 
   useEffect(() => {

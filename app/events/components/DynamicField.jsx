@@ -52,9 +52,6 @@ export default function DynamicField({ field, value, onChange }) {
   }
 
   if (type === "number") {
-    {
-      // console.log(type);
-    }
     return (
       <div className="space-y-2">
         <Label htmlFor={name} className="font-medium">

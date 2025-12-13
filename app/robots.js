@@ -1,17 +1,18 @@
 export default function robots() {
-  const baseUrl = "https://iamabhi.me";
+  const baseUrl = "https://orgatick.in";
 
   return {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
         disallow: [
           "/admin",
           "/dashboard",
-          "/api",       // protect backend APIs
+          "/api",
           "/private",
-          "/_next",     // avoid crawlers indexing assets
+          "/auth",
+          "/profile",
+          "/payment",
         ],
       },
     ],

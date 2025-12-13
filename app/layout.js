@@ -1,12 +1,10 @@
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
-// import { LoaderProvider } from "@/components/LoaderContext";
-import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
+import {Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import ProvidersSwr from "@/components/ProvidersSwr";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import Head from "next/head";
 // Fonts
 const sourceCodePro = Source_Code_Pro({
   variable: "--font-source-code-pro",
@@ -36,55 +34,66 @@ export const themeColor = "#ffffff";
    GLOBAL SEO
 ------------------------------------------ */
 export const metadata = {
-  metadataBase: new URL("https://iamabhi.me"),
+  metadataBase: new URL("https://orgatick.in"),
 
   title: {
-    default: "orgatick",
-    template: "%s | orgatick",
+    default: "Orgatick – Event Hosting & Management Platform",
+    template: "%s | Orgatick",
   },
 
   description:
-    "orgatick simplifies college event management with secure ticketing, organizer tools, analytics, and real-time updates.",
+    "Orgatick is a modern event hosting and management platform for colleges, communities, and organizations. Create events, manage registrations, send tickets, and track attendees easily.",
 
   keywords: [
     "orgatick",
-    "event management",
-    "ticket booking",
-    "college events",
-    "esports events",
-    "tech events",
-    "fest management",
     "event hosting platform",
+    "event management software",
+    "college events platform",
+    "community events",
+    "event registration system",
+    "organizer tools",
+    "event analytics",
   ],
 
-  applicationName: "orgatick",
-  generator: "Next.js",
+  applicationName: "Orgatick",
   category: "Events",
-  creator: "orgatick Team",
+  creator: "Orgatick Team",
 
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 
   openGraph: {
-    title: "orgatick",
+    title: "Orgatick – Host & Manage Events Seamlessly",
     description:
-      "Effortlessly host and attend events with ticketing, analytics & payments.",
-    url: "https://iamabhi.me",
-    siteName: "orgatick",
+      "Create and manage events with ease. Orgatick provides powerful tools for registrations, attendee tracking, and event operations.",
+    url: "https://orgatick.in",
+    siteName: "Orgatick",
     locale: "en_IN",
     type: "website",
-    images: ["https://iamabhi.me/og_image.png"],
+    images: [
+      {
+        url: "https://orgatick.in/og_image.png",
+        width: 1200,
+        height: 630,
+        alt: "Orgatick – Event Hosting Platform",
+      },
+    ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "orgatick",
-    description: "A modern event hosting & ticketing platform.",
-    images: ["https://iamabhi.me/og_image.png"],
-    site: "@orgatick",
-    creator: "@orgatick",
+    title: "Orgatick – Event Hosting Platform",
+    description:
+      "A modern platform to host and manage events with registrations, tickets, and analytics.",
+    images: ["https://orgatick.in/og_image.png"],
   },
 
   icons: {
@@ -93,9 +102,10 @@ export const metadata = {
   },
 
   alternates: {
-    canonical: "https://iamabhi.me",
+    canonical: "https://orgatick.in",
   },
 };
+
 
 export default function RootLayout({ children }) {
   return (
@@ -120,10 +130,13 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-          {/* <LoaderProvider> */}
-            <ClientLayout>{children}</ClientLayout>
+            <ClientLayout>
+              {children}
+              
+            </ClientLayout>
+            <SpeedInsights />
             <Toaster />
-          {/* </LoaderProvider> */}
+
         </ThemeProvider>
       </body>
     </html>

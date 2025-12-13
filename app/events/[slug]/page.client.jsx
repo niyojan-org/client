@@ -18,7 +18,7 @@ import Error404 from "@/app/not-found";
 import { SpinnerCustom } from "@/components/ui/spinner";
 import { motion } from "framer-motion";
 
-export default function ClientEventPage({ initialEvent }) {
+export default function EventPageClient({ initialEvent }) {
   const slug = initialEvent.slug;
 
   const { data, error } = useSWR(

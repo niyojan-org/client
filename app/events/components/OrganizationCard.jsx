@@ -17,7 +17,6 @@ import {
   IconNews,
 } from "@tabler/icons-react";
 import { useMemo } from "react";
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -37,7 +36,6 @@ export default function OrganizationCard({ event }) {
   if (!event?.organization) return null;
 
   const org = event.organization;
-  console.log(org)
 
   /* 🔹 Memoized social links (avoid recalculation every render) */
   const socialLinks = useMemo(() => {
@@ -162,9 +160,9 @@ export default function OrganizationCard({ event }) {
               <Button
                 asChild
                 size="sm"
-                className="w-full bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300"
+                className="w-full bg-linear-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300"
               >
-                <Link href={`/org/${org.slug}`}>
+                <Link href={`/organization/${org.slug}`}>
                   <IconExternalLink className="h-4 w-4 mr-2" />
                   View Organization
                 </Link>
@@ -183,7 +181,7 @@ export default function OrganizationCard({ event }) {
                   <motion.div whileHover={{ scale: 1.05 }} className="text-primary">
                     <IconBuildingBank className="h-6 w-6" />
                   </motion.div>
-                  <CardTitle className="text-2xl font-bold text-foreground break-words">
+                  <CardTitle className="text-2xl font-bold text-foreground word-break">
                     {org.name || "Organization"}
                   </CardTitle>
                   {org.verified && (

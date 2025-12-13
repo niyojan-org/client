@@ -17,7 +17,7 @@ export default function EventsPage() {
 
   return (
     <div className="flex transition-colors duration-300">
-      <main className="flex-1 overflow-auto mt-[20px] mb-20">
+      <main className="flex-1 overflow-auto mt-[px] mb-20">
         {/* Header */}
         <header className="mb-6 mx-auto" aria-label="Events page header">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">
