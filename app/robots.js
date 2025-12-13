@@ -5,13 +5,14 @@ export default function robots() {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
         disallow: [
           "/admin",
           "/dashboard",
-          "/api",       // protect backend APIs
+          "/api",
           "/private",
-          "/_next",     // avoid crawlers indexing assets
+          "/auth",
+          "/profile",
+          "/payment",
         ],
       },
     ],

@@ -1,6 +1,6 @@
 import api from "@/lib/api";
-import ClientEventPage from "./ClientEventsPage";
 import Error404 from "@/app/not-found";
+import EventPageClient from "./page.client";
 
 // =========================
 // DYNAMIC SEO METADATA
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-      title: `${event.title} | orgatick`,
+      title: `${event.title} `,
       description: event.shortDescription || event.description,
       alternates: {
         canonical: `https://orgatick.in/events/${slug}`,
@@ -64,7 +64,7 @@ export async function generateMetadata({ params }) {
     };
   } catch {
     return {
-      title: "Event | orgatick",
+      title: "Event",
       description: "Event details and information.",
     };
   }
@@ -85,7 +85,7 @@ export default async function EventPage({ params }) {
       return <div>Event Not Found</div>;
     }
 
-    return <ClientEventPage initialEvent={event} />;
+    return <EventPageClient initialEvent={event} />;
   } catch {
     return <Error404 />
   }

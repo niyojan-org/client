@@ -1,5 +1,5 @@
 import api from "@/lib/api";
-import ClientOrganizationPage from "./ClientOrganizationPage";
+import OrganizationPageClient from "./page.client";
 import Error404 from "@/app/not-found";
 
 // ========== DYNAMIC SEO ========== //
@@ -12,18 +12,18 @@ export async function generateMetadata({ params }) {
 
     if (!org) {
       return {
-        title: "Organization Not Found | orgatick",
-        description: "This organization does not exist on orgatick.",
+        title: "Organization Not Found | Orgatick",
+        description: "This organization does not exist on Orgatick.",
       };
     }
 
-    const ogImage = org.bannerImage || org.logo || "https://orgatick.in/og_image.png";
+    const ogImage = `https://orgatick.in/organization/${slug}/opengraph-image`;
 
     return {
-      title: `${org.name} | orgatick`,
-      description:
-        `${org.name} • ${org.category} / ${org.subCategory}. ` +
-        `Trusted and Loved by many students.`,
+      title: `${org.name}`,
+      description: `${org.name} is a ${org.category}${
+        org.subCategory ? ` in ${org.subCategory}` : ""
+      }. View organization details, contact information, and hosted events on Orgatick.`,
 
       alternates: {
         canonical: `https://orgatick.in/organization/${slug}`,
@@ -32,46 +32,39 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: org.name,
         description:
-          org.description || `Learn more about ${org.name} on orgatick.`,
+          org.description ||
+          `Learn more about ${org.name}, including events and organization details on Orgatick.`,
         url: `https://orgatick.in/organization/${slug}`,
-        images: [ogImage],
+        siteName: "Orgatick",
         type: "website",
+        images: [
+          {
+            url: ogImage,
+            width: 1200,
+            height: 630,
+            alt: `${org.name} on Orgatick`,
+          },
+        ],
       },
 
       twitter: {
         card: "summary_large_image",
         title: org.name,
-        description: org.description || `Organization page for ${org.name}.`,
+        description:
+          org.description ||
+          `Official organization page of ${org.name} on Orgatick.`,
         images: [ogImage],
-      },
-
-      other: {
-        "script:ld+json": {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: organization.name,
-          description: `${organization.name} - ${organization.category} / ${organization.subCategory}`,
-          url: `https://orgatick.in/organization/${slug}`,
-          logo: organization.logo || "/org_logo_default.png",
-          sameAs: Object.values(organization.socialLinks || {}).filter(Boolean),
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: organization.address?.street,
-            addressLocality: organization.address?.city,
-            addressRegion: organization.address?.state,
-            postalCode: organization.address?.zipCode,
-            addressCountry: organization.address?.country,
-          },
-        },
       },
     };
   } catch {
     return {
       title: "Organization",
-      description: "View organization details and events.",
+      description: "View organization details and events on Orgatick.",
     };
   }
 }
+
+
 
 // next js viewport settings
 export const viewport = {
@@ -93,7 +86,7 @@ export default async function OrgPage({ params }) {
       return <div className="p-10 text-center">Organization not found.</div>;
     }
 
-    return <ClientOrganizationPage initialOrg={organization} />;
+    return <OrganizationPageClient initialOrg={organization} />;
   } catch {
     return <Error404 />
   }

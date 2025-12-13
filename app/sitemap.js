@@ -4,9 +4,8 @@ export default async function sitemap() {
 
   async function fetchSafe(url, field) {
     try {
-      const r = await fetch(url, { next: { revalidate: 60 } });
+      const r = await fetch(url, { next: { revalidate: 300 } });
       if (!r.ok) return [];
-
       const json = await r.json();
       return json?.data?.[field] || [];
     } catch {
@@ -14,32 +13,26 @@ export default async function sitemap() {
     }
   }
 
-  // === Fetch Events ===
   const events = await fetchSafe(`${API}/event`, "events");
-
-  // === Fetch Organizations ===
   const orgs = await fetchSafe(`${API}/org/public`, "organizations");
 
-  // === STATIC PAGES ===
   const staticPages = [
-    "",
-    "events",
-    "organization",
-    "about",
-    "contact",
-    "features",
-    "privacy-policy",
-    "refund-policy",
-    "terms-and-conditions",
-    "delivery-policy",
-  ].map((page) => ({
-    url: `${base}/${page}`,
+    { url: `${base}`, priority: 1.0 },
+    { url: `${base}/events`, priority: 0.9 },
+    { url: `${base}/organization`, priority: 0.9 },
+    { url: `${base}/about`, priority: 0.7 },
+    { url: `${base}/features`, priority: 0.7 },
+    { url: `${base}/contact`, priority: 0.6 },
+    { url: `${base}/privacy-policy`, priority: 0.4 },
+    { url: `${base}/refund-policy`, priority: 0.4 },
+    { url: `${base}/terms-and-conditions`, priority: 0.4 },
+    { url: `${base}/delivery-policy`, priority: 0.4 },
+  ].map((p) => ({
+    ...p,
     lastModified: new Date(),
-    changeFrequency: "weekly",
-    priority: 0.7,
+    changeFrequency: "monthly",
   }));
 
-  // === EVENT PAGES ===
   const dynamicEvents = events.map((e) => ({
     url: `${base}/events/${e.slug}`,
     lastModified: new Date(e.updatedAt || Date.now()),
@@ -47,15 +40,6 @@ export default async function sitemap() {
     priority: 1.0,
   }));
 
-  // === EVENT REGISTRATION PAGES ===
-  const dynamicRegistrations = events.map((e) => ({
-    url: `${base}/events/${e.slug}/registration`,
-    lastModified: new Date(e.updatedAt || Date.now()),
-    changeFrequency: "daily",
-    priority: 0.8,
-  }));
-
-  // === ORGANIZATION PAGES ===
   const dynamicOrgs = orgs.map((o) => ({
     url: `${base}/organization/${o.slug}`,
     lastModified: new Date(o.updatedAt || Date.now()),
@@ -63,10 +47,5 @@ export default async function sitemap() {
     priority: 0.9,
   }));
 
-  return [
-    ...staticPages,
-    ...dynamicEvents,
-    ...dynamicRegistrations,
-    ...dynamicOrgs,
-  ];
+  return [...staticPages, ...dynamicEvents, ...dynamicOrgs];
 }
