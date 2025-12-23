@@ -54,7 +54,7 @@ export default function TermsAndConditionsClient() {
 
       <p>
         All paid registrations and ticket purchases are processed securely through 
-        Razorpay. orgatick does not store card numbers, UPI IDs, or banking details. 
+        payment gateway. orgatick does not store card numbers, UPI IDs, or banking details. 
         A platform service fee may apply and is non-refundable. Users acknowledge that 
         bank statements or SMS confirmations may display the name 
         <strong> “Abhishek Kumar Mandal”</strong> as the legal account holder for payment 
@@ -66,11 +66,11 @@ export default function TermsAndConditionsClient() {
         tickets cannot be cancelled or transferred by attendees. Refunds will only be issued
         if the organizer officially cancels the event. In such cases, the refund amount will
         be processed after deducting applicable service charges. Refunds processed through 
-        Razorpay may take approximately 5–10 business days to reflect. </p>
+        payment gateway may take approximately 5–10 business days to reflect. </p>
       <p>
         Upon successful payment, tickets are delivered digitally by email and/or 
         WhatsApp. No physical tickets are printed or shipped. Organizers receive 
-        settlements based on Razorpay’s payout timeline after deduction of applicable 
+        settlements based on payment gateway’s payout timeline after deduction of applicable 
         platform fees and payment gateway charges. orgatick is not responsible for 
         delays caused by banks, payment processors, or compliance reviews.
       </p>

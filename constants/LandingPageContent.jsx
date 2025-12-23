@@ -53,7 +53,7 @@ const landingPageContent = {
         "1-Minute Registration",
         "Instant QR e-Tickets",
         "Personalized Event Reminders",
-        "Secure Payments (Razorpay)",
+        "Secure Payments",
         "Register, Join, Enjoy"
       ],
     },
@@ -111,8 +111,8 @@ const landingPageContent = {
 
 
   paymentAndTrust: {
-    title: "Secure, Swift Payments with Razorpay",
-    logos: ["Razorpay", "Visa", "MasterCard", "UPI"],
+    title: "Secure, Swift Payments",
+    logos: ["Visa", "MasterCard", "UPI"],
     points: [
       "256-bit SSL Encrypted",
       "45.7% faster payouts",
@@ -227,7 +227,7 @@ const landingPageContent = {
         },
         {
           question: "How will I receive payments?",
-          answer: "Directly to your Razorpay-linked bank account within 1-2 days.",
+          answer: "Directly to your linked bank account within 1-2 days.",
         },
         {
           question: "Do I need GST to host?",

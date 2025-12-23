@@ -102,8 +102,8 @@ export default function Hero() {
               whileFocus={!shouldReduceMotion ? { scale: 1.03 } : {}}
               transition={{ type: "spring", stiffness: 300 }}
             >
-              <Link href="/auth" aria-label="Start Hosting Events">
-                Host an Event
+              <Link href="/features" aria-label="Start Hosting Events">
+                Services
               </Link>
             </motion.span>
           </Button>

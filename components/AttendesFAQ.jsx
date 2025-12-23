@@ -22,15 +22,15 @@ const faqs = [
   },
   {
     q: "What happens if the event is canceled?",
-    a: "If an event is canceled, you’ll be notified and a full refund will be automatically processed through Razorpay within 5–10 business days."
+    a: "If an event is canceled, you’ll be notified and a full refund will be automatically processed through payment gateway within 5–10 business days."
   },
   {
     q: "Why does my bank or SMS show a different name after payment?",
-    a: "Payments are processed through Razorpay. Statements may show the legal business name of our payment account: 'Abhishek Kumar Mandal'."
+    a: "Payments are processed through payment gateway. Statements may show the legal business name of our payment account: 'Abhishek Kumar Mandal'."
   },
   {
     q: "Are my personal and payment details secure?",
-    a: "Yes. All payments are encrypted and processed securely through Razorpay. We do not store any sensitive payment information."
+    a: "Yes. All payments are encrypted and processed securely. We do not store any sensitive payment information."
   },
   {
     q: "Do I need an account to buy tickets?",

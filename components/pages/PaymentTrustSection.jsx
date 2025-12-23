@@ -110,12 +110,12 @@ export default function PaymentAssurance() {
               "@type": "PaymentService",
               name: "orgatick Payment Processing",
               description:
-                "Secure payments for events via Razorpay, supporting UPI, cards, and netbanking.",
+                "Secure payments for events via payment gateway, supporting UPI, cards, and netbanking.",
               provider: {
                 "@type": "Organization",
                 name: "orgatick",
               },
-              paymentMethod: ["CreditCard", "UPIPayment", "NetBanking"],
+              paymentMethod: ["CreditCard", "UPIPayment", "NetBanking", "All major payment services"],
             }),
           }}
         />

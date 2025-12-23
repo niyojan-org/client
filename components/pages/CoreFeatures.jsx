@@ -29,7 +29,7 @@ export default function CoreFeatures() {
     {
       title: "Secure Ticketing & Payments",
       description:
-        "Integrated with Razorpay for smooth, trusted, and transparent transactions — every ticket purchase is safe and verified.",
+        "Integrated with multiples payment gateway for smooth, trusted, and transparent transactions — every ticket purchase is safe and verified.",
       icon: Ticket,
     },
     {

@@ -111,7 +111,6 @@ export const techStack = [
   { name: 'Next.js', icon: IconCode, category: 'Frontend', color: 'text-gray-700 dark:text-gray-300' },
   { name: 'Node.js', icon: IconRocket, category: 'Backend', color: 'text-green-600 dark:text-green-400' },
   { name: 'MongoDB', icon: IconDatabase, category: 'Database', color: 'text-green-700 dark:text-green-300' },
-  { name: 'Razorpay', icon: IconShield, category: 'Payments', color: 'text-blue-600 dark:text-blue-400' },
   { name: 'WhatsApp API', icon: IconBrandWhatsapp, category: 'Communication', color: 'text-green-500 dark:text-green-400' },
   { name: 'JWT', icon: IconLock, category: 'Security', color: 'text-red-600 dark:text-red-400' },
 ];

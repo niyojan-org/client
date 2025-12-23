@@ -58,7 +58,7 @@ export default function RefundPolicyClient() {
       </p>
 
       <p>
-        When refunds are applicable, they will be processed through Razorpay and returned 
+        When refunds are applicable, they will be processed through payment gateway and returned 
         to the original payment method used at checkout. Refunds typically take between 
         5–10 business days to appear depending on the attendee’s bank, card provider, or 
         UPI wallet. Additional processing time may apply for certain payment methods or 

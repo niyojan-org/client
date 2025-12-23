@@ -1,3 +1,4 @@
+import api from "@/lib/api";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -9,8 +10,8 @@ export const size = {
 };
 
 export default async function OGImage({ params }) {
-  const { slug } = params;
-  const API = process.env.NEXT_PUBLIC_API_URL;
+  const { slug } =  await params;
+  // const API = process.env.NEXT_PUBLIC_API_URL;
 
   let event = null;
 
@@ -18,9 +19,10 @@ export default async function OGImage({ params }) {
   // Fetch event data
   // -----------------------------
   try {
-    const res = await fetch(`${API}/event/${slug}`, {
-      cache: "no-store",
-    });
+    // const res = await fetch(`${API}/event/${slug}`, {
+    //   cache: "no-store",
+    // });
+    const res = await api.get(`/event/${slug}`);
 
     if (res.ok) {
       const json = await res.json();
