@@ -36,7 +36,7 @@ export default function HowItWorks() {
         {
           title: "Host & Manage Events",
           description:
-            "Add schedules, ticket types, and team roles. Manage registrations and updates from one powerful dashboard.",
+            "Add schedules, ticket types, and team roles starting at just ₹299. Manage registrations and updates from one powerful dashboard.",
           icon: Settings2,
         },
         {
