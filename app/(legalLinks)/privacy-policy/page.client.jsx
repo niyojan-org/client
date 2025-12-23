@@ -37,7 +37,7 @@ export default function PrivacyClient() {
         such as IP addresses, device identifiers, browser type, and usage logs 
         to ensure security and improve platform performance. If you register 
         for or host events, we store details related to events you create, 
-        attend, or interact with. For payment processing, we use Razorpay and 
+        attend, or interact with. For payment processing, we use multiple payments gateway and 
         do not store sensitive financial information such as card numbers, UPI IDs, 
         or banking details.
       </p>

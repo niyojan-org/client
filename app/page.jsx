@@ -31,7 +31,7 @@ export default function Home() {
       <Hero />
       <WhyChooseorgatick />
       <CoreFeatures />
-      <PaymentTrustSection />
+      {/* <PaymentTrustSection /> */}
       <HowItWorks />
       {/* <TestimonialsSection /> */}
       <FAQSection />
