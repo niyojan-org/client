@@ -24,7 +24,7 @@ const contactMethods = [
     icon: IconMapPin2,
     title: "Office",
     description: "Come say hello at our office.",
-    value: "Lovely Professional University\nPhagwara, Punjab, India",
+    value: "Delhi, India",
     href: "https://map.google.com",
     type: "link"
   },
@@ -32,8 +32,8 @@ const contactMethods = [
     icon: IconPhoneCall,
     title: "Phone",
     description: "Mon-Fri from 8am to 5pm.",
-    value: "+91 6206418701",
-    href: "tel:+91 6206418701",
+    value: "+91 8539863808",
+    href: "tel:+91 8539863808",
     type: "link"
   }
 ];
