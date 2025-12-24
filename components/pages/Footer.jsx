@@ -24,7 +24,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="sm:bg-card text-foreground pt-10 pb-5 px-1 sm:px-10 relative overflow-hidden transition-colors duration-700"
+      className="text-foreground pt-10 pb-5 px-1 sm:px-10 relative overflow-hidden transition-colors duration-700"
       role="contentinfo"
     >
       {/* Social & Newsletter */}

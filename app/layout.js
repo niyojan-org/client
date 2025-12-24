@@ -1,7 +1,7 @@
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
-import {Source_Code_Pro, Source_Sans_3 } from "next/font/google";
+import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
@@ -114,11 +114,6 @@ export default function RootLayout({ children }) {
       className={[sourceCodePro.variable, sourceSans3.variable].join(" ")}
       suppressHydrationWarning
     >
-      {/* google site verification */}
-      <head>
-        <meta name="google-site-verification" content="k4YccptuL7MdOxpNTt0698j3qTFKSDVwMjg9RlqjRQs" />
-      </head>
-
 
       <body
         className="relative antialiased"
@@ -130,12 +125,12 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-            <ClientLayout>
-              {children}
-              
-            </ClientLayout>
-            <SpeedInsights />
-            <Toaster />
+          <ClientLayout>
+            {children}
+
+          </ClientLayout>
+          <SpeedInsights />
+          <Toaster />
 
         </ThemeProvider>
       </body>

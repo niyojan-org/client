@@ -1,6 +1,4 @@
 "use client";
-
-import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,27 +12,25 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PhoneInput } from "@/components/ui/phone-number-input";
-import { min } from "date-fns";
+import { cn } from "@/lib/utils";
+import DatePicker from "@/components/ui/date-picker";
 
-export default function DynamicField({ field, value, onChange }) {
-  const {
-    name,
-    label,
-    type,
-    required,
-    placeholder,
-    min,
-    max,
-    options = [],
-  } = field;
+export default function DynamicField({ field, value, onChange, onFocus, error }) {
+  const { name, label, type, required, placeholder, min, max, options = [] } = field;
 
-  const Req = required ? <span className="text-red-500">*</span> : null;
+  const Req = required ? <span className="text-destructive">*</span> : null;
+
+  const handleFocus = () => {
+    if (onFocus) {
+      onFocus(name);
+    }
+  };
 
   // -------- Inputs --------
-  if (["text", "email", "url", "date"].includes(type)) {
+  if (["text", "email", "url"].includes(type)) {
     return (
-      <div className="space-y-2">
-        <Label htmlFor={name} className="font-medium">
+      <div className="space-y-0.5">
+        <Label htmlFor={name} className="font-medium pb-1">
           {label} {Req}
         </Label>
         <Input
@@ -45,16 +41,32 @@ export default function DynamicField({ field, value, onChange }) {
           required={required}
           value={value || ""}
           onChange={(e) => onChange(name, e.target.value)}
-          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
+          onFocus={handleFocus}
+          className={cn(
+            "shadow-sm focus-visible:ring-2 focus-visible:ring-primary",
+            error && "border-destructive focus-visible:ring-destructive"
+          )}
         />
+        {error && <p className="text-xs text-destructive pl-1">{error}</p>}
+      </div>
+    );
+  }
+
+  if (type === "date") {
+    return (
+      <div className="space-y-2">
+        <Label htmlFor={name} className="font-medium">
+          {label} {Req}
+        </Label>
+        <DatePicker onChange={(e) => onChange(name, e)} />
       </div>
     );
   }
 
   if (type === "number") {
     return (
-      <div className="space-y-2">
-        <Label htmlFor={name} className="font-medium">
+      <div className="space-y-0.5">
+        <Label htmlFor={name} className="font-medium pb-1">
           {label} {Req}
         </Label>
         <Input
@@ -67,16 +79,21 @@ export default function DynamicField({ field, value, onChange }) {
           min={min}
           max={max}
           onChange={(e) => onChange(name, e.target.value)}
-          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
+          onFocus={handleFocus}
+          className={cn(
+            "shadow-sm focus-visible:ring-2 focus-visible:ring-primary",
+            error && "border-destructive focus-visible:ring-destructive"
+          )}
         />
+        {error && <p className="text-xs text-destructive pl-1">{error}</p>}
       </div>
     );
   }
 
   if (type === "tel") {
     return (
-      <div className="space-y-2">
-        <Label htmlFor={name} className="font-medium">
+      <div className="space-y-0.5">
+        <Label htmlFor={name} className="font-medium pb-1">
           {label} {Req}
         </Label>
         <PhoneInput
@@ -86,17 +103,22 @@ export default function DynamicField({ field, value, onChange }) {
           required={required}
           value={value || ""}
           onChange={(val) => onChange(name, val)}
-          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary"
+          onFocus={handleFocus}
+          className={cn(
+            "",
+            error && "border-destructive focus-visible:ring-destructive"
+          )}
           defaultCountry="IN"
         />
+        {error && <p className="text-xs text-destructive pl-1">{error}</p>}
       </div>
     );
   }
 
   if (type === "textarea") {
     return (
-      <div className="space-y-2">
-        <Label htmlFor={name} className="font-medium">
+      <div className="space-y-0.5">
+        <Label htmlFor={name} className="font-medium pb-1">
           {label} {Req}
         </Label>
         <Textarea
@@ -106,8 +128,13 @@ export default function DynamicField({ field, value, onChange }) {
           required={required}
           value={value || ""}
           onChange={(e) => onChange(name, e.target.value)}
-          className="rounded-lg shadow-sm focus-visible:ring-2 focus-visible:ring-primary min-h-[1px]"
+          onFocus={handleFocus}
+          className={cn(
+            "shadow-sm focus-visible:ring-2 focus-visible:ring-primary min-h-px",
+            error && "border-destructive focus-visible:ring-destructive pl-2"
+          )}
         />
+        {error && <p className="text-xs text-destructive">{error}</p>}
       </div>
     );
   }
@@ -118,11 +145,14 @@ export default function DynamicField({ field, value, onChange }) {
         <Label className="font-medium">
           {label} {Req}
         </Label>
-        <Select
-          value={value || ""}
-          onValueChange={(val) => onChange(name, val)}
-        >
-          <SelectTrigger className="rounded-lg shadow-sm">
+        <Select value={value || ""} onValueChange={(val) => onChange(name, val)}>
+          <SelectTrigger
+            onFocus={handleFocus}
+            className={cn(
+              "rounded-lg shadow-sm",
+              error && "border-destructive focus-visible:ring-destructive"
+            )}
+          >
             <SelectValue placeholder={placeholder || `Select ${label}`} />
           </SelectTrigger>
           <SelectContent>
@@ -133,6 +163,7 @@ export default function DynamicField({ field, value, onChange }) {
             ))}
           </SelectContent>
         </Select>
+        {error && <p className="text-xs text-destructive">{error}</p>}
       </div>
     );
   }
@@ -151,22 +182,23 @@ export default function DynamicField({ field, value, onChange }) {
           {options.map((opt) => (
             <div
               key={opt.value}
-              className="flex items-center gap-2 rounded-lg border px-3 py-2 shadow-sm hover:border-primary/50 cursor-pointer"
+              className={cn(
+                "flex items-center gap-2 rounded-lg border px-3 py-2 shadow-sm hover:border-primary/50 cursor-pointer",
+                error && "border-destructive"
+              )}
             >
               <RadioGroupItem
                 id={`${name}-${opt.value}`}
                 value={opt.value}
                 className="border-primary text-primary"
               />
-              <Label
-                htmlFor={`${name}-${opt.value}`}
-                className="cursor-pointer"
-              >
+              <Label htmlFor={`${name}-${opt.value}`} className="cursor-pointer">
                 {opt.label}
               </Label>
             </div>
           ))}
         </RadioGroup>
+        {error && <p className="text-xs text-destructive">{error}</p>}
       </div>
     );
   }
@@ -195,10 +227,7 @@ export default function DynamicField({ field, value, onChange }) {
                     onChange(name, newVal);
                   }}
                 />
-                <Label
-                  htmlFor={`${name}-${opt.value}`}
-                  className="cursor-pointer"
-                >
+                <Label htmlFor={`${name}-${opt.value}`} className="cursor-pointer">
                   {opt.label}
                 </Label>
               </div>
