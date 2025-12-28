@@ -23,13 +23,13 @@ export default function TicketCards({ event }) {
 
   return (
     <motion.section
-      className="w-full py-10 "
+      className="w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       {/* Header */}
-      <div className="border-t-4 border-t-primary py-3 text-center max-w-6xl mx-auto space-y-5 px-4 bg-card w-full rounded-2xl">
+      <div className="border-t-4 border-t-primary py-3 text-center mx-auto space-y-1 sm:space-y-5 px-2 sm:px-4 bg-card w-full border rounded-2xl p-0 ">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary tracking-tight">
           Ticket Options
         </h2>
@@ -39,7 +39,7 @@ export default function TicketCards({ event }) {
 
         {/* Grid */}
         <div
-          className={`grid ${gridCols} gap-6 sm:gap-8 px-4 sm:px-6 md:px-10 place-items-center`}
+          className={`grid ${gridCols} gap-2 sm:gap-8 sm:px-6 md:px-10 place-items-center`}
         >
           {event.tickets.map((ticket, index) => (
             <motion.div
@@ -52,8 +52,8 @@ export default function TicketCards({ event }) {
               className="w-full flex justify-center"
             >
               <Link
-                href={`/events/${event.slug}/registration?ticketId=${ticket._id}`}
-                className="block w-full max-w-sm sm:max-w-md md:max-w-[22rem]"
+                href={`/events/${event.slug}/registration?ticket=${ticket._id}`}
+                className="block w-full max-w-sm sm:max-w-md md:max-w-88"
               >
                 <Ticket
                   ticketName={ticket.type || "General"}

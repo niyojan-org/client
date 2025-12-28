@@ -24,14 +24,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useUserStore } from "@/store/userStore"
 import Link from "next/link"
-import { IconLogout2, IconTicket, IconUser } from "@tabler/icons-react"
+import { IconLoader2, IconLoader3, IconLogout2, IconTicket, IconUser } from "@tabler/icons-react"
 import { useRouter } from "next/navigation"
 
 export default function UserMenu() {
-  const { user, isAuthenticated, logout } = useUserStore();
+  const { user, isAuthenticated, logout, loading } = useUserStore();
   const router = useRouter();
 
   if (!isAuthenticated) {
+    if (loading) {
+      return <IconLoader3 className="animate-spin text-primary" />;
+    }
     return (
       <Button variant="outline" asChild>
         <Link href={'/auth'}>

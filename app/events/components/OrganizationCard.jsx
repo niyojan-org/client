@@ -50,7 +50,7 @@ export default function OrganizationCard({ event }) {
       transition={{ duration: 0.35, ease: "easeOut" }}
       className="w-full mt-10"
     >
-      <Card className="border-t-4 border-t-primary backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300">
+      <Card className="border-t-4 border-t-primary backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300 p-0 pt-1 pb-3 sm:p-4">
         
         {/* -------- Mobile / Tablet Layout -------- */}
         <div className="lg:hidden">
@@ -58,7 +58,7 @@ export default function OrganizationCard({ event }) {
             <h1></h1>
             <div className="flex items-start justify-between gap-3">
               <div className="flex-1 min-w-0">
-                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2 break-words">
+                <CardTitle className="text-xl font-bold text-foreground flex items-center gap-2 wrap-break-word">
                   
                   <motion.div whileHover={{ scale: 1.05 }} className="text-primary">
                     <IconBuildingBank className="h-5 w-5" />
@@ -271,11 +271,11 @@ export default function OrganizationCard({ event }) {
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="flex-shrink-0"
+                  className="shrink-0"
                 >
                   <Button
                     asChild
-                    className="bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300 min-w-[160px]"
+                    className="bg-linear-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300 min-w-40"
                   >
                     <Link href={`/organization/${org.slug}`}>
                       <IconExternalLink className="h-4 w-4 mr-2" />

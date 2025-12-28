@@ -34,8 +34,8 @@ export default function HeroSection({ event }) {
       aria-label={`${event.title} hero section`}
       className="
         relative w-full
-        min-h-[50vh] sm:min-h-[60vh] md:min-h-[65vh] lg:min-h-[70vh]
-        overflow-hidden flex items-end
+        aspect-video
+        overflow-hidden flex items-end rounded-xl
       "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -48,7 +48,10 @@ export default function HeroSection({ event }) {
         transition={{ duration: 0.6 }}
       >
         <Image
-          src={event.bannerImage || "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761138208/orgatickBanner_vdyzdk.png"}
+          src={
+            event.bannerImage ||
+            "https://res.cloudinary.com/ddk9qhmit/image/upload/v1761138208/orgatickBanner_vdyzdk.png"
+          }
           alt={event.title || "Event banner"}
           priority
           fill
@@ -63,13 +66,11 @@ export default function HeroSection({ event }) {
           aria-label="Go back to previous page"
         >
           <IconArrowLeft className="w-4 h-4" /> Back
-
-
         </Button>
 
         {/* Gradient overlays for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/70" />
       </motion.div>
 
       {/* Content */}
@@ -146,9 +147,7 @@ export default function HeroSection({ event }) {
           {event.organization && (
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-success rounded-full animate-pulse" />
-              <span className="font-medium">
-                {event.organization.name}
-              </span>
+              <span className="font-medium">{event.organization.name}</span>
               {event.organization.verified && (
                 <IconCheck className="w-4 h-4 text-success" aria-label="Verified organization" />
               )}

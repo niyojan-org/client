@@ -8,14 +8,13 @@ import { Button } from "@/components/ui/button";
 export default function CallToAction({ event, registrationActive }) {
   return (
     <motion.section
-      className="text-center py-16 px-4 sm:px-6 lg:px-8  rounded-2xl"
+      className="text-center py-16 w-full  rounded-2xl"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, delay: 0.5 }}
     >
       <motion.article
-        className="bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-3xl p-8 sm:p-12 border border-primary/20 shadow-lg max-w-7xl mx-auto"
-        whileHover={{ scale: 1.02 }}
+        className="bg-linear-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-3xl p-8 sm:p-12 border border-primary/20 shadow-lg w-full"
       >
         {/* Heading */}
         <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 text-primary">
@@ -32,7 +31,7 @@ export default function CallToAction({ event, registrationActive }) {
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="inline-block">
             <Button
               size="lg"
-              className="flex items-center justify-center px-8 py-3 text-lg font-semibold bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300"
+              className="flex items-center justify-center px-8 py-3 text-lg font-semibold bg-linear-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300"
               asChild
             >
               <Link

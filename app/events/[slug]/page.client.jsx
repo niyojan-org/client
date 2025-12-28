@@ -29,6 +29,7 @@ export default function EventPageClient({ initialEvent }) {
       refreshInterval: 15000,
     }
   );
+  console.log(error);
 
   const event = data?.event || initialEvent;
 
@@ -37,6 +38,7 @@ export default function EventPageClient({ initialEvent }) {
   }, [slug]);
 
   if (error) {
+    console.log("Error loading event:", error);
     return <Error404 />;
   }
 
@@ -45,9 +47,8 @@ export default function EventPageClient({ initialEvent }) {
   }
 
   return (
-    <div className="min-h-dvh w-full pt-14">
+    <div className="min-h-dvh w-full">
       <HeroSection event={event} />
-
       <motion.div
         className="pt-5 space-y-4 pb-8"
         initial={{ opacity: 0 }}

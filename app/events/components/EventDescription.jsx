@@ -1,13 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconStar, IconUsers, IconClock } from "@tabler/icons-react";
 import { format } from "date-fns";
@@ -61,7 +55,7 @@ export default function EventDescription({ event }) {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full"
     >
-      <Card className="border-t-4 border-t-primary backdrop-blur-md mb-1 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-card mt-10 ">
+      <Card className="border-t-4 border-t-primary backdrop-blur-md mb-1 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden bg-card p-0 pt-1 pb-3 sm:p-4 gap-2">
         {/* 🔹 Header */}
         <CardHeader className="text-center px-4 sm:px-8 ">
           <CardTitle className="text-2xl sm:text-3xl font-bold text-primary">
@@ -69,9 +63,7 @@ export default function EventDescription({ event }) {
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="px-4 sm:px-8 md:px-12 lg:px-16 pb-10">
-         
-
+        <CardContent className="px-4 sm:px-8 md:px-12 lg:px-16 ">
           {/* 🔹 Full Description */}
           {event.description?.trim() && (
             <motion.div
@@ -80,26 +72,16 @@ export default function EventDescription({ event }) {
               transition={{ delay: 0.25, duration: 0.4 }}
               className="mx-auto max-w-5xl"
             >
-              {/* Section heading */}
-              <div className="flex items-center gap-3 mb-5">
-                <IconUsers className="h-5 w-5 text-primary" />
-                <h3 className="text-lg sm:text-xl font-semibold text-foreground">
-                  Event Details
-                </h3>
-                <div className="flex-1 h-px bg-primary/20" />
-              </div>
-
               {/* Description box */}
-              <div className="bg-muted/10 rounded-lg px-6 py-6 sm:px-8 sm:py-8 border border-muted/30 shadow-sm">
-                <CardDescription className="text-base sm:text-lg leading-relaxed sm:leading-loose text-foreground/80 whitespace-pre-line text-justify">
+              <div className="bg-muted/50 rounded-lg px-2 py-2 sm:px-8 sm:py-8 border border-muted/30 shadow-sm">
+                <CardDescription className="text-base sm:text-lg leading-relaxed sm:leading-loose text-foreground whitespace-pre-line text-justify">
                   {event.description}
                 </CardDescription>
 
                 {/* Reading meta */}
                 <div className="mt-6 pt-4 border-t border-muted/20 flex items-center justify-between text-xs sm:text-sm text-muted-foreground">
                   <span className="flex items-center gap-1">
-                    <IconClock className="h-4 w-4" />
-                    ~{readMinutes} min read
+                    <IconClock className="h-4 w-4" />~{readMinutes} min read
                   </span>
                   <span>{wordCount} words</span>
                 </div>

@@ -51,7 +51,7 @@ export default function NavigationBar() {
   }, [isAuthenticated]);
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-[color:var(--background)] text-[color:var(--foreground)] border-b border-[color:var(--border)] transition-colors duration-300 shadow-sm">
+    <header className="fixed top-0 z-50 w-full bg-background text-foreground border-b border-0 transition-colors duration-300 shadow-sm">
       <div className="flex items-center justify-between  max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-2">
 
         {/* Left: Logo + Mobile Menu */}
@@ -65,10 +65,10 @@ export default function NavigationBar() {
                 aria-label="Toggle menu"
                 className="md:hidden"
               >
-                <IconMenu2 className="w-5 h-5 text-[color:var(--foreground)] transition-transform duration-300" />
+                <IconMenu2 className="w-5 h-5 text-foreground transition-transform duration-300" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-64 flex flex-col bg-[color:var(--background)] text-[color:var(--foreground)]">
+            <SheetContent side="left" className="w-64 flex flex-col bg-background text-foreground">
               <SheetHeader>
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
@@ -81,7 +81,7 @@ export default function NavigationBar() {
                       key={idx}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-md hover:bg-[color:var(--accent)]/10 transition-colors ${isActive ? 'underline' : ''
+                      className={`flex items-center gap-3 px-3 py-2 rounded-md hover:bg-accent/10 transition-colors ${isActive ? 'underline' : ''
                         }`}
                     >
                       {/* <Icon size={20} className="text-[color:var(--muted-foreground)]" /> */}
@@ -97,7 +97,7 @@ export default function NavigationBar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Logo className="h-9 w-9" />
-            <span className="hidden md:block text-[color:var(--primary)] font-bold text-lg">orgatick</span>
+            <span className="hidden md:block text-primary font-bold text-lg">orgatick</span>
           </Link>
         </div>
 
@@ -110,7 +110,7 @@ export default function NavigationBar() {
                 <NavigationMenuItem key={idx}>
                   <NavigationMenuLink
                     href={link.href}
-                    className={`flex items-center gap-2 px-2 py-1 font-medium rounded-md hover:bg-[color:var(--accent)]/10 hover:text-primary text-lg transition-colors ${isActive ? 'underline underline-offset-4 text-primary' : ''
+                    className={`flex items-center gap-2 px-2 py-1 font-medium rounded-md hover:bg-accent/10 hover:text-primary text-lg transition-colors ${isActive ? 'underline underline-offset-4 text-primary' : ''
                       }`}
                   >
                     {/* <Icon size={16} className="text-[color:var(--muted-foreground)]/80" /> */}

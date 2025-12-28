@@ -103,15 +103,12 @@ export const useUserStore = create((set, get) => ({
   fetchUser: async () => {
     try {
       set({ loading: true, error: null });
-
       const response = await api.get("/user/me");
-      const { user, organization } = response.data.data;
-
+      const { user } = response.data.data;
       set({
         user,
         isAuthenticated: true,
       });
-
       return true;
     } catch (error) {
       // console.error("Fetch user failed:", error);
