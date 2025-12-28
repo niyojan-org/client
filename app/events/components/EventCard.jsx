@@ -215,7 +215,7 @@ export default function EventCard({ event }) {
           <div className="flex items-center flex-wrap gap-2">
             {event.tickets.map((t) => (
               <Badge key={t._id} variant={t.price > 0 ? "default" : "success"} asChild>
-                <Link href={`/events/${event.slug || event._id}/registration?ticketId=${t._id}`}>
+                <Link href={`/events/${event.slug || event._id}/registration?ticket=${t._id}`}>
                   {t.price > 0 ? <IconCurrencyRupee size={14} className="inline" /> : <IconConfetti size={14} className="inline" />}
                   {t.price > 0 ? t.price : "Free"} - {t.type || "General"}
                 </Link>

@@ -52,7 +52,7 @@ export default function TicketCards({ event }) {
               className="w-full flex justify-center"
             >
               <Link
-                href={`/events/${event.slug}/registration?ticketId=${ticket._id}`}
+                href={`/events/${event.slug}/registration?ticket=${ticket._id}`}
                 className="block w-full max-w-sm sm:max-w-md md:max-w-88"
               >
                 <Ticket

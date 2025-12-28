@@ -7,6 +7,7 @@ import OrderSummary from "./payment/OrderSummary";
 import api from "@/lib/api";
 import { toast } from "sonner";
 import Cashfree from "./payment/cashfree";
+import PhonePe from "./payment/phonePe";
 import useEventRegistrationStore from "@/store/eventRegistration";
 import PaymentVerificationLoading from "./PaymentVerificationLoading";
 
@@ -33,14 +34,22 @@ function Payment({ paymentData }) {
       available: paymentData.payment.availablePaymentGateways.razorpay,
       features: ["Instant", "Secure", "Multiple Options"],
     },
+    // {
+    //   id: "cashfree",
+    //   name: "Cashfree",
+    //   description: "UPI, Cards, Net Banking",
+    //   icon: IconWallet,
+    //   available: paymentData.payment.availablePaymentGateways.cashfree,
+    //   features: ["Quick", "Trusted"],
+    // },
     {
-      id: "cashfree",
-      name: "Cashfree",
-      description: "UPI, Cards, Net Banking",
+      id: 'phonepe',
+      name: 'PhonePe',
+      description: 'UPI, Wallets, Cards',
       icon: IconWallet,
-      available: paymentData.payment.availablePaymentGateways.cashfree,
-      features: ["Quick", "Trusted"],
-    },
+      available: paymentData.payment.availablePaymentGateways.phonepe,
+      features: ['Easy', 'Fast'],
+    }
   ];
 
   const { setSuccessData } = useEventRegistrationStore();
@@ -103,11 +112,62 @@ function Payment({ paymentData }) {
             toast.error(
               error.response?.data?.message || "Failed to verify payment. Please contact support."
             );
-          }finally{
+          } finally {
             setLoading(false);
           }
         } else {
           toast.error("Payment was not completed");
+        }
+      }
+
+      if (res.data.success && selectedGateway === "phonepe") {
+        const paymentUrl = res.data.data?.payment_url;
+
+        if (!paymentUrl) {
+          toast.error("Payment URL not received from server");
+          return;
+        }
+
+        // Open PhonePe PayPage in IFrame mode
+        const result = await PhonePe({
+          paymentUrl,
+          onSuccess: async () => {
+            // Payment concluded - verify with backend
+            try {
+              setLoading(true);
+              const verifyRes = await api.get(`/payment/event/order/verify/phonepe`, {
+                params: {
+                  orderId: paymentData.payment.orderId,
+                },
+              });
+
+              if (verifyRes.data.success) {
+                toast.success("Payment completed successfully!", {
+                  description:
+                    verifyRes.data.message || "You will receive a confirmation email shortly.",
+                });
+                // Pass the full response data which contains participant, event, etc.
+                setSuccessData(verifyRes.data);
+              } else {
+                toast.error("Payment verification failed");
+              }
+            } catch (error) {
+              console.error("Payment verification error:", error);
+              toast.error(
+                error.response?.data?.message || "Failed to verify payment. Please contact support."
+              );
+            } finally {
+              setLoading(false);
+            }
+          },
+          onCancel: () => {
+            // User cancelled the payment
+            toast.info("Payment was cancelled");
+          },
+        });
+
+        if (!result) {
+          toast.error("Failed to open payment page");
         }
       }
     } catch (error) {

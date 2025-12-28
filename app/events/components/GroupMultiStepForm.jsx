@@ -4,4 +4,4 @@
  * Please use: import GroupMultiStepForm from "./group-registration"
  */
 
-export { default } from "../[slug]/registrationv1/components/group-registration";
+export { default } from "../[slug]/registration/components/group-registration";
