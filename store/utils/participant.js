@@ -105,6 +105,7 @@ export const GetSuccessData = (data) => {
             totalAmount: data.data?.payment?.amount || 0,
             qrCode: "",
             eventSlug: data.data.event?.slug || "",
+            redirect: data.data?.redirect || null,
         };
     }
 
@@ -128,6 +129,7 @@ export const GetSuccessData = (data) => {
         totalAmount: 0,
         qrCode: "",
         eventSlug: data.data?.event?.slug || "",
+        redirect: data.data?.redirect || null,
     }
 
     return SUCCESS_DATA
