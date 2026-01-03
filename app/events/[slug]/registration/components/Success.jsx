@@ -49,7 +49,7 @@ export default function RegistrationSuccess({ data, redirect, afterDelay = 2500 
   useEffect(() => {
     if (redirect) {
       const timer = setTimeout(() => {
-        router.push(redirect);
+        router.replace(redirect);
       }, afterDelay);
 
       return () => clearTimeout(timer);

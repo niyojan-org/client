@@ -13,17 +13,30 @@ import OrderSummary from "../registration/components/payment/OrderSummary";
 import PaymentVerificationLoading from "../registration/components/PaymentVerificationLoading";
 import RegistrationSuccess from "../registration/components/Success";
 import ErrorCard from "@/components/Card/Error";
+import { SpinnerCustom } from "@/components/ui/spinner";
 
 function Payment() {
     const [paymentData, setPaymentData] = useState(null);
     const [selectedGateway, setSelectedGateway] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [currentSessionId, setCurrentSessionId] = useState(null);
     const searchParams = useSearchParams();
     const router = useRouter();
     const sessionId = searchParams.get("sessionId");
     const redirect = searchParams.get("redirect");
-    const { setSuccessData, successData } = useEventRegistrationStore();
+    const { setSuccessData, successData, resetSuccessData } = useEventRegistrationStore();
+
+    // Reset state when sessionId changes or is missing
+    useEffect(() => {
+        if (sessionId !== currentSessionId) {
+            setPaymentData(null);
+            setSelectedGateway(null);
+            setError(null);
+            resetSuccessData();
+            setCurrentSessionId(sessionId);
+        }
+    }, [sessionId, currentSessionId, resetSuccessData]);
 
     useEffect(() => {
         if (sessionId && redirect) {
@@ -36,8 +49,11 @@ function Payment() {
                     });
                     if (res.data.success) {
                         setPaymentData(res.data.data);
+                        // Clean up URL after successfully receiving the data
+                        // router.replace(window.location.pathname, { scroll: false });
                     } else {
                         toast.error("Failed to fetch payment data");
+                        setError({ message: "Failed to fetch payment data" });
                     }
                 } catch (error) {
                     toast.error(
@@ -96,8 +112,13 @@ function Payment() {
         );
     }
     if (!paymentData) {
-        return <div>Loading...</div>;
+        return (
+            <div className="h-full flex items-center justify-center">
+                <SpinnerCustom />
+            </div>
+        )
     }
+    
 
     // Detect if this is a group registration
     const isGroupRegistration = paymentData.participants && Array.isArray(paymentData.participants);
@@ -105,7 +126,10 @@ function Payment() {
         ? paymentData.participants.find(p => p.isGroupLeader) || paymentData.participants[0]
         : paymentData.participant;
 
-
+    // For group registration, we need to pass participantId for payment
+    const participantId = isGroupRegistration
+        ? participant?.id
+        : paymentData.participant?.id;
 
     const gateways = [
         {
@@ -138,9 +162,6 @@ function Payment() {
             alert("Please select a payment gateway");
             return;
         }
-        const participantId = isGroupRegistration
-            ? participant?.id
-            : paymentData.participant?.id;
         try {
             const paymentPayload = {
                 gateway: selectedGateway,
@@ -262,7 +283,7 @@ function Payment() {
     };
 
     if (successData) {
-        const redirectUrl = redirect ? `${redirect}?participantId=` : null;
+        const redirectUrl = redirect ? `${redirect}?orderId=${paymentData.payment.orderId}` : null;
         return <RegistrationSuccess data={successData} redirect={redirectUrl} />;
     }
 
