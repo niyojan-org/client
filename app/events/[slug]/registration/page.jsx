@@ -123,8 +123,7 @@ export default function RegistrationPage() {
   }
 
   if (successData) {
-    console.log(successData);
-    return <RegistrationSuccess data={successData} />;
+    return <RegistrationSuccess data={successData} redirect={successData?.redirect} />;
   }
 
   if (registrationForm) {

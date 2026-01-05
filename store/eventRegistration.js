@@ -132,6 +132,9 @@ const useEventRegistrationStore = create((set, get) => ({
     setSuccessData: (data) => {
         const dataObj = GetSuccessData(data);
         set({ successData: dataObj, isPaymentRequired: false, resData: null });
+    },
+    resetSuccessData: () => {
+        set({ successData: null });
     }
 }));
 

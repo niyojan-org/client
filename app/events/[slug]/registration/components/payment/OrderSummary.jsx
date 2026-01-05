@@ -40,7 +40,7 @@ const OrderSummary = ({
           <div className="flex items-center gap-2 text-xs sm:text-sm">
             <IconTicket className="w-4 h-4 text-muted-foreground shrink-0" />
             <span className="text-muted-foreground">Ticket:</span>
-            <span className="font-medium ml-auto">{participant.ticket.type}</span>
+            <span className="font-medium ml-auto">{participant?.ticket?.type}</span>
           </div>
 
           {isGroupRegistration && groupInfo && (
@@ -49,11 +49,11 @@ const OrderSummary = ({
               <div className="bg-primary/10 rounded-lg p-2.5 space-y-1">
                 <div className="flex items-center gap-2 text-xs sm:text-sm">
                   <span className="text-muted-foreground">Group:</span>
-                  <span className="font-medium">{groupInfo.groupName}</span>
+                  <span className="font-medium">{groupInfo?.groupName}</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs sm:text-sm">
                   <span className="text-muted-foreground">Members:</span>
-                  <span className="font-medium">{groupInfo.totalMembers}</span>
+                  <span className="font-medium">{groupInfo?.totalMembers}</span>
                 </div>
               </div>
             </>
@@ -69,11 +69,11 @@ const OrderSummary = ({
             )}
             <div className="flex items-start gap-2">
               <IconMail className="w-3.5 h-3.5 text-muted-foreground mt-0.5 shrink-0" />
-              <span className="break-all">{participant.email}</span>
+              <span className="break-all">{participant?.email}</span>
             </div>
             <div className="flex items-center gap-2">
               <IconPhone className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-              <span>{participant.phone}</span>
+              <span>{participant?.phone}</span>
             </div>
           </div>
 
@@ -81,13 +81,13 @@ const OrderSummary = ({
 
           <div className="flex justify-between text-xs sm:text-sm">
             <span className="text-muted-foreground">Ticket Price</span>
-            <span>{formatAmount(priceSummary.ticketPrice)}</span>
+            <span>{formatAmount(priceSummary?.ticketPrice)}</span>
           </div>
 
-          {priceSummary.discount > 0 && (
+          {priceSummary?.discount > 0 && (
             <div className="flex justify-between text-xs sm:text-sm text-green-600">
               <span>Discount</span>
-              <span>-{formatAmount(priceSummary.discount)}</span>
+              <span>-{formatAmount(priceSummary?.discount)}</span>
             </div>
           )}
 
@@ -95,7 +95,7 @@ const OrderSummary = ({
 
           <div className="flex justify-between font-bold text-base sm:text-lg">
             <span>Total</span>
-            <span className="text-primary">{formatAmount(priceSummary.total)}</span>
+            <span className="text-primary">{formatAmount(priceSummary?.total)}</span>
           </div>
         </div>
 
