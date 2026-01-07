@@ -40,7 +40,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
-import { useUserStore } from "@/store/userStore";
+import { PasskeySettings } from "@/components/profile/PasskeySettings";
 
 export function AccountSettings({ user, onLogout, className }) {
   const [isLoading, setIsLoading] = useState({
@@ -157,6 +157,14 @@ export function AccountSettings({ user, onLogout, className }) {
             </Button>
           )}
         </div>
+      ),
+    },
+    {
+      title: "Two-Step Verification",
+      description: "Add passkeys for secure, passwordless authentication",
+      icon: IconShield,
+      content: (
+        <PasskeySettings />
       ),
     },
     {

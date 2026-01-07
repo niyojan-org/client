@@ -1,28 +1,20 @@
 'use client';
-
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/userStore';
-import { toast } from 'sonner';
-import { useLoaderStore } from '@/store/loaderStore';
+import { SpinnerCustom } from './ui/spinner';
 
 
 export default function ProtectedRoute({ children }) {
   const router = useRouter();
   const { isAuthenticated, loading: userLoading } = useUserStore();
-  const { showLoader, hideLoader } = useLoaderStore();
 
-  useEffect(() => {
-    if (userLoading) {
-      showLoader();
-    } else {
-      hideLoader();
-      if (isAuthenticated === false) {
-        toast.error('Please log in to access this page');
-        router.replace('/auth?view=login');
-      }
-    }
-  }, [isAuthenticated, userLoading, router, showLoader, hideLoader]);
+  if (userLoading) {
+    return (
+      <div className='h-full flex items-center justify-center'>
+        <SpinnerCustom />
+      </div>
+    )
+  }
 
   // Render children only if authenticated
   return isAuthenticated ? <>{children}</> : null;
