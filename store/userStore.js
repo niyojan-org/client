@@ -1,6 +1,7 @@
 import api, { setAccessToken, clearAccessToken } from "@/lib/api";
 import { toast } from "sonner";
 import { create } from "zustand";
+import { loginWithPasskey } from "@/lib/passkey";
 
 export const useUserStore = create((set, get) => ({
   user: null,
@@ -22,6 +23,18 @@ export const useUserStore = create((set, get) => ({
       set({ loading: true, error: null });
       const response = await api.post("/auth/login", credentials);
 
+      // Check if 2FA is required
+      if (response.data.requiresTOTP || response.data.requiresPasskey) {
+        set({ loading: false });
+        return {
+          requires2FA: true,
+          requiresTOTP: response.data.requiresTOTP,
+          requiresPasskey: response.data.requiresPasskey,
+          userId: response.data.userId,
+          message: response.data.message,
+        };
+      }
+
       const { userId, name, email: userEmail, avatar, token, organizationId } =
         response.data.data;
 
@@ -35,16 +48,69 @@ export const useUserStore = create((set, get) => ({
       });
 
       toast.success(response.data.message || "Login successful!");
-      return true;
+      return { success: true };
     } catch (error) {
       const msg = error?.response?.data?.message || "Login failed";
       set({ error: msg, isAuthenticated: false });
       toast.error(msg, {
         description: error?.response?.data?.error?.details,
       });
-      return false;
+      return { success: false, error: msg };
     } finally {
       set({ loading: false });
+    }
+  },
+
+  // --- PASSKEY LOGIN ---
+  loginWithPasskey: async (useConditionalUI = false, abortController = null) => {
+    try {
+      // For conditional UI, don't show loading state
+      // This allows the form to remain interactive while waiting for passkey selection
+      if (!useConditionalUI) {
+        set({ loading: true, error: null });
+      }
+
+      // Call the passkey login utility with optional AbortController
+      const result = await loginWithPasskey(useConditionalUI, abortController);
+
+      // If user cancelled (didn't select a passkey), don't show error
+      if (result.cancelled) {
+        return false;
+      }
+
+      if (!result.success) {
+        throw new Error(result.message || "Passkey login failed");
+      }
+      const { name, email, avatar, token } = result.data;
+
+      // Store access token in memory
+      setAccessToken(token);
+
+      // Extract userId and organizationId from the returned data if available
+      const userId = result.data.userId || result.data.id;
+      const organizationId = result.data.organizationId;
+
+      set({
+        user: { userId, name, email, avatar, organizationId },
+        isAuthenticated: true,
+        message: result.message || "Passkey login successful!",
+      });
+
+      toast.success(result.message || "Passkey login successful!");
+      return true;
+    } catch (error) {
+      const msg = error?.message || "Passkey login failed";
+      set({ error: msg, isAuthenticated: false });
+
+      // Only show error toast for non-conditional UI attempts
+      if (!useConditionalUI) {
+        toast.error(msg);
+      }
+      return false;
+    } finally {
+      if (!useConditionalUI) {
+        set({ loading: false });
+      }
     }
   },
 
@@ -170,6 +236,64 @@ export const useUserStore = create((set, get) => ({
       set({ error: msg });
       toast.error(msg);
       return false;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  // --- VERIFY TOTP ---
+  verifyTOTP: async (userId, totpCode) => {
+    try {
+      set({ loading: true, error: null });
+      const response = await api.post("/auth/totp/verify-login", { userId, token: totpCode });
+
+      const { name, email, avatar, token, organizationId } = response.data.data;
+
+      // Store access token in memory
+      setAccessToken(token);
+
+      set({
+        user: { userId, name, email, avatar, organizationId },
+        isAuthenticated: true,
+        message: response.data.message,
+      });
+
+      toast.success(response.data.message || "TOTP verification successful!");
+      return { success: true };
+    } catch (error) {
+      const msg = error?.response?.data?.message || "TOTP verification failed";
+      set({ error: msg });
+      toast.error(msg);
+      return { success: false, error: msg };
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  // --- VERIFY BACKUP CODE ---
+  verifyBackupCode: async (userId, backupCode) => {
+    try {
+      set({ loading: true, error: null });
+      const response = await api.post("/auth/verify-backup-code", { userId, backupCode });
+
+      const { name, email, avatar, token, organizationId } = response.data.data;
+
+      // Store access token in memory
+      setAccessToken(token);
+
+      set({
+        user: { userId, name, email, avatar, organizationId },
+        isAuthenticated: true,
+        message: response.data.message,
+      });
+
+      toast.success(response.data.message || "Account recovered successfully!");
+      return { success: true };
+    } catch (error) {
+      const msg = error?.response?.data?.message || "Backup code verification failed";
+      set({ error: msg });
+      toast.error(msg);
+      return { success: false, error: msg };
     } finally {
       set({ loading: false });
     }

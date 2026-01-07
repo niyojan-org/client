@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
 import ForgotPassword from './Auth/ForgetPassword';
+import TwoFactorAuth from './Auth/TwoFactorAuth';
 import { useRouter } from 'next/navigation';
 import GoogleAuthButton from './Auth/GoogleAuthButton';
 import { SpinnerCustom } from './ui/spinner';
@@ -19,11 +20,20 @@ export default function Auth({ view: initialView }) {
   const [carouselImages, setCarouselImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [userEmail, setUserEmail] = useState('');
+  const [twoFactorData, setTwoFactorData] = useState(null);
 
   const [view, setView] = useState(initialView || 'login');
   const handleViewChange = (newView) => {
     router.replace(`/auth?view=${newView}`)
     setView(newView);
+  };
+
+  const handle2FARequired = (data) => {
+    setTwoFactorData(data);
+  };
+
+  const handleBack2FA = () => {
+    setTwoFactorData(null);
   };
 
 
@@ -55,7 +65,17 @@ export default function Auth({ view: initialView }) {
     if (view === 'signup') return 'Welcome aboard! Let’s get started.';
     return 'We’ll send you a link to reset your password';
   };
-
+  // Show 2FA screen if required
+  if (twoFactorData) {
+    return (
+      <TwoFactorAuth
+        requiresTOTP={twoFactorData.requiresTOTP}
+        requiresPasskey={twoFactorData.requiresPasskey}
+        userId={twoFactorData.userId}
+        onBack={handleBack2FA}
+      />
+    );
+  }
   return (
     <div className="flex items-center justify-center my-auto px-2 h-full bg-background w-full">
 
@@ -83,7 +103,7 @@ export default function Auth({ view: initialView }) {
 
             <CardContent className="flex flex-col flex-1 justify-between w-full p-0 h-full">
               {view === 'login' &&
-                <Login userEmail={userEmail} setUserEmail={setUserEmail} onViewChange={handleViewChange} />}
+                <Login userEmail={userEmail} setUserEmail={setUserEmail} onViewChange={handleViewChange} on2FARequired={handle2FARequired} />}
 
               {view === 'signup' && <Signup onViewChange={handleViewChange} />}
 

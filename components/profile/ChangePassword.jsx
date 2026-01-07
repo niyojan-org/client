@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import {
   Dialog,
   DialogContent,
@@ -54,7 +53,7 @@ export function ChangePassword({ className, user }) {
   });
 
   // Mock last password change date
-  const lastPasswordChange = new Date(user?.lastPasswordChange); // 45 days ago
+  const lastPasswordChange = new Date(user?.lastPasswordChange);
 
   const validatePassword = (password) => {
     const checks = {

@@ -5,7 +5,7 @@ const analyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-export default {
+const nextConfig = {
   ...analyzer,
   images: {
     remotePatterns: [
@@ -42,3 +42,5 @@ export default {
     ],
   },
 };
+
+export default nextConfig;

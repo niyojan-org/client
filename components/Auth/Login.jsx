@@ -12,19 +12,110 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
+import { isConditionalUISupported } from "@/lib/passkey";
+import { IconLoader2 } from "@tabler/icons-react";
+// import PasskeyLoginButton from "./PasskeyLoginButton";
 
-export default function Login({ onViewChange, userEmail, setUserEmail }) {
+export default function Login({ onViewChange, userEmail, setUserEmail, on2FARequired }) {
   const formRef = useRef(null);
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const { login, loading, error } = useUserStore();
+  const { login, loginWithPasskey, loading, error } = useUserStore();
   const { showLoader, hideLoader } = useLoaderStore();
+  const passkeyAbortControllerRef = useRef(null);
+  const passkeyStartedRef = useRef(false);
+
+  // Function to abort ongoing conditional passkey request
+  const abortConditionalPasskey = () => {
+    if (passkeyAbortControllerRef.current) {
+      passkeyAbortControllerRef.current.abort();
+      passkeyAbortControllerRef.current = null;
+      passkeyStartedRef.current = false;
+    }
+  };
 
   useEffect(() => {
     loading ? showLoader() : hideLoader();
   }, [loading, showLoader, hideLoader]);
+
+  /**
+   * Conditional Passkey Authentication Setup
+   * 
+   * This useEffect implements Google-style passkey login using WebAuthn Conditional Mediation.
+   * 
+   * How it works:
+   * 1. On component mount, check if browser supports conditional UI
+   * 2. If supported, start a conditional WebAuthn request in the background
+   * 3. Browser shows passkeys in the password manager dropdown when user focuses email field
+   * 4. When user selects a passkey, authentication happens automatically
+   * 5. User is redirected on success
+   * 
+   * Key points:
+   * - Runs silently in background, doesn't block the UI
+   * - Doesn't prevent email/password login
+   * - Gracefully fails if user doesn't select a passkey
+   * - Only runs once on mount to avoid duplicate requests
+   * 
+   * Browser Support:
+   * - Chrome/Edge 108+
+   * - Safari 16+
+   * - Firefox not yet supported (as of 2024)
+   */
+  useEffect(() => {
+    // Prevent multiple simultaneous conditional requests
+    // This is important because conditional requests stay active until user interaction
+    if (passkeyStartedRef.current) {
+      return;
+    }
+
+    const setupConditionalAuth = async () => {
+      // Check if browser supports Conditional Mediation
+      const isSupported = await isConditionalUISupported();
+      if (!isSupported || passkeyStartedRef.current) {
+        return;
+      }
+
+      passkeyStartedRef.current = true;
+
+      // Create AbortController for this conditional request
+      passkeyAbortControllerRef.current = new AbortController();
+
+      try {
+        // Start conditional authentication with AbortController
+        // This call will wait silently until:
+        // - User selects a passkey from the autofill dropdown, OR
+        // - User navigates away from the page, OR
+        // - Component unmounts, OR
+        // - Request is aborted via AbortController
+        const success = await loginWithPasskey(true, passkeyAbortControllerRef.current); // true = use conditional UI
+
+        if (success) {
+          // Passkey login successful - redirect to events page
+          router.push("/events");
+        }
+        // If not successful but no error, user simply didn't select a passkey
+        // This is normal - they can still use email/password login
+      } catch (error) {
+        // Only log unexpected errors
+        // User cancellations (AbortError, NotAllowedError) are expected and normal
+        if (error.name !== 'AbortError' && error.name !== 'NotAllowedError') {
+          console.error('Conditional passkey auth error:', error);
+        }
+      } finally {
+        passkeyStartedRef.current = false;
+        passkeyAbortControllerRef.current = null;
+      }
+    };
+
+    setupConditionalAuth();
+
+    // Cleanup on unmount
+    return () => {
+      abortConditionalPasskey();
+    };
+  }, []); // Empty dependency array - only run once on mount
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,12 +145,17 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
       return;
     }
 
-    const success = await login({
+    const result = await login({
       email: formData.email,
       password: formData.password,
     });
 
-    if (success) {
+    if (result.requires2FA) {
+      // Trigger 2FA flow
+      if (on2FARequired) {
+        on2FARequired(result);
+      }
+    } else if (result.success) {
       toast.success("Login successful!");
       formRef.current.reset();
       setFormData({ email: "", password: "" });
@@ -106,7 +202,7 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            autoComplete="email"
+            autoComplete="email webauthn"
             className="w-full"
           // placeHolder="Enter you email"
           />
@@ -147,26 +243,7 @@ export default function Login({ onViewChange, userEmail, setUserEmail }) {
           >
             {loading ? (
               <span className="flex items-center justify-center gap-2">
-                <svg
-                  className="animate-spin h-5 w-5 text-primary-foreground"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v8z"
-                  />
-                </svg>
+                <IconLoader2 className="w-5 h-5 animate-spin" />
                 Logging in...
               </span>
             ) : (

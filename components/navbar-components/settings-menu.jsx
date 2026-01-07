@@ -1,5 +1,5 @@
 import { SettingsIcon } from "lucide-react"
-import { IconMoon, IconSun, IconLanguage, IconHelpCircle, IconShieldCheck, IconContrast2 } from "@tabler/icons-react"
+import { IconMoon, IconSun, IconLanguage, IconHelpCircle, IconShieldCheck, IconContrast2, IconSettings2 } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "next-themes"
 import Link from "next/link"
-import { toast } from "sonner"
+import { useUserStore } from "@/store/userStore"
 
 export default function SettingsMenu() {
   const { theme, setTheme } = useTheme()
+  const { isAuthenticated } = useUserStore();
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark")
@@ -44,6 +45,15 @@ export default function SettingsMenu() {
           )}
           <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
         </DropdownMenuItem>
+
+        {isAuthenticated && (
+          <DropdownMenuItem asChild>
+            <Link href={'/profile/security'} className="cursor-pointer">
+              <IconSettings2 size={16} className="opacity-60" aria-hidden="true" />
+              <span>Account Security</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
 
         {/* <DropdownMenuItem onClick={() => toast.info('Language settings coming soon!')}>
           <IconLanguage size={16} className="opacity-60" aria-hidden="true" />

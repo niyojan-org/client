@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useUserStore } from "@/store/userStore"
 import Link from "next/link"
-import { IconLoader2, IconLoader3, IconLogout2, IconTicket, IconUser } from "@tabler/icons-react"
+import { IconLoader2, IconLoader3, IconLogout2, IconShield, IconTicket, IconUser } from "@tabler/icons-react"
 import { useRouter } from "next/navigation"
 
 export default function UserMenu() {
@@ -68,6 +68,12 @@ export default function UserMenu() {
             <Link href={'/profile'}>
               <IconUser size={16} className="opacity-60" aria-hidden="true" />
               <span>Profile</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={'/profile/security'}>
+              <IconShield size={16} className="opacity-60" aria-hidden="true" />
+              <span>Security</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
@@ -141,6 +147,15 @@ export function SheetDownMenu({ onClose }) {
         >
           <IconUser size={18} className="text-muted-foreground" aria-hidden="true" />
           <span className="text-sm font-medium">Profile</span>
+        </Link>
+
+        <Link
+          href="/profile/security"
+          onClick={onClose}
+          className="flex items-center gap-3 px-3 py-2.5 hover:bg-accent rounded-md mx-2 transition-colors"
+        >
+          <IconShield size={18} className="text-muted-foreground" aria-hidden="true" />
+          <span className="text-sm font-medium">Security</span>
         </Link>
 
         <Link

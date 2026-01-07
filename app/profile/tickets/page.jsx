@@ -100,18 +100,15 @@ export default function TicketsPage({ searchParams }) {
     if (ticket) {
       setSelectedTicket(ticket);
       setDialogOpen(true);
-      // Update URL with query param
-      router.push(`/profile/tickets?ticketCode=${ticketCode}`, {
+      router.replace(`/profile/tickets?ticketCode=${ticketCode}`, {
         scroll: false,
       });
     }
   };
-
   const handleCloseDialog = () => {
     setDialogOpen(false);
     setSelectedTicket(null);
-    // Remove query param from URL
-    router.push("/profile/tickets", { scroll: false });
+    router.replace("/profile/tickets", { scroll: false });
   };
 
   const handleDownloadTicket = async (ticketCode) => {
@@ -155,8 +152,8 @@ export default function TicketsPage({ searchParams }) {
       } else {
         toast.error(
           error.response?.data?.message ||
-            error.message ||
-            "Failed to download ticket"
+          error.message ||
+          "Failed to download ticket"
         );
       }
     }
@@ -176,7 +173,7 @@ export default function TicketsPage({ searchParams }) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-          <SpinnerCustom />
+        <SpinnerCustom />
       </div>
     );
   }
@@ -185,7 +182,7 @@ export default function TicketsPage({ searchParams }) {
     <>
       <div className="min-h-dvh bg-background w-full">
         {/* Compact Header */}
-        <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
           <div className="container mx-auto py-3">
             {/* Header Content */}
             <div className="flex flex-col gap-3">
@@ -196,18 +193,18 @@ export default function TicketsPage({ searchParams }) {
                     variant="ghost"
                     size="icon"
                     onClick={() => router.back()}
-                    className="h-8 w-8 flex-shrink-0"
+                    className="h-8 w-8 shrink-0"
                   >
                     <ArrowLeft className="h-4 w-4" />
                   </Button>
-                  <Ticket className="h-5 w-5 text-primary flex-shrink-0" />
+                  <Ticket className="h-5 w-5 text-primary shrink-0" />
                   <h1 className="text-lg sm:text-xl font-semibold truncate">
                     My Tickets
                   </h1>
                 </div>
 
                 {/* Ticket Count Badge */}
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 flex-shrink-0">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 shrink-0">
                   <span className="text-xs sm:text-sm font-semibold text-primary">
                     {filteredTickets.length}
                   </span>
@@ -232,7 +229,7 @@ export default function TicketsPage({ searchParams }) {
 
                 {/* Status Filter */}
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-[130px] sm:w-[140px] h-9 text-sm">
+                  <SelectTrigger className="w-32.5 sm:w-35 h-9 text-sm">
                     <Filter className="h-3.5 w-3.5 mr-1" />
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
@@ -312,15 +309,16 @@ export default function TicketsPage({ searchParams }) {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
               {filteredTickets.map((ticket, index) => {
+
                 return (
-                    <TicketCard
-                    key={ticket.ticket?.code || ticket._id}
+                  <TicketCard
+                    key={ticket._id}
                     ticket={ticket}
                     onViewDetails={handleViewDetails}
                     onDownload={handleDownloadTicket}
-                    />
+                  />
                 );
-                })}
+              })}
             </div>
           )}
         </div>
