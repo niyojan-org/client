@@ -121,13 +121,13 @@ const closePhonePePayPage = () => {
  * @param {Function} params.onCancel - Callback when user cancels
  * @returns {Promise<boolean>}
  */
-export default async function PhonePe({ paymentUrl, onSuccess, onCancel }) {
+export default function PhonePe({ paymentUrl, onSuccess, onCancel }) {
   if (!paymentUrl) {
     toast.error("Payment URL is missing");
-    return false;
+    return Promise.resolve(false);
   }
 
-  return await openPhonePePayPage({
+  return openPhonePePayPage({
     tokenUrl: paymentUrl,
     onSuccess,
     onCancel,
