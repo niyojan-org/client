@@ -37,11 +37,9 @@ export default function ClientLayout({ children }) {
       {!shouldHideNavbar && <NavigationBar />}
       {/* MAIN CONTENT */}
       <main className="h-dvh w-full flex flex-col">
-        <div className="flex-1">
-          <div className={`w-full h-full px-2 md:px-8 lg:px-16 ${!shouldHideNavbar ? 'pt-16' : ''}`}>
+          <div className={`flex-1 w-full h-full px-2 md:px-8 lg:px-16 ${!shouldHideNavbar ? 'pt-16' : ''}`}>
             {children}
           </div>
-        </div>
       </main>
     </>
   );
