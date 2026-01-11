@@ -21,7 +21,7 @@ const Contact02Page = () => {
   } = useContactForm();
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-col gap-8 my-auto h-full items-center justify-center">
+    <div className="w-full max-w-7xl flex flex-col gap-8  h-full items-center justify-center pb-8">
       {/* Intro text */}
       {/* <p className="text-base sm:text-lg text-muted-foreground text-center lg:text-left">
         We&apos;d love to hear from you. Please fill out this form or shoot us
@@ -29,7 +29,7 @@ const Contact02Page = () => {
       </p> */}
 
       {/* Grid with methods & form */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-10 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-10 items-center h-full pb-8 sm:pb-0">
         {/* Contact Methods */}
         <ContactMethods />
 

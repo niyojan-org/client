@@ -43,7 +43,7 @@ export default function ForgotPassword({ onViewChange, userEmail, setUserEmail }
 
     showLoader(); // Show loader when API call starts
     try {
-      const res = await api.post("/api/auth/forgot-password", {
+      const res = await api.post("/auth/forgot-password", {
         email: formData.email,
       });
       toast.success(res.data.message);

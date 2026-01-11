@@ -58,9 +58,9 @@ export default function RegistrationSuccess({ data, redirect, afterDelay = 2500 
 
   return (
     <div className="h-full flex items-center justify-center">
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-xl h-full">
         <div
-          className={`space-y-3 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          className={`space-y-3 transition-all h-full duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
         >
           {/* <SuccessIcon /> */}

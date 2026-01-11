@@ -38,7 +38,7 @@ function VerifyEmailContent() {
       setLoading(true);
       setError(null);
       try {
-        const res = await api.post("/api/auth/verify-email", { token, email });
+        const res = await api.post("/auth/verify-email", { token, email });
         setVerified(true);
         toast.success(res.data.message || "Email verified successfully!");
       } catch (err) {
