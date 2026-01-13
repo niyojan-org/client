@@ -17,6 +17,7 @@ export default function GoogleAuthButton({ variant = "outline", className = "", 
                 return;
             }
             // Direct redirect to backend Google OAuth endpoint
+            //TODO: Change to a popup based flow later when typescript types are available
             const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050';
             window.location.href = `${baseUrl}/auth/google`;
         } catch (error) {

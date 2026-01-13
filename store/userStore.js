@@ -170,7 +170,7 @@ export const useUserStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
       const response = await api.get("/user/me");
-      const { user } = response.data.data;
+      const user = response.data.data || response.data.data.user;
       set({
         user,
         isAuthenticated: true,
