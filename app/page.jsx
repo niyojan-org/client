@@ -1,11 +1,10 @@
 'use client';
-
 import dynamic from "next/dynamic";
 
 
 const Hero = dynamic(() => import("@/components/pages/Hero"));
 // const WhyChooseorgatick = dynamic(() => import("@/components/pages/WhyChooseorgatick"));
-const WhyChooseorgatick = dynamic(() => import ("@/components/pages/WhyChooseOrgatic"))
+const WhyChooseorgatick = dynamic(() => import("@/components/pages/WhyChooseOrgatic"))
 const CoreFeatures = dynamic(() => import("@/components/pages/CoreFeatures"));
 const HowItWorks = dynamic(() => import("@/components/pages/HowItWorks"))
 const PaymentTrustSection = dynamic(() => import("@/components/pages/PaymentTrustSection"));

@@ -19,7 +19,7 @@ export default function GoogleAuthButton({ variant = "outline", className = "", 
             // Direct redirect to backend Google OAuth endpoint
             //TODO: Change to a popup based flow later when typescript types are available
             const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050';
-            window.location.href = `${baseUrl}/auth/google`;
+            window.location.href = `${baseUrl}/auth/google?redirect=app:events`;
         } catch (error) {
             console.error('Google auth error:', error);
             toast.error('Failed to authenticate with Google');

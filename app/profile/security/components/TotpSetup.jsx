@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,27 +15,60 @@ import { IconKey, IconCopy, IconCheck, IconLoader2, IconCircleCheck } from "@tab
 import { toast } from "sonner";
 import api from "@/lib/api";
 import { BackupCodesDialog } from "./BackupCodesDialog";
+import QRCodeStyling from "qr-code-styling";
 
 export function TotpSetup({ open, onOpenChange, onSuccess, isEnabled }) {
   const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
   const [copied, setCopied] = useState(false);
-  const [qrCodeDataUri, setQrCodeDataUri] = useState("");
+  const [otpauthUrl, setOtpauthUrl] = useState("");
   const [manualCode, setManualCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [backupCodes, setBackupCodes] = useState([]);
   const [showBackupCodes, setShowBackupCodes] = useState(false);
+  const qrCodeRef = useRef(null);
+  const qrCodeInstance = useRef(null);
+
+  // Render QR code when otpauthUrl is available
+  useEffect(() => {
+    if (otpauthUrl && qrCodeRef.current) {
+      // Clear previous QR code if it exists
+      if (qrCodeInstance.current) {
+        qrCodeRef.current.innerHTML = "";
+      }
+
+      // Create new QR code instance
+      qrCodeInstance.current = new QRCodeStyling({
+        width: 192,
+        height: 192,
+        data: otpauthUrl,
+        dotsOptions: {
+          color: "#000000",
+          type: "rounded"
+        },
+        backgroundOptions: {
+          color: "#ffffff"
+        },
+        imageOptions: {
+          crossOrigin: "anonymous",
+          margin: 0
+        }
+      });
+
+      qrCodeInstance.current.append(qrCodeRef.current);
+    }
+  }, [otpauthUrl]);
 
   // Fetch QR code when dialog opens and 2FA is not enabled
   useEffect(() => {
     const setupTotp = async () => {
-      if (open && !isEnabled && !qrCodeDataUri) {
+      if (open && !isEnabled && !otpauthUrl) {
         setIsLoading(true);
         try {
           const response = await api.post("/auth/totp/setup");
-          const { qrCode, secret } = response.data.data;
-          setQrCodeDataUri(qrCode);
-          setManualCode(secret);
+          const { otpauthUrl, base32 } = response.data.data;
+          setOtpauthUrl(otpauthUrl);
+          setManualCode(base32);
         } catch (error) {
           toast.error(error.response?.data?.message || "Failed to setup 2FA");
           onOpenChange(false);
@@ -46,7 +79,7 @@ export function TotpSetup({ open, onOpenChange, onSuccess, isEnabled }) {
     };
 
     setupTotp();
-  }, [open, isEnabled, qrCodeDataUri, onOpenChange]);
+  }, [open, isEnabled, otpauthUrl, onOpenChange]);
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(manualCode);
@@ -132,7 +165,7 @@ export function TotpSetup({ open, onOpenChange, onSuccess, isEnabled }) {
 
   const handleClose = () => {
     setVerificationCode(["", "", "", "", "", ""]);
-    setQrCodeDataUri("");
+    setOtpauthUrl("");
     setManualCode("");
     setCopied(false);
     setBackupCodes([]);
@@ -153,7 +186,7 @@ export function TotpSetup({ open, onOpenChange, onSuccess, isEnabled }) {
               <IconKey className="w-5 h-5" stroke={1.5} />
               {isEnabled ? "Two-Factor Authentication Status" : "Enable Two-Factor Authentication"}
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className={'text-start'}>
               {isEnabled
                 ? "Two-factor authentication is currently enabled on your account"
                 : "Scan the QR code and enter the verification code from your authenticator app"}
@@ -196,8 +229,8 @@ export function TotpSetup({ open, onOpenChange, onSuccess, isEnabled }) {
 
                   <div className="flex flex-col items-center gap-4">
                     <div className="w-48 h-48 border-2 border-border rounded-lg flex items-center justify-center bg-background">
-                      {qrCodeDataUri ? (
-                        <img src={qrCodeDataUri} alt="QR Code" className="w-full h-full p-2" />
+                      {otpauthUrl ? (
+                        <div ref={qrCodeRef} />
                       ) : (
                         <p className="text-sm text-muted-foreground">Loading QR code...</p>
                       )}

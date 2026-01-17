@@ -2,6 +2,7 @@ import api, { setAccessToken, clearAccessToken } from "@/lib/api";
 import { toast } from "sonner";
 import { create } from "zustand";
 import { loginWithPasskey } from "@/lib/passkey";
+import baseApi from "@/lib/base.api";
 
 export const useUserStore = create((set, get) => ({
   user: null,
@@ -21,17 +22,18 @@ export const useUserStore = create((set, get) => ({
 
     try {
       set({ loading: true, error: null });
-      const response = await api.post("/auth/login", credentials);
+      const response = await baseApi.post("/auth/login", credentials);
 
       // Check if 2FA is required
-      if (response.data.requiresTOTP || response.data.requiresPasskey) {
+      console.log(response.data)
+      if (response.data.data.requiresTOTP || response.data.data.requiresPasskey) {
         set({ loading: false });
         return {
           requires2FA: true,
-          requiresTOTP: response.data.requiresTOTP,
-          requiresPasskey: response.data.requiresPasskey,
-          userId: response.data.userId,
-          message: response.data.message,
+          requiresTOTP: response.data.data.requiresTOTP,
+          requiresPasskey: response.data.data.requiresPasskey,
+          userId: response.data.data.userId,
+          message: response.data.data.message,
         };
       }
 
@@ -81,22 +83,16 @@ export const useUserStore = create((set, get) => ({
       if (!result.success) {
         throw new Error(result.message || "Passkey login failed");
       }
-      const { name, email, avatar, token } = result.data;
+
 
       // Store access token in memory
-      setAccessToken(token);
-
-      // Extract userId and organizationId from the returned data if available
-      const userId = result.data.userId || result.data.id;
-      const organizationId = result.data.organizationId;
+      setAccessToken(result.data.token);
 
       set({
-        user: { userId, name, email, avatar, organizationId },
+        user: result.data.user || result.data,
         isAuthenticated: true,
         message: result.message || "Passkey login successful!",
       });
-
-      toast.success(result.message || "Passkey login successful!");
       return true;
     } catch (error) {
       const msg = error?.message || "Passkey login failed";
@@ -133,7 +129,7 @@ export const useUserStore = create((set, get) => ({
 
     try {
       set({ loading: true, error: null });
-      const response = await api.post("/auth/register", userData);
+      const response = await baseApi.post("/auth/register", userData);
       toast.success(response.data.message || "Registration successful!");
       return true;
     } catch (error) {
@@ -150,9 +146,6 @@ export const useUserStore = create((set, get) => ({
   logout: async () => {
     try {
       await api.post("/auth/logout");
-    } catch (e) {
-      // ignore network errors
-    } finally {
       clearAccessToken();
       set({
         user: null,
@@ -162,6 +155,8 @@ export const useUserStore = create((set, get) => ({
         message: null,
       });
       toast.success("Logout successful!");
+    } catch (e) {
+      toast.error(e?.response?.data?.message || "Logout failed");
     }
   },
 
@@ -170,7 +165,7 @@ export const useUserStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
       const response = await api.get("/user/me");
-      const user = response.data.data || response.data.data.user;
+      const user = response.data.data.user || response.data.data;
       set({
         user,
         isAuthenticated: true,
@@ -247,13 +242,11 @@ export const useUserStore = create((set, get) => ({
       set({ loading: true, error: null });
       const response = await api.post("/auth/totp/verify-login", { userId, token: totpCode });
 
-      const { name, email, avatar, token, organizationId } = response.data.data;
-
-      // Store access token in memory
+      const { token } = response.data.data;
       setAccessToken(token);
-
+      const user = response.data.data.user || response.data.data;
       set({
-        user: { userId, name, email, avatar, organizationId },
+        user: user,
         isAuthenticated: true,
         message: response.data.message,
       });

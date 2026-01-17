@@ -31,17 +31,13 @@ export function PasskeyRegister({ open, onOpenChange, onSuccess }) {
   const [showBackupCodes, setShowBackupCodes] = useState(false);
 
   const handleRegister = async () => {
-    if (!passkeyName.trim()) {
-      toast.error("Please enter a name for your passkey");
-      return;
-    }
 
     setIsRegistering(true);
     setStep(2);
 
     try {
       // Step 1: Get registration options from server
-      const optionsResponse = await api.post("/auth/passkeys/register/options");
+      const optionsResponse = await api.post("/auth/passkeys/register/options", { name: passkeyName.trim() || "Unnamed Device" });
       const { options } = optionsResponse.data;
 
       if (!options) {
@@ -114,111 +110,111 @@ export function PasskeyRegister({ open, onOpenChange, onSuccess }) {
 
   return (
     <>
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <IconKey className="w-5 h-5" stroke={1.5} />
-            {step === 1 ? "Register New Passkey" : step === 2 ? "Authenticating..." : "Passkey Registered"}
-          </DialogTitle>
-          <DialogDescription>
-            {step === 1
-              ? "Create a passkey for passwordless sign-in"
-              : step === 2
-                ? "Follow the prompt on your device"
-                : "You're all set! Your passkey has been registered"}
-          </DialogDescription>
-        </DialogHeader>
+      <Dialog open={open} onOpenChange={handleClose}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <IconKey className="w-5 h-5" stroke={1.5} />
+              {step === 1 ? "Register New Passkey" : step === 2 ? "Authenticating..." : "Passkey Registered"}
+            </DialogTitle>
+            <DialogDescription>
+              {step === 1
+                ? "Create a passkey for passwordless sign-in"
+                : step === 2
+                  ? "Follow the prompt on your device"
+                  : "You're all set! Your passkey has been registered"}
+            </DialogDescription>
+          </DialogHeader>
 
-        <div className="space-y-6 py-4">
-          {step === 1 && (
-            <>
-              {/* Benefits */}
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 border border-border rounded-md">
-                  <IconShieldCheck className="w-5 h-5 shrink-0 mt-0.5" stroke={1.5} />
-                  <div>
-                    <p className="text-sm font-medium">More Secure</p>
-                    <p className="text-xs text-muted-foreground">
-                      Passkeys are resistant to phishing and more secure than passwords
-                    </p>
+          <div className="space-y-6 py-4">
+            {step === 1 && (
+              <>
+                {/* Benefits */}
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-3 border border-border rounded-md">
+                    <IconShieldCheck className="w-5 h-5 shrink-0 mt-0.5" stroke={1.5} />
+                    <div>
+                      <p className="text-sm font-medium">More Secure</p>
+                      <p className="text-xs text-muted-foreground">
+                        Passkeys are resistant to phishing and more secure than passwords
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-3 border border-border rounded-md">
+                    <IconFingerprint className="w-5 h-5 shrink-0 mt-0.5" stroke={1.5} />
+                    <div>
+                      <p className="text-sm font-medium">Faster Sign-In</p>
+                      <p className="text-xs text-muted-foreground">
+                        Use biometrics or PIN to sign in instantly
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 p-3 border border-border rounded-md">
-                  <IconFingerprint className="w-5 h-5 shrink-0 mt-0.5" stroke={1.5} />
-                  <div>
-                    <p className="text-sm font-medium">Faster Sign-In</p>
-                    <p className="text-xs text-muted-foreground">
-                      Use biometrics or PIN to sign in instantly
-                    </p>
+
+                {/* Passkey Name Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="passkey-name" className="text-sm font-medium">
+                    Name this passkey
+                  </Label>
+                  <Input
+                    id="passkey-name"
+                    placeholder="e.g., MacBook Pro, iPhone 15"
+                    value={passkeyName}
+                    onChange={(e) => setPasskeyName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleRegister()}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Choose a name to help you identify this device
+                  </p>
+                </div>
+
+                <Button onClick={handleRegister} className="w-full" disabled={!passkeyName.trim()}>
+                  Create Passkey
+                </Button>
+              </>
+            )}
+
+            {step === 2 && (
+              <div className="flex flex-col items-center gap-6 py-8">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-full border-4 border-primary/20 flex items-center justify-center animate-pulse">
+                    <IconFingerprint className="w-12 h-12" stroke={1.5} />
                   </div>
+                  <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                </div>
+                <div className="text-center space-y-2">
+                  <p className="font-medium">Authenticating...</p>
+                  <p className="text-sm text-muted-foreground">
+                    Follow the prompt on your device to complete registration
+                  </p>
                 </div>
               </div>
+            )}
 
-              {/* Passkey Name Input */}
-              <div className="space-y-2">
-                <Label htmlFor="passkey-name" className="text-sm font-medium">
-                  Name this passkey
-                </Label>
-                <Input
-                  id="passkey-name"
-                  placeholder="e.g., MacBook Pro, iPhone 15"
-                  value={passkeyName}
-                  onChange={(e) => setPasskeyName(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleRegister()}
-                />
-                <p className="text-xs text-muted-foreground">
-                  Choose a name to help you identify this device
-                </p>
-              </div>
-
-              <Button onClick={handleRegister} className="w-full" disabled={!passkeyName.trim()}>
-                Create Passkey
-              </Button>
-            </>
-          )}
-
-          {step === 2 && (
-            <div className="flex flex-col items-center gap-6 py-8">
-              <div className="relative">
-                <div className="w-24 h-24 rounded-full border-4 border-primary/20 flex items-center justify-center animate-pulse">
-                  <IconFingerprint className="w-12 h-12" stroke={1.5} />
+            {step === 3 && (
+              <div className="flex flex-col items-center gap-6 py-8">
+                <div className="w-24 h-24 rounded-full border-4 border-border flex items-center justify-center">
+                  <IconCheck className="w-12 h-12" stroke={1.5} />
                 </div>
-                <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+                <div className="text-center space-y-2">
+                  <p className="font-medium">Success!</p>
+                  <p className="text-sm text-muted-foreground">
+                    Your passkey "{passkeyName}" has been registered
+                  </p>
+                </div>
               </div>
-              <div className="text-center space-y-2">
-                <p className="font-medium">Authenticating...</p>
-                <p className="text-sm text-muted-foreground">
-                  Follow the prompt on your device to complete registration
-                </p>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
-          {step === 3 && (
-            <div className="flex flex-col items-center gap-6 py-8">
-              <div className="w-24 h-24 rounded-full border-4 border-border flex items-center justify-center">
-                <IconCheck className="w-12 h-12" stroke={1.5} />
-              </div>
-              <div className="text-center space-y-2">
-                <p className="font-medium">Success!</p>
-                <p className="text-sm text-muted-foreground">
-                  Your passkey "{passkeyName}" has been registered
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
-
-    {/* Backup Codes Dialog */}
-    <BackupCodesDialog
-      open={showBackupCodes}
-      onOpenChange={setShowBackupCodes}
-      backupCodes={backupCodes}
-      onConfirm={handleBackupCodesConfirmed}
-    />
+      {/* Backup Codes Dialog */}
+      <BackupCodesDialog
+        open={showBackupCodes}
+        onOpenChange={setShowBackupCodes}
+        backupCodes={backupCodes}
+        onConfirm={handleBackupCodesConfirmed}
+      />
     </>
   );
 }

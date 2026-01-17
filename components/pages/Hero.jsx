@@ -26,14 +26,14 @@ export default function Hero() {
   }, [shouldReduceMotion]);
 
   return (
-    <section
+    <div
       aria-label="Hero section - Event Management Platform"
-      className="relative overflow-hidden bg-[color:var(--background)] text-[color:var(--foreground)] transition-colors duration-300"
+      className="relative overflow-hidden transition-colors duration-300"
     >
       {/* Background animation */}
       <svg
         aria-hidden="true"
-        className="absolute -top-16 left-[10%] w-[360px] h-[360px] md:w-[520px] md:h-[520px] opacity-20 pointer-events-none"
+        className="absolute -top-14 left-[10%] w-90 h-90 md:w-130 md:h-130 opacity-20 pointer-events-none"
         viewBox="0 0 600 600"
         fill="none"
         preserveAspectRatio="xMidYMid slice"
@@ -67,7 +67,7 @@ export default function Hero() {
           style={{ lineHeight: 1.06, letterSpacing: "0.02em", fontFamily: "var(--font-source-sans-3)" }}
         >
           Create Experiences That{" "}
-          <span className="bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent shape-moments">
+          <span className="bg-linear-to-r from-primary via-accent to-secondary bg-clip-text text-transparent shape-moments">
             Inspire
           </span>{" "}
           and Connect People.
@@ -79,9 +79,9 @@ export default function Hero() {
           initial="initial"
           animate="animate"
           transition={{ delay: 0.18, duration: 0.6 }}
-          className="mt-6 text-lg sm:text-xl max-w-3xl mx-auto text-[color:var(--muted-foreground)]"
+          className="mt-6 text-lg sm:text-xl max-w-3xl mx-auto text-muted-foreground"
         >
-          <strong className="text-[color:var(--primary)] italic">All-in-one event management platform</strong>{" "}
+          <strong className="text-primary italic">All-in-one event management platform</strong>{" "}
           built to help you plan, promote, and deliver unforgettable experiences — from concept to celebration.
         </motion.p>
 
@@ -95,7 +95,7 @@ export default function Hero() {
         >
           <Button
             asChild
-            className="px-7 py-3 rounded-xl shadow-lg font-semibold bg-gradient-to-r from-primary via-accent to-secondary text-card hover:scale-105 transition-transform duration-300"
+            className="px-7 py-3 rounded-xl shadow-lg font-semibold bg-linear-to-r from-primary via-accent to-secondary text-card hover:scale-105 transition-transform duration-300"
           >
             <motion.span
               whileHover={!shouldReduceMotion ? { scale: 1.04 } : {}}
@@ -130,13 +130,13 @@ export default function Hero() {
           initial="initial"
           animate="animate"
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-12 text-sm text-[color:var(--muted-foreground)]"
+          className="mt-12 text-sm text-muted-foreground"
         >
           Trusted by <strong>1,000+</strong> organizers & attendees.
         </motion.div>
       </div>
 
-      {/* Localw Styles */}
+      {/* Local Styles */}
       <style jsx>{`
         .shape-moments {
           position: relative;
@@ -161,6 +161,6 @@ export default function Hero() {
           box-shadow: none;
         }
       `}</style>
-    </section>
+    </div>
   );
 }

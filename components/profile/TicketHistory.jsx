@@ -49,7 +49,6 @@ export function TicketHistory({ className }) {
       const response = await api.get('/user/participants/history');
       setTickets(response.data.history || []);
     } catch (error) {
-      console.error('Error fetching ticket history:', error);
       toast.error(error.response?.data?.message || 'Failed to fetch ticket history');
     } finally {
       setLoading(false);
@@ -196,7 +195,7 @@ export function TicketHistory({ className }) {
 
   return (
     <Card className={cn("flex flex-col h-full p-0 py-2 gap-2", className)}>
-      <CardHeader className="border-b flex-shrink-0">
+      <CardHeader className="border-b shrink-0">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Ticket className="h-4 w-4" />
@@ -301,7 +300,7 @@ export function TicketHistory({ className }) {
 
       {/* Pagination Footer */}
       {totalPages > 1 && (
-        <CardFooter className="border-t flex-shrink-0 [.border-t]:pt-1">
+        <CardFooter className="border-t shrink-0 [.border-t]:pt-1">
           <Pagination className="w-full">
             <PaginationContent className="flex justify-center w-full">
               <PaginationItem>

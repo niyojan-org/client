@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { IconShield, IconDeviceLaptop } from "@tabler/icons-react";
+import { IconShield } from "@tabler/icons-react";
 import { SecurityOverview } from "@/app/profile/security/components/SecurityOverview";
 import PasswordSection, { getPasswordAge } from "./components/PasswordSection";
 import { TwoFactorSection } from "@/app/profile/security/components/TwoFactorSection";
@@ -33,7 +33,7 @@ export default function SecurityPage() {
             setIsLoading(true);
             try {
                 // Fetch 2FA status and passkeys in parallel
-                const response = await api.get("/auth/2fa/status");
+                const response = await api.get("/auth/mfa/status");
                 const { status } = response.data;
                 setStatus(status);
                 setSecurityOverview({
@@ -58,7 +58,7 @@ export default function SecurityPage() {
 
     const handleTotpStatusChange = async () => {
         try {
-            const response = await api.get("/auth/2fa/status");
+            const response = await api.get("/auth/mfa/status");
             const { status: newStatus } = response.data;
             setStatus(newStatus);
             setSecurityOverview(prev => ({

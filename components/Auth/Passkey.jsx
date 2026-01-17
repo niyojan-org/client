@@ -46,7 +46,7 @@ export default function PasskeyVerification({ userId, onSuccess, onFailed, onBac
 
         try {
             // Use modal/prompt passkey login
-            const success = await loginWithPasskey(false);
+            const success = await loginWithPasskey(userId, false);
 
             if (success) {
                 toast.success("Authentication successful!");
@@ -56,7 +56,7 @@ export default function PasskeyVerification({ userId, onSuccess, onFailed, onBac
                 if (onFailed) onFailed();
             }
         } catch (error) {
-            toast.error("Authentication failed. Please try again.");
+            toast.error(error.message || "Authentication failed. Please try again.");
             if (onFailed) onFailed();
         } finally {
             setIsAuthenticating(false);

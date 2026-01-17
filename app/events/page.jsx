@@ -16,16 +16,16 @@ export default function EventsPage() {
   const { allEvents, categories, loading, error } = useEvents();
 
   return (
-    <div className="flex transition-colors duration-300">
-      <main className="flex-1 overflow-auto mt-[px] mb-20">
+    <div className="flex transition-colors duration-300 pt-2">
+      <main className="flex-1 overflow-auto mb-20">
         {/* Header */}
         <header className="mb-6 mx-auto" aria-label="Events page header">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 lg:gap-8">
             {/* Left section */}
             <div>
-              <div className="flex items-center gap-3">
-                <div className="h-12 w-1.5 bg-gradient-to-b from-primary via-accent to-primary/50 rounded-full shadow-sm" />
-                <div className="flex gap-4 items-center md:flex-row flex-col">
+              <div className="flex items-center gap-2 h-full">
+                <div className="h-14 w-1.5 bg-linear-to-b from-primary via-accent to-primary/50 rounded-full shadow-sm" />
+                <div className="flex gap-0 items-center md:flex-row flex-col">
                   <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground leading-tight">
                     Discover Events
                   </h1>

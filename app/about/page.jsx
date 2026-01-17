@@ -30,7 +30,7 @@ function FeatureCard({ feature }) {
       className={`bg-card mt-5  border-l-2 ${feature.colorScheme.border} border-border rounded-2xl p-4 px-0 hover:shadow-lg transition-all duration-300`}
     >
       <CardHeader className="flex items-center gap-4 mb-4">
-        <div className={`p-3 rounded-xl ${feature.colorScheme.bg} flex-shrink-0`}>
+        <div className={`p-3 rounded-xl ${feature.colorScheme.bg} shrink-0`}>
           <Icon className={`w-6 h-6 ${feature.colorScheme.icon}`} />
         </div>
         <CardTitle className="text-lg">{feature.title}</CardTitle>
@@ -87,8 +87,8 @@ const About = () => {
       {/* Hero Section */}
       <section className="relative text-center justify-center flex flex-col items-center pt-5 sm:pt-15 ">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <h1 className="text-5xl md:text-7xl font-bold pb-6 bg-gradient-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">
-            orgatick
+          <h1 className="text-5xl md:text-7xl font-bold pb-6 bg-linear-to-r from-foreground via-primary to-secondary bg-clip-text text-transparent">
+            Orgatick
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             A <span className="font-semibold text-primary">user-friendly event management platform </span>

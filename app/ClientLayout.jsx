@@ -1,10 +1,12 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useUserStore } from "@/store/userStore";
 
 import { useEffect, useMemo, useState } from "react";
 import NavigationBar from "@/components/NavigationBar";
+import { Button } from "@/components/ui/button";
+import { subscribeUser } from "@/lib/subscribePush";
 
 // Routes where navbar should be hidden
 const hiddenNavbarRoutes = ["/auth"];
@@ -37,9 +39,11 @@ export default function ClientLayout({ children }) {
       {!shouldHideNavbar && <NavigationBar />}
       {/* MAIN CONTENT */}
       <main className="h-dvh w-full flex flex-col">
-          <div className={`flex-1 w-full h-full px-2 md:px-8 lg:px-16 ${!shouldHideNavbar ? 'pt-16' : ''}`}>
-            {children}
-          </div>
+
+        {/* <Button onClick={() => subscribeUser()}>Enable Notification</Button> */}
+        <div className={`flex-1 w-full h-full px-2 md:px-8 lg:px-16 ${!shouldHideNavbar ? 'pt-13' : ''}`}>
+          {children}
+        </div>
       </main>
     </>
   );

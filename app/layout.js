@@ -3,7 +3,9 @@ import ClientLayout from "./ClientLayout";
 import { Toaster } from "@/components/ui/sonner";
 import { Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeColor } from "@/components/ThemeColor";
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import ServiceWorkerRegister from "./ServiceWorkerRegister";
 
 // Fonts
 const sourceCodePro = Source_Code_Pro({
@@ -28,14 +30,11 @@ export const viewport = {
   maximumScale: 1,
 };
 
-export const themeColor = "#ffffff";
-
 /* ------------------------------------------
    GLOBAL SEO
 ------------------------------------------ */
 export const metadata = {
   metadataBase: new URL("https://orgatick.in"),
-
   title: {
     default: "Orgatick – Event Hosting & Management Platform",
     template: "%s | Orgatick",
@@ -58,6 +57,9 @@ export const metadata = {
   applicationName: "Orgatick",
   category: "Events",
   creator: "Orgatick Team",
+
+  background_color: "#f4f7fc",
+  theme_color: "#f4f7fc",
 
   robots: {
     index: true,
@@ -125,6 +127,7 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
+          <ServiceWorkerRegister />
           <ClientLayout>
             {children}
 

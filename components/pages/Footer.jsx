@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "@/public/icon.png";
-import { IconBrandInstagram, IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
+import { IconBrandInstagram, IconBrandLinkedin, IconBrandX, IconBrandYoutube } from "@tabler/icons-react";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -51,7 +51,7 @@ export default function Footer() {
               aria-label="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full sm:w-[250px] py-5 rounded-lg border-border text-foreground placeholder-muted-foreground"
+              className="w-full sm:w-62.5 py-5 rounded-lg border-border text-foreground placeholder-muted-foreground"
               required
             />
             <Button
@@ -70,7 +70,7 @@ export default function Footer() {
           {/* Social Links */}
           <div className="flex gap-4 mt-6 justify-center md:justify-start">
             <Link
-              href="https://instagram.com/orgatick"
+              href="https://instagram.com/orgatick.in"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -79,16 +79,16 @@ export default function Footer() {
               <IconBrandInstagram className="w-6 h-6" />
             </Link>
             <Link
-              href="https://twitter.com/orgatick"
+              href="https://www.youtube.com/@orgatick"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
               className="hover:text-primary transition-colors"
             >
-              <IconBrandX className="w-6 h-6" />
+              <IconBrandYoutube className="w-6 h-6" />
             </Link>
             <Link
-              href="https://linkedin.com/company/orgatick"
+              href="https://linkedin.com/company/orgatick.in"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -156,7 +156,7 @@ export default function Footer() {
                   Refund Policy
                 </Link>
               </li>
-                            <li>
+              <li>
                 <Link
                   href="/delivery-policy"
                   className="hover:text-primary transition"
@@ -190,7 +190,7 @@ export default function Footer() {
         <p>
           © {new Date().getFullYear()}{" "}
           <span className="text-primary font-semibold">
-            <Link href="https://orgatick.in">orgatick</Link>
+            <Link href="https://orgatick.in">Orgatick</Link>
           </span>
           . All rights reserved.
         </p>
@@ -213,6 +213,7 @@ export default function Footer() {
             sameAs: [
               "https://instagram.com/orgatick",
               "https://linkedin.com/company/orgatick",
+              "https://youtube.com/@orgatick",
             ],
           }),
         }}

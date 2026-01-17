@@ -79,13 +79,14 @@ export function PasskeysSection({ onCountChange }) {
 
     setIsUpdatingName(true);
     try {
-      await api.patch(`/auth/passkeys/${passkeyId}/name`, {
+      await api.put(`/auth/passkeys/${passkeyId}`, {
         name: newName.trim()
       });
       toast.success("Device name updated!");
       await fetchPasskeys();
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to update name");
+      console.log(error)
+      toast.error(error.response?.data?.message || error.message || "Failed to update name");
     } finally {
       setIsUpdatingName(false);
     }
@@ -141,10 +142,10 @@ export function PasskeysSection({ onCountChange }) {
         </div>
       </div>
 
-      <PasskeyRegister 
-        open={showRegister} 
-        onOpenChange={setShowRegister} 
-        onSuccess={handlePasskeyAdded} 
+      <PasskeyRegister
+        open={showRegister}
+        onOpenChange={setShowRegister}
+        onSuccess={handlePasskeyAdded}
       />
 
       {/* Delete Confirmation Dialog */}

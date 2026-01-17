@@ -90,7 +90,7 @@ export function PasskeySettings({ className }) {
         setIsRegistering(true);
         try {
             // Step 1: Get registration options from server
-            const optionsResponse = await api.post("/auth/passkeys/register/options");
+            const optionsResponse = await api.post("/auth/passkeys/register/options", { name: "Unnamed Device" });
 
             // Extract the options from the response
             const { options } = optionsResponse.data;

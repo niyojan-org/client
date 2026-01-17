@@ -205,8 +205,15 @@ export function TicketCard({ ticket, onViewDetails, className }) {
                   value={ticket._id || ticket.ticket.code}
                   size={200}
                   level="H"
-                  fgColor="var(--foreground)"
-                  bgColor="var(--background)"
+                  fgColor="var(--primary)"
+                  bgColor="none"
+                  imageSettings={{
+                    src: ticket.event?.logoImage || "/icon.png",
+                    excavate: false,
+                    height: 40,
+                    width: 40,
+                  }}
+
                 />
               </div>
               <p className="text-sm text-muted-foreground mt-4 text-center">

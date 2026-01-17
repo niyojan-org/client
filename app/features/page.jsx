@@ -47,7 +47,7 @@ export default function Features() {
   ];
 
   return (
-    <section className="min-h-dvh sm:px-12 md:px-20 lg:px-32 transition-colors duration-700 pb-10 scroll-smooth">
+    <section className="transition-colors duration-700 pb-10 scroll-smooth pt-6">
 
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-16">
