@@ -208,7 +208,7 @@ export function TicketCard({ ticket, onViewDetails, className }) {
                   fgColor="var(--primary)"
                   bgColor="none"
                   imageSettings={{
-                    src: ticket.event?.logoImage || "/icon.png",
+                    src: ticket.event?.logoImage || "icons/icon.png",
                     excavate: false,
                     height: 40,
                     width: 40,

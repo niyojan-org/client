@@ -10,7 +10,7 @@ import {
 } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/icon.png";
+import logo from "@/public/icons/icon.png";
 import { useUserStore } from "@/store/userStore";
 import React, { useRef, useState } from "react";
 
