@@ -1,10 +1,29 @@
 "use client";;
-import { Slot } from "@radix-ui/react-slot";
-import { Star } from "lucide-react";
 import * as React from "react";
 import { useComposedRefs } from "@/lib/compose-refs";
 import { cn } from "@/lib/utils";
 import { VisuallyHiddenInput } from "@/components/visually-hidden-input";
+import { IconStar } from "@tabler/icons-react";
+
+const Slot = React.forwardRef((props, forwardedRef) => {
+  const { children, ...slotProps } = props;
+  
+  if (React.isValidElement(children)) {
+    return React.cloneElement(children, {
+      ...slotProps,
+      ...children.props,
+      ref: forwardedRef,
+      style: {
+        ...slotProps.style,
+        ...children.props.style,
+      },
+      className: cn(slotProps.className, children.props.className),
+    });
+  }
+  
+  return null;
+});
+Slot.displayName = "Slot";
 
 const ROOT_NAME = "Rating";
 const ITEM_NAME = "RatingItem";
@@ -203,7 +222,7 @@ function RatingRootImpl(props) {
     max = 5,
     step = 1,
     clearable = false,
-    asChild,
+    ,
     disabled = false,
     readOnly = false,
     required = false,
@@ -380,7 +399,7 @@ function RatingRootImpl(props) {
     getItems,
   ]);
 
-  const RootPrimitive = asChild ? Slot : "div";
+  const RootPrimitive =  ? Slot : "div";
 
   return (
     <RatingContext.Provider value={contextValue}>
@@ -436,7 +455,7 @@ function RatingRootImpl(props) {
 }
 
 function RatingItem(props) {
-  const { index, asChild, disabled, className, ref, children, ...itemProps } =
+  const { index, , disabled, className, ref, children, ...itemProps } =
     props;
 
   const itemRef = React.useRef(null);
@@ -712,7 +731,7 @@ function RatingItem(props) {
       ? "partial"
       : "empty";
 
-  const ItemPrimitive = asChild ? Slot : "button";
+  const ItemPrimitive =  ? Slot : "button";
 
   return (
     <ItemPrimitive
@@ -756,7 +775,7 @@ function RatingItem(props) {
       onMouseLeave={onMouseLeave}>
       {typeof children === "function"
         ? children(dataState)
-        : (children ?? <Star />)}
+        : (children ?? <IconStar />)}
     </ItemPrimitive>
   );
 }

@@ -122,7 +122,7 @@ export function DangerZoneSection({ user }) {
                             <IconAlertTriangle className="h-5 w-5" />
                             Delete Account
                         </AlertDialogTitle>
-                        <AlertDialogDescription asChild>
+                        <AlertDialogDescription >
                             <div className="space-y-4">
                                 <div className="text-foreground font-medium">
                                     {getDeleteAccountMessage()}

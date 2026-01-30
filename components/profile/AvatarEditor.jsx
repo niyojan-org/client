@@ -234,7 +234,7 @@ export function AvatarEditor({ user, triggerButton }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger >
         {triggerButton || (
           <Button variant="outline" className="gap-2">
             <IconCamera className="h-4 w-4" />

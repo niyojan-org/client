@@ -204,7 +204,7 @@ export default function SearchBar({
         {/* Filter Button */}
         {isDesktop ? (
           <Popover open={filtersOpen} onOpenChange={setFiltersOpen}>
-            <PopoverTrigger asChild>
+            <PopoverTrigger render={
               <Button variant="outline" className="gap-2 relative">
                 <IconFilter size={16} />
                 <span className="hidden sm:inline">Filters</span>
@@ -214,6 +214,8 @@ export default function SearchBar({
                   </Badge>
                 )}
               </Button>
+            }>
+
             </PopoverTrigger>
             <PopoverContent className="min-w-[450px]" align="end">
               <EventFilters
@@ -226,16 +228,16 @@ export default function SearchBar({
           </Popover>
         ) : (
           <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" className="gap-2 relative">
-                <IconFilter size={16} />
-                <span>Filters</span>
-                {getActiveFiltersCount() > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center text-xs">
-                    {getActiveFiltersCount()}
-                  </Badge>
-                )}
-              </Button>
+            <SheetTrigger render={<Button variant="outline" className="gap-2 relative">
+              <IconFilter size={16} />
+              <span>Filters</span>
+              {getActiveFiltersCount() > 0 && (
+                <Badge className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center text-xs">
+                  {getActiveFiltersCount()}
+                </Badge>
+              )}
+            </Button>}>
+
             </SheetTrigger>
             <SheetContent side="right" className="w-[320px] sm:w-[400px] px-4">
               <SheetHeader className="mb-4">

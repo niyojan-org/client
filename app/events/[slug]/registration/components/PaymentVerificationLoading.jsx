@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { CheckCircle2, Clock, Shield } from "lucide-react";
+import { IconCircleCheck, IconClock, IconShield } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 function PaymentVerificationLoading({ className }) {
@@ -22,17 +22,17 @@ function PaymentVerificationLoading({ className }) {
 
   const verificationSteps = [
     {
-      icon: Shield,
+      icon: IconShield,
       text: "Securing your transaction",
       completed: progress >= 30,
     },
     {
-      icon: Clock,
+      icon: IconClock,
       text: "Processing payment",
       completed: progress >= 60,
     },
     {
-      icon: CheckCircle2,
+      icon: IconCircleCheck,
       text: "Verifying with payment gateway",
       completed: progress >= 90,
     },
@@ -47,7 +47,7 @@ function PaymentVerificationLoading({ className }) {
             <div className="relative">
               <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping duration-700" />
               <div className="relative bg-primary/10 p-4 rounded-full">
-                <Shield className="w-12 h-12 text-primary" />
+                <IconShield className="w-12 h-12 text-primary" />
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ function PaymentVerificationLoading({ className }) {
                   {step.text}
                 </span>
                 {step.completed && (
-                  <CheckCircle2 className="w-4 h-4 text-green-500 ml-auto" />
+                  <IconCircleCheck className="w-4 h-4 text-green-500 ml-auto" />
                 )}
               </div>
             ))}

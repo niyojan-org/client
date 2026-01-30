@@ -197,11 +197,13 @@ export function AccountSettings({ user, onLogout, className }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger render={
         <Button variant="outline" size="sm" className={cn("gap-2 cursor-pointer", className)}>
           <IconSettings className="h-4 w-4" />
           Settings
         </Button>
+      }>
+
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh]">
         <DialogHeader>
@@ -322,7 +324,7 @@ export function AccountSettings({ user, onLogout, className }) {
               <IconAlertTriangle className="h-5 w-5" />
               Delete Account
             </AlertDialogTitle>
-            <AlertDialogDescription asChild>
+            <AlertDialogDescription >
               <div className="space-y-4">
                 <div className="text-foreground font-medium">
                   {getDeleteAccountMessage()}

@@ -174,7 +174,7 @@ export function PasskeySettings({ className }) {
 
     return (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
+            <DialogTrigger >
                 <Button variant="outline" className={cn("gap-2", className)}>
                     <IconKey className="h-4 w-4" />
                     Manage Passkeys

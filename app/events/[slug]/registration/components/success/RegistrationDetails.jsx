@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { IconBrandWhatsapp, IconMail } from "@tabler/icons-react";
-import { CheckCircle2, Ticket, Calendar, MapPin, Users, IndianRupee } from "lucide-react";
+import { IconCircleCheck, IconTicket, IconCalendar, IconMapPin, IconUsers, IconCurrencyRupee } from "@tabler/icons-react";
 
 export default function RegistrationDetails({
   registrationId,
@@ -35,7 +35,7 @@ export default function RegistrationDetails({
         <div className="space-y-2.5">
           {eventName && (
             <div className="flex items-center gap-2.5">
-              <Ticket className="w-4 h-4 text-primary shrink-0" />
+              <IconTicket className="w-4 h-4 text-primary shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground">Event</p>
                 <p className="font-semibold text-sm text-foreground truncate">{eventName}</p>
@@ -45,7 +45,7 @@ export default function RegistrationDetails({
 
           {eventDate && (
             <div className="flex items-center gap-2.5">
-              <Calendar className="w-4 h-4 text-primary shrink-0" />
+              <IconCalendar className="w-4 h-4 text-primary shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground">Date & Time</p>
                 <p className="font-semibold text-sm text-foreground">{eventDate}</p>
@@ -55,7 +55,7 @@ export default function RegistrationDetails({
 
           {eventLocation && (
             <div className="flex items-center gap-2.5">
-              <MapPin className="w-4 h-4 text-primary shrink-0" />
+              <IconMapPin className="w-4 h-4 text-primary shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground">Location</p>
                 <p className="font-semibold text-sm text-foreground truncate">{eventLocation}</p>
@@ -65,7 +65,7 @@ export default function RegistrationDetails({
 
           {ticketType && (
             <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
+              <IconCircleCheck className="w-4 h-4 text-primary shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground">Ticket Type</p>
                 <p className="font-semibold text-sm text-foreground">{ticketType}</p>
@@ -76,7 +76,7 @@ export default function RegistrationDetails({
           {/* Group Registration Info */}
           {isGroup && (
             <div className="flex items-center gap-2.5">
-              <Users className="w-4 h-4 text-primary shrink-0" />
+              <IconUsers className="w-4 h-4 text-primary shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground">Participants</p>
                 <p className="font-semibold text-sm text-foreground">
@@ -89,7 +89,7 @@ export default function RegistrationDetails({
           {/* Payment Info */}
           {isPaid && (
             <div className="flex items-center gap-2.5">
-              <IndianRupee className="w-4 h-4 text-success shrink-0" />
+              <IconCurrencyRupee className="w-4 h-4 text-success shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-muted-foreground">Amount Paid</p>
                 <p className="font-semibold text-sm text-success">

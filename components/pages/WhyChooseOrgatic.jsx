@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Users, Rocket, BarChart3 } from "lucide-react";
+import { IconUsers, IconRocket, IconChartBar } from "@tabler/icons-react";
 import Script from "next/script";
 import {
   Card,
@@ -15,17 +15,17 @@ import {
 export default function WhyChooseorgatick() {
   const features = [
     {
-      icon: <Users className="w-8 h-8 text-primary" />,
+      icon: <IconUsers className="w-8 h-8 text-primary" />,
       title: "Collaborate Seamlessly",
       desc: "Organizers, clubs, and sponsors work together — from planning to promotion, all in one place.",
     },
     {
-      icon: <Rocket className="w-8 h-8 text-primary" />,
+      icon: <IconRocket className="w-8 h-8 text-primary" />,
       title: "Join & Experience More",
       desc: "Discover college events, fests, and workshops that match your passions and goals.",
     },
     {
-      icon: <BarChart3 className="w-8 h-8 text-primary" />,
+      icon: <IconChartBar className="w-8 h-8 text-primary" />,
       title: "Grow Your Network",
       desc: "Connect with peers, showcase your achievements, and expand your event presence across campuses.",
     },

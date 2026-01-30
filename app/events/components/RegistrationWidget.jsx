@@ -129,7 +129,7 @@ export default function RegistrationWidget({ event }) {
         >
           {registrationActive ? (
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full px-4">
-              <Button className={"w-full"} asChild>
+              <Button className={"w-full"} >
                 <Link href={`/events/${event.slug}/registration`}>
                   <IconTicket className="w-5 h-5" />
                   Grab Your Spot

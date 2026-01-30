@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Save, X, User, Mail, Phone, MapPin, Users, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { IconMapPin } from "@tabler/icons-react";
 import { PhoneInput } from "../ui/phone-number-input";
+import { IconDeviceFloppy } from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
+import { IconMapPin2 } from "@tabler/icons-react";
 
 export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
     const [formData, setFormData] = useState({
@@ -93,11 +92,11 @@ export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
                 <CardAction >
                     <div className="flex gap-2 justify-between">
                         <Button size="sm" onClick={handleSave} disabled={isLoading}>
-                            <Save className="h-4 w-4" />
+                            <IconDeviceFloppy className="h-4 w-4" />
                             {isLoading ? "Saving..." : "Save Changes"}
                         </Button>
                         <Button size="sm" variant="outline" onClick={handleCancel} disabled={isLoading}>
-                            <X className="h-4 w-4" />
+                            <IconX className="h-4 w-4" />
                             Cancel
                         </Button>
                     </div>
@@ -168,7 +167,7 @@ export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
                     {/* Address */}
                     <div className="space-y-2">
                         <Label htmlFor="address" className="flex items-center gap-2 text-sm font-medium">
-                            <IconMapPin className="h-4 w-4 text-muted-foreground" />
+                            <IconMapPin2 className="h-4 w-4 text-muted-foreground" />
                             Address
                         </Label>
                         <Input

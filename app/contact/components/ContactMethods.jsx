@@ -70,7 +70,7 @@ export const ContactMethods = () => {
 
             {method.type === "dialog" && (
               <AlertDialog>
-                <AlertDialogTrigger asChild>
+                <AlertDialogTrigger >
                   <p className="font-medium text-primary cursor-pointer hover:underline">
                     {method.value}
                   </p>

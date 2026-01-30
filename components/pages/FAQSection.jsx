@@ -16,7 +16,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="py-4 sm:px-8 bg-gradient-to-b from-background via-primary/5 to-card transition-colors duration-700">
+    <section className="py-4 sm:px-8 bg-linear-to-b from-background via-primary/5 to-card transition-colors duration-700">
       <div className="max-w-5xl mx-auto text-center">
         {/* Heading */}
         <h2 className="text-3xl sm:text-4xl font-extrabold mb-10 font-sans text-primary dark:text-primary">

@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { SpinnerCustom } from "@/components/ui/spinner";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, TicketPercent, XCircle } from "lucide-react";
+import { IconCircleCheck, IconTicket, IconCircleX } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 export default function CouponInput({
@@ -73,7 +73,7 @@ export default function CouponInput({
         htmlFor="coupon-input"
         className="font-semibold text-foreground flex items-center gap-2 text-sm sm:text-base"
       >
-        <TicketPercent className="w-4 h-4 text-primary" />
+        <IconTicket className="w-4 h-4 text-primary" />
         Apply Coupon
       </Label >
 
@@ -101,7 +101,7 @@ export default function CouponInput({
               onClick={handleClear}
               className="rounded-full w-full sm:w-auto flex items-center gap-2"
             >
-              <XCircle className="w-4 h-4" />
+              <IconCircleX className="w-4 h-4" />
               Remove
             </Button>
           ) : (
@@ -116,7 +116,7 @@ export default function CouponInput({
                 <SpinnerCustom className="h-4 w-4" />
               ) : (
                 <>
-                  <TicketPercent className="w-4 h-4" />
+                  <IconTicket className="w-4 h-4" />
                   Apply
                 </>
               )}

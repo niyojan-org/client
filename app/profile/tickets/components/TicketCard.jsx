@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Eye, CheckCircle2, Ticket } from "lucide-react";
+import { IconCalendar, IconMapPin, IconEye, IconCircleCheck, IconTicket } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { QRCodeSVG } from "qrcode.react";
 import {
@@ -89,7 +89,7 @@ export function TicketCard({ ticket, onViewDetails, className }) {
         {hasCheckedIn && (
           <div className="absolute top-3 left-3">
             <Badge className="bg-green-500 text-white border-0 gap-1">
-              <CheckCircle2 className="h-3 w-3" />
+              <IconCircleCheck className="h-3 w-3" />
               Checked In
             </Badge>
           </div>
@@ -139,11 +139,11 @@ export function TicketCard({ ticket, onViewDetails, className }) {
         {/* Event Info */}
         <div className="space-y-2 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4 shrink-0" />
+            <IconCalendar className="h-4 w-4 shrink-0" />
             <span className="truncate">{formatDate(getEventDate())}</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
-            <MapPin className="h-4 w-4 shrink-0" />
+            <IconMapPin className="h-4 w-4 shrink-0" />
             <span className="truncate">{getVenue()}</span>
           </div>
         </div>
@@ -166,7 +166,7 @@ export function TicketCard({ ticket, onViewDetails, className }) {
               onViewDetails(ticket.ticket.code);
             }}
           >
-            <Eye className="h-3.5 w-3.5" />
+            <IconEye className="h-3.5 w-3.5" />
             View
           </Button>
           {ticket?.status?.toLowerCase() === "confirmed" && (
@@ -179,7 +179,7 @@ export function TicketCard({ ticket, onViewDetails, className }) {
                 setIsSheetOpen(true);
               }}
             >
-              <Ticket className="h-3.5 w-3.5" />
+              <IconTicket className="h-3.5 w-3.5" />
               Show Ticket
             </Button>
           )}

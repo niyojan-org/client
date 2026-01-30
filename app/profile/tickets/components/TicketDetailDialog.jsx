@@ -12,22 +12,22 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-    Calendar,
-    MapPin,
-    User,
-    Mail,
-    Phone,
-    Ticket,
-    Users,
-    CreditCard,
-    CheckCircle2,
-    Download,
-    Clock,
-    Tag,
-    Building2,
-    IndianRupee,
-    FileText,
-} from "lucide-react";
+    IconCalendar,
+    IconMapPin,
+    IconUser,
+    IconMail,
+    IconPhone,
+    IconTicket,
+    IconUsers,
+    IconCreditCard,
+    IconCircleCheck,
+    IconDownload,
+    IconClock,
+    IconTag,
+    IconBuilding,
+    IconCurrencyRupee,
+    IconFileText,
+} from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
@@ -132,7 +132,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                 <CardContent className="p-3">
                                     <div className="flex items-center gap-2">
                                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
-                                            <Ticket className="h-4 w-4 text-primary" />
+                                            <IconTicket className="h-4 w-4 text-primary" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
@@ -151,7 +151,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                 <CardContent className="p-3">
                                     <div className="flex items-center gap-2">
                                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
-                                            <IndianRupee className="h-4 w-4 text-primary" />
+                                            <IconCurrencyRupee className="h-4 w-4 text-primary" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
@@ -170,7 +170,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                 <CardContent className="p-3">
                                     <div className="flex items-center gap-2">
                                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted flex-shrink-0">
-                                            <Tag className="h-4 w-4 text-foreground" />
+                                            <IconTag className="h-4 w-4 text-foreground" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
@@ -189,7 +189,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                 <CardContent className="p-3">
                                     <div className="flex items-center gap-2">
                                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted flex-shrink-0">
-                                            <Building2 className="h-4 w-4 text-foreground" />
+                                            <IconBuilding className="h-4 w-4 text-foreground" />
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-[10px] text-muted-foreground font-medium mb-0.5">
@@ -207,7 +207,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                         {/* Booking Info - Compact Inline */}
                         <div className="flex flex-wrap items-center  p-3 gap-1 bg-muted rounded-lg border">
                             <div className="flex items-center gap-2">
-                                <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                                <IconClock className="h-3.5 w-3.5 text-muted-foreground" />
                                 <div>
                                     <span className="text-[10px] text-muted-foreground">Booked on</span>
                                     <p className="font-semibold text-xs">
@@ -219,7 +219,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                 <>
                                     <Separator orientation="vertical" className="h-6" />
                                     <div className="flex items-center gap-2">
-                                        <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                                        <IconClock className="h-3.5 w-3.5 text-muted-foreground" />
                                         <div>
                                             <span className="text-[10px] text-muted-foreground">Last updated</span>
                                             <p className="font-semibold text-xs">
@@ -242,7 +242,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                     <Card className="border-border p-2">
                                         <CardContent className="w-full p-0">
                                             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-                                                <Calendar className="h-5 w-5 text-primary" />
+                                                <IconCalendar className="h-5 w-5 text-primary" />
                                                 Sessions ({ticket.sessionCheckIn.length})
                                             </h3>
 
@@ -272,7 +272,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                                                 </div>
                                                                 {session.checkedIn && (
                                                                     <Badge className="bg-green-600 text-white gap-1 flex-shrink-0">
-                                                                        <CheckCircle2 className="h-3 w-3" />
+                                                                        <IconCircleCheck className="h-3 w-3" />
                                                                         Checked In
                                                                     </Badge>
                                                                 )}
@@ -280,7 +280,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
 
                                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                                                                 <div className="flex items-center gap-2">
-                                                                    <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                                                                    <IconClock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                                                                     <div>
                                                                         <p className="text-xs text-muted-foreground">Start</p>
                                                                         <p className="font-semibold">{startTime.day}</p>
@@ -289,7 +289,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange, onDownload }) {
                                                                 </div>
 
                                                                 <div className="flex items-center gap-2">
-                                                                    <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                                                                    <IconClock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                                                                     <div>
                                                                         <p className="text-xs text-muted-foreground">End</p>
                                                                         <p className="font-semibold">{endTime.time}</p>

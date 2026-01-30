@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, XCircle, AlertCircle } from "lucide-react";
+import { IconCircleCheck, IconClock, IconCircleX, IconAlertCircle } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 export function TicketStatusBadge({ status, className }) {
@@ -8,28 +8,28 @@ export function TicketStatusBadge({ status, className }) {
       case "confirmed":
         return {
           variant: "default",
-          icon: CheckCircle,
+          icon: IconCircleCheck,
           label: "Confirmed",
           className: "bg-green-500 hover:bg-green-600 text-white",
         };
       case "pending":
         return {
           variant: "secondary",
-          icon: Clock,
+          icon: IconClock,
           label: "Pending",
           className: "bg-yellow-500 hover:bg-yellow-600 text-white",
         };
       case "cancelled":
         return {
           variant: "destructive",
-          icon: XCircle,
+          icon: IconCircleX,
           label: "Cancelled",
           className: "bg-red-500 hover:bg-red-600 text-white",
         };
       default:
         return {
           variant: "outline",
-          icon: AlertCircle,
+          icon: IconAlertCircle,
           label: status || "Unknown",
           className: "bg-muted",
         };

@@ -1,10 +1,11 @@
-import { SettingsIcon } from "lucide-react"
+import { IconSettings } from "@tabler/icons-react"
 import { IconMoon, IconSun, IconLanguage, IconHelpCircle, IconShieldCheck, IconContrast2, IconSettings2 } from "@tabler/icons-react"
 
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -24,20 +25,24 @@ export default function SettingsMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger render={
         <Button
           size="icon"
           variant="ghost"
           className="rounded-full shadow-none size-8"
           aria-label="Open settings menu">
-          <SettingsIcon className="text-muted-foreground" size={16} aria-hidden="true" />
+          <IconSettings className="text-muted-foreground" size={16} aria-hidden="true" />
         </Button>
+      } >
+
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-w-64" align="end">
-        <DropdownMenuLabel>Settings</DropdownMenuLabel>
+      <DropdownMenuContent className="max-w-64 w-full" align="end">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Settings</DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={toggleTheme} className="cursor-pointer">
+        <DropdownMenuItem onClick={toggleTheme} className="cursor-pointer w-full">
           {theme === "dark" ? (
             <IconSun size={16} className="opacity-60" aria-hidden="true" />
           ) : (
@@ -47,8 +52,8 @@ export default function SettingsMenu() {
         </DropdownMenuItem>
 
         {isAuthenticated && (
-          <DropdownMenuItem asChild>
-            <Link href={'/profile/security'} className="cursor-pointer">
+          <DropdownMenuItem >
+            <Link href={'/profile/security'} className="cursor-pointer flex items-center gap-2">
               <IconSettings2 size={16} className="opacity-60" aria-hidden="true" />
               <span>Account Security</span>
             </Link>
@@ -61,22 +66,21 @@ export default function SettingsMenu() {
         </DropdownMenuItem> */}
 
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href={'/contact'} className="cursor-pointer">
+        <DropdownMenuItem >
+          <Link href={'/contact'} className="cursor-pointer flex items-center gap-2">
             <IconHelpCircle size={16} className="opacity-60 " aria-hidden="true" />
             <span>Help & Support</span>
           </Link>
         </DropdownMenuItem>
-
-        <DropdownMenuItem asChild>
-          <Link href={'/privacy-policy'} className="cursor-pointer">
+        <DropdownMenuItem >
+          <Link href={'/privacy-policy'} className="cursor-pointer flex items-center gap-2">
             <IconShieldCheck size={16} className="opacity-60" aria-hidden="true" />
             <span>Privacy</span>
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild>
-          <Link href={'/terms-and-conditions'} className="cursor-pointer">
+        <DropdownMenuItem >
+          <Link href={'/terms-and-conditions'} className="cursor-pointer flex items-center gap-2">
             <IconContrast2 size={16} className="opacity-60" aria-hidden="true" />
             <span>Terms & Conditions</span>
           </Link>

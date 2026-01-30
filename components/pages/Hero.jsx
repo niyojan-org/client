@@ -94,7 +94,7 @@ export default function Hero() {
           className="mt-8 flex flex-col sm:flex-row gap-4 items-center justify-center"
         >
           <Button
-            asChild
+            
             className="px-7 py-3 rounded-xl shadow-lg font-semibold bg-gradient-to-r from-primary via-accent to-secondary text-card hover:scale-105 transition-transform duration-300"
           >
             <motion.span
@@ -109,7 +109,7 @@ export default function Hero() {
           </Button>
 
           <Button
-            asChild
+            
             variant="outline"
             className="px-7 py-3 rounded-xl font-semibold border-primary text-primary hover:bg-primary/10 hover:border-primary transition-all duration-300"
           >

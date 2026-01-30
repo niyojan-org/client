@@ -3,13 +3,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  Calendar,
-  Ticket,
-  BarChart,
-  Bell,
-  Users,
-  ShieldCheck,
-} from "lucide-react";
+  IconCalendar,
+  IconTicket,
+  IconChartBar,
+  IconBell,
+  IconUsers,
+  IconShieldCheck,
+} from "@tabler/icons-react";
 import {
   Card,
   CardHeader,
@@ -24,37 +24,37 @@ export default function CoreFeatures() {
       title: "Effortless Event Creation",
       description:
         "Create and publish events in minutes — no technical barriers, just intuitive tools that let you focus on delivering memorable experiences.",
-      icon: Calendar,
+      icon: IconCalendar,
     },
     {
       title: "Secure Ticketing & Payments",
       description:
         "Integrated with multiples payment gateway for smooth, trusted, and transparent transactions — every ticket purchase is safe and verified.",
-      icon: Ticket,
+      icon: IconTicket,
     },
     {
       title: "Smart Analytics Dashboard",
       description:
         "Get real-time insights into attendance, engagement, and revenue — helping you make confident, data-driven decisions.",
-      icon: BarChart,
+      icon: IconChartBar,
     },
     {
       title: "Automated Notifications",
       description:
         "Keep attendees informed with automated email, SMS, and push notifications — ensuring no one misses an update.",
-      icon: Bell,
+      icon: IconBell,
     },
     {
       title: "Team Collaboration",
       description:
         "Invite teammates, assign roles, and manage access effortlessly — making event management truly collaborative and secure.",
-      icon: Users,
+      icon: IconUsers,
     },
     {
       title: "Enterprise-Grade Security",
       description:
         "Built with advanced encryption and privacy controls to safeguard every user, payment, and organization record.",
-      icon: ShieldCheck,
+      icon: IconShieldCheck,
     },
   ];
 

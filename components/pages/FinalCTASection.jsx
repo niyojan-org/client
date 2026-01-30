@@ -62,7 +62,7 @@ const FinalCTA = () => {
             </Button>
 
             <Button
-              asChild
+              
               size="lg"
               variant="primary"
               className="

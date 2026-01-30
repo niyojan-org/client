@@ -15,16 +15,16 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
-  Ticket,
-  Calendar,
-  MapPin,
-  ExternalLink,
-  Clock,
-  CheckCircle,
-  XCircle,
-  AlertCircle,
-  Download
-} from "lucide-react";
+  IconTicket,
+  IconCalendar,
+  IconMapPin,
+  IconExternalLink,
+  IconClock,
+  IconCircleCheck,
+  IconCircleX,
+  IconAlertCircle,
+  IconDownload
+} from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -99,28 +99,28 @@ export function TicketHistory({ className }) {
       case "confirmed":
         return {
           variant: "default",
-          icon: CheckCircle,
+          icon: IconCircleCheck,
           label: "Confirmed",
           color: "text-green-600",
         };
       case "pending":
         return {
           variant: "secondary",
-          icon: Clock,
+          icon: IconClock,
           label: "Pending",
           color: "text-yellow-600",
         };
       case "cancelled":
         return {
           variant: "destructive",
-          icon: XCircle,
+          icon: IconCircleX,
           label: "Cancelled",
           color: "text-destructive",
         };
       default:
         return {
           variant: "outline",
-          icon: AlertCircle,
+          icon: IconAlertCircle,
           label: status || "Unknown",
           color: "text-muted-foreground",
         };
@@ -159,7 +159,7 @@ export function TicketHistory({ className }) {
       <Card className={cn("h-full", className)}>
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2">
-            <Ticket className="h-5 w-5" />
+            <IconTicket className="h-5 w-5" />
             Ticket History
           </CardTitle>
         </CardHeader>
@@ -177,12 +177,12 @@ export function TicketHistory({ className }) {
       <Card className={cn("h-full ", className)}>
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2">
-            <Ticket className="h-5 w-5" />
+            <IconTicket className="h-5 w-5" />
             Ticket History
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center py-12">
-          <Ticket className="h-12 w-12 text-muted-foreground mb-4" />
+          <IconTicket className="h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-lg font-medium text-muted-foreground mb-2">
             No tickets found
           </h3>
@@ -199,7 +199,7 @@ export function TicketHistory({ className }) {
       <CardHeader className="border-b flex-shrink-0">
         <CardTitle className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Ticket className="h-4 w-4" />
+            <IconTicket className="h-4 w-4" />
             <span className="text-lg">Ticket History</span>
           </div>
           <Badge variant="outline" className="text-xs">{tickets.length}</Badge>
@@ -236,11 +236,11 @@ export function TicketHistory({ className }) {
                       {/* Event Details */}
                       <div className="grid grid-cols-1 gap-1.5 text-xs">
                         <div className="flex items-center gap-2 text-muted-foreground">
-                          <Calendar className="h-3.5 w-3.5 shrink-0" />
+                          <IconCalendar className="h-3.5 w-3.5 shrink-0" />
                           <span>{formatDate(eventDate)}</span>
                         </div>
                         <div className="flex items-center gap-2 text-muted-foreground">
-                          <MapPin className="h-3.5 w-3.5 shrink-0" />
+                          <IconMapPin className="h-3.5 w-3.5 shrink-0" />
                           <span className="line-clamp-1">{eventVenue}</span>
                         </div>
                       </div>
@@ -274,7 +274,7 @@ export function TicketHistory({ className }) {
                           className="gap-1.5 h-8 text-xs flex-1"
                           onClick={() => handleViewDetails(ticket.ticket.code)}
                         >
-                          <ExternalLink className="h-3 w-3" />
+                          <IconExternalLink className="h-3 w-3" />
                           View Details
                         </Button>
 
@@ -284,7 +284,7 @@ export function TicketHistory({ className }) {
                           className="gap-1.5 h-8 text-xs"
                           onClick={() => handleDownloadTicket(ticket.ticket.code)}
                         >
-                          <Download className="h-3 w-3" />
+                          <IconDownload className="h-3 w-3" />
                           Ticket
                         </Button>
                       </div>

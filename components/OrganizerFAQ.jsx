@@ -41,7 +41,7 @@ const OrganizerFAQ = () => {
 
   return (
     <div className="w-full">
-      <Accordion type="true" collapsible className="w-full space-y-4">
+      <Accordion type="single" collapsible className="w-full space-y-4">
         {faqs.map((faq, i) => (
           <AccordionItem
             key={`faq-item-${i}`}

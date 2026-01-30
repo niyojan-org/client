@@ -58,15 +58,17 @@ export default function NavigationBar() {
         <div className="flex items-center gap-4">
           {/* Mobile menu */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Toggle menu"
-                className="md:hidden"
-              >
-                <IconMenu2 className="w-5 h-5 text-foreground transition-transform duration-300" />
-              </Button>
+            <SheetTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Toggle menu"
+                  className="md:hidden"
+                />
+              }
+            >
+              <IconMenu2 className="w-5 h-5 text-foreground transition-transform duration-300" />
             </SheetTrigger>
             <SheetContent side="left" className="w-64 flex flex-col bg-background text-foreground">
               <SheetHeader>

@@ -147,7 +147,7 @@ export default function ChangePassword({ searchParams }) {
               <CardDescription className="text-green-700 mb-6">
                 Your password has been updated. You can now log in with your new password.
               </CardDescription>
-              <Button asChild className="w-full" size="lg">
+              <Button className="w-full" size="lg">
                 <Link href="/auth">
                   Go to Login Page
                 </Link>

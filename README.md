@@ -33,10 +33,8 @@
 ### Frontend
 - **Framework**: Next.js 15.3.0 with App Router
 - **Styling**: Tailwind CSS 4.0
-- **UI Components**: Radix UI primitives with custom design system
 - **State Management**: Zustand for global state
 - **Animations**: Framer Motion for smooth interactions
-- **Icons**: Lucide React & Tabler Icons
 - **Forms**: Custom form components with validation
 - **Notifications**: Sonner for toast notifications
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Info, ChevronDown, ChevronUp } from "lucide-react";
+import { IconInfoCircle, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
 export default function NextSteps({ isPaid = false, isGroup = false }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -14,12 +14,12 @@ export default function NextSteps({ isPaid = false, isGroup = false }) {
       >
         <div className="flex items-center gap-2.5">
           <div className="bg-primary/10 rounded-full p-1.5 shrink-0">
-            <Info className="w-3.5 h-3.5 text-primary" />
+            <IconInfoCircle className="w-3.5 h-3.5 text-primary" />
           </div>
           <h3 className="font-semibold text-sm text-foreground">What's Next?</h3>
         </div>
         <div className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}>
-          <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
+          <IconChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
         </div>
       </button>
       

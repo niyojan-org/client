@@ -38,7 +38,7 @@ const Error404 = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <Button asChild size={'lg'}>
+          <Button size={'lg'}>
             <Link
               href="/"
               className=""
@@ -47,7 +47,7 @@ const Error404 = () => {
               Go Home
             </Link>
           </Button>
-          <Button asChild variant="outline" size={'lg'}>
+          <Button variant="outline" size={'lg'}>
             <Link
               href="/contact"
               className=""

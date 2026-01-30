@@ -158,7 +158,7 @@ export default function OrganizationCard({ event }) {
             {/* View Organization */}
             {org.slug && (
               <Button
-                asChild
+                
                 size="sm"
                 className="w-full bg-linear-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300"
               >
@@ -274,7 +274,7 @@ export default function OrganizationCard({ event }) {
                   className="shrink-0"
                 >
                   <Button
-                    asChild
+                    
                     className="bg-linear-to-r from-primary to-primary/90 text-primary-foreground hover:from-primary/90 hover:to-primary shadow-md hover:shadow-lg transition-all duration-300 min-w-40"
                   >
                     <Link href={`/organization/${org.slug}`}>

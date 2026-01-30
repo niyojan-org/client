@@ -1,9 +1,29 @@
 "use client";
 import * as React from "react"
 import { createContext, useContext } from "react"
-import { CheckIcon, LoaderCircleIcon } from "lucide-react"
-import { Slot } from "radix-ui"
+import { IconCheck, IconLoader2 } from "@tabler/icons-react"
 import { cn } from "@/lib/utils"
+
+const Slot = React.forwardRef((props, forwardedRef) => {
+  const { children, ...slotProps } = props;
+  
+  if (React.isValidElement(children)) {
+    return React.cloneElement(children, {
+      ...slotProps,
+      ...children.props,
+      ref: forwardedRef,
+      style: {
+        ...slotProps.style,
+        ...children.props.style,
+      },
+      className: cn(slotProps.className, children.props.className),
+    });
+  }
+  
+  return null;
+});
+Slot.displayName = "Slot";
+Slot.Root = Slot; // Alias for compatibility
 
 // Contexts
 const StepperContext = createContext(undefined)
@@ -158,13 +178,13 @@ function StepperIndicator({
             className="transition-all group-data-loading/step:scale-0 group-data-loading/step:opacity-0 group-data-loading/step:transition-none group-data-[state=completed]/step:scale-0 group-data-[state=completed]/step:opacity-0">
             {step}
           </span>
-          <CheckIcon
+          <IconCheck
             className="absolute scale-0 opacity-0 transition-all group-data-[state=completed]/step:scale-100 group-data-[state=completed]/step:opacity-100"
             size={16}
             aria-hidden="true" />
           {isLoading && (
             <span className="absolute transition-all">
-              <LoaderCircleIcon className="animate-spin" size={14} aria-hidden="true" />
+              <IconLoader2 className="animate-spin" size={14} aria-hidden="true" />
             </span>
           )}
         </>

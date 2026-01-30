@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { SpinnerCustom } from "@/components/ui/spinner";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, TicketPercent, XCircle } from "lucide-react";
+import { IconCircleCheck, IconTicket, IconCircleX } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 export default function CouponManager({
@@ -118,7 +118,7 @@ export default function CouponManager({
                     htmlFor="coupon-input"
                     className="font-semibold text-foreground flex items-center gap-2 text-sm sm:text-base"
                 >
-                    <TicketPercent className="w-4 h-4 text-primary" />
+                    <IconTicket className="w-4 h-4 text-primary" />
                     Apply Coupon
                 </Label>
 
@@ -145,7 +145,7 @@ export default function CouponManager({
                             onClick={removeCoupon}
                             className="rounded-full w-full sm:w-auto flex items-center gap-2"
                         >
-                            <XCircle className="w-4 h-4" />
+                            <IconCircleX className="w-4 h-4" />
                             Remove
                         </Button>
                     ) : (
@@ -160,7 +160,7 @@ export default function CouponManager({
                                 <SpinnerCustom className="h-4 w-4" />
                             ) : (
                                 <>
-                                    <TicketPercent className="w-4 h-4" />
+                                    <IconTicket className="w-4 h-4" />
                                     Apply
                                 </>
                             )}
@@ -170,7 +170,7 @@ export default function CouponManager({
 
                 {!couponData && (
                     <p className="text-xs text-muted-foreground flex items-center gap-1">
-                        <TicketPercent className="w-3 h-3 text-primary" />
+                        <IconTicket className="w-3 h-3 text-primary" />
                         Enter a coupon to unlock special student discounts.
                     </p>
                 )}
@@ -191,7 +191,7 @@ export default function CouponManager({
                             bg-green-50 dark:bg-green-900/20
                         "
                     >
-                        <CheckCircle2 className="w-6 h-6 text-success dark:text-success-400 mt-0.5" />
+                        <IconCircleCheck className="w-6 h-6 text-success dark:text-success-400 mt-0.5" />
                         <div className="space-y-1">
                             <p className="font-semibold text-success-700 dark:text-success-300">
                                 Coupon "{couponData.code}" applied successfully!

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircledIcon } from "@radix-ui/react-icons";
+import { IconCircleCheck } from "@tabler/icons-react";
 
 export default function SuccessMessage({
   participant,
@@ -12,7 +12,7 @@ export default function SuccessMessage({
     <div className="flex items-center justify-center bg-card rounded-2xl p-8 border border-border shadow-md text-center">
       <div className="flex flex-col items-center space-y-4">
         <div className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center shadow-md border border-success/20">
-          <CheckCircledIcon className="text-success w-12 h-12" />
+          <IconCircleCheck className="text-success w-12 h-12" />
         </div>
         <h2 className="text-2xl font-bold text-success">
           Registration Successful!

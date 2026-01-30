@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Fingerprint } from "lucide-react";
+import { IconFingerprint } from "@tabler/icons-react";
 import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
 import { isPasskeySupported, isPlatformAuthenticatorAvailable } from "@/lib/passkey";
@@ -83,7 +83,7 @@ export default function PasskeyLoginButton({ className = "", onBeforeLogin }) {
         </span>
       ) : (
         <>
-          <Fingerprint className="h-5 w-5 mr-2" />
+          <IconFingerprint className="h-5 w-5 mr-2" />
           Login with Passkey
         </>
       )}

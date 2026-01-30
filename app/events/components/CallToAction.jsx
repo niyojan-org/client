@@ -32,7 +32,7 @@ export default function CallToAction({ event, registrationActive }) {
             <Button
               size="lg"
               className="flex items-center justify-center px-8 py-3 text-lg font-semibold bg-linear-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 transition-all duration-300"
-              asChild
+              
             >
               <Link
                 href={`/events/${event.slug}/registration`}

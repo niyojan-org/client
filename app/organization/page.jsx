@@ -13,10 +13,11 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star, Facebook, Instagram, Twitter, Linkedin, Youtube, Globe } from "lucide-react";
+import { IconStar, IconBrandFacebook, IconBrandInstagram, IconBrandTwitter, IconBrandLinkedin, IconBrandYoutube, IconWorld } from "@tabler/icons-react";
 import { SpinnerCustom } from "@/components/ui/spinner";
 import { useUserStore } from "@/store/userStore";
 import { Badge } from "@/components/ui/badge";
+import { IconIcons } from "@tabler/icons-react";
 
 export default function Organization() {
   const { isAuthenticated, loading: userLoading } = useUserStore();
@@ -84,7 +85,7 @@ export default function Organization() {
 
   const renderRating = (rating) => (
     <div className="flex items-center space-x-1">
-      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+      <IconStar className="w-4 h-4 fill-yellow-400 text-yellow-400" />
       <span className="font-semibold">{rating ?? 0}</span>
     </div>
   );
@@ -101,12 +102,12 @@ export default function Organization() {
   );
 
   const socialIconMap = {
-    facebook: Facebook,
-    instagram: Instagram,
-    twitter: Twitter,
-    linkedin: Linkedin,
-    youtube: Youtube,
-    blog: Globe,
+    facebook: IconBrandFacebook,
+    instagram: IconBrandInstagram,
+    twitter: IconBrandTwitter,
+    linkedin: IconBrandLinkedin,
+    youtube: IconBrandYoutube,
+    blog: IconWorld,
   };
 
   if (loading || userLoading) {
@@ -406,7 +407,7 @@ export default function Organization() {
                             onClick={(e) => e.stopPropagation()}
                             className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                           >
-                            <Icon className="w-4 h-4" />
+                            <IconIcons className="w-4 h-4" />
                           </a>
                         );
                       })}

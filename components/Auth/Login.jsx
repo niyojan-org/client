@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff } from "lucide-react";
+import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import FloatingInput from "../ui/FloatingInput";
 import { useUserStore } from "../../store/userStore";
 // import { useLoader } from "@/components/LoaderContext";
@@ -228,7 +228,7 @@ export default function Login({ onViewChange, userEmail, setUserEmail, on2FARequ
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-1 top-1/2 -translate-y-1/4 "
             >
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              {showPassword ? <IconEyeOff size={18} /> : <IconEye size={18} />}
             </Button>
           </div>
           {errors.password && (

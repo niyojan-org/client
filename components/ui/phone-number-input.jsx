@@ -1,5 +1,4 @@
 import * as React from "react";
-import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import * as RPNInput from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
 
@@ -20,6 +19,8 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { IconCheck } from "@tabler/icons-react";
+import { IconChevronUp } from "@tabler/icons-react";
 
 const PhoneInput = React.forwardRef(
     ({ className, onChange, value, ...props }, ref) => {
@@ -68,7 +69,7 @@ const CountrySelect = ({
                 open && setSearchValue("");
             }}
         >
-            <PopoverTrigger asChild>
+            <PopoverTrigger render={
                 <Button
                     type="button"
                     variant="outline"
@@ -79,13 +80,15 @@ const CountrySelect = ({
                         country={selectedCountry}
                         countryName={selectedCountry}
                     />
-                    <ChevronsUpDown
+                    <IconChevronUp
                         className={cn(
                             "-mr-2 size-4 opacity-50",
                             disabled ? "hidden" : "opacity-100"
                         )}
                     />
                 </Button>
+            } >
+
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0">
                 <Command>
@@ -95,9 +98,7 @@ const CountrySelect = ({
                             setSearchValue(value);
                             setTimeout(() => {
                                 if (scrollAreaRef.current) {
-                                    const viewportElement = scrollAreaRef.current.querySelector(
-                                        "[data-radix-scroll-area-viewport]"
-                                    );
+
                                     if (viewportElement) {
                                         viewportElement.scrollTop = 0;
                                     }
@@ -148,7 +149,7 @@ const CountrySelectOption = ({
             <FlagComponent country={country} countryName={countryName} />
             <span className="flex-1 text-sm">{countryName}</span>
             <span className="text-sm text-foreground/50">{`+${RPNInput.getCountryCallingCode(country)}`}</span>
-            <CheckIcon
+            <IconCheck
                 className={`ml-auto size-4 ${country === selectedCountry ? "opacity-100" : "opacity-0"}`}
             />
         </CommandItem>

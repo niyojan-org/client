@@ -3,13 +3,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import {
-  ClipboardCheck,
-  Settings2,
-  Rocket,
-  Users2,
-  CalendarDays,
-  Star,
-} from "lucide-react";
+  IconClipboardCheck,
+  IconAdjustments,
+  IconRocket,
+  IconUsers,
+  IconCalendar,
+  IconStar,
+} from "@tabler/icons-react";
 import {
   Card,
   CardHeader,
@@ -31,19 +31,19 @@ export default function HowItWorks() {
           title: "Create Your Organization",
           description:
             "Set up your club, college, or community profile in minutes. Customize branding and event categories effortlessly.",
-          icon: ClipboardCheck,
+          icon: IconClipboardCheck,
         },
         {
           title: "Host & Manage Events",
           description:
             "Add schedules, ticket types, and team roles at just ₹299. Manage registrations and updates from one powerful dashboard.",
-          icon: Settings2,
+          icon: IconAdjustments,
         },
         {
           title: "Launch & Grow",
           description:
             "Go live instantly, track engagement and payments, and grow your reach with data-driven insights.",
-          icon: Rocket,
+          icon: IconRocket,
         },
       ],
     },
@@ -58,19 +58,19 @@ export default function HowItWorks() {
           title: "Explore Events",
           description:
             "Browse curated fests, workshops, and hackathons tailored to your interests and skills.",
-          icon: CalendarDays,
+          icon: IconCalendar,
         },
         {
           title: "Join & Connect",
           description:
             "Register instantly, secure tickets, and engage with peers through shared experiences.",
-          icon: Users2,
+          icon: IconUsers,
         },
         {
           title: "Experience & Earn",
           description:
             "Attend, share feedback, and collect rewards that highlight your achievements.",
-          icon: Star,
+          icon: IconStar,
         },
       ],
     },

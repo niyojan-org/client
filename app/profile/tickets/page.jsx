@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Ticket, ArrowLeft, Filter, Search, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -17,6 +16,7 @@ import { TicketDetailDialog } from "./components/TicketDetailDialog";
 import api from "@/lib/api";
 import { toast } from "sonner";
 import { SpinnerCustom } from "@/components/ui/spinner";
+import { IconArrowLeft, IconFilter2, IconTicket, IconSearch } from "@tabler/icons-react";
 
 export default function TicketsPage({ searchParams }) {
   const [tickets, setTickets] = useState([]);
@@ -195,9 +195,9 @@ export default function TicketsPage({ searchParams }) {
                     onClick={() => router.back()}
                     className="h-8 w-8 shrink-0"
                   >
-                    <ArrowLeft className="h-4 w-4" />
+                    <IconArrowLeft className="h-4 w-4" />
                   </Button>
-                  <Ticket className="h-5 w-5 text-primary shrink-0" />
+                  <IconTicket className="h-5 w-5 text-primary shrink-0" />
                   <h1 className="text-lg sm:text-xl font-semibold truncate">
                     My Tickets
                   </h1>
@@ -218,7 +218,7 @@ export default function TicketsPage({ searchParams }) {
               <div className="flex gap-2">
                 {/* Search */}
                 <div className="relative flex-1">
-                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                  <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
                   <Input
                     placeholder="Search tickets..."
                     value={searchQuery}
@@ -230,7 +230,7 @@ export default function TicketsPage({ searchParams }) {
                 {/* Status Filter */}
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger className="w-32.5 sm:w-35 h-9 text-sm">
-                    <Filter className="h-3.5 w-3.5 mr-1" />
+                    <IconFilter2 className="h-3.5 w-3.5 mr-1" />
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
                   <SelectContent>
@@ -280,7 +280,7 @@ export default function TicketsPage({ searchParams }) {
               <div className="text-center space-y-4 max-w-md">
                 <div className="flex justify-center">
                   <div className="h-24 w-24 rounded-full bg-muted flex items-center justify-center">
-                    <Ticket className="h-12 w-12 text-muted-foreground" />
+                    <IconTicket className="h-12 w-12 text-muted-foreground" />
                   </div>
                 </div>
                 <h2 className="text-xl md:text-2xl font-semibold">

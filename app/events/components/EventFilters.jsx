@@ -20,7 +20,6 @@ import {
   IconConfetti,
   IconCurrencyRupee
 } from '@tabler/icons-react';
-import { icons } from 'lucide-react';
 
 export default function EventFilters({
   filters,

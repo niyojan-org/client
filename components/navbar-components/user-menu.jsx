@@ -1,11 +1,11 @@
 import {
-  BoltIcon,
-  BookOpenIcon,
-  Layers2Icon,
-  LogOutIcon,
-  PinIcon,
-  UserPenIcon,
-} from "lucide-react"
+  IconBolt,
+  IconBook,
+  IconLayers,
+  IconLogout,
+  IconPin,
+  IconUserEdit,
+} from "@tabler/icons-react"
 
 import {
   Avatar,
@@ -36,7 +36,7 @@ export default function UserMenu() {
       return <IconLoader3 className="animate-spin text-primary" />;
     }
     return (
-      <Button variant="outline" asChild>
+      <Button variant="outline" >
         <Link href={'/auth'}>
           Login
         </Link>
@@ -45,39 +45,43 @@ export default function UserMenu() {
   }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger render={
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
             <AvatarImage src={user?.avatar || "/origin/avatar.jpg"} alt="Profile image" />
             <AvatarFallback>{user?.name ? user.name[0] : "U"}</AvatarFallback>
           </Avatar>
         </Button>
+      }>
+
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-w-64" align="end">
-        <DropdownMenuLabel className="flex min-w-0 flex-col">
-          <span className="truncate text-sm font-medium text-foreground">
-            {user?.name || "User"}
-          </span>
-          <span className="truncate text-xs font-normal text-muted-foreground">
-            {user?.email || "user@email.com"}
-          </span>
-        </DropdownMenuLabel>
+      <DropdownMenuContent className="max-w-64 w-full" align="end">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-medium text-foreground">
+              {user?.name || "User"}
+            </span>
+            <span className="truncate text-xs font-normal text-muted-foreground">
+              {user?.email || "user@email.com"}
+            </span>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href={'/profile'}>
+          <DropdownMenuItem>
+            <Link href={'/profile'} className={'flex items-center gap-2'}>
               <IconUser size={16} className="opacity-60" aria-hidden="true" />
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={'/profile/security'}>
+          <DropdownMenuItem >
+            <Link href={'/profile/security'} className={'flex items-center gap-2'}>
               <IconShield size={16} className="opacity-60" aria-hidden="true" />
               <span>Security</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={'/profile/tickets'}>
+          <DropdownMenuItem >
+            <Link href={'/profile/tickets'} className={'flex items-center gap-2'}>
               <IconTicket size={16} className="opacity-60" aria-hidden="true" />
               <span>Ticket History</span>
             </Link>
@@ -105,7 +109,7 @@ export function SheetDownMenu({ onClose }) {
   if (!isAuthenticated) {
     return (
       <div className="px-3 py-2">
-        <Button variant="outline" className="w-full" asChild>
+        <Button variant="outline" className="w-full" >
           <Link href={'/auth'} onClick={onClose}>
             Login
           </Link>

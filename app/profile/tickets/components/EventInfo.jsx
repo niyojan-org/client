@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Users, Tag } from "lucide-react";
+import { IconCalendar, IconMapPin, IconUsers, IconTag } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -49,7 +49,7 @@ export function EventInfo({ event, sessionCheckIn, className }) {
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 mt-0.5">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-              <Calendar className="h-4 w-4 text-primary" />
+              <IconCalendar className="h-4 w-4 text-primary" />
             </div>
           </div>
           <div className="flex-1 min-w-0">
@@ -64,7 +64,7 @@ export function EventInfo({ event, sessionCheckIn, className }) {
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0 mt-0.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-            <MapPin className="h-4 w-4 text-primary" />
+            <IconMapPin className="h-4 w-4 text-primary" />
           </div>
         </div>
         <div className="flex-1 min-w-0">
@@ -77,7 +77,7 @@ export function EventInfo({ event, sessionCheckIn, className }) {
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0 mt-0.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
-            <Tag className="h-4 w-4 text-primary" />
+            <IconTag className="h-4 w-4 text-primary" />
           </div>
         </div>
         <div className="flex-1 min-w-0">

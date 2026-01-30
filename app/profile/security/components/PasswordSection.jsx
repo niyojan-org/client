@@ -239,11 +239,13 @@ const ChangePassword = ({ className }) => {
               {isForgotPasswordLoading ? "Sending..." : "Forgot Password?"}
             </Button>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-              <DialogTrigger asChild>
+              <DialogTrigger render={
                 <Button variant="outline" size="sm" className="gap-2 cursor-pointer">
                   <IconKey className="h-4 w-4" />
                   Change Password
                 </Button>
+              }>
+
               </DialogTrigger>
               <DialogContent className="max-w-md">
                 <DialogHeader>

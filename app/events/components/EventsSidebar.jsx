@@ -66,7 +66,7 @@ export default function EventsSidebar({ onLogout }) {
           {navItems.map(({ id, label, icon }) => (
             <TooltipProvider key={id}>
               <Tooltip>
-                <TooltipTrigger asChild>
+                <TooltipTrigger >
                   <button
                     onClick={() => setActive(id)}
                     className={`
@@ -99,7 +99,7 @@ export default function EventsSidebar({ onLogout }) {
         {/* Logout Button with Tooltip */}
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger asChild>
+            <TooltipTrigger >
               <Button
                 variant="outline"
                 className={`flex items-center justify-center gap-2 mt-auto ${collapsed ? 'justify-center' : ''}`}
@@ -124,9 +124,8 @@ export default function EventsSidebar({ onLogout }) {
           <button
             key={id}
             onClick={() => setActive(id)}
-            className={`flex flex-col items-center text-xs transition-colors duration-150 ${
-              active === id ? 'text-blue-600 font-semibold' : 'text-gray-500'
-            }`}
+            className={`flex flex-col items-center text-xs transition-colors duration-150 ${active === id ? 'text-blue-600 font-semibold' : 'text-gray-500'
+              }`}
           >
             <div>{icon}</div>
             <span className="text-[11px] mt-1">{label}</span>

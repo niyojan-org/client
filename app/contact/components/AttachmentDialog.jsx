@@ -19,25 +19,24 @@ export const AttachmentDialog = ({ files, onFileChange, onRemoveFile, disabled }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full h-10 justify-start gap-2"
-          disabled={disabled}
-        >
-          <IconPaperclip className="h-4 w-4" />
-          <span className="flex-1 text-left">
-            {files.length > 0
-              ? `${files.length} file${files.length > 1 ? "s" : ""} attached`
-              : "Add Attachments (Optional)"}
-          </span>
-          {files.length > 0 && (
-            <Badge variant="secondary" className="ml-auto">
-              {files.length}
-            </Badge>
-          )}
-        </Button>
+      <DialogTrigger render={<Button
+        type="button"
+        variant="outline"
+        className="w-full h-10 justify-start gap-2"
+        disabled={disabled}
+      >
+        <IconPaperclip className="h-4 w-4" />
+        <span className="flex-1 text-left">
+          {files.length > 0
+            ? `${files.length} file${files.length > 1 ? "s" : ""} attached`
+            : "Add Attachments (Optional)"}
+        </span>
+        {files.length > 0 && (
+          <Badge variant="secondary" className="ml-auto">
+            {files.length}
+          </Badge>
+        )}
+      </Button>}>
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
@@ -49,7 +48,7 @@ export const AttachmentDialog = ({ files, onFileChange, onRemoveFile, disabled }
             Upload files to include with your message. Maximum 5 files, 10MB each, 25MB total.
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="flex-1 overflow-y-auto pr-2">
           <ContactFileUpload
             files={files}

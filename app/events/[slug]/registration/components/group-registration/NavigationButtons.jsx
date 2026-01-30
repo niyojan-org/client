@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import useEventRegistrationStore from "@/store/eventRegistration";
 import { IconArrowLeft, IconArrowRight, IconLoader3, IconPlus } from "@tabler/icons-react";
 import { is } from "date-fns/locale/is";
-import { XCircle } from "lucide-react";
+import { IconCircleX } from "@tabler/icons-react";
 
 export default function NavigationButtons({
   currentStep,
@@ -60,7 +60,7 @@ export default function NavigationButtons({
           onClick={onRemoveMember}
           className="flex items-center gap-2 rounded-full mt-4"
         >
-          <XCircle className="w-4 h-4" />
+          <IconCircleX className="w-4 h-4" />
           Remove Member
         </Button>
       )}
