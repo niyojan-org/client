@@ -48,7 +48,7 @@ const Carousel = ({ images = [], interval = 4000 }) => {
   };
 
   return (
-    <div className="w-full md:w-1/2 relative h-[170px] md:h-full overflow-hidden">
+    <div className="w-full md:w-1/2 relative h-42.5 md:h-full overflow-hidden">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentImage}

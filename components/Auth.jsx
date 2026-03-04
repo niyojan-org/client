@@ -3,8 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Carousel from './Carousel';
-
-import { toast } from 'sonner';
 import api from '../lib/api';
 import Link from 'next/link';
 import Login from './Auth/Login';
@@ -15,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import GoogleAuthButton from './Auth/GoogleAuthButton';
 import { SpinnerCustom } from './ui/spinner';
 
-export default function Auth({ view: initialView }) {
+export default function Auth({ view: initialView, popup = false }) {
   const router = useRouter();
   const [carouselImages, setCarouselImages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,11 +39,19 @@ export default function Auth({ view: initialView }) {
     const fetchImages = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get("/util/resources?type=carousel&page=1&limit=3&sort=-createdAt");
-        setCarouselImages(response.data.resources);
+        const response = await api.get("/resources/public", {
+          params: {
+            type: "carousel",
+            page: 1,
+            limit: 3,
+            sort: "-createdAt"
+          }
+        });
+        setCarouselImages(response.data.data);
       } catch (error) {
-        toast.error("Failed to fetch carousel images");
-
+        setCarouselImages([{
+          url: "https://res.cloudinary.com/ddk9qhmit/image/upload/v1767675144/event-resources/First_Banner.png",
+        }])
       } finally {
         setIsLoading(false);
       }
@@ -73,14 +79,13 @@ export default function Auth({ view: initialView }) {
         requiresPasskey={twoFactorData.requiresPasskey}
         userId={twoFactorData.userId}
         onBack={handleBack2FA}
+        popup={popup}
       />
     );
   }
   return (
     <div className="flex items-center justify-center my-auto px-2 h-full bg-background w-full">
-
       <div className="w-full bg-card max-w-5xl mx-auto flex flex-col md:flex-row sm:h-full sm:max-h-[80vh] md:bg-card rounded-2xl md:shadow-lg overflow-hidden md:border border-border items-center justify-center">
-
         {/* Carousel Section */}
         {isLoading ? <SpinnerCustom /> : <Carousel images={carouselImages} />}
 
@@ -99,11 +104,11 @@ export default function Auth({ view: initialView }) {
               <p className="text-sm text-muted-foreground font-inter">{getSubtitleText()}</p>
             </CardHeader>
 
-            <GoogleAuthButton />
+            <GoogleAuthButton popup={popup} />
 
             <CardContent className="flex flex-col flex-1 justify-between w-full p-0 h-full">
               {view === 'login' &&
-                <Login userEmail={userEmail} setUserEmail={setUserEmail} onViewChange={handleViewChange} on2FARequired={handle2FARequired} />}
+                <Login userEmail={userEmail} setUserEmail={setUserEmail} onViewChange={handleViewChange} on2FARequired={handle2FARequired} popup={popup} />}
 
               {view === 'signup' && <Signup onViewChange={handleViewChange} />}
 

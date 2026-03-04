@@ -28,9 +28,9 @@ export default function SettingsMenu() {
         <Button
           size="icon"
           variant="ghost"
-          className="rounded-full shadow-none size-8"
+          className="rounded-lg shadow-none size-8"
           aria-label="Open settings menu">
-          <SettingsIcon className="text-muted-foreground" size={16} aria-hidden="true" />
+          <SettingsIcon size={16} aria-hidden="true" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-w-64" align="end">

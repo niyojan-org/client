@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { IconArrowLeft, IconKey, IconFingerprint } from "@tabler/icons-react";
 import PasskeyVerification from "./Passkey";
 
-export default function TwoFactorAuth({ requiresTOTP, requiresPasskey, userId, onBack }) {
+export default function TwoFactorAuth({ requiresTOTP, requiresPasskey, userId, onBack, popup = false }) {
     const router = useRouter();
     const [currentMethod, setCurrentMethod] = useState(() => {
         // Priority: Passkey > TOTP
@@ -29,7 +29,18 @@ export default function TwoFactorAuth({ requiresTOTP, requiresPasskey, userId, o
     };
 
     const handleSuccess = () => {
-        router.push("/events");
+        if (popup) {
+            if (window.opener) {
+                window.opener.postMessage({
+                    type: 'AUTH_SUCCESS',
+                    success: true,
+                    method: '2fa'
+                }, window.location.origin);
+            }
+            setTimeout(() => window.close(), 100);
+        } else {
+            router.push("/events");
+        }
     };
 
     // If showing recovery, show the recovery component

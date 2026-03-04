@@ -5,7 +5,7 @@ import { IconBrandGoogle, IconLoader2 } from '@tabler/icons-react';
 import { toast } from 'sonner';
 import { useState } from 'react';
 
-export default function GoogleAuthButton({ variant = "outline", className = "", disabled = false }) {
+export default function GoogleAuthButton({ variant = "outline", className = "", disabled = false, popup = false }) {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleGoogleAuth = () => {
@@ -19,7 +19,8 @@ export default function GoogleAuthButton({ variant = "outline", className = "", 
             // Direct redirect to backend Google OAuth endpoint
             //TODO: Change to a popup based flow later when typescript types are available
             const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5050';
-            window.location.href = `${baseUrl}/auth/google?redirect=app:events`;
+            const redirectUrl = popup ? 'app:auth?popup=true' : 'app:events';
+            window.location.href = `${baseUrl}/auth/google?redirect=${redirectUrl}`;
         } catch (error) {
             console.error('Google auth error:', error);
             toast.error('Failed to authenticate with Google');

@@ -51,7 +51,7 @@ export default function NavigationBar() {
   }, [isAuthenticated]);
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-background text-foreground border-b border-0 transition-colors duration-300 shadow-sm">
+    <header className="fixed top-0 z-50 w-full bg-background text-foreground border-b border-0 transition-colors duration-300 sm:shadow-sm">
       <div className="flex items-center justify-between  max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-2">
 
         {/* Left: Logo + Mobile Menu */}
@@ -97,7 +97,7 @@ export default function NavigationBar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Logo className="h-9 w-9" />
-            <span className="hidden md:block text-primary font-bold text-lg">orgatick</span>
+            <span className="hidden md:block text-primary font-bold text-lg">Orgatick</span>
           </Link>
         </div>
 
@@ -123,7 +123,7 @@ export default function NavigationBar() {
         </NavigationMenu>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
           <NotificationMenu />
           <SettingsMenu />
           <UserMenu />

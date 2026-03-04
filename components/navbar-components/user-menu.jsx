@@ -1,11 +1,3 @@
-import {
-  BoltIcon,
-  BookOpenIcon,
-  Layers2Icon,
-  LogOutIcon,
-  PinIcon,
-  UserPenIcon,
-} from "lucide-react"
 
 import {
   Avatar,
@@ -27,6 +19,14 @@ import Link from "next/link"
 import { IconLoader2, IconLoader3, IconLogout2, IconShield, IconTicket, IconUser } from "@tabler/icons-react"
 import { useRouter } from "next/navigation"
 
+const openPopup = () => {
+  window.open(
+    "/auth?popup=true",
+    "authPopup",
+    "width=500,height=700,left=500,top=100"
+  );
+};
+
 export default function UserMenu() {
   const { user, isAuthenticated, logout, loading } = useUserStore();
   const router = useRouter();
@@ -36,10 +36,10 @@ export default function UserMenu() {
       return <IconLoader3 className="animate-spin text-primary" />;
     }
     return (
-      <Button variant="outline" asChild>
-        <Link href={'/auth'}>
-          Login
-        </Link>
+      <Button variant="outline" onClick={openPopup}>
+        {/* <Link href={'/auth'}> */}
+        Login
+        {/* </Link> */}
       </Button>
     );
   }

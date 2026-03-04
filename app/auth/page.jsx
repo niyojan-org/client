@@ -15,11 +15,24 @@ export default function AuthPage({ searchParams }) {
   useEffect(() => {
     if (param.token) {
       setAccessToken(param.token);
-      router.replace('/events');
+      if (param.popup === 'true' || param.popup === true) {
+        // Send success message to parent window
+        if (window.opener) {
+          window.opener.postMessage({
+            type: 'AUTH_SUCCESS',
+            success: true,
+            token: param.token
+          }, window.location.origin);
+        }
+        // Close after a brief delay to ensure message is sent
+        setTimeout(() => window.close(), 100);
+      } else {
+        router.replace('/events');
+      }
     }
   }, [param]);
 
   return (
-    <Auth view={param.view} />
+    <Auth view={param.view} popup={param.popup === 'true' || param.popup === true} />
   )
 }

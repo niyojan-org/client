@@ -15,7 +15,7 @@ import { isConditionalUISupported } from "@/lib/passkey";
 import { IconLoader2 } from "@tabler/icons-react";
 // import PasskeyLoginButton from "./PasskeyLoginButton";
 
-export default function Login({ onViewChange, userEmail, setUserEmail, on2FARequired }) {
+export default function Login({ onViewChange, userEmail, setUserEmail, on2FARequired, popup = false }) {
   const formRef = useRef(null);
   const router = useRouter();
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -91,8 +91,19 @@ export default function Login({ onViewChange, userEmail, setUserEmail, on2FARequ
         const success = await loginWithPasskey(true, passkeyAbortControllerRef.current); // true = use conditional UI
 
         if (success) {
-          // Passkey login successful - redirect to events page
-          router.push("/events");
+          // Passkey login successful
+          if (popup) {
+            if (window.opener) {
+              window.opener.postMessage({
+                type: 'AUTH_SUCCESS',
+                success: true,
+                method: 'passkey'
+              }, window.location.origin);
+            }
+            setTimeout(() => window.close(), 100);
+          } else {
+            router.push("/events");
+          }
         }
         // If not successful but no error, user simply didn't select a passkey
         // This is normal - they can still use email/password login
@@ -158,7 +169,19 @@ export default function Login({ onViewChange, userEmail, setUserEmail, on2FARequ
       toast.success("Login successful!");
       formRef.current.reset();
       setFormData({ email: "", password: "" });
-      router.push("/events");
+      
+      if (popup) {
+        if (window.opener) {
+          window.opener.postMessage({
+            type: 'AUTH_SUCCESS',
+            success: true,
+            method: 'password'
+          }, window.location.origin);
+        }
+        setTimeout(() => window.close(), 100);
+      } else {
+        router.push("/events");
+      }
     }
   };
 
