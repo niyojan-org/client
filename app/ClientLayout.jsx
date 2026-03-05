@@ -5,8 +5,6 @@ import { useUserStore } from "@/store/userStore";
 
 import { useEffect, useMemo, useState } from "react";
 import NavigationBar from "@/components/NavigationBar";
-import { Button } from "@/components/ui/button";
-import { subscribeUser } from "@/lib/subscribePush";
 
 // Routes where navbar should be hidden
 const hiddenNavbarRoutes = ["/auth"];
@@ -31,6 +29,7 @@ export default function ClientLayout({ children }) {
 
   // Fetch user on mount
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_API_URL);
     fetchUser();
   }, [fetchUser]);
 
