@@ -49,7 +49,7 @@ const FinalCTA = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center mt-8">
             <Button
-              onClick={() => router.push('/auth')}
+              onClick={() => router.push('/login')}
               size="lg"
               className="
                 px-8 py-3 rounded-full font-semibold shadow-md 
@@ -91,7 +91,7 @@ const FinalCTA = () => {
             target: [
               {
                 "@type": "EntryPoint",
-                urlTemplate: "https://orgatick.events/auth",
+                urlTemplate: "https://orgatick.events/login",
                 actionName: "Start Hosting",
               },
               {

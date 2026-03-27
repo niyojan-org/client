@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation"
 
 const openPopup = () => {
   window.open(
-    "/auth?popup=true",
+    "/login",
     "authPopup",
     "width=500,height=700,left=500,top=100"
   );
@@ -106,7 +106,7 @@ export function SheetDownMenu({ onClose }) {
     return (
       <div className="px-3 py-2">
         <Button variant="outline" className="w-full" asChild>
-          <Link href={'/auth'} onClick={onClose}>
+          <Link href={'/login'} onClick={onClose}>
             Login
           </Link>
         </Button>

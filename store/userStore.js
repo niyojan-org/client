@@ -1,7 +1,6 @@
 import api, { setAccessToken, clearAccessToken } from "@/lib/api";
 import { toast } from "sonner";
 import { create } from "zustand";
-import { loginWithPasskey } from "@/lib/passkey";
 import baseApi from "@/lib/base.api";
 
 export const useUserStore = create((set, get) => ({
@@ -63,52 +62,6 @@ export const useUserStore = create((set, get) => ({
     }
   },
 
-  // --- PASSKEY LOGIN ---
-  loginWithPasskey: async (useConditionalUI = false, abortController = null) => {
-    try {
-      // For conditional UI, don't show loading state
-      // This allows the form to remain interactive while waiting for passkey selection
-      if (!useConditionalUI) {
-        set({ loading: true, error: null });
-      }
-
-      // Call the passkey login utility with optional AbortController
-      const result = await loginWithPasskey(useConditionalUI, abortController);
-
-      // If user cancelled (didn't select a passkey), don't show error
-      if (result.cancelled) {
-        return false;
-      }
-
-      if (!result.success) {
-        throw new Error(result.message || "Passkey login failed");
-      }
-
-
-      // Store access token in memory
-      setAccessToken(result.data.token);
-
-      set({
-        user: result.data.user || result.data,
-        isAuthenticated: true,
-        message: result.message || "Passkey login successful!",
-      });
-      return true;
-    } catch (error) {
-      const msg = error?.message || "Passkey login failed";
-      set({ error: msg, isAuthenticated: false });
-
-      // Only show error toast for non-conditional UI attempts
-      if (!useConditionalUI) {
-        toast.error(msg);
-      }
-      return false;
-    } finally {
-      if (!useConditionalUI) {
-        set({ loading: false });
-      }
-    }
-  },
 
   // --- REGISTER ---
   register: async (userData) => {
@@ -200,9 +153,7 @@ export const useUserStore = create((set, get) => ({
       return true;
     } catch (error) {
       const msg = error?.response?.data?.message || "Failed to update profile";
-      toast.error(msg, {
-        description: error?.response?.data?.error?.details,
-      });
+      toast.error(msg);
       set({ error: msg });
       toast.error(msg);
 

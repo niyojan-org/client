@@ -8,19 +8,26 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Save, X, User, Mail, Phone, MapPin, Users, Info } from "lucide-react";
+import { Save, X, User, Mail, Phone, MapPin, Users, Info, Mars, Venus, UserRound, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { IconMapPin } from "@tabler/icons-react";
 import { PhoneInput } from "../ui/phone-number-input";
 
+const genderOptions = [
+    { value: "male", label: "Male", icon: Mars },
+    { value: "female", label: "Female", icon: Venus },
+    { value: "other", label: "Other", icon: UserRound },
+    { value: "prefer_not_to_say", label: "Prefer not to say", icon: EyeOff }
+];
+
 export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
     const [formData, setFormData] = useState({
-        name: user?.name || "",
-        email: user?.email || "",
-        phone: user?.phone || "",
-        address: user?.address || "",
-        gender: user?.gender || "",
+        name: user?.name || undefined,
+        email: user?.email || undefined,
+        phone: user?.phone || undefined,
+        address: user?.address || undefined,
+        gender: user?.gender || undefined,
     });
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState({});
@@ -62,6 +69,7 @@ export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
 
         setIsLoading(true);
         try {
+            console.log(formData);
             await onSave(formData);
             // toast.success("Profile updated successfully!");
         } catch (error) {
@@ -190,15 +198,25 @@ export function PersonalInfoEdit({ user, onSave, onCancel, className }) {
                             onValueChange={(value) => handleInputChange("gender", value)}
                         >
                             <SelectTrigger className={'w-full'}>
-                                <SelectValue placeholder="Select your gender" />
+                                <SelectValue placeholder="Choose an option" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="male">Male</SelectItem>
-                                <SelectItem value="female">Female</SelectItem>
-                                <SelectItem value="other">Other</SelectItem>
-                                <SelectItem value="prefer-not-to-say">Prefer not to say</SelectItem>
+                                {genderOptions.map((option) => {
+                                    const GenderIcon = option.icon;
+                                    return (
+                                        <SelectItem key={option.value} value={option.value}>
+                                            <span className="flex items-center gap-2">
+                                                <GenderIcon className="h-4 w-4 text-muted-foreground" />
+                                                {option.label}
+                                            </span>
+                                        </SelectItem>
+                                    );
+                                })}
                             </SelectContent>
                         </Select>
+                        <p className="text-xs text-muted-foreground">
+                            This helps us personalize your experience. You can update it anytime.
+                        </p>
                     </div>
 
                     {/* Form Actions */}
