@@ -1,10 +1,5 @@
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,19 +8,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { useUserStore } from "@/store/userStore"
-import Link from "next/link"
-import { IconLoader2, IconLoader3, IconLogout2, IconShield, IconTicket, IconUser } from "@tabler/icons-react"
-import { useRouter } from "next/navigation"
-
-const openPopup = () => {
-  window.open(
-    "/login",
-    "authPopup",
-    "width=500,height=700,left=500,top=100"
-  );
-};
+} from "@/components/ui/dropdown-menu";
+import { useUserStore } from "@/store/userStore";
+import Link from "next/link";
+import {
+  IconLoader2,
+  IconLoader3,
+  IconLogout2,
+  IconShield,
+  IconTicket,
+  IconUser,
+} from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function UserMenu() {
   const { user, isAuthenticated, logout, loading } = useUserStore();
@@ -36,11 +31,9 @@ export default function UserMenu() {
       return <IconLoader3 className="animate-spin text-primary" />;
     }
     return (
-      <Button variant="outline" onClick={openPopup}>
-        {/* <Link href={'/auth'}> */}
+      <Link href={"/login"} className={buttonVariants({ variant: "outline" })}>
         Login
-        {/* </Link> */}
-      </Button>
+      </Link>
     );
   }
   return (
@@ -48,7 +41,10 @@ export default function UserMenu() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
-            <AvatarImage src={user?.avatar || "/origin/avatar.jpg"} alt="Profile image" />
+            <AvatarImage
+              src={user?.avatar || "/origin/avatar.jpg"}
+              alt="Profile image"
+            />
             <AvatarFallback>{user?.name ? user.name[0] : "U"}</AvatarFallback>
           </Avatar>
         </Button>
@@ -65,19 +61,19 @@ export default function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
-            <Link href={'/profile'}>
+            <Link href={"/profile"}>
               <IconUser size={16} className="opacity-60" aria-hidden="true" />
               <span>Profile</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={'/profile/security'}>
+            <Link href={"/profile/security"}>
               <IconShield size={16} className="opacity-60" aria-hidden="true" />
               <span>Security</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={'/profile/tickets'}>
+            <Link href={"/profile/tickets"}>
               <IconTicket size={16} className="opacity-60" aria-hidden="true" />
               <span>Ticket History</span>
             </Link>
@@ -105,11 +101,13 @@ export function SheetDownMenu({ onClose }) {
   if (!isAuthenticated) {
     return (
       <div className="px-3 py-2">
-        <Button variant="outline" className="w-full" asChild>
-          <Link href={'/login'} onClick={onClose}>
-            Login
-          </Link>
-        </Button>
+        <Link
+          href={"/login"}
+          onClick={onClose}
+          className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+        >
+          Login
+        </Link>
       </div>
     );
   }
@@ -125,7 +123,10 @@ export function SheetDownMenu({ onClose }) {
       {/* User Info Section */}
       <div className="flex items-center px-3 pb-2 gap-3 border-b">
         <Avatar className="h-10 w-10">
-          <AvatarImage src={user?.avatar || "/origin/avatar.jpg"} alt="Profile image" />
+          <AvatarImage
+            src={user?.avatar || "/origin/avatar.jpg"}
+            alt="Profile image"
+          />
           <AvatarFallback>{user?.name ? user.name[0] : "U"}</AvatarFallback>
         </Avatar>
         <div className="flex flex-col min-w-0 flex-1">
@@ -145,7 +146,11 @@ export function SheetDownMenu({ onClose }) {
           onClick={onClose}
           className="flex items-center gap-3 px-3 py-2.5 hover:bg-accent rounded-md mx-2 transition-colors"
         >
-          <IconUser size={18} className="text-muted-foreground" aria-hidden="true" />
+          <IconUser
+            size={18}
+            className="text-muted-foreground"
+            aria-hidden="true"
+          />
           <span className="text-sm font-medium">Profile</span>
         </Link>
 
@@ -154,7 +159,11 @@ export function SheetDownMenu({ onClose }) {
           onClick={onClose}
           className="flex items-center gap-3 px-3 py-2.5 hover:bg-accent rounded-md mx-2 transition-colors"
         >
-          <IconShield size={18} className="text-muted-foreground" aria-hidden="true" />
+          <IconShield
+            size={18}
+            className="text-muted-foreground"
+            aria-hidden="true"
+          />
           <span className="text-sm font-medium">Security</span>
         </Link>
 
@@ -163,7 +172,11 @@ export function SheetDownMenu({ onClose }) {
           onClick={onClose}
           className="flex items-center gap-3 px-3 py-2.5 hover:bg-accent rounded-md mx-2 transition-colors"
         >
-          <IconTicket size={18} className="text-muted-foreground" aria-hidden="true" />
+          <IconTicket
+            size={18}
+            className="text-muted-foreground"
+            aria-hidden="true"
+          />
           <span className="text-sm font-medium">Ticket History</span>
         </Link>
       </div>
@@ -174,7 +187,11 @@ export function SheetDownMenu({ onClose }) {
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2.5 hover:bg-accent rounded-md mx-2 transition-colors w-[calc(100%-1rem)] text-left"
         >
-          <IconLogout2 size={18} className="text-muted-foreground" aria-hidden="true" />
+          <IconLogout2
+            size={18}
+            className="text-muted-foreground"
+            aria-hidden="true"
+          />
           <span className="text-sm font-medium text-destructive">Logout</span>
         </button>
       </div>

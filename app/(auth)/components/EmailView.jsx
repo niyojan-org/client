@@ -8,7 +8,7 @@ function EmailView({ message = "Authenticating with email..." }) {
     if (!email) return null;
 
     return (
-        <div className="w-full rounded-2xl sm:border sm:border-border sm:bg-card/80 space-y-4 ">
+        <div className="w-full rounded-2xl sm:bg-card/80 space-y-4">
             <div className="flex items-start gap-3">
                 <div className="h-11 w-11 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
                     <IconUserCircle size={24} />

@@ -69,7 +69,6 @@ const passkeyAuth = async (passkeyOptions, email, useConditionalMediation = fals
             setIsPasskeyAvailable(false);
             return;
         }
-        console.log("All good till here");
         const credentialJSON = {
             id: credential.id,
             rawId: bufferToBase64url(credential.rawId),
@@ -83,7 +82,6 @@ const passkeyAuth = async (passkeyOptions, email, useConditionalMediation = fals
                     : null,
             },
         };
-        console.log(credentialJSON);
         const verifyResponse = await baseApi.post('/auth/passkeys/authenticate/verify', { email, assertion: credentialJSON });
 
         if (!verifyResponse.data.success) {
