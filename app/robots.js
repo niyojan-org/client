@@ -18,6 +18,8 @@ export default function robots() {
           "/change-password",
           "/verify-email",
           "/reset-password",
+          "/mfa",
+          "/oauth-success",
         ],
       },
     ],

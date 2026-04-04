@@ -7,7 +7,14 @@ import { useEffect, useMemo, useState } from "react";
 import NavigationBar from "@/components/NavigationBar";
 
 // Routes where navbar should be hidden
-const hiddenNavbarRoutes = ["/auth", "/login", "/signup", "/reset-password"];
+const hiddenNavbarRoutes = [
+  "/auth",
+  "/login",
+  "/signup",
+  "/reset-password",
+  "/mfa",
+  "/oauth-success",
+];
 
 export default function ClientLayout({ children }) {
   const { fetchUser } = useUserStore();
@@ -37,9 +44,10 @@ export default function ClientLayout({ children }) {
       {!shouldHideNavbar && <NavigationBar />}
       {/* MAIN CONTENT */}
       <main className="h-dvh w-full flex flex-col">
-
         {/* <Button onClick={() => subscribeUser()}>Enable Notification</Button> */}
-        <div className={`flex-1 w-full h-full px-2 md:px-8 lg:px-16 ${!shouldHideNavbar ? 'pt-13' : ''}`}>
+        <div
+          className={`flex-1 w-full h-full px-2 md:px-8 lg:px-16 ${!shouldHideNavbar ? "pt-13" : ""}`}
+        >
           {children}
         </div>
       </main>
