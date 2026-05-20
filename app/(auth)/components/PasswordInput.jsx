@@ -20,7 +20,6 @@ function PasswordInput() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handlePasswordSubmitWrapper = async () => {
-    console.log("Hey whats the error");
     setError(null);
     try {
       const redirectPath = await handlePasswordSubmit(password);

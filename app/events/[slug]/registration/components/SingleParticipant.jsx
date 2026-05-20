@@ -1,12 +1,12 @@
-"use client";
-import DynamicField from "@/app/events/components/DynamicField";
-import { Button } from "@/components/ui/button";
-import useEventRegistrationStore from "@/store/eventRegistration";
-import { useUserStore } from "@/store/userStore";
-import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
-import { toast } from "sonner";
-import CouponInput from "./CouponInput";
+'use client';
+import DynamicField from '@/app/events/components/DynamicField';
+import { Button } from '@/components/ui/button';
+import useEventRegistrationStore from '@/store/eventRegistration';
+import { useUserStore } from '@/store/userStore';
+import Link from 'next/link';
+import { useState, useRef, useEffect } from 'react';
+import { toast } from 'sonner';
+import CouponInput from './CouponInput';
 
 function SingleParticipant({ allFields }) {
   const [data, setData] = useState({});
@@ -28,8 +28,8 @@ function SingleParticipant({ allFields }) {
     if (fieldRefs.current[name]) {
       setTimeout(() => {
         fieldRefs.current[name].scrollIntoView({
-          behavior: "smooth",
-          block: "center",
+          behavior: 'smooth',
+          block: 'center',
         });
       }, 300); // Delay to allow keyboard animation
     }
@@ -40,7 +40,7 @@ function SingleParticipant({ allFields }) {
       const initialData = {};
       allFields.forEach((field) => {
         // Map phone_number to phone
-        const userKey = field.name === "phone" ? "phone_number" : field.name;
+        const userKey = field.name === 'phone' ? 'phone_number' : field.name;
         if (user[userKey]) {
           initialData[field.name] = user[userKey];
         }
@@ -53,11 +53,11 @@ function SingleParticipant({ allFields }) {
     const result = await register(data);
 
     if (!result.success) {
-      toast.error(result.error || "Please fill all required fields correctly.");
+      toast.error(result.error || 'Please fill all required fields correctly.');
       if (result.firstErrorField && fieldRefs.current[result.firstErrorField]) {
         fieldRefs.current[result.firstErrorField].scrollIntoView({
-          behavior: "smooth",
-          block: "center",
+          behavior: 'smooth',
+          block: 'center',
         });
       }
     } else {
@@ -72,7 +72,7 @@ function SingleParticipant({ allFields }) {
           <div key={f.name} ref={(el) => (fieldRefs.current[f.name] = el)}>
             <DynamicField
               field={f}
-              value={data[f.name] || ""}
+              value={data[f.name] || ''}
               onChange={handleFieldChange}
               onFocus={handleFieldFocus}
               error={fieldErrors[f.name]}
@@ -82,32 +82,28 @@ function SingleParticipant({ allFields }) {
         {ticket?.price > 0 && registrationForm?.allowCoupons && <CouponInput />}
       </div>
       <p className="text-sm text-gray-500 my-2">
-        By proceeding, you agree to our{" "}
+        By proceeding, you agree to our{' '}
         <Link href="/terms-and-conditions" className="underline text-primary" target="_blank">
-          T&C{" "}
+          T&C{' '}
         </Link>
-        ,{" "}
+        ,{' '}
         <Link href="/refund-policy" className="underline text-primary" target="_blank">
           Refund Policy
         </Link>
-        , and{" "}
+        , and{' '}
         <Link href="/delivery-policy" className="underline text-primary" target="_blank">
           Delivery Policy
         </Link>
       </p>
 
-      <Button
-        onClick={handleSubmit}
-        disabled={isSubmitting || !ticket}
-        className="w-full rounded-full"
-      >
+      <Button onClick={handleSubmit} disabled={isSubmitting || !ticket} className="w-full rounded-full">
         {isSubmitting
-          ? "Submitting..."
+          ? 'Submitting...'
           : ticket
             ? ticket?.price > 0
               ? `Pay Now /-`
-              : "Register Now"
-            : "Select a ticket"}
+              : 'Register Now'
+            : 'Select a ticket'}
       </Button>
     </div>
   );

@@ -1,21 +1,20 @@
-import api from "@/lib/api";
-import Error404 from "@/app/not-found";
-import EventPageClient from "./page.client";
+import api from '@/lib/api';
+import Error404 from '@/app/not-found';
+import EventPageClient from './page.client';
 
 // =========================
 // DYNAMIC SEO METADATA
 // =========================
 export async function generateMetadata({ params }) {
-  const { slug } =  await params;  
+  const { slug } = await params;
 
   try {
-    const { data } = await api.get(`/event/${slug}`);
+    const { data } = await api.get(`/events/public/${slug}`);
     const event = data?.event;
-
     if (!event) {
       return {
-        title: "Event Not Found | orgatick",
-        description: "The event you are looking for does not exist.",
+        title: 'Event Not Found | orgatick',
+        description: 'The event you are looking for does not exist.',
       };
     }
 
@@ -32,31 +31,31 @@ export async function generateMetadata({ params }) {
         url: `https://orgatick.in/events/${slug}`,
       },
       twitter: {
-        card: "summary_large_image",
+        card: 'summary_large_image',
         title: event.title,
         description: event.shortDescription || event.description,
         images: [`https://orgatick.in/events/${slug}/opengraph-image`],
       },
       other: {
-        "script:ld+json": {
-          "@context": "https://schema.org",
-          "@type": "Event",
+        'script:ld+json': {
+          '@context': 'https://schema.org',
+          '@type': 'Event',
           name: event.title,
           description: event.shortDescription || event.description,
-          image: [event.bannerImage || "/og_image.png"],
+          image: [event.bannerImage || '/og_image.png'],
           startDate: event.startDate,
           endDate: event.endDate,
-          eventStatus: "EventScheduled",
-          eventAttendanceMode: "OnlineEventAttendanceMode",
+          eventStatus: 'EventScheduled',
+          eventAttendanceMode: 'OnlineEventAttendanceMode',
           organizer: {
-            "@type": "Organization",
-            name: event.organization?.name || "orgatick Organizer",
-            url: `https://orgatick.in/organization/${event.organization?.slug}`
+            '@type': 'Organization',
+            name: event.organization?.name || 'orgatick Organizer',
+            url: `https://orgatick.in/organization/${event.organization?.slug}`,
           },
           location: {
-            "@type": "Place",
-            name: event.locationName || "Venue",
-            address: event.location
+            '@type': 'Place',
+            name: event.locationName || 'Venue',
+            address: event.location,
           },
           url: `https://orgatick.in/events/${slug}`,
         },
@@ -64,29 +63,25 @@ export async function generateMetadata({ params }) {
     };
   } catch {
     return {
-      title: "Event",
-      description: "Event details and information.",
+      title: 'Event',
+      description: 'Event details and information.',
     };
   }
 }
-
 
 // =========================
 // PAGE COMPONENT (SSR + CLIENT WRAPPER)
 // =========================
 export default async function EventPage({ params }) {
   const { slug } = await params;
-
   try {
-    const { data } = await api.get(`/event/${slug}`);
+    const { data } = await api.get(`/events/public/${slug}`);
     const event = data?.event;
-
     if (!event) {
       return <div>Event Not Found</div>;
     }
-
     return <EventPageClient initialEvent={event} />;
   } catch {
-    return <Error404 />
+    return <Error404 />;
   }
 }

@@ -34,7 +34,6 @@ function page() {
     try {
       const res = await handleEmailSubmit(candidateEmail);
       const externalAuth = localStorage.getItem("redirect");
-      console.log("I am here", res, externalAuth);
       if (res && externalAuth) {
         localStorage.removeItem("redirect");
         router.replace(externalAuth);
