@@ -1,23 +1,23 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
-import { SpinnerCustom } from "@/components/ui/spinner";
-import api from "@/lib/api";
-import ErrorCard from "@/components/Card/Error";
-import RegistrationBanner from "./components/RegistrationBanner";
-import RegistrationForm from "./components/RegistrationForm";
-import useEventRegistrationStore from "@/store/eventRegistration";
-import Payment from "./components/Payment";
-import RegistrationSuccess from "./components/Success";
+import React, { useEffect, useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
+import { SpinnerCustom } from '@/components/ui/spinner';
+import api from '@/lib/api';
+import ErrorCard from '@/components/Card/Error';
+import RegistrationBanner from './components/RegistrationBanner';
+import RegistrationForm from './components/RegistrationForm';
+import useEventRegistrationStore from '@/store/eventRegistration';
+import Payment from './components/Payment';
+import RegistrationSuccess from './components/Success';
 
 export default function RegistrationPage() {
   const { slug } = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const referralCode = searchParams.get("ref") || null;
-  const ticketIdFromUrl = searchParams.get("ticket") || null;
+  const referralCode = searchParams.get('ref') || null;
+  const ticketIdFromUrl = searchParams.get('ticket') || null;
 
   // const { fetchRegistrationForm, registrationForm, error, loadingRegistrationForm } =
   //   useEventStore();
@@ -35,8 +35,8 @@ export default function RegistrationPage() {
 
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [formData, setFormData] = useState({});
-  const [groupName, setGroupName] = useState("");
-  const [couponCode, setCouponCode] = useState("");
+  const [groupName, setGroupName] = useState('');
+  const [couponCode, setCouponCode] = useState('');
   const [couponDiscount, setCouponDiscount] = useState(0);
 
   useEffect(() => {
@@ -51,12 +51,12 @@ export default function RegistrationPage() {
 
   useEffect(() => {
     // Clean up URL parameters after they've been processed
-    if (ticketIdFromUrl || searchParams.get("coupon")) {
+    if (ticketIdFromUrl || searchParams.get('coupon')) {
       const params = new URLSearchParams(searchParams.toString());
       let shouldUpdate = false;
 
       if (ticketIdFromUrl && registrationForm?.tickets) {
-        params.delete("ticket");
+        params.delete('ticket');
         shouldUpdate = true;
       }
 
@@ -75,10 +75,7 @@ export default function RegistrationPage() {
     // setCouponFinalPrice(finalPrice);
   };
 
-  const allFields = [
-    ...(registrationForm?.defaultFields || []),
-    ...(registrationForm?.customFields || []),
-  ];
+  const allFields = [...(registrationForm?.defaultFields || []), ...(registrationForm?.customFields || [])];
 
   const validateLeader = () => {
     for (const f of allFields) {
@@ -88,7 +85,7 @@ export default function RegistrationPage() {
       }
     }
     if (!selectedTicket) {
-      toast.error("Please select a ticket before continuing.");
+      toast.error('Please select a ticket before continuing.');
       return false;
     }
     return true;
@@ -110,8 +107,8 @@ export default function RegistrationPage() {
         <ErrorCard
           error={error}
           onRetry={() => window.location.reload()}
-          onBrowseEvents={() => router.push("/events")}
-          onGoHome={() => router.push("/")}
+          onBrowseEvents={() => router.push('/events')}
+          onGoHome={() => router.push('/')}
           className="w-full max-w-5xl mx-auto"
         />
       </div>
@@ -130,9 +127,7 @@ export default function RegistrationPage() {
     return (
       <div>
         <RegistrationBanner
-          bannerImage={
-            registrationForm?.eventDetails?.bannerImage || "/banner/default-event-banner.png"
-          }
+          bannerImage={registrationForm?.eventDetails?.bannerImage || '/banner/default-event-banner.png'}
           title={registrationForm?.eventDetails?.title}
           onBack={() => router.back()}
         />
@@ -158,8 +153,8 @@ export default function RegistrationPage() {
       <ErrorCard
         error={error}
         onRetry={() => window.location.reload()}
-        onBrowseEvents={() => router.push("/events")}
-        onGoHome={() => router.push("/")}
+        onBrowseEvents={() => router.push('/events')}
+        onGoHome={() => router.push('/')}
         className="w-full max-w-5xl mx-auto"
       />
     </div>

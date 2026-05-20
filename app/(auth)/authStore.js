@@ -99,8 +99,6 @@ export const authStore = create((set, get) => ({
         password: normalizedPassword,
       });
 
-      console.log(response);
-
       const responseData = response?.data?.data || response?.data || {};
       const requiresPasskey = Boolean(responseData?.requiresPasskey);
 

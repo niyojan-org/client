@@ -1,6 +1,6 @@
 // stores/eventStore.js
-import { create } from "zustand";
-import api from "@/lib/api";
+import { create } from 'zustand';
+import api from '@/lib/api';
 
 const useEventStore = create((set, get) => ({
   // ---------------------------
@@ -21,7 +21,7 @@ const useEventStore = create((set, get) => ({
   filters: {
     categories: [],
     modes: [],
-    type: "",
+    type: '',
   },
 
   //  Coupon-relateds state
@@ -44,15 +44,13 @@ const useEventStore = create((set, get) => ({
   fetchAllEvents: async ({ params } = {}) => {
     try {
       set({ loading: true });
-      const res = await api.get("/event", { params });
-      const events = Array.isArray(res.data.data.events)
-        ? res.data.data.events
-        : [];
+      const res = await api.get('/events/public', { params });
+      const events = Array.isArray(res.data.data.events) ? res.data.data.events : [];
       set({ allEvents: events });
     } catch (err) {
       console.error(err);
       set({
-        error: err.message || "Failed to fetch all events",
+        error: err.message || 'Failed to fetch all events',
         allEvents: [],
       });
     } finally {
@@ -62,15 +60,13 @@ const useEventStore = create((set, get) => ({
 
   fetchFeaturedEvents: async () => {
     try {
-      const res = await api.get("/event/featured");
-      const events = Array.isArray(res.data.data.events)
-        ? res.data.data.events
-        : [];
+      const res = await api.get('/event/featured');
+      const events = Array.isArray(res.data.data.events) ? res.data.data.events : [];
       set({ featuredEvents: events });
     } catch (err) {
       console.error(err);
       set({
-        error: err.message || "Failed to fetch featured events",
+        error: err.message || 'Failed to fetch featured events',
         featuredEvents: [],
       });
     }
@@ -78,10 +74,10 @@ const useEventStore = create((set, get) => ({
 
   fetchEventCategories: async () => {
     try {
-      const res = await api.get("/event/categories");
+      const res = await api.get('/event/categories');
       set({ eventCategories: res.data.data.categories });
     } catch (err) {
-      set({ error: err.message || "Failed to fetch event categories" });
+      set({ error: err.message || 'Failed to fetch event categories' });
     }
   },
 
@@ -91,7 +87,7 @@ const useEventStore = create((set, get) => ({
       const res = await api.get(`/event/${slug}`);
       set({ singleEvent: res.data.event });
     } catch (err) {
-      set({ error: err.message || "Failed to fetch event by slug" });
+      set({ error: err.message || 'Failed to fetch event by slug' });
     } finally {
       set({ loadingSingleEvent: false });
     }
@@ -106,12 +102,12 @@ const useEventStore = create((set, get) => ({
 
       set({
         registrationForm: {
-          ...regData
+          ...regData,
         },
       });
     } catch (err) {
       set({
-        error: err.response?.data
+        error: err.response?.data,
       });
     } finally {
       set({ loadingRegistrationForm: false });
@@ -120,7 +116,7 @@ const useEventStore = create((set, get) => ({
 
   //  Locally calculate discount (mirrors backend exact data)
   calculateDiscountedPrice: (originalPrice, coupon) => {
-    if (!coupon || typeof originalPrice !== "number" || originalPrice <= 0) {
+    if (!coupon || typeof originalPrice !== 'number' || originalPrice <= 0) {
       return { finalPrice: originalPrice, discount: 0 };
     }
     const finalPrice = Math.max(0, originalPrice - coupon.discountValue);
@@ -169,24 +165,21 @@ const useEventStore = create((set, get) => ({
 
     try {
       if (!code || !code.trim()) {
-        throw new Error("Please enter a valid coupon code");
+        throw new Error('Please enter a valid coupon code');
       }
 
       const res = await api.get(`/event/coupon/${eventSlug}/${code.trim()}`);
       const coupon = res.data?.data;
 
       if (!coupon) {
-        throw new Error("Invalid coupon response from server");
+        throw new Error('Invalid coupon response from server');
       }
 
       // Compute preview
       let discountAmount = 0;
       let finalPrice = ticketPrice;
-      if (typeof ticketPrice === "number") {
-        const { discount, finalPrice: fPrice } = get().calculateDiscountedPrice(
-          ticketPrice,
-          coupon
-        );
+      if (typeof ticketPrice === 'number') {
+        const { discount, finalPrice: fPrice } = get().calculateDiscountedPrice(ticketPrice, coupon);
         discountAmount = discount;
         finalPrice = fPrice;
       }
@@ -202,10 +195,7 @@ const useEventStore = create((set, get) => ({
 
       return { coupon, discountAmount, finalPrice };
     } catch (err) {
-      const message =
-        err.response?.data?.message ||
-        err.message ||
-        "Coupon verification failed";
+      const message = err.response?.data?.message || err.message || 'Coupon verification failed';
 
       set({
         error: message,
@@ -238,10 +228,7 @@ const useEventStore = create((set, get) => ({
       set({ organization: res.data.organization, loading: false });
     } catch (err) {
       set({
-        error:
-          err.response?.data?.message ||
-          err.message ||
-          "Failed to fetch organization",
+        error: err.response?.data?.message || err.message || 'Failed to fetch organization',
         loading: false,
       });
     }
@@ -250,8 +237,7 @@ const useEventStore = create((set, get) => ({
   // Cleanup helpers
   clearSingleEvent: () => set({ singleEvent: null, error: null }),
   clearRegistrationForm: () => set({ registrationForm: null, error: null }),
-  clearOrganization: () =>
-    set({ organization: null, loading: false, error: null }),
+  clearOrganization: () => set({ organization: null, loading: false, error: null }),
 }));
 
 export default useEventStore;

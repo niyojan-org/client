@@ -1,149 +1,143 @@
-import { formatFullTimeline } from "@/lib/timelineFormate";
+import { formatFullTimeline } from '@/lib/timelineFormate';
 
 const normalizeDynamicFields = (fields) => {
-    const out = {};
-    for (const [key, val] of Object.entries(fields || {})) {
-        out[key] = Array.isArray(val) ? val.join(", ") : val ?? "";
-    }
-    return out;
+  const out = {};
+  for (const [key, val] of Object.entries(fields || {})) {
+    out[key] = Array.isArray(val) ? val.join(', ') : (val ?? '');
+  }
+  return out;
 };
 
 export const validateFormData = (formData, registrationForm) => {
-    const errors = {};
-    const allFields = [
-        ...(registrationForm?.defaultFields || []),
-        ...(registrationForm?.customFields || []),
-    ];
+  const errors = {};
+  const allFields = [...(registrationForm?.defaultFields || []), ...(registrationForm?.customFields || [])];
 
-    let firstErrorField = null;
+  let firstErrorField = null;
 
-    allFields.forEach((field) => {
-        if (field.required) {
-            const value = formData[field.name];
+  allFields.forEach((field) => {
+    if (field.required) {
+      const value = formData[field.name];
 
-            if (!value || (typeof value === 'string' && value.trim() === '')) {
-                errors[field.name] = `${field.label} is required`;
-                if (!firstErrorField) {
-                    firstErrorField = field.name;
-                }
-            }
+      if (!value || (typeof value === 'string' && value.trim() === '')) {
+        errors[field.name] = `${field.label} is required`;
+        if (!firstErrorField) {
+          firstErrorField = field.name;
         }
-    });
+      }
+    }
+  });
 
-    return {
-        isValid: Object.keys(errors).length === 0,
-        errors,
-        firstErrorField,
-    };
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+    firstErrorField,
+  };
 };
 
-export const prepareRegistrationPayload = (formData, ticketId, registrationForm, couponCode) => {
-    const defaultFieldNames = registrationForm?.defaultFields?.map(f => f.name) || ['name', 'email', 'phone'];
-    const customFieldNames = registrationForm?.customFields?.map(f => f.name) || [];
-
-    const payload = {
-        ticketId
-    };
-
-    // Add default fields
-    defaultFieldNames.forEach(fieldName => {
-        if (formData[fieldName]) {
-            payload[fieldName] = formData[fieldName];
-        }
-    });
-
-    // Add optional codes
-    if (formData.referralCode) {
-        payload.referralCode = formData.referralCode;
-    }
-    if (couponCode) {
-        payload.couponCode = couponCode;
-    }
-
-    // Add custom fields as dynamicFields
-    const dynamicFields = {};
-    customFieldNames.forEach(fieldName => {
-        if (formData[fieldName] !== undefined && formData[fieldName] !== null) {
-            dynamicFields[fieldName] = formData[fieldName];
-        }
-    });
-
-    if (Object.keys(dynamicFields).length > 0) {
-        payload.dynamicFields = normalizeDynamicFields(dynamicFields);
-    }
-
-    return payload;
+export const prepareRegistrationPayload = (formData, ticketId, registrationForm, couponCode, slug) => {
+  const payload = {
+    ticketId,
+    eventId: slug,
+    // referralCode: 'Xdd', TODO: future implementation for referral code, need to add it in registration form response from backend
+  };
+  if (formData.referralCode) {
+    payload.referralCode = formData.referralCode;
+  }
+  if (couponCode) {
+    payload.couponCode = couponCode;
+  }
+  payload.participants = [formData];
+  return payload;
 };
 
 export const GetSuccessData = (data) => {
-    if (!data) return null;
+  if (!data) return null;
 
-    // Check if this is a group registration
-    const isGroupRegistration = data.data?.groupId && data.data?.participants && Array.isArray(data.data.participants);
+  // Handle new response format with separate registration and participants
+  const registration = data.registration || data.data;
+  const participants = data.participants || [];
+  
+  // Check if this is a group registration
+  const isGroup = registration?.groupInfo?.groupName || registration?.groupInfo?.totalMembers > 1 || participants.length > 1;
+  
+  if (isGroup && participants.length > 0) {
+    // Group registration
+    const leader = participants.find((p) => p.isGroupLeader) || participants[0];
+    const ticketInfo = registration?.pricing || {};
+    
+    return {
+      registrationId: registration?._id || leader?._id || '',
+      message: data.message || 'Registration Confirmed',
+      eventName: registration?.eventDetails?.title || '',
+      eventDate: registration?.eventDetails?.sessions ? formatFullTimeline(registration.eventDetails.sessions) : '',
+      eventLocation:
+        (registration?.eventDetails?.sessions?.[0]?.venue?.name || '') +
+        (registration?.eventDetails?.sessions?.[0]?.venue?.address || '') ||
+        'Venue TBD',
+      ticketType: registration?.ticketInfo?.type || '',
+      ticketPrice: registration?.ticketInfo?.price || ticketInfo?.subtotal || 0,
+      isPaid: registration?.status === 'PAID' || ticketInfo?.total > 0,
+      isGroup: true,
+      groupName: registration?.groupInfo?.groupName || 'Group Registration',
+      participants: participants.map((p) => ({
+        name: p.name,
+        email: p.email,
+        phone: p.phone,
+        isLeader: p.isGroupLeader || p._id === leader._id,
+      })),
+      participantCount: participants.length,
+      totalAmount: ticketInfo?.total || 0,
+      qrCode: '',
+      eventSlug: registration?.eventDetails?.slug || '',
+      redirect: data.redirect || null,
+    };
+  }
 
-    if (isGroupRegistration) {
+  // Individual registration
+  const participant = participants?.[0];
+  const ticketInfo = registration?.pricing || {};
+  
+  const SUCCESS_DATA = {
+    registrationId: registration?._id || participant?._id || '',
+    message: data.message || 'Registration Confirmed',
+    eventName: registration?.eventDetails?.title || '',
+    eventDate: registration?.eventDetails?.sessions ? formatFullTimeline(registration.eventDetails.sessions) : '',
+    eventLocation:
+      (registration?.eventDetails?.sessions?.[0]?.venue?.name || '') +
+      (registration?.eventDetails?.sessions?.[0]?.venue?.address || '') ||
+      'Venue TBD',
+    ticketType: registration?.ticketInfo?.type || '',
+    ticketPrice: registration?.ticketInfo?.price || ticketInfo?.subtotal || 0,
+    isPaid: registration?.status === 'PAID' || ticketInfo?.total > 0,
+    isGroup: false,
+    participants: participant
+      ? [
+          {
+            name: participant.name || '',
+            email: participant.email || '',
+            phone: participant.phone || '',
+          },
+        ]
+      : [],
+    participantCount: 1,
+    totalAmount: ticketInfo?.total || 0,
+    qrCode: '',
+    eventSlug: registration?.eventDetails?.slug || '',
+    redirect: data.redirect || null,
+  };
 
-        const leader = data.data.participants.find(p => p.isGroupLeader) || data.data.participants[0];
-        return {
-            registrationId: data.data.groupId || leader?._id || "",
-            message: data.message || "",
-            eventName: data.data.event?.title || "",
-            eventDate: data.data.event?.sessions ? formatFullTimeline(data.data.event.sessions) : "",
-            eventLocation: (data.data.event?.sessions?.[0]?.venue?.name || "") + (data.data.event?.sessions?.[0]?.venue?.address || "") || "Venue TBD",
-            ticketType: leader?.ticket?.type || "",
-            ticketPrice: leader?.ticket?.price || 0,
-            isPaid: (leader?.ticket?.price || 0) > 0,
-            isGroup: true,
-            groupName: leader?.groupInfo?.groupName || "",
-            participants: data.data.participants.map(p => ({
-                name: p.name,
-                email: p.email,
-                phone: p.phone,
-                isLeader: p.isGroupLeader || false,
-            })),
-            participantCount: data.data.participants.length,
-            totalAmount: data.data?.payment?.amount || 0,
-            qrCode: "",
-            eventSlug: data.data.event?.slug || "",
-            redirect: data.data?.redirect || null,
-        };
-    }
-
-    // Individual registration
-    const SUCCESS_DATA = {
-        registrationId: data.data?.participant?._id || "",
-        message: data.message || "",
-        eventName: data.data?.event?.title || "",
-        eventDate: data.data?.event?.sessions ? formatFullTimeline(data.data.event.sessions) : "",
-        eventLocation: (data.data?.event?.sessions?.[0]?.venue?.name || "") + (data.data?.event?.sessions?.[0]?.venue?.address || "") || "Venue TBD",
-        ticketType: data.data?.participant?.ticket?.type || "",
-        ticketPrice: data.data?.participant?.ticket?.price || 0,
-        isPaid: (data.data?.participant?.ticket?.price || 0) > 0,
-        isGroup: data.data?.participant?.ticket?.isGroupTicket || false,
-        participants: [{
-            name: data.data?.participant?.name || "",
-            email: data.data?.participant?.email || "",
-            phone: data.data?.participant?.phone || "",
-        }],
-        participantCount: 1,
-        totalAmount: 0,
-        qrCode: "",
-        eventSlug: data.data?.event?.slug || "",
-        redirect: data.data?.redirect || null,
-    }
-
-    return SUCCESS_DATA
-}
+  return SUCCESS_DATA;
+};
 
 export const prepareGroupRegistrationPayload = (groupData, ticketId, registrationForm, couponCode) => {
-    const DATA = {
-        groupName: groupData.groupName,
-        groupLeader: groupData.leader,
-        groupMembers: groupData.groupMembers,
-        ticketId,
-        couponCode
-    }
-    return DATA;
-}
+  const DATA = {
+    groupName: groupData.groupName,
+    groupLeader: groupData.leader,
+    groupMembers: groupData.groupMembers,
+    ticketId,
+    couponCode,
+  };
+  return DATA;
+};
 
 export { normalizeDynamicFields };
